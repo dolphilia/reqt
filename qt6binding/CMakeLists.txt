@@ -69,6 +69,12 @@ set(MOC_HEADERS
     include/handler_radio_button.h
     include/bind_q_spin_box.h
     include/handler_spin_box.h
+    include/bind_q_scroll_bar.h
+    include/handler_scroll_bar.h
+    include/bind_q_scroll_area.h
+    include/handler_scroll_area.h
+    include/bind_q_text_edit.h
+    include/handler_text_edit.h
 )
 
 add_library(qt6binding SHARED
@@ -136,6 +142,15 @@ add_library(qt6binding SHARED
     src/bind_q_spin_box.cpp
     src/handler_spin_box.cpp
     src/c_q_spin_box.cpp
+    src/bind_q_scroll_bar.cpp
+    src/handler_scroll_bar.cpp
+    src/c_q_scroll_bar.cpp
+    src/bind_q_scroll_area.cpp
+    src/handler_scroll_area.cpp
+    src/c_q_scroll_area.cpp
+    src/bind_q_text_edit.cpp
+    src/handler_text_edit.cpp
+    src/c_q_text_edit.cpp
 )
 
 target_include_directories(qt6binding PUBLIC include)
