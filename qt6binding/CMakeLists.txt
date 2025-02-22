@@ -65,6 +65,8 @@ set(MOC_HEADERS
     include/handler_progress_bar.h
     include/bind_q_slider.h
     include/handler_slider.h
+    include/bind_q_radio_button.h
+    include/handler_radio_button.h
 )
 
 add_library(qt6binding SHARED
@@ -126,6 +128,9 @@ add_library(qt6binding SHARED
     src/bind_q_slider.cpp
     src/handler_slider.cpp
     src/c_q_slider.cpp
+    src/bind_q_radio_button.cpp
+    src/handler_radio_button.cpp
+    src/c_q_radio_button.cpp
 )
 
 target_include_directories(qt6binding PUBLIC include)
