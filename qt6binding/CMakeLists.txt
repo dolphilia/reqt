@@ -57,6 +57,10 @@ set(MOC_HEADERS
     include/bind_q_tab_bar.h
     include/bind_q_tab_widget.h
     include/handler_tab_widget.h
+    include/bind_q_menu.h
+    include/handler_menu.h
+    include/bind_q_menu_bar.h
+    include/handler_menu_bar.h
 )
 
 add_library(qt6binding SHARED
@@ -106,6 +110,12 @@ add_library(qt6binding SHARED
     src/bind_q_tab_widget.cpp
     src/handler_tab_widget.cpp
     src/c_q_tab_widget.cpp
+    src/bind_q_menu.cpp
+    src/handler_menu.cpp
+    src/c_q_menu.cpp
+    src/bind_q_menu_bar.cpp
+    src/handler_menu_bar.cpp
+    src/c_q_menu_bar.cpp
 )
 
 target_include_directories(qt6binding PUBLIC include)
