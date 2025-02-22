@@ -61,6 +61,8 @@ set(MOC_HEADERS
     include/handler_menu.h
     include/bind_q_menu_bar.h
     include/handler_menu_bar.h
+    include/bind_q_progress_bar.h
+    include/handler_progress_bar.h
 )
 
 add_library(qt6binding SHARED
@@ -116,6 +118,9 @@ add_library(qt6binding SHARED
     src/bind_q_menu_bar.cpp
     src/handler_menu_bar.cpp
     src/c_q_menu_bar.cpp
+    src/bind_q_progress_bar.cpp
+    src/handler_progress_bar.cpp
+    src/c_q_progress_bar.cpp
 )
 
 target_include_directories(qt6binding PUBLIC include)
