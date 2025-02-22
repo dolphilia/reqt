@@ -24,6 +24,7 @@ set(MOC_HEADERS
     include/handler_mdi_area.h
     include/handler_mdi_sub_window.h
     include/handler_check_box.h
+    include/handler_tab_bar.h
     include/handler_combo_box.h
     include/handler_date_edit.h
     include/handler_date_time_edit.h
@@ -53,6 +54,9 @@ set(MOC_HEADERS
     include/bind_q_list_view.h
     include/bind_q_string_list_model.h
     include/handler_list_view.h
+    include/bind_q_tab_bar.h
+    include/bind_q_tab_widget.h
+    include/handler_tab_widget.h
 )
 
 add_library(qt6binding SHARED
@@ -96,6 +100,12 @@ add_library(qt6binding SHARED
     src/handler_list_view.cpp
     src/handler_mdi_area.cpp
     src/handler_mdi_sub_window.cpp
+    src/bind_q_tab_bar.cpp
+    src/handler_tab_bar.cpp
+    src/c_q_tab_bar.cpp
+    src/bind_q_tab_widget.cpp
+    src/handler_tab_widget.cpp
+    src/c_q_tab_widget.cpp
 )
 
 target_include_directories(qt6binding PUBLIC include)
