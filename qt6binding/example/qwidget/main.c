@@ -2,33 +2,36 @@
 #include <stdio.h>
 
 int main(int argc, char *argv[]) {
-    // QApplicationの作成
-    void* app = QApplication_create(argc, argv);
+    // Initialize application
+    void *app = QApplication_create(argc, argv);
     
-    // ウィジェットの作成
-    void* widget = QWidget_create(NULL);
+    // Create main window
+    void *window = QWidget_create(NULL);
+    QWidget_resize(window, 400, 300);
+    QWidget_setWindowTitle(window, "QWidget Example");
     
-    // ウィンドウタイトルの設定
-    QWidget_setWindowTitle(widget, "QWidget Example");
+    // Create label
+    void *label = QLabel_create("Styled Label", window);
+    QWidget_resize(label, 200, 100);
+    QWidget_move(label, 100, 100);
     
-    // ウィンドウサイズの設定
-    QWidget_resize(widget, 300, 200);
+    // Set style sheet for label
+    QWidget_setStyleSheet(label, "background-color: #3498db; "
+                               "border: 2px solid #2980b9; "
+                               "border-radius: 10px; "
+                               "color: white; "
+                               "padding: 10px;");
     
-    // ウィンドウの最小サイズと最大サイズの設定
-    QWidget_setMinimumSize(widget, 200, 150);
-    QWidget_setMaximumSize(widget, 400, 300);
+    // Show widgets
+    QWidget_show(window);
+    QWidget_show(label);
     
-    // ウィンドウの位置を画面中央に設定
-    QWidget_move(widget, 100, 100);
-    
-    // ウィジェットの表示
-    QWidget_show(widget);
-    
-    // イベントループの開始
+    // Run application
     int result = QApplication_exec(app);
     
-    // クリーンアップ
-    QWidget_delete(widget);
+    // Cleanup
+    QWidget_delete(label);
+    QWidget_delete(window);
     QApplication_delete(app);
     
     return result;

@@ -1,19 +1,27 @@
-#ifndef QWIDGET_BIND_H
-#define QWIDGET_BIND_H
+#ifndef BIND_Q_WIDGET_H
+#define BIND_Q_WIDGET_H
 
 #include <QWidget>
 
-class QWidgetBind {
+class BindQWidget : public QWidget {
+    Q_OBJECT
 public:
-    static QWidget* create(QWidget* parent = nullptr);
-    static void destroy(QWidget* widget);
-    static void show(QWidget* widget);
-    static void hide(QWidget* widget);
-    static void setWindowTitle(QWidget* widget, const char* title);
-    static void resize(QWidget* widget, int width, int height);
-    static void setMinimumSize(QWidget* widget, int width, int height);
-    static void setMaximumSize(QWidget* widget, int width, int height);
-    static void move(QWidget* widget, int x, int y);
+    explicit BindQWidget(QWidget *parent = nullptr);
+    ~BindQWidget();
+
+    // Style sheet
+    void setStyleSheet(const QString &styleSheet);
+    QString styleSheet() const;
+
+    // Background
+    void setAutoFillBackground(bool enabled);
+    bool autoFillBackground() const;
+
+    // Palette
+    void setBackgroundRole(QPalette::ColorRole role);
+    QPalette::ColorRole backgroundRole() const;
+    void setForegroundRole(QPalette::ColorRole role);
+    QPalette::ColorRole foregroundRole() const;
 };
 
-#endif // QWIDGET_BIND_H
+#endif // BIND_Q_WIDGET_H

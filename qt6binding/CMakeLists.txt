@@ -99,6 +99,7 @@ add_library(qt6binding SHARED
     src/bind_q_style.cpp
     src/bind_q_v_box_layout.cpp
     src/bind_q_widget.cpp
+    src/c_q_widget.cpp
     src/c_q_application.cpp
     src/c_q_combo_box.cpp
     src/c_q_h_box_layout.cpp

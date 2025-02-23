@@ -1,94 +1,50 @@
 #include "bind_q_widget.h"
-#include <QString>
 
-QWidget* QWidgetBind::create(QWidget* parent) {
-    return new QWidget(parent);
+BindQWidget::BindQWidget(QWidget *parent)
+    : QWidget(parent)
+{
 }
 
-void QWidgetBind::destroy(QWidget* widget) {
-    if (widget) {
-        delete widget;
-    }
+BindQWidget::~BindQWidget()
+{
 }
 
-void QWidgetBind::show(QWidget* widget) {
-    if (widget) {
-        widget->show();
-    }
+void BindQWidget::setStyleSheet(const QString &styleSheet)
+{
+    QWidget::setStyleSheet(styleSheet);
 }
 
-void QWidgetBind::hide(QWidget* widget) {
-    if (widget) {
-        widget->hide();
-    }
+QString BindQWidget::styleSheet() const
+{
+    return QWidget::styleSheet();
 }
 
-void QWidgetBind::setWindowTitle(QWidget* widget, const char* title) {
-    if (widget && title) {
-        widget->setWindowTitle(QString::fromUtf8(title));
-    }
+void BindQWidget::setAutoFillBackground(bool enabled)
+{
+    QWidget::setAutoFillBackground(enabled);
 }
 
-void QWidgetBind::resize(QWidget* widget, int width, int height) {
-    if (widget) {
-        widget->resize(width, height);
-    }
+bool BindQWidget::autoFillBackground() const
+{
+    return QWidget::autoFillBackground();
 }
 
-void QWidgetBind::setMinimumSize(QWidget* widget, int width, int height) {
-    if (widget) {
-        widget->setMinimumSize(width, height);
-    }
+void BindQWidget::setBackgroundRole(QPalette::ColorRole role)
+{
+    QWidget::setBackgroundRole(role);
 }
 
-void QWidgetBind::setMaximumSize(QWidget* widget, int width, int height) {
-    if (widget) {
-        widget->setMaximumSize(width, height);
-    }
+QPalette::ColorRole BindQWidget::backgroundRole() const
+{
+    return QWidget::backgroundRole();
 }
 
-void QWidgetBind::move(QWidget* widget, int x, int y) {
-    if (widget) {
-        widget->move(x, y);
-    }
+void BindQWidget::setForegroundRole(QPalette::ColorRole role)
+{
+    QWidget::setForegroundRole(role);
 }
 
-extern "C" {
-
-void* QWidget_create(void* parent) {
-    return QWidgetBind::create(static_cast<QWidget*>(parent));
-}
-
-void QWidget_delete(void* widget) {
-    QWidgetBind::destroy(static_cast<QWidget*>(widget));
-}
-
-void QWidget_show(void* widget) {
-    QWidgetBind::show(static_cast<QWidget*>(widget));
-}
-
-void QWidget_hide(void* widget) {
-    QWidgetBind::hide(static_cast<QWidget*>(widget));
-}
-
-void QWidget_setWindowTitle(void* widget, const char* title) {
-    QWidgetBind::setWindowTitle(static_cast<QWidget*>(widget), title);
-}
-
-void QWidget_resize(void* widget, int width, int height) {
-    QWidgetBind::resize(static_cast<QWidget*>(widget), width, height);
-}
-
-void QWidget_setMinimumSize(void* widget, int width, int height) {
-    QWidgetBind::setMinimumSize(static_cast<QWidget*>(widget), width, height);
-}
-
-void QWidget_setMaximumSize(void* widget, int width, int height) {
-    QWidgetBind::setMaximumSize(static_cast<QWidget*>(widget), width, height);
-}
-
-void QWidget_move(void* widget, int x, int y) {
-    QWidgetBind::move(static_cast<QWidget*>(widget), x, y);
-}
-
+QPalette::ColorRole BindQWidget::foregroundRole() const
+{
+    return QWidget::foregroundRole();
 }

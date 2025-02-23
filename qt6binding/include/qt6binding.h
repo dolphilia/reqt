@@ -21,5 +21,16 @@
 #include "c_q_status_bar.h"
 #include "c_q_list_view.h"
 #include "c_q_string_list_model.h"
+#include "c_q_tab_bar.h"
+#include "c_q_tab_widget.h"
+#include "c_q_menu.h"
+#include "c_q_menu_bar.h"
+#include "c_q_progress_bar.h"
+#include "c_q_slider.h"
+#include "c_q_radio_button.h"
+#include "c_q_spin_box.h"
+#include "c_q_scroll_bar.h"
+#include "c_q_scroll_area.h"
+#include "c_q_text_edit.h"
 
 #endif // QT6BINDING_H
