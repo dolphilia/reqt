@@ -40,5 +40,6 @@
 #include "c_q_standard_item_model.h"
 #include "c_q_standard_item.h"
 #include "c_q_table_view.h"
+#include "c_q_color.h"
 
 #endif // QT6BINDING_H

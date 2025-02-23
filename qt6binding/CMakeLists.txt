@@ -89,6 +89,7 @@ set(MOC_HEADERS
     include/bind_q_standard_item.h
     include/bind_q_table_view.h
     include/handler_table_view.h
+    include/bind_q_color.h
 )
 
 add_library(qt6binding SHARED
@@ -188,6 +189,8 @@ add_library(qt6binding SHARED
     src/bind_q_table_view.cpp
     src/handler_table_view.cpp
     src/c_q_table_view.cpp
+    src/bind_q_color.cpp
+    src/c_q_color.cpp
 )
 
 target_include_directories(qt6binding PUBLIC include)
