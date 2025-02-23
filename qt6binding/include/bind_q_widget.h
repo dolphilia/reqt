@@ -27,6 +27,7 @@ public:
     void setFixedSizeWrapper(int w, int h);
     void setFixedHeightWrapper(int height);
     void setFixedWidthWrapper(int width);
+    void setCursor(const QCursor &cursor);
 };
 
 #endif // BIND_Q_WIDGET_H

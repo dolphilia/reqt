@@ -99,6 +99,11 @@ const char* QWidget_styleSheet(void* widget)
     return static_cast<BindQWidget*>(widget)->styleSheet().toUtf8().constData();
 }
 
+void QWidget_setCursor(void* widget, void* cursor)
+{
+    static_cast<BindQWidget*>(widget)->setCursor(*static_cast<QCursor*>(cursor));
+}
+
 void QWidget_setAutoFillBackground(void* widget, bool enabled)
 {
     static_cast<BindQWidget*>(widget)->setAutoFillBackground(enabled);

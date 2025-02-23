@@ -36,6 +36,9 @@ const char* QWidget_windowTitle(void* widget);
 void QWidget_setStyleSheet(void* widget, const char* styleSheet);
 const char* QWidget_styleSheet(void* widget);
 
+// Cursor
+void QWidget_setCursor(void* widget, void* cursor);
+
 // Background
 void QWidget_setAutoFillBackground(void* widget, bool enabled);
 bool QWidget_autoFillBackground(void* widget);

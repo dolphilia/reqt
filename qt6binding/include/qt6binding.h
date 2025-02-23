@@ -43,5 +43,6 @@
 #include "c_q_color.h"
 #include "c_q_lcd_number.h"
 #include "c_q_grid_layout.h"
+#include "c_q_cursor.h"
 
 #endif // QT6BINDING_H

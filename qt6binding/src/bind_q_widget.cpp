@@ -61,5 +61,10 @@ void BindQWidget::setFixedHeightWrapper(int height)
 
 void BindQWidget::setFixedWidthWrapper(int width)
 {
-    QWidget::setFixedWidth(width);
+    setFixedWidth(width);
+}
+
+void BindQWidget::setCursor(const QCursor &cursor)
+{
+    QWidget::setCursor(cursor);
 }
