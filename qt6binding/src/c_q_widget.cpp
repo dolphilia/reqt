@@ -1,6 +1,7 @@
 #include "c_q_widget.h"
 #include "bind_q_widget.h"
 #include <QWidget>
+#include <QLayout>
 
 extern "C" {
 
@@ -132,6 +133,11 @@ void QWidget_setForegroundRole(void* widget, int role)
 int QWidget_foregroundRole(void* widget)
 {
     return static_cast<int>(static_cast<BindQWidget*>(widget)->foregroundRole());
+}
+
+void QWidget_setLayout(void* widget, void* layout)
+{
+    static_cast<BindQWidget*>(widget)->setLayout(static_cast<QLayout*>(layout));
 }
 
 }

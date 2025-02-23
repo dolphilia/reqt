@@ -43,6 +43,9 @@ void QWidget_setCursor(void* widget, void* cursor);
 void QWidget_setAutoFillBackground(void* widget, bool enabled);
 bool QWidget_autoFillBackground(void* widget);
 
+// Layout
+void QWidget_setLayout(void* widget, void* layout);
+
 // Palette
 void QWidget_setBackgroundRole(void* widget, int role);
 int QWidget_backgroundRole(void* widget);

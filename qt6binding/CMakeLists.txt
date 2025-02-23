@@ -94,6 +94,8 @@ set(MOC_HEADERS
     include/handler_lcd_number.h
     include/bind_q_grid_layout.h
     include/bind_q_cursor.h
+    include/bind_q_group_box.h
+    include/handler_group_box.h
 )
 
 add_library(qt6binding SHARED
@@ -202,6 +204,9 @@ add_library(qt6binding SHARED
     src/c_q_grid_layout.cpp
     src/bind_q_cursor.cpp
     src/c_q_cursor.cpp
+    src/bind_q_group_box.cpp
+    src/c_q_group_box.cpp
+    src/handler_group_box.cpp
 )
 
 target_include_directories(qt6binding PUBLIC include)
