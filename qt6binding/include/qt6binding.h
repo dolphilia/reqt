@@ -36,5 +36,8 @@
 #include "c_q_tool_box.h"
 #include "c_q_tool_bar.h"
 #include "c_q_tool_button.h"
+#include "c_q_tree_view.h"
+#include "c_q_standard_item_model.h"
+#include "c_q_standard_item.h"
 
 #endif // QT6BINDING_H

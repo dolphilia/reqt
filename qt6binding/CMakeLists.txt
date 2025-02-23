@@ -83,6 +83,10 @@ set(MOC_HEADERS
     include/handler_tool_bar.h
     include/bind_q_tool_button.h
     include/handler_tool_button.h
+    include/bind_q_tree_view.h
+    include/handler_tree_view.h
+    include/bind_q_standard_item_model.h
+    include/bind_q_standard_item.h
 )
 
 add_library(qt6binding SHARED
@@ -172,6 +176,13 @@ add_library(qt6binding SHARED
     src/bind_q_tool_button.cpp
     src/handler_tool_button.cpp
     src/c_q_tool_button.cpp
+    src/bind_q_tree_view.cpp
+    src/handler_tree_view.cpp
+    src/c_q_tree_view.cpp
+    src/bind_q_standard_item_model.cpp
+    src/bind_q_standard_item.cpp
+    src/c_q_standard_item_model.cpp
+    src/c_q_standard_item.cpp
 )
 
 target_include_directories(qt6binding PUBLIC include)
