@@ -32,5 +32,6 @@
 #include "c_q_scroll_bar.h"
 #include "c_q_scroll_area.h"
 #include "c_q_text_edit.h"
+#include "c_q_double_spin_box.h"
 
 #endif // QT6BINDING_H

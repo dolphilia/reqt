@@ -75,6 +75,8 @@ set(MOC_HEADERS
     include/handler_scroll_area.h
     include/bind_q_text_edit.h
     include/handler_text_edit.h
+    include/bind_q_double_spin_box.h
+    include/handler_double_spin_box.h
 )
 
 add_library(qt6binding SHARED
@@ -152,6 +154,9 @@ add_library(qt6binding SHARED
     src/bind_q_text_edit.cpp
     src/handler_text_edit.cpp
     src/c_q_text_edit.cpp
+    src/bind_q_double_spin_box.cpp
+    src/handler_double_spin_box.cpp
+    src/c_q_double_spin_box.cpp
 )
 
 target_include_directories(qt6binding PUBLIC include)
