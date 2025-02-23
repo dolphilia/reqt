@@ -41,5 +41,7 @@
 #include "c_q_standard_item.h"
 #include "c_q_table_view.h"
 #include "c_q_color.h"
+#include "c_q_lcd_number.h"
+#include "c_q_grid_layout.h"
 
 #endif // QT6BINDING_H

@@ -44,6 +44,21 @@ int QWidget_height(void* widget)
     return static_cast<BindQWidget*>(widget)->height();
 }
 
+void QWidget_setFixedSize(void* widget, int w, int h)
+{
+    static_cast<BindQWidget*>(widget)->setFixedSizeWrapper(w, h);
+}
+
+void QWidget_setFixedHeight(void* widget, int height)
+{
+    static_cast<BindQWidget*>(widget)->setFixedHeightWrapper(height);
+}
+
+void QWidget_setFixedWidth(void* widget, int width)
+{
+    static_cast<BindQWidget*>(widget)->setFixedWidthWrapper(width);
+}
+
 void QWidget_show(void* widget)
 {
     static_cast<BindQWidget*>(widget)->show();

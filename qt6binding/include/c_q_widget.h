@@ -18,6 +18,9 @@ int QWidget_x(void* widget);
 int QWidget_y(void* widget);
 int QWidget_width(void* widget);
 int QWidget_height(void* widget);
+void QWidget_setFixedSize(void* widget, int w, int h);
+void QWidget_setFixedHeight(void* widget, int height);
+void QWidget_setFixedWidth(void* widget, int width);
 
 // Visibility
 void QWidget_show(void* widget);

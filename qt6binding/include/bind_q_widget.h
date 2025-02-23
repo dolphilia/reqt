@@ -22,6 +22,11 @@ public:
     QPalette::ColorRole backgroundRole() const;
     void setForegroundRole(QPalette::ColorRole role);
     QPalette::ColorRole foregroundRole() const;
+
+    // Size
+    void setFixedSizeWrapper(int w, int h);
+    void setFixedHeightWrapper(int height);
+    void setFixedWidthWrapper(int width);
 };
 
 #endif // BIND_Q_WIDGET_H

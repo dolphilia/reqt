@@ -48,3 +48,18 @@ QPalette::ColorRole BindQWidget::foregroundRole() const
 {
     return QWidget::foregroundRole();
 }
+
+void BindQWidget::setFixedSizeWrapper(int w, int h)
+{
+    QWidget::setFixedSize(w, h);
+}
+
+void BindQWidget::setFixedHeightWrapper(int height)
+{
+    QWidget::setFixedHeight(height);
+}
+
+void BindQWidget::setFixedWidthWrapper(int width)
+{
+    QWidget::setFixedWidth(width);
+}

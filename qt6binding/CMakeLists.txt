@@ -90,6 +90,9 @@ set(MOC_HEADERS
     include/bind_q_table_view.h
     include/handler_table_view.h
     include/bind_q_color.h
+    include/bind_q_lcd_number.h
+    include/handler_lcd_number.h
+    include/bind_q_grid_layout.h
 )
 
 add_library(qt6binding SHARED
@@ -191,9 +194,15 @@ add_library(qt6binding SHARED
     src/c_q_table_view.cpp
     src/bind_q_color.cpp
     src/c_q_color.cpp
+    src/bind_q_lcd_number.cpp
+    src/handler_lcd_number.cpp
+    src/c_q_lcd_number.cpp
+    src/bind_q_grid_layout.cpp
+    src/c_q_grid_layout.cpp
 )
 
 target_include_directories(qt6binding PUBLIC include)
 target_link_libraries(qt6binding PRIVATE Qt6::Core Qt6::Gui Qt6::Widgets)
 
 add_subdirectory(example)
+add_subdirectory(demo)
