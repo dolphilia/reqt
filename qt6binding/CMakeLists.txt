@@ -77,6 +77,12 @@ set(MOC_HEADERS
     include/handler_text_edit.h
     include/bind_q_double_spin_box.h
     include/handler_double_spin_box.h
+    include/bind_q_tool_box.h
+    include/handler_tool_box.h
+    include/bind_q_tool_bar.h
+    include/handler_tool_bar.h
+    include/bind_q_tool_button.h
+    include/handler_tool_button.h
 )
 
 add_library(qt6binding SHARED
@@ -157,6 +163,15 @@ add_library(qt6binding SHARED
     src/bind_q_double_spin_box.cpp
     src/handler_double_spin_box.cpp
     src/c_q_double_spin_box.cpp
+    src/bind_q_tool_box.cpp
+    src/handler_tool_box.cpp
+    src/c_q_tool_box.cpp
+    src/bind_q_tool_bar.cpp
+    src/handler_tool_bar.cpp
+    src/c_q_tool_bar.cpp
+    src/bind_q_tool_button.cpp
+    src/handler_tool_button.cpp
+    src/c_q_tool_button.cpp
 )
 
 target_include_directories(qt6binding PUBLIC include)

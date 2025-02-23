@@ -33,5 +33,8 @@
 #include "c_q_scroll_area.h"
 #include "c_q_text_edit.h"
 #include "c_q_double_spin_box.h"
+#include "c_q_tool_box.h"
+#include "c_q_tool_bar.h"
+#include "c_q_tool_button.h"
 
 #endif // QT6BINDING_H
