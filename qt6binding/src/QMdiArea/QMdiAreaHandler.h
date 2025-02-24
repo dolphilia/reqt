@@ -5,19 +5,24 @@
 #include <QMdiArea>
 #include <QMdiSubWindow>
 
+typedef void (*SubWindowActivatedCallback)(void*, void*);
+
 class MdiAreaHandler : public QObject {
     Q_OBJECT
 public:
     explicit MdiAreaHandler(QObject* parent = nullptr);
+    MdiAreaHandler(const MdiAreaHandler&) = delete;
+    MdiAreaHandler& operator=(const MdiAreaHandler&) = delete;
+
     void setMdiArea(QMdiArea* mdiArea);
-    void setSubWindowActivatedCallback(void (*callback)(void*, void*));
+    void setSubWindowActivatedCallback(SubWindowActivatedCallback callback);
 
 public slots:
     void onSubWindowActivated(QMdiSubWindow* window);
 
 private:
     QMdiArea* mdiArea;
-    void (*callback)(void*, void*);
+    SubWindowActivatedCallback callback;
 };
 
 #endif // MDIAREA_HANDLER_H

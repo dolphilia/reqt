@@ -12,7 +12,7 @@ void MdiAreaHandler::setMdiArea(QMdiArea* mdiArea) {
     connect(mdiArea, &QMdiArea::subWindowActivated, this, &MdiAreaHandler::onSubWindowActivated);
 }
 
-void MdiAreaHandler::setSubWindowActivatedCallback(void (*callback)(void*, void*)) {
+void MdiAreaHandler::setSubWindowActivatedCallback(SubWindowActivatedCallback callback) {
     this->callback = callback;
 }
 

@@ -2,7 +2,6 @@
 
 DialHandler::DialHandler(QObject* parent)
     : QObject(parent)
-    , dial(nullptr)
     , valueChangedCallback(nullptr)
     , sliderMovedCallback(nullptr)
     , sliderPressedCallback(nullptr)
@@ -10,50 +9,42 @@ DialHandler::DialHandler(QObject* parent)
 {
 }
 
-void DialHandler::setDial(QDial* dial) {
-    this->dial = dial;
-    connect(dial, &QDial::valueChanged, this, &DialHandler::onValueChanged);
-    connect(dial, &QDial::sliderMoved, this, &DialHandler::onSliderMoved);
-    connect(dial, &QDial::sliderPressed, this, &DialHandler::onSliderPressed);
-    connect(dial, &QDial::sliderReleased, this, &DialHandler::onSliderReleased);
-}
-
-void DialHandler::setValueChangedCallback(void (*callback)(void*, int)) {
+void DialHandler::setValueChangedCallback(ValueChangedCallback callback) {
     valueChangedCallback = callback;
 }
 
-void DialHandler::setSliderMovedCallback(void (*callback)(void*, int)) {
+void DialHandler::setSliderMovedCallback(SliderMovedCallback callback) {
     sliderMovedCallback = callback;
 }
 
-void DialHandler::setSliderPressedCallback(void (*callback)(void*)) {
+void DialHandler::setSliderPressedCallback(SliderPressedCallback callback) {
     sliderPressedCallback = callback;
 }
 
-void DialHandler::setSliderReleasedCallback(void (*callback)(void*)) {
+void DialHandler::setSliderReleasedCallback(SliderReleasedCallback callback) {
     sliderReleasedCallback = callback;
 }
 
 void DialHandler::onValueChanged(int value) {
-    if (valueChangedCallback && dial) {
-        valueChangedCallback(dial, value);
+    if (valueChangedCallback) {
+        valueChangedCallback(parent(), value);
     }
 }
 
-void DialHandler::onSliderMoved(int value) {
-    if (sliderMovedCallback && dial) {
-        sliderMovedCallback(dial, value);
+void DialHandler::onSliderMoved(int position) {
+    if (sliderMovedCallback) {
+        sliderMovedCallback(parent(), position);
     }
 }
 
 void DialHandler::onSliderPressed() {
-    if (sliderPressedCallback && dial) {
-        sliderPressedCallback(dial);
+    if (sliderPressedCallback) {
+        sliderPressedCallback(parent());
     }
 }
 
 void DialHandler::onSliderReleased() {
-    if (sliderReleasedCallback && dial) {
-        sliderReleasedCallback(dial);
+    if (sliderReleasedCallback) {
+        sliderReleasedCallback(parent());
     }
 }

@@ -11,17 +11,32 @@ public:
     explicit QDialBind(QWidget* parent = nullptr);
     ~QDialBind() override;
 
-    void setValueChangedCallback(QDial* dial, void (*callback)(void*, int));
-    void setSliderMovedCallback(QDial* dial, void (*callback)(void*, int));
-    void setSliderPressedCallback(QDial* dial, void (*callback)(void*));
-    void setSliderReleasedCallback(QDial* dial, void (*callback)(void*));
+    // コールバック設定
+    void setValueChangedCallback(ValueChangedCallback callback);
+    void setSliderMovedCallback(SliderMovedCallback callback);
+    void setSliderPressedCallback(SliderPressedCallback callback);
+    void setSliderReleasedCallback(SliderReleasedCallback callback);
 
-    void setNotchesVisible(bool visible);
-    bool notchesVisible() const;
-    void setNotchTarget(double target);
-    double notchTarget() const;
-    void setWrapping(bool on);
-    bool wrapping() const;
+    // プロパティ設定
+    using QDial::setMinimum;
+    using QDial::setMaximum;
+    using QDial::setRange;
+    using QDial::setValue;
+    using QDial::setSingleStep;
+    using QDial::setPageStep;
+    using QDial::setNotchTarget;
+    using QDial::setNotchesVisible;
+    using QDial::setWrapping;
+
+    // プロパティ取得
+    using QDial::minimum;
+    using QDial::maximum;
+    using QDial::value;
+    using QDial::singleStep;
+    using QDial::pageStep;
+    using QDial::notchTarget;
+    using QDial::notchesVisible;
+    using QDial::wrapping;
 
 private:
     DialHandler* handler;

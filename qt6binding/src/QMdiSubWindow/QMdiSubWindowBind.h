@@ -11,8 +11,8 @@ public:
     explicit QMdiSubWindowBind(QWidget* parent = nullptr);
     ~QMdiSubWindowBind() override;
 
-    void setWindowStateChangedCallback(void (*callback)(void*, int, int));
-    void setAboutToActivateCallback(void (*callback)(void*));
+    void setWindowStateChangedCallback(WindowStateChangedCallback callback);
+    void setAboutToActivateCallback(AboutToActivateCallback callback);
 
 private:
     MdiSubWindowHandler* handler;

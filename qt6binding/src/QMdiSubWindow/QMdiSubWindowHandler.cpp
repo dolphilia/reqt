@@ -14,11 +14,11 @@ void MdiSubWindowHandler::setSubWindow(QMdiSubWindow* subWindow) {
     connect(subWindow, &QMdiSubWindow::aboutToActivate, this, &MdiSubWindowHandler::onAboutToActivate);
 }
 
-void MdiSubWindowHandler::setWindowStateChangedCallback(void (*callback)(void*, int, int)) {
+void MdiSubWindowHandler::setWindowStateChangedCallback(WindowStateChangedCallback callback) {
     windowStateChangedCallback = callback;
 }
 
-void MdiSubWindowHandler::setAboutToActivateCallback(void (*callback)(void*)) {
+void MdiSubWindowHandler::setAboutToActivateCallback(AboutToActivateCallback callback) {
     aboutToActivateCallback = callback;
 }
 

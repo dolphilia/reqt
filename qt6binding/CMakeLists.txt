@@ -104,10 +104,13 @@ add_library(qt6binding SHARED
     src/QCursor/QCursorCAPI.cpp
     src/QDateEdit/QDateEditBind.cpp
     src/QDateEdit/QDateEditHandler.cpp
+    src/QDateEdit/QDateEditCAPI.cpp
     src/QDateTimeEdit/QDateTimeEditBind.cpp
     src/QDateTimeEdit/QDateTimeEditHandler.cpp
+    src/QDateTimeEdit/QDateTimeEditCAPI.cpp
     src/QDial/QDialBind.cpp
     src/QDial/QDialHandler.cpp
+    src/QDial/QDialCAPI.cpp
     src/QDockWidget/QDockWidgetBind.cpp
     src/QDockWidget/QDockWidgetHandler.cpp
     src/QDoubleSpinBox/QDoubleSpinBoxBind.cpp
@@ -127,14 +130,18 @@ add_library(qt6binding SHARED
     src/QLCDNumber/QLCDNumberHandler.cpp
     src/QLineEdit/QLineEditBind.cpp
     src/QLineEdit/QLineEditHandler.cpp
+    src/QLineEdit/QLineEditCAPI.cpp
     src/QListView/QListViewBind.cpp
     src/QListView/QListViewCAPI.cpp
     src/QListView/QListViewHandler.cpp
     src/QMainWindow/QMainWindowBind.cpp
+    src/QMainWindow/QMainWindowCAPI.cpp
     src/QMdiArea/QMdiAreaBind.cpp
     src/QMdiArea/QMdiAreaHandler.cpp
+    src/QMdiArea/QMdiAreaCAPI.cpp
     src/QMdiSubWindow/QMdiSubWindowBind.cpp
     src/QMdiSubWindow/QMdiSubWindowHandler.cpp
+    src/QMdiSubWindow/QMdiSubWindowCAPI.cpp
     src/QMenu/QMenuBind.cpp
     src/QMenu/QMenuCAPI.cpp
     src/QMenu/QMenuHandler.cpp
@@ -146,6 +153,7 @@ add_library(qt6binding SHARED
     src/QProgressBar/QProgressBarHandler.cpp
     src/QPushButton/QPushButtonBind.cpp
     src/QPushButton/QPushButtonHandler.cpp
+    src/QPushButton/QPushButtonCAPI.cpp
     src/QRadioButton/QRadioButtonBind.cpp
     src/QRadioButton/QRadioButtonCAPI.cpp
     src/QRadioButton/QRadioButtonHandler.cpp
@@ -166,6 +174,7 @@ add_library(qt6binding SHARED
     src/QStandardItemModel/QStandardItemModelBind.cpp
     src/QStandardItemModel/QStandardItemModelCAPI.cpp
     src/QStatusBar/QStatusBarBind.cpp
+    src/QStatusBar/QStatusBarCAPI.cpp
     src/QStringListModel/QStringListModelBind.cpp
     src/QStringListModel/QStringListModelCAPI.cpp
     src/QStyle/QStyleBind.cpp

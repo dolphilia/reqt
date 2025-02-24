@@ -11,7 +11,7 @@ public:
     explicit QMdiAreaBind(QWidget* parent = nullptr);
     ~QMdiAreaBind() override;
 
-    void setSubWindowActivatedCallback(void (*callback)(void*, void*));
+    void setSubWindowActivatedCallback(SubWindowActivatedCallback callback);
 
 private:
     MdiAreaHandler* handler;

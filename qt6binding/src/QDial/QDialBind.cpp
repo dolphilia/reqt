@@ -11,69 +11,38 @@ QDialBind::~QDialBind()
     delete handler;
 }
 
-void QDialBind::setValueChangedCallback(QDial* dial, void (*callback)(void*, int))
+void QDialBind::setValueChangedCallback(ValueChangedCallback callback)
 {
     if (!handler) {
         handler = new DialHandler(this);
-        handler->setDial(this);
+        connect(this, &QDial::valueChanged, handler, &DialHandler::onValueChanged);
     }
     handler->setValueChangedCallback(callback);
 }
 
-void QDialBind::setSliderMovedCallback(QDial* dial, void (*callback)(void*, int))
+void QDialBind::setSliderMovedCallback(SliderMovedCallback callback)
 {
     if (!handler) {
         handler = new DialHandler(this);
-        handler->setDial(this);
+        connect(this, &QDial::sliderMoved, handler, &DialHandler::onSliderMoved);
     }
     handler->setSliderMovedCallback(callback);
 }
 
-void QDialBind::setSliderPressedCallback(QDial* dial, void (*callback)(void*))
+void QDialBind::setSliderPressedCallback(SliderPressedCallback callback)
 {
     if (!handler) {
         handler = new DialHandler(this);
-        handler->setDial(this);
+        connect(this, &QDial::sliderPressed, handler, &DialHandler::onSliderPressed);
     }
     handler->setSliderPressedCallback(callback);
 }
 
-void QDialBind::setSliderReleasedCallback(QDial* dial, void (*callback)(void*))
+void QDialBind::setSliderReleasedCallback(SliderReleasedCallback callback)
 {
     if (!handler) {
         handler = new DialHandler(this);
-        handler->setDial(this);
+        connect(this, &QDial::sliderReleased, handler, &DialHandler::onSliderReleased);
     }
     handler->setSliderReleasedCallback(callback);
-}
-
-void QDialBind::setNotchesVisible(bool visible)
-{
-    QDial::setNotchesVisible(visible);
-}
-
-bool QDialBind::notchesVisible() const
-{
-    return QDial::notchesVisible();
-}
-
-void QDialBind::setNotchTarget(double target)
-{
-    QDial::setNotchTarget(target);
-}
-
-double QDialBind::notchTarget() const
-{
-    return QDial::notchTarget();
-}
-
-
-void QDialBind::setWrapping(bool on)
-{
-    QDial::setWrapping(on);
-}
-
-bool QDialBind::wrapping() const
-{
-    return QDial::wrapping();
 }
