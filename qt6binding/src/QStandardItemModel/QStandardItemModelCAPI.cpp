@@ -1,6 +1,6 @@
 #include "qstandarditemmodel.h"
 #include "QStandardItemModelBind.h"
-#include "QStandardItemBind.h"
+#include "QStandardItem/QStandardItemBind.h"
 
 extern "C" {
 

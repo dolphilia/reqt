@@ -1,6 +1,6 @@
 #include "qgridlayout.h"
 #include "QGridLayoutBind.h"
-#include "QWidgetBind.h"
+#include "QWidget/QWidgetBind.h"
 
 extern "C" {
 
