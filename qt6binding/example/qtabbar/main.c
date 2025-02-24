@@ -1,5 +1,4 @@
-#include "qt6binding.h"
-#include "c_q_tab_bar.h"
+#include "qt6.h"
 #include <stdio.h>
 
 void on_current_changed(int index) {

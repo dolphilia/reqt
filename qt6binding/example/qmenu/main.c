@@ -1,5 +1,4 @@
-#include "qt6binding.h"
-#include "c_q_menu.h"
+#include "qt6.h"
 #include <stdio.h>
 
 static void* g_menu = NULL;

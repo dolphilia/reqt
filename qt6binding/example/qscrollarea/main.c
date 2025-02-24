@@ -1,5 +1,4 @@
-#include "qt6binding.h"
-#include "c_q_scroll_area.h"
+#include "qt6.h"
 #include <stdio.h>
 
 void on_vertical_scroll_value_changed(int value) {

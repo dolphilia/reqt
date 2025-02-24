@@ -1,5 +1,4 @@
-#include "qt6binding.h"
-#include "c_q_radio_button.h"
+#include "qt6.h"
 #include <stdio.h>
 
 void on_toggled(bool checked) {

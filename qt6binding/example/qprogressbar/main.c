@@ -1,5 +1,4 @@
-#include "qt6binding.h"
-#include "c_q_progress_bar.h"
+#include "qt6.h"
 #include <stdio.h>
 #include <unistd.h>
 

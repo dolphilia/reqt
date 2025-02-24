@@ -1,4 +1,4 @@
-#include "qt6binding.h"
+#include "qt6.h"
 #include <stdio.h>
 
 int main(int argc, char *argv[]) {

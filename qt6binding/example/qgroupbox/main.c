@@ -1,5 +1,4 @@
-#include "qt6binding.h"
-#include "c_q_group_box.h"
+#include "qt6.h"
 #include <stdio.h>
 
 void onGroupBoxToggled(void* groupBox, bool checked) {

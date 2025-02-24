@@ -1,5 +1,4 @@
-#include "qt6binding.h"
-#include "c_q_scroll_bar.h"
+#include "qt6.h"
 #include <stdio.h>
 
 void on_value_changed(int value) {

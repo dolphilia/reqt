@@ -1,6 +1,4 @@
-#include "qt6binding.h"
-#include "c_q_menu_bar.h"
-#include "c_q_menu.h"
+#include "qt6.h"
 #include <stdio.h>
 
 void on_triggered(void* action) {
