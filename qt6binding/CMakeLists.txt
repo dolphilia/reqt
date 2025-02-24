@@ -29,6 +29,10 @@ set(MOC_HEADERS
     src/QDockWidget/QDockWidgetHandler.h
     src/QDoubleSpinBox/QDoubleSpinBoxBind.h
     src/QDoubleSpinBox/QDoubleSpinBoxHandler.h
+    src/QGraphicsView/QGraphicsViewBind.h
+    src/QGraphicsView/QGraphicsViewHandler.h
+    src/QGraphicsWidget/QGraphicsWidgetBind.h
+    src/QGraphicsWidget/QGraphicsWidgetHandler.h
     src/QGridLayout/QGridLayoutBind.h
     src/QGroupBox/QGroupBoxBind.h
     src/QGroupBox/QGroupBoxHandler.h
@@ -60,7 +64,10 @@ set(MOC_HEADERS
     src/QScrollArea/QScrollAreaHandler.h
     src/QScrollBar/QScrollBarBind.h
     src/QScrollBar/QScrollBarHandler.h
+    src/QSizeGrip/QSizeGripBind.h
     src/QSlider/QSliderBind.h
+    src/QSplitter/QSplitterBind.h
+    src/QSplitter/QSplitterHandler.h
     src/QSlider/QSliderHandler.h
     src/QSpinBox/QSpinBoxBind.h
     src/QSpinBox/QSpinBoxHandler.h
@@ -116,6 +123,12 @@ add_library(qt6binding SHARED
     src/QDoubleSpinBox/QDoubleSpinBoxBind.cpp
     src/QDoubleSpinBox/QDoubleSpinBoxCAPI.cpp
     src/QDoubleSpinBox/QDoubleSpinBoxHandler.cpp
+    src/QGraphicsView/QGraphicsViewBind.cpp
+    src/QGraphicsView/QGraphicsViewHandler.cpp
+    src/QGraphicsView/QGraphicsViewCAPI.cpp
+    src/QGraphicsWidget/QGraphicsWidgetBind.cpp
+    src/QGraphicsWidget/QGraphicsWidgetHandler.cpp
+    src/QGraphicsWidget/QGraphicsWidgetCAPI.cpp
     src/QGridLayout/QGridLayoutBind.cpp
     src/QGridLayout/QGridLayoutCAPI.cpp
     src/QGroupBox/QGroupBoxBind.cpp
@@ -163,7 +176,12 @@ add_library(qt6binding SHARED
     src/QScrollBar/QScrollBarBind.cpp
     src/QScrollBar/QScrollBarCAPI.cpp
     src/QScrollBar/QScrollBarHandler.cpp
+    src/QSizeGrip/QSizeGripBind.cpp
+    src/QSizeGrip/QSizeGripCAPI.cpp
     src/QSlider/QSliderBind.cpp
+    src/QSplitter/QSplitterBind.cpp
+    src/QSplitter/QSplitterHandler.cpp
+    src/QSplitter/QSplitterCAPI.cpp
     src/QSlider/QSliderCAPI.cpp
     src/QSlider/QSliderHandler.cpp
     src/QSpinBox/QSpinBoxBind.cpp
