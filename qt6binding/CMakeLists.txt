@@ -68,6 +68,10 @@ set(MOC_HEADERS
     src/QSlider/QSliderBind.h
     src/QSplitter/QSplitterBind.h
     src/QSplitter/QSplitterHandler.h
+    src/QSplitterHandle/QSplitterHandleBind.h
+    src/QSplitterHandle/QSplitterHandleHandler.h
+    src/QStackedWidget/QStackedWidgetBind.h
+    src/QStackedWidget/QStackedWidgetHandler.h
     src/QSlider/QSliderHandler.h
     src/QSpinBox/QSpinBoxBind.h
     src/QSpinBox/QSpinBoxHandler.h
@@ -182,6 +186,12 @@ add_library(qt6binding SHARED
     src/QSplitter/QSplitterBind.cpp
     src/QSplitter/QSplitterHandler.cpp
     src/QSplitter/QSplitterCAPI.cpp
+    src/QSplitterHandle/QSplitterHandleBind.cpp
+    src/QSplitterHandle/QSplitterHandleHandler.cpp
+    src/QSplitterHandle/QSplitterHandleCAPI.cpp
+    src/QStackedWidget/QStackedWidgetBind.cpp
+    src/QStackedWidget/QStackedWidgetHandler.cpp
+    src/QStackedWidget/QStackedWidgetCAPI.cpp
     src/QSlider/QSliderCAPI.cpp
     src/QSlider/QSliderHandler.cpp
     src/QSpinBox/QSpinBoxBind.cpp
