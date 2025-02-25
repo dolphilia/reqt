@@ -1278,6 +1278,169 @@ void* QWidget_screen(void* widget)
     return static_cast<BindQWidget*>(widget)->screen();
 }
 
+void QWidget_setMaskBitmap(void* widget, void* bitmap)
+{
+    static_cast<BindQWidget*>(widget)->setMask(*static_cast<QBitmap*>(bitmap));
+}
+
+void QWidget_setMaskRegion(void* widget, void* region)
+{
+    static_cast<BindQWidget*>(widget)->setMask(*static_cast<QRegion*>(region));
+}
+
+void QWidget_setParent(void* widget, void* parent)
+{
+    static_cast<BindQWidget*>(widget)->setParent(static_cast<QWidget*>(parent));
+}
+
+void QWidget_setParentWithFlags(void* widget, void* parent, int flags)
+{
+    static_cast<BindQWidget*>(widget)->setParent(
+        static_cast<QWidget*>(parent),
+        static_cast<Qt::WindowFlags>(flags)
+    );
+}
+
+void QWidget_setScreen(void* widget, void* screen)
+{
+    static_cast<BindQWidget*>(widget)->setScreen(static_cast<QScreen*>(screen));
+}
+
+void QWidget_setShortcutAutoRepeat(void* widget, int id, bool enable)
+{
+    static_cast<BindQWidget*>(widget)->setShortcutAutoRepeat(id, enable);
+}
+
+void QWidget_setShortcutEnabled(void* widget, int id, bool enable)
+{
+    static_cast<BindQWidget*>(widget)->setShortcutEnabled(id, enable);
+}
+
+void QWidget_setSizeIncrementWithSize(void* widget, int width, int height)
+{
+    static_cast<BindQWidget*>(widget)->setSizeIncrement(QSize(width, height));
+}
+
+void QWidget_setStyle(void* widget, void* style)
+{
+    static_cast<BindQWidget*>(widget)->setStyle(static_cast<QStyle*>(style));
+}
+
+void QWidget_setWindowFlag(void* widget, int flag, bool on)
+{
+    static_cast<BindQWidget*>(widget)->setWindowFlag(static_cast<Qt::WindowType>(flag), on);
+}
+
+void QWidget_setWindowRole(void* widget, const char* role)
+{
+    static_cast<BindQWidget*>(widget)->setWindowRole(QString::fromUtf8(role));
+}
+
+void QWidget_setWindowState(void* widget, int windowState)
+{
+    static_cast<BindQWidget*>(widget)->setWindowState(static_cast<Qt::WindowStates>(windowState));
+}
+
+void QWidget_setupUi(void* widget, void* targetWidget)
+{
+    // setupUiはQtのデザイナーが生成するコードで使用される関数で、
+    // 通常はuic（User Interface Compiler）によって生成されるコードの一部です。
+    // ここでは単純に何もしない実装を提供します。
+    // 実際のアプリケーションでは、uicが生成したコードを使用するか、
+    // 手動でUIをセットアップする必要があります。
+}
+
+void QWidget_stackUnder(void* widget, void* w)
+{
+    static_cast<BindQWidget*>(widget)->stackUnder(static_cast<QWidget*>(w));
+}
+
+bool QWidget_testAttribute(void* widget, int attribute)
+{
+    return static_cast<BindQWidget*>(widget)->testAttribute(static_cast<Qt::WidgetAttribute>(attribute));
+}
+
+bool QWidget_underMouse(void* widget)
+{
+    return static_cast<BindQWidget*>(widget)->underMouse();
+}
+
+void QWidget_ungrabGesture(void* widget, int gesture)
+{
+    static_cast<BindQWidget*>(widget)->ungrabGesture(static_cast<Qt::GestureType>(gesture));
+}
+
+void QWidget_unsetCursor(void* widget)
+{
+    static_cast<BindQWidget*>(widget)->unsetCursor();
+}
+
+void QWidget_unsetLayoutDirection(void* widget)
+{
+    static_cast<BindQWidget*>(widget)->unsetLayoutDirection();
+}
+
+void QWidget_unsetLocale(void* widget)
+{
+    static_cast<BindQWidget*>(widget)->unsetLocale();
+}
+
+void QWidget_updateRect(void* widget, int x, int y, int w, int h)
+{
+    static_cast<BindQWidget*>(widget)->update(x, y, w, h);
+}
+
+void QWidget_updateQRect(void* widget, int x, int y, int w, int h)
+{
+    static_cast<BindQWidget*>(widget)->update(QRect(x, y, w, h));
+}
+
+void QWidget_updateRegion(void* widget, void* region)
+{
+    static_cast<BindQWidget*>(widget)->update(*static_cast<QRegion*>(region));
+}
+
+void QWidget_updateGeometry(void* widget)
+{
+    static_cast<BindQWidget*>(widget)->updateGeometry();
+}
+
+void* QWidget_visibleRegion(void* widget)
+{
+    QRegion* region = new QRegion(static_cast<BindQWidget*>(widget)->visibleRegion());
+    return region;
+}
+
+unsigned long QWidget_winId(void* widget)
+{
+    return static_cast<BindQWidget*>(widget)->winId();
+}
+
+void* QWidget_window(void* widget)
+{
+    return static_cast<BindQWidget*>(widget)->window();
+}
+
+void* QWidget_windowHandle(void* widget)
+{
+    return static_cast<BindQWidget*>(widget)->windowHandle();
+}
+
+const char* QWidget_windowRole(void* widget)
+{
+    return static_cast<BindQWidget*>(widget)->windowRole().toUtf8().constData();
+}
+
+int QWidget_windowState(void* widget)
+{
+    return static_cast<int>(static_cast<BindQWidget*>(widget)->windowState());
+}
+
+int QWidget_windowType(void* widget)
+{
+    return static_cast<int>(static_cast<BindQWidget*>(widget)->windowType());
+}
+
 // Public Slots
 
 bool QWidget_close(void* widget)

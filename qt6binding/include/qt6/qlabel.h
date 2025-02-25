@@ -22,6 +22,34 @@ bool QLabel_openExternalLinks(void* label);
 void QLabel_setTextFormat(void* label, int format);
 int QLabel_textFormat(void* label);
 
+// 追加機能
+void QLabel_setMargin(void* label, int margin);
+int QLabel_margin(void* label);
+void QLabel_setIndent(void* label, int indent);
+int QLabel_indent(void* label);
+void QLabel_setScaledContents(void* label, bool scaled);
+bool QLabel_hasScaledContents(void* label);
+void* QLabel_buddy(void* label);
+void QLabel_setBuddy(void* label, void* buddy);
+bool QLabel_hasSelectedText(void* label);
+const char* QLabel_selectedText(void* label);
+int QLabel_selectionStart(void* label);
+void QLabel_setSelection(void* label, int start, int length);
+void* QLabel_pixmap(void* label);
+void QLabel_setPixmap(void* label, void* pixmap);
+void* QLabel_movie(void* label);
+void QLabel_setMovie(void* label, void* movie);
+void* QLabel_picture(void* label);
+void QLabel_setPicture(void* label, void* picture);
+void QLabel_setNumInt(void* label, int num);
+void QLabel_setNumDouble(void* label, double num);
+void QLabel_setTextInteractionFlags(void* label, int flags);
+int QLabel_textInteractionFlags(void* label);
+
+// シグナル用コールバック
+void QLabel_setLinkActivatedCallback(void* label, void (*callback)(void*, const char*));
+void QLabel_setLinkHoveredCallback(void* label, void (*callback)(void*, const char*));
+
 // テキストフォーマット定数
 #define QLABEL_PLAINTEXT 0
 #define QLABEL_RICHTEXT 1
@@ -37,6 +65,13 @@ int QLabel_textFormat(void* label);
 #define QLABEL_ALIGN_BOTTOM 0x0040
 #define QLABEL_ALIGN_VCENTER 0x0080
 #define QLABEL_ALIGN_CENTER 0x0084
+
+// テキストインタラクションフラグ定数
+#define QLABEL_NO_TEXT_INTERACTION 0
+#define QLABEL_TEXT_SELECTABLE 1
+#define QLABEL_TEXT_EDITABLE 2
+#define QLABEL_TEXT_BROWSER_INTERACTION 4
+#define QLABEL_TEXT_EDITOR_INTERACTION 7
 
 #ifdef __cplusplus
 }

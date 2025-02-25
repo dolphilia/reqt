@@ -55,4 +55,106 @@ int QLabel_textFormat(void* label) {
     return static_cast<QLabelBind*>(label)->textFormat();
 }
 
+// 追加機能
+void QLabel_setMargin(void* label, int margin) {
+    static_cast<QLabelBind*>(label)->setMargin(margin);
+}
+
+int QLabel_margin(void* label) {
+    return static_cast<QLabelBind*>(label)->margin();
+}
+
+void QLabel_setIndent(void* label, int indent) {
+    static_cast<QLabelBind*>(label)->setIndent(indent);
+}
+
+int QLabel_indent(void* label) {
+    return static_cast<QLabelBind*>(label)->indent();
+}
+
+void QLabel_setScaledContents(void* label, bool scaled) {
+    static_cast<QLabelBind*>(label)->setScaledContents(scaled);
+}
+
+bool QLabel_hasScaledContents(void* label) {
+    return static_cast<QLabelBind*>(label)->hasScaledContents();
+}
+
+void* QLabel_buddy(void* label) {
+    return static_cast<QLabelBind*>(label)->buddy();
+}
+
+void QLabel_setBuddy(void* label, void* buddy) {
+    static_cast<QLabelBind*>(label)->setBuddy(buddy);
+}
+
+bool QLabel_hasSelectedText(void* label) {
+    return static_cast<QLabelBind*>(label)->hasSelectedText();
+}
+
+const char* QLabel_selectedText(void* label) {
+    return static_cast<QLabelBind*>(label)->selectedText();
+}
+
+int QLabel_selectionStart(void* label) {
+    return static_cast<QLabelBind*>(label)->selectionStart();
+}
+
+void QLabel_setSelection(void* label, int start, int length) {
+    static_cast<QLabelBind*>(label)->setSelection(start, length);
+}
+
+void* QLabel_pixmap(void* label) {
+    return static_cast<QLabelBind*>(label)->pixmap();
+}
+
+void QLabel_setPixmap(void* label, void* pixmap) {
+    static_cast<QLabelBind*>(label)->setPixmap(pixmap);
+}
+
+void* QLabel_movie(void* label) {
+    return static_cast<QLabelBind*>(label)->movie();
+}
+
+void QLabel_setMovie(void* label, void* movie) {
+    static_cast<QLabelBind*>(label)->setMovie(movie);
+}
+
+void* QLabel_picture(void* label) {
+    return static_cast<QLabelBind*>(label)->picture();
+}
+
+void QLabel_setPicture(void* label, void* picture) {
+    static_cast<QLabelBind*>(label)->setPicture(picture);
+}
+
+void QLabel_setNumInt(void* label, int num) {
+    static_cast<QLabelBind*>(label)->setNum(num);
+}
+
+void QLabel_setNumDouble(void* label, double num) {
+    static_cast<QLabelBind*>(label)->setNum(num);
+}
+
+void QLabel_setTextInteractionFlags(void* label, int flags) {
+    static_cast<QLabelBind*>(label)->setTextInteractionFlags(flags);
+}
+
+int QLabel_textInteractionFlags(void* label) {
+    return static_cast<QLabelBind*>(label)->textInteractionFlags();
+}
+
+// シグナル用コールバック
+void QLabel_setLinkActivatedCallback(void* label, void (*callback)(void*, const char*)) {
+    static_cast<QLabelBind*>(label)->setLinkActivatedCallback(
+        reinterpret_cast<QLabelBind::LinkActivatedCallback>(callback)
+    );
+}
+
+void QLabel_setLinkHoveredCallback(void* label, void (*callback)(void*, const char*)) {
+    static_cast<QLabelBind*>(label)->setLinkHoveredCallback(
+        reinterpret_cast<QLabelBind::LinkHoveredCallback>(callback)
+    );
+}
+
 }

@@ -11,48 +11,13 @@ extern "C" {
 void* QWidget_create(void* parent);
 void QWidget_delete(void* widget);
 
-// Geometry
+// Public Functions
 void QWidget_resize(void* widget, int w, int h);
 void QWidget_move(void* widget, int x, int y);
-int QWidget_x(void* widget);
-int QWidget_y(void* widget);
-int QWidget_width(void* widget);
-int QWidget_height(void* widget);
 void QWidget_setFixedSize(void* widget, int w, int h);
 void QWidget_setFixedHeight(void* widget, int height);
 void QWidget_setFixedWidth(void* widget, int width);
-
-// Visibility
-void QWidget_show(void* widget);
-void QWidget_hide(void* widget);
-bool QWidget_isVisible(void* widget);
-void QWidget_setVisible(void* widget, bool visible);
-
-// Window properties
-void QWidget_setWindowTitle(void* widget, const char* title);
-const char* QWidget_windowTitle(void* widget);
-
-// Style sheet
-void QWidget_setStyleSheet(void* widget, const char* styleSheet);
-const char* QWidget_styleSheet(void* widget);
-
-// Cursor
-void QWidget_setCursor(void* widget, void* cursor);
-
-// Background
-void QWidget_setAutoFillBackground(void* widget, bool enabled);
-bool QWidget_autoFillBackground(void* widget);
-
-// Layout
 void QWidget_setLayout(void* widget, void* layout);
-
-// Palette
-void QWidget_setBackgroundRole(void* widget, int role);
-int QWidget_backgroundRole(void* widget);
-void QWidget_setForegroundRole(void* widget, int role);
-int QWidget_foregroundRole(void* widget);
-
-// Public Functions
 void* QWidget_actions(void* widget);
 void QWidget_activateWindow(void* widget);
 void QWidget_addAction(void* widget, void* action);
@@ -147,8 +112,54 @@ void QWidget_resizeWithSize(void* widget, int width, int height);
 bool QWidget_restoreGeometry(void* widget, void* geometry, int size);
 void* QWidget_saveGeometry(void* widget, int* size);
 void* QWidget_screen(void* widget);
+void QWidget_setMaskBitmap(void* widget, void* bitmap);
+void QWidget_setMaskRegion(void* widget, void* region);
+void QWidget_setParent(void* widget, void* parent);
+void QWidget_setParentWithFlags(void* widget, void* parent, int flags);
+void QWidget_setScreen(void* widget, void* screen);
+void QWidget_setShortcutAutoRepeat(void* widget, int id, bool enable);
+void QWidget_setShortcutEnabled(void* widget, int id, bool enable);
+void QWidget_setSizeIncrementWithSize(void* widget, int width, int height);
+void QWidget_setStyle(void* widget, void* style);
+void QWidget_setWindowFlag(void* widget, int flag, bool on);
+void QWidget_setWindowRole(void* widget, const char* role);
+void QWidget_setWindowState(void* widget, int windowState);
+void QWidget_setupUi(void* widget, void* targetWidget);
+void QWidget_stackUnder(void* widget, void* w);
+bool QWidget_testAttribute(void* widget, int attribute);
+bool QWidget_underMouse(void* widget);
+void QWidget_ungrabGesture(void* widget, int gesture);
+void QWidget_unsetCursor(void* widget);
+void QWidget_unsetLayoutDirection(void* widget);
+void QWidget_unsetLocale(void* widget);
+void QWidget_updateRect(void* widget, int x, int y, int w, int h);
+void QWidget_updateQRect(void* widget, int x, int y, int w, int h);
+void QWidget_updateRegion(void* widget, void* region);
+void QWidget_updateGeometry(void* widget);
+void* QWidget_visibleRegion(void* widget);
+unsigned long QWidget_winId(void* widget);
+void* QWidget_window(void* widget);
+void* QWidget_windowHandle(void* widget);
+const char* QWidget_windowRole(void* widget);
+int QWidget_windowState(void* widget);
+int QWidget_windowType(void* widget);
 
 // Properties
+int QWidget_x(void* widget);
+int QWidget_y(void* widget);
+int QWidget_width(void* widget);
+int QWidget_height(void* widget);
+const char* QWidget_windowTitle(void* widget);
+void QWidget_setWindowTitle(void* widget, const char* title);
+const char* QWidget_styleSheet(void* widget);
+void QWidget_setStyleSheet(void* widget, const char* styleSheet);
+void QWidget_setCursor(void* widget, void* cursor);
+bool QWidget_autoFillBackground(void* widget);
+void QWidget_setAutoFillBackground(void* widget, bool enabled);
+int QWidget_backgroundRole(void* widget);
+void QWidget_setBackgroundRole(void* widget, int role);
+int QWidget_foregroundRole(void* widget);
+void QWidget_setForegroundRole(void* widget, int role);
 bool QWidget_acceptDrops(void* widget);
 void QWidget_setAcceptDrops(void* widget, bool on);
 const char* QWidget_accessibleDescription(void* widget);
@@ -256,6 +267,10 @@ void* QWidget_mouseGrabber();
 void QWidget_setTabOrder(void* first, void* second);
 
 // Public Slots
+void QWidget_show(void* widget);
+void QWidget_hide(void* widget);
+bool QWidget_isVisible(void* widget);
+void QWidget_setVisible(void* widget, bool visible);
 bool QWidget_close(void* widget);
 void QWidget_lower(void* widget);
 void QWidget_raise(void* widget);
