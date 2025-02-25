@@ -52,6 +52,34 @@ int QWidget_backgroundRole(void* widget);
 void QWidget_setForegroundRole(void* widget, int role);
 int QWidget_foregroundRole(void* widget);
 
+// Static Public Members
+void* QWidget_createWindowContainer(void* window, void* parent, int flags);
+void* QWidget_find(unsigned long id);
+void* QWidget_keyboardGrabber();
+void* QWidget_mouseGrabber();
+void QWidget_setTabOrder(void* first, void* second);
+
+// Public Slots
+bool QWidget_close(void* widget);
+void QWidget_lower(void* widget);
+void QWidget_raise(void* widget);
+void QWidget_repaint(void* widget);
+void QWidget_setDisabled(void* widget, bool disable);
+void QWidget_setEnabled(void* widget, bool enable);
+void QWidget_setFocus(void* widget);
+void QWidget_setHidden(void* widget, bool hidden);
+void QWidget_setWindowModified(void* widget, bool modified);
+void QWidget_showFullScreen(void* widget);
+void QWidget_showMaximized(void* widget);
+void QWidget_showMinimized(void* widget);
+void QWidget_showNormal(void* widget);
+void QWidget_update(void* widget);
+
+// Signals
+void QWidget_setCustomContextMenuRequestedCallback(void* widget, void (*callback)(void*, const void*));
+void QWidget_setWindowIconChangedCallback(void* widget, void (*callback)(void*, const void*));
+void QWidget_setWindowTitleChangedCallback(void* widget, void (*callback)(void*, const void*));
+
 // Color roles
 #define QWIDGET_BACKGROUND 10
 #define QWIDGET_FOREGROUND 9

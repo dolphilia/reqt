@@ -2,6 +2,7 @@
 #include "QWidgetBind.h"
 #include <QWidget>
 #include <QLayout>
+#include <QWindow>
 
 extern "C" {
 
@@ -138,6 +139,135 @@ int QWidget_foregroundRole(void* widget)
 void QWidget_setLayout(void* widget, void* layout)
 {
     static_cast<BindQWidget*>(widget)->setLayout(static_cast<QLayout*>(layout));
+}
+
+// Static Public Members
+
+void* QWidget_createWindowContainer(void* window, void* parent, int flags)
+{
+    return QWidget::createWindowContainer(
+        static_cast<QWindow*>(window),
+        static_cast<QWidget*>(parent),
+        static_cast<Qt::WindowFlags>(flags)
+    );
+}
+
+void* QWidget_find(unsigned long id)
+{
+    return QWidget::find(static_cast<WId>(id));
+}
+
+void* QWidget_keyboardGrabber()
+{
+    return QWidget::keyboardGrabber();
+}
+
+void* QWidget_mouseGrabber()
+{
+    return QWidget::mouseGrabber();
+}
+
+void QWidget_setTabOrder(void* first, void* second)
+{
+    QWidget::setTabOrder(
+        static_cast<QWidget*>(first),
+        static_cast<QWidget*>(second)
+    );
+}
+
+// Public Slots
+
+bool QWidget_close(void* widget)
+{
+    return static_cast<BindQWidget*>(widget)->close();
+}
+
+void QWidget_lower(void* widget)
+{
+    static_cast<BindQWidget*>(widget)->lower();
+}
+
+void QWidget_raise(void* widget)
+{
+    static_cast<BindQWidget*>(widget)->raise();
+}
+
+void QWidget_repaint(void* widget)
+{
+    static_cast<BindQWidget*>(widget)->repaint();
+}
+
+void QWidget_setDisabled(void* widget, bool disable)
+{
+    static_cast<BindQWidget*>(widget)->setDisabled(disable);
+}
+
+void QWidget_setEnabled(void* widget, bool enable)
+{
+    static_cast<BindQWidget*>(widget)->setEnabled(enable);
+}
+
+void QWidget_setFocus(void* widget)
+{
+    static_cast<BindQWidget*>(widget)->setFocus();
+}
+
+void QWidget_setHidden(void* widget, bool hidden)
+{
+    static_cast<BindQWidget*>(widget)->setHidden(hidden);
+}
+
+void QWidget_setWindowModified(void* widget, bool modified)
+{
+    static_cast<BindQWidget*>(widget)->setWindowModified(modified);
+}
+
+void QWidget_showFullScreen(void* widget)
+{
+    static_cast<BindQWidget*>(widget)->showFullScreen();
+}
+
+void QWidget_showMaximized(void* widget)
+{
+    static_cast<BindQWidget*>(widget)->showMaximized();
+}
+
+void QWidget_showMinimized(void* widget)
+{
+    static_cast<BindQWidget*>(widget)->showMinimized();
+}
+
+void QWidget_showNormal(void* widget)
+{
+    static_cast<BindQWidget*>(widget)->showNormal();
+}
+
+void QWidget_update(void* widget)
+{
+    static_cast<BindQWidget*>(widget)->update();
+}
+
+// Signals
+
+void QWidget_setCustomContextMenuRequestedCallback(void* widget, void (*callback)(void*, const void*))
+{
+    static_cast<BindQWidget*>(widget)->setCustomContextMenuRequestedCallback(
+        reinterpret_cast<WidgetCustomContextMenuRequestedCallback>(callback)
+    );
+}
+
+void QWidget_setWindowIconChangedCallback(void* widget, void (*callback)(void*, const void*))
+{
+    static_cast<BindQWidget*>(widget)->setWindowIconChangedCallback(
+        reinterpret_cast<WidgetWindowIconChangedCallback>(callback)
+    );
+}
+
+void QWidget_setWindowTitleChangedCallback(void* widget, void (*callback)(void*, const void*))
+{
+    static_cast<BindQWidget*>(widget)->setWindowTitleChangedCallback(
+        reinterpret_cast<WidgetWindowTitleChangedCallback>(callback)
+    );
 }
 
 }
