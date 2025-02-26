@@ -155,6 +155,81 @@ int main(int argc, char *argv[])
     printf("str1 == str2: %s\n", QString_equals(str1, QString_toString(str2)) ? "はい" : "いいえ");
     printf("str1 == str3: %s\n", QString_equals(str1, QString_toString(str3)) ? "はい" : "いいえ");
     
+    printf("\n");
+    
+    // セクション
+    printf("セクション:\n");
+    
+    void *pathStr = QString_create_from_utf8("/usr/local/bin/example");
+    char *pathText = QString_toString(pathStr);
+    printf("パス: \"%s\"\n", pathText);
+    free(pathText);
+    
+    char *dirSection = QString_section(pathStr, "/", 1, 2, QString_SectionDefault);
+    printf("ディレクトリセクション (1-2): \"%s\"\n", dirSection);
+    free(dirSection);
+    
+    char *lastSection = QString_section(pathStr, "/", -1, -1, QString_SectionDefault);
+    printf("最後のセクション: \"%s\"\n", lastSection);
+    free(lastSection);
+    
+    printf("\n");
+    
+    // 正規化
+    printf("正規化:\n");
+    
+    void *normalizeStr = QString_create_from_utf8("Café");
+    char *normalText = QString_toString(normalizeStr);
+    printf("元の文字列: \"%s\"\n", normalText);
+    free(normalText);
+    
+    char *normalizedText = QString_normalized(normalizeStr, QString_NormalizationForm_D);
+    printf("正規化 (D): \"%s\"\n", normalizedText);
+    free(normalizedText);
+    
+    printf("\n");
+    
+    // 引数置換
+    printf("引数置換:\n");
+    
+    void *templateStr = QString_create_from_utf8("Hello %1, welcome to %2!");
+    char *templateText = QString_toString(templateStr);
+    printf("テンプレート: \"%s\"\n", templateText);
+    free(templateText);
+    
+    char *arg1Text = QString_arg_string(templateStr, "Alice");
+    printf("引数1置換後: \"%s\"\n", arg1Text);
+    
+    char *arg2Text = QString_arg_string(QString_create_from_utf8(arg1Text), "Qt");
+    printf("引数2置換後: \"%s\"\n", arg2Text);
+    free(arg1Text);
+    free(arg2Text);
+    
+    void *numTemplate = QString_create_from_utf8("Number: %1, Float: %2");
+    char *numText = QString_arg_int(numTemplate, 42);
+    char *floatText = QString_arg_double(QString_create_from_utf8(numText), 3.14159, 6, 'f', 2, ' ');
+    printf("数値置換: \"%s\"\n", floatText);
+    free(numText);
+    free(floatText);
+    
+    printf("\n");
+    
+    // パディング
+    printf("パディング:\n");
+    
+    void *padStr = QString_create_from_utf8("Test");
+    char *padText = QString_toString(padStr);
+    printf("元の文字列: \"%s\"\n", padText);
+    free(padText);
+    
+    char *leftJustText = QString_leftJustified(padStr, 10, '-', false);
+    printf("左揃え: \"%s\"\n", leftJustText);
+    free(leftJustText);
+    
+    char *rightJustText = QString_rightJustified(padStr, 10, '-', false);
+    printf("右揃え: \"%s\"\n", rightJustText);
+    free(rightJustText);
+    
     // クリーンアップ
     QString_delete(emptyStr);
     QString_delete(helloStr);
@@ -163,6 +238,11 @@ int main(int argc, char *argv[])
     QString_delete(str1);
     QString_delete(str2);
     QString_delete(str3);
+    QString_delete(pathStr);
+    QString_delete(normalizeStr);
+    QString_delete(templateStr);
+    QString_delete(numTemplate);
+    QString_delete(padStr);
     
     QApplication_delete(app);
     
