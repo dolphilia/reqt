@@ -2,6 +2,9 @@
 #define QT6BINDING_H
 
 #include "qapplication.h"
+#include "qobject.h"
+#include "qstring.h"
+#include "qvariant.h"
 #include "qcheckbox.h"
 #include "qcolor.h"
 #include "qcombobox.h"

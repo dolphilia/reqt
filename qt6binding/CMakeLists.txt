@@ -98,6 +98,11 @@ set(MOC_HEADERS
     src/QTreeView/QTreeViewHandler.h
     src/QVBoxLayout/QVBoxLayoutBind.h
     src/QWidget/QWidgetBind.h
+    src/QObject/QObjectBind.h
+    src/QString/QStringBind.h
+    src/QString/QStringHandler.h
+    src/QVariant/QVariantBind.h
+    src/QVariant/QVariantHandler.h
 )
 
 add_library(qt6binding SHARED
@@ -235,6 +240,15 @@ add_library(qt6binding SHARED
     src/QVBoxLayout/QVBoxLayoutCAPI.cpp
     src/QWidget/QWidgetBind.cpp
     src/QWidget/QWidgetCAPI.cpp
+    src/QObject/QObjectBind.cpp
+    src/QObject/QObjectHandler.cpp
+    src/QObject/QObjectCAPI.cpp
+    src/QString/QStringBind.cpp
+    src/QString/QStringHandler.cpp
+    src/QString/QStringCAPI.cpp
+    src/QVariant/QVariantBind.cpp
+    src/QVariant/QVariantHandler.cpp
+    src/QVariant/QVariantCAPI.cpp
 )
 
 target_include_directories(qt6binding PUBLIC include include/qt6 src)
