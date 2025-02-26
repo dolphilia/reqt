@@ -16,6 +16,8 @@ set(MOC_HEADERS
     src/QCheckBox/QCheckBoxBind.h
     src/QCheckBox/QCheckBoxHandler.h
     src/QColor/QColorBind.h
+    src/QTimer/QTimerBind.h
+    src/QTimer/QTimerHandler.h
     src/QComboBox/QComboBoxBind.h
     src/QComboBox/QComboBoxHandler.h
     src/QCursor/QCursorBind.h
@@ -111,6 +113,9 @@ add_library(qt6binding SHARED
     src/QApplication/QApplicationCAPI.cpp
     src/QCheckBox/QCheckBoxBind.cpp
     src/QCheckBox/QCheckBoxHandler.cpp
+    src/QTimer/QTimerBind.cpp
+    src/QTimer/QTimerHandler.cpp
+    src/QTimer/QTimerCAPI.cpp
     src/QColor/QColorBind.cpp
     src/QColor/QColorCAPI.cpp
     src/QComboBox/QComboBoxBind.cpp

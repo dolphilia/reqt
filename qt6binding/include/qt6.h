@@ -54,5 +54,6 @@
 #include "qtreeview.h"
 #include "qvboxlayout.h"
 #include "qwidget.h"
+#include "qtimer.h"
 
 #endif // QT6BINDING_H

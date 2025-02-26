@@ -15,4 +15,8 @@ int QApplication_exec(void* app) {
     return QApplicationBind::exec(static_cast<QApplication*>(app));
 }
 
+void QApplication_processEvents(void* app) {
+    QApplicationBind::processEvents(static_cast<QApplication*>(app));
+}
+
 }

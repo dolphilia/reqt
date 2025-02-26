@@ -8,6 +8,7 @@ public:
     static QApplication* create(int argc, char* argv[]);
     static void destroy(QApplication* app);
     static int exec(QApplication* app);
+    static void processEvents(QApplication* app);
 };
 
 #endif // QAPPLICATION_BIND_H

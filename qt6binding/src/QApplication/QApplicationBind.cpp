@@ -23,3 +23,9 @@ int QApplicationBind::exec(QApplication* app) {
     }
     return -1;
 }
+
+void QApplicationBind::processEvents(QApplication* app) {
+    if (app) {
+        app->processEvents();
+    }
+}

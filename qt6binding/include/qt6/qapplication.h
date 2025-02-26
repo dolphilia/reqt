@@ -9,6 +9,7 @@ extern "C" {
 void* QApplication_create(int argc, char* argv[]);
 void QApplication_delete(void* app);
 int QApplication_exec(void* app);
+void QApplication_processEvents(void* app);
 
 #ifdef __cplusplus
 }
