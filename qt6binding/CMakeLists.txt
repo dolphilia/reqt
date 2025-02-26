@@ -112,6 +112,7 @@ add_library(qt6binding SHARED
     src/QApplication/QApplicationBind.cpp
     src/QApplication/QApplicationCAPI.cpp
     src/QCheckBox/QCheckBoxBind.cpp
+    src/QCheckBox/QCheckBoxCAPI.cpp
     src/QCheckBox/QCheckBoxHandler.cpp
     src/QTimer/QTimerBind.cpp
     src/QTimer/QTimerHandler.cpp

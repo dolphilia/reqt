@@ -31,8 +31,6 @@ public:
     int textFormat() const;
     void setScaledContents(bool scaled);
     bool hasScaledContents() const;
-    
-    // 追加機能
     void* buddy() const;
     void setBuddy(void* buddy);
     bool hasSelectedText() const;

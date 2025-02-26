@@ -1,5 +1,5 @@
 #include "QStringBind.h"
-#include "../../include/qt6/qstring.h"
+#include "qstring.h"
 
 // 静的メソッド
 char *QString_number_int(int n, int base)

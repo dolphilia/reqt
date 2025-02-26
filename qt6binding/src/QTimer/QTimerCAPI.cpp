@@ -1,5 +1,5 @@
 #include "QTimerBind.h"
-#include "../../include/qt6/qtimer.h"
+#include "qtimer.h"
 #include <QTimer>
 
 // 作成・削除
@@ -99,7 +99,6 @@ static void singleShotHandler()
         g_singleShotCallback(g_singleShotUserData);
     }
     
-    // タイマーを削除
     if (g_singleShotTimer) {
         delete g_singleShotTimer;
         g_singleShotTimer = nullptr;
@@ -108,18 +107,15 @@ static void singleShotHandler()
 
 void QTimer_singleShot(int msec, QTimer_Callback callback, void *userData)
 {
-    // 前のタイマーがあれば削除
     if (g_singleShotTimer) {
         delete g_singleShotTimer;
     }
     
-    // 新しいタイマーを作成
     g_singleShotTimer = new QTimer();
     g_singleShotTimer->setSingleShot(true);
     g_singleShotCallback = callback;
     g_singleShotUserData = userData;
     
-    // タイマーを接続して開始
     QObject::connect(g_singleShotTimer, &QTimer::timeout, singleShotHandler);
     g_singleShotTimer->start(msec);
 }
