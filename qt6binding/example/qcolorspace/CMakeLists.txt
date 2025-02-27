@@ -1,0 +1,2 @@
+add_executable(qcolorspace_example main.c)
+target_link_libraries(qcolorspace_example PRIVATE qt6binding)

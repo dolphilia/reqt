@@ -1,4 +1,4 @@
-#include "../../include/qt6/qcheckbox.h"
+#include "qcheckbox.h"
 #include "QCheckBoxBind.h"
 #include <QWidget>
 #include <QCheckBox>

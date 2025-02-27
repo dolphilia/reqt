@@ -1,5 +1,7 @@
 add_subdirectory(qcheckbox)
 add_subdirectory(qcolor)
+add_subdirectory(qcolorspace)
+add_subdirectory(qpoint)
 add_subdirectory(qcombobox)
 add_subdirectory(qcursor)
 add_subdirectory(qdatetime)

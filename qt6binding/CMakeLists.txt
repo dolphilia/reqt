@@ -16,10 +16,12 @@ set(MOC_HEADERS
     src/QCheckBox/QCheckBoxBind.h
     src/QCheckBox/QCheckBoxHandler.h
     src/QColor/QColorBind.h
+    src/QColorSpace/QColorSpaceBind.h
     src/QTimer/QTimerBind.h
     src/QTimer/QTimerHandler.h
     src/QComboBox/QComboBoxBind.h
     src/QComboBox/QComboBoxHandler.h
+    src/QCoreApplication/QCoreApplicationBind.h
     src/QCursor/QCursorBind.h
     src/QDateEdit/QDateEditBind.h
     src/QDateEdit/QDateEditHandler.h
@@ -36,6 +38,7 @@ set(MOC_HEADERS
     src/QGraphicsWidget/QGraphicsWidgetBind.h
     src/QGraphicsWidget/QGraphicsWidgetHandler.h
     src/QGridLayout/QGridLayoutBind.h
+    src/QGuiApplication/QGuiApplicationBind.h
     src/QGroupBox/QGroupBoxBind.h
     src/QGroupBox/QGroupBoxHandler.h
     src/QHBoxLayout/QHBoxLayoutBind.h
@@ -101,6 +104,8 @@ set(MOC_HEADERS
     src/QVBoxLayout/QVBoxLayoutBind.h
     src/QWidget/QWidgetBind.h
     src/QObject/QObjectBind.h
+    src/QPaintDevice/QPaintDeviceBind.h
+    src/QPoint/QPointBind.h
     src/QString/QStringBind.h
     src/QString/QStringHandler.h
     src/QVariant/QVariantBind.h
@@ -119,9 +124,13 @@ add_library(qt6binding SHARED
     src/QTimer/QTimerCAPI.cpp
     src/QColor/QColorBind.cpp
     src/QColor/QColorCAPI.cpp
+    src/QColorSpace/QColorSpaceBind.cpp
+    src/QColorSpace/QColorSpaceCAPI.cpp
     src/QComboBox/QComboBoxBind.cpp
     src/QComboBox/QComboBoxCAPI.cpp
     src/QComboBox/QComboBoxHandler.cpp
+    src/QCoreApplication/QCoreApplicationBind.cpp
+    src/QCoreApplication/QCoreApplicationCAPI.cpp
     src/QCursor/QCursorBind.cpp
     src/QCursor/QCursorCAPI.cpp
     src/QDateEdit/QDateEditBind.cpp
@@ -135,6 +144,7 @@ add_library(qt6binding SHARED
     src/QDial/QDialCAPI.cpp
     src/QDockWidget/QDockWidgetBind.cpp
     src/QDockWidget/QDockWidgetHandler.cpp
+    src/QDockWidget/QDockWidgetCAPI.cpp
     src/QDoubleSpinBox/QDoubleSpinBoxBind.cpp
     src/QDoubleSpinBox/QDoubleSpinBoxCAPI.cpp
     src/QDoubleSpinBox/QDoubleSpinBoxHandler.cpp
@@ -144,6 +154,8 @@ add_library(qt6binding SHARED
     src/QGraphicsWidget/QGraphicsWidgetBind.cpp
     src/QGraphicsWidget/QGraphicsWidgetHandler.cpp
     src/QGraphicsWidget/QGraphicsWidgetCAPI.cpp
+    src/QGuiApplication/QGuiApplicationBind.cpp
+    src/QGuiApplication/QGuiApplicationCAPI.cpp
     src/QGridLayout/QGridLayoutBind.cpp
     src/QGridLayout/QGridLayoutCAPI.cpp
     src/QGroupBox/QGroupBoxBind.cpp
@@ -249,6 +261,10 @@ add_library(qt6binding SHARED
     src/QObject/QObjectBind.cpp
     src/QObject/QObjectHandler.cpp
     src/QObject/QObjectCAPI.cpp
+    src/QPaintDevice/QPaintDeviceBind.cpp
+    src/QPaintDevice/QPaintDeviceCAPI.cpp
+    src/QPoint/QPointBind.cpp
+    src/QPoint/QPointCAPI.cpp
     src/QString/QStringBind.cpp
     src/QString/QStringHandler.cpp
     src/QString/QStringCAPI.cpp
