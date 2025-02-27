@@ -31,6 +31,7 @@
 #include "qobject.h"
 #include "qpaintdevice.h"
 #include "qpoint.h"
+#include "qpointf.h"
 #include "qprogressbar.h"
 #include "qpushbutton.h"
 #include "qradiobutton.h"

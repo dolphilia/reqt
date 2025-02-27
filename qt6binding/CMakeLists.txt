@@ -106,6 +106,7 @@ set(MOC_HEADERS
     src/QObject/QObjectBind.h
     src/QPaintDevice/QPaintDeviceBind.h
     src/QPoint/QPointBind.h
+    src/QPointF/QPointFBind.h
     src/QString/QStringBind.h
     src/QString/QStringHandler.h
     src/QVariant/QVariantBind.h
@@ -265,6 +266,8 @@ add_library(qt6binding SHARED
     src/QPaintDevice/QPaintDeviceCAPI.cpp
     src/QPoint/QPointBind.cpp
     src/QPoint/QPointCAPI.cpp
+    src/QPointF/QPointFBind.cpp
+    src/QPointF/QPointFCAPI.cpp
     src/QString/QStringBind.cpp
     src/QString/QStringHandler.cpp
     src/QString/QStringCAPI.cpp

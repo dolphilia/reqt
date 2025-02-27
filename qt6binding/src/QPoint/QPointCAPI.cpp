@@ -76,25 +76,5 @@ void* QPoint_divideReal(void* point, double divisor) {
     return QPointBind::divideReal(static_cast<QPoint*>(point), divisor);
 }
 
-// QPointF関連
-void QPointF_delete(void* pointF) {
-    if (pointF) {
-        delete static_cast<QPointF*>(pointF);
-    }
-}
-
-double QPointF_x(void* pointF) {
-    if (pointF) {
-        return static_cast<QPointF*>(pointF)->x();
-    }
-    return 0.0;
-}
-
-double QPointF_y(void* pointF) {
-    if (pointF) {
-        return static_cast<QPointF*>(pointF)->y();
-    }
-    return 0.0;
-}
 
 }
