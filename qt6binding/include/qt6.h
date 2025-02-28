@@ -1,15 +1,20 @@
 #ifndef QT6BINDING_H
 #define QT6BINDING_H
 
+#include "qabstractbutton.h"
 #include "qapplication.h"
 #include "qcheckbox.h"
 #include "qcolor.h"
 #include "qcolorspace.h"
 #include "qcombobox.h"
 #include "qcoreapplication.h"
+#include "qframe.h"
+#include "qfilesystemmodel.h"
 #include "qcursor.h"
+#include "qdir.h"
 #include "qdateedit.h"
 #include "qdatetimeedit.h"
+#include "qdialog.h"
 #include "qdial.h"
 #include "qdockwidget.h"
 #include "qdoublespinbox.h"
@@ -27,6 +32,7 @@
 #include "qmdiarea.h"
 #include "qmdisubwindow.h"
 #include "qmenu.h"
+#include "qmessagebox.h"
 #include "qmenubar.h"
 #include "qobject.h"
 #include "qpaintdevice.h"

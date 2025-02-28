@@ -1,11 +1,7 @@
 #ifndef bridging_header_h
 #define bridging_header_h
 
-#include "include/qt6/qapplication.h"
-#include "include/qt6/qmainwindow.h"
-#include "include/qt6/qpushbutton.h"
-#include "include/qt6/qlabel.h"
-#include "include/qt6/qwidget.h"
+#include "qt6.h"
 
 // #ifdef __cplusplus
 // extern "C" {

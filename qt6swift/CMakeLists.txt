@@ -5,12 +5,15 @@ project(qt6swift)
 enable_language(Swift)
 
 # ライブラリのパスを設定
-link_directories(${PROJECT_SOURCE_DIR}/lib)
+link_directories(
+    ${PROJECT_SOURCE_DIR}/../qt6binding/build
+)
+
 
 # インクルードディレクトリを設定
 include_directories(
-    ${PROJECT_SOURCE_DIR}/include
-    ${PROJECT_SOURCE_DIR}/include/qt6
+    ${PROJECT_SOURCE_DIR}/../qt6binding/include
+    ${PROJECT_SOURCE_DIR}/../qt6binding/include/qt6
 )
 
 # Swiftのコンパイルオプションを設定
@@ -23,6 +26,5 @@ add_executable(qt6swift
 )
 
 # Qt6バインディングライブラリをリンク
-target_link_libraries(qt6swift
-    ${CMAKE_SOURCE_DIR}/lib/libqt6binding.dylib
+target_link_libraries(qt6swift qt6binding
 )

@@ -87,7 +87,7 @@ void QCheckBoxBind::setStateChangedCallback(QCheckBox* checkbox, QCheckBoxStateC
         CheckBoxHandler* handler = new CheckBoxHandler();
         handler->setParent(checkbox);
         handler->setStateChangedCallback(callback);
-        QObject::connect(checkbox, &QCheckBox::stateChanged, handler, &CheckBoxHandler::onStateChanged);
+        QObject::connect(checkbox, &QCheckBox::checkStateChanged, handler, &CheckBoxHandler::onStateChanged);
     }
 }
 

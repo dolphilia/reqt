@@ -12,7 +12,12 @@ set(CMAKE_AUTOUIC ON)
 
 # Qt MOC headers
 set(MOC_HEADERS
+    src/QAbstractButton/QAbstractButtonHandler.h
+    src/QAbstractButton/QAbstractButtonBind.h
     src/QApplication/QApplicationBind.h
+    src/QDialog/QDialogBind.h
+    src/QDialog/QDialogHandler.h
+    src/QFrame/QFrameBind.h
     src/QCheckBox/QCheckBoxBind.h
     src/QCheckBox/QCheckBoxHandler.h
     src/QColor/QColorBind.h
@@ -59,6 +64,8 @@ set(MOC_HEADERS
     src/QMenu/QMenuHandler.h
     src/QMenuBar/QMenuBarBind.h
     src/QMenuBar/QMenuBarHandler.h
+    src/QMessageBox/QMessageBoxBind.h
+    src/QMessageBox/QMessageBoxHandler.h
     src/QProgressBar/QProgressBarBind.h
     src/QProgressBar/QProgressBarHandler.h
     src/QPushButton/QPushButtonBind.h
@@ -111,11 +118,20 @@ set(MOC_HEADERS
     src/QString/QStringHandler.h
     src/QVariant/QVariantBind.h
     src/QVariant/QVariantHandler.h
+    src/QDir/QDirBind.h
 )
 
 add_library(qt6binding SHARED
     ${MOC_HEADERS}
+    src/QAbstractButton/QAbstractButtonBind.cpp
+    src/QAbstractButton/QAbstractButtonHandler.cpp
+    src/QAbstractButton/QAbstractButtonCAPI.cpp
     src/QApplication/QApplicationBind.cpp
+    src/QDialog/QDialogBind.cpp
+    src/QDialog/QDialogHandler.cpp
+    src/QDialog/QDialogCAPI.cpp
+    src/QFrame/QFrameBind.cpp
+    src/QFrame/QFrameCAPI.cpp
     src/QApplication/QApplicationCAPI.cpp
     src/QCheckBox/QCheckBoxBind.cpp
     src/QCheckBox/QCheckBoxCAPI.cpp
@@ -189,6 +205,9 @@ add_library(qt6binding SHARED
     src/QMenuBar/QMenuBarBind.cpp
     src/QMenuBar/QMenuBarCAPI.cpp
     src/QMenuBar/QMenuBarHandler.cpp
+    src/QMessageBox/QMessageBoxBind.cpp
+    src/QMessageBox/QMessageBoxHandler.cpp
+    src/QMessageBox/QMessageBoxCAPI.cpp
     src/QProgressBar/QProgressBarBind.cpp
     src/QProgressBar/QProgressBarCAPI.cpp
     src/QProgressBar/QProgressBarHandler.cpp
@@ -274,6 +293,8 @@ add_library(qt6binding SHARED
     src/QVariant/QVariantBind.cpp
     src/QVariant/QVariantHandler.cpp
     src/QVariant/QVariantCAPI.cpp
+    src/QDir/QDirBind.cpp
+    src/QDir/QDirCAPI.cpp
 )
 
 target_include_directories(qt6binding PUBLIC include include/qt6 src)
