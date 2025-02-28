@@ -119,6 +119,9 @@ set(MOC_HEADERS
     src/QVariant/QVariantBind.h
     src/QVariant/QVariantHandler.h
     src/QDir/QDirBind.h
+    src/QFileInfo/QFileInfoBind.h
+    src/QItemSelectionModel/QItemSelectionModelBind.h
+    src/QItemSelectionModel/QItemSelectionModelHandler.h
 )
 
 add_library(qt6binding SHARED
@@ -295,6 +298,11 @@ add_library(qt6binding SHARED
     src/QVariant/QVariantCAPI.cpp
     src/QDir/QDirBind.cpp
     src/QDir/QDirCAPI.cpp
+    src/QFileInfo/QFileInfoBind.cpp
+    src/QFileInfo/QFileInfoCAPI.cpp
+    src/QItemSelectionModel/QItemSelectionModelBind.cpp
+    src/QItemSelectionModel/QItemSelectionModelHandler.cpp
+    src/QItemSelectionModel/QItemSelectionModelCAPI.cpp
 )
 
 target_include_directories(qt6binding PUBLIC include include/qt6 src)

@@ -12,6 +12,8 @@
 #include "qfilesystemmodel.h"
 #include "qcursor.h"
 #include "qdir.h"
+#include "qfileinfo.h"
+#include "qitemselectionmodel.h"
 #include "qdateedit.h"
 #include "qdatetimeedit.h"
 #include "qdialog.h"
