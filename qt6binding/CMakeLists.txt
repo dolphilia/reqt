@@ -12,18 +12,15 @@ set(CMAKE_AUTOUIC ON)
 
 # Qt MOC headers
 set(MOC_HEADERS
-    src/QAbstractButton/QAbstractButtonHandler.h
     src/QAbstractButton/QAbstractButtonBind.h
+    src/QAbstractButton/QAbstractButtonHandler.h
+    src/QAction/QActionBind.h
+    src/QAction/QActionHandler.h
     src/QApplication/QApplicationBind.h
-    src/QDialog/QDialogBind.h
-    src/QDialog/QDialogHandler.h
-    src/QFrame/QFrameBind.h
     src/QCheckBox/QCheckBoxBind.h
     src/QCheckBox/QCheckBoxHandler.h
     src/QColor/QColorBind.h
     src/QColorSpace/QColorSpaceBind.h
-    src/QTimer/QTimerBind.h
-    src/QTimer/QTimerHandler.h
     src/QComboBox/QComboBoxBind.h
     src/QComboBox/QComboBoxHandler.h
     src/QCoreApplication/QCoreApplicationBind.h
@@ -34,19 +31,27 @@ set(MOC_HEADERS
     src/QDateTimeEdit/QDateTimeEditHandler.h
     src/QDial/QDialBind.h
     src/QDial/QDialHandler.h
+    src/QDialog/QDialogBind.h
+    src/QDialog/QDialogHandler.h
+    src/QDir/QDirBind.h
     src/QDockWidget/QDockWidgetBind.h
     src/QDockWidget/QDockWidgetHandler.h
     src/QDoubleSpinBox/QDoubleSpinBoxBind.h
     src/QDoubleSpinBox/QDoubleSpinBoxHandler.h
+    src/QFileInfo/QFileInfoBind.h
+    src/QFrame/QFrameBind.h
     src/QGraphicsView/QGraphicsViewBind.h
     src/QGraphicsView/QGraphicsViewHandler.h
     src/QGraphicsWidget/QGraphicsWidgetBind.h
     src/QGraphicsWidget/QGraphicsWidgetHandler.h
     src/QGridLayout/QGridLayoutBind.h
-    src/QGuiApplication/QGuiApplicationBind.h
     src/QGroupBox/QGroupBoxBind.h
     src/QGroupBox/QGroupBoxHandler.h
+    src/QGuiApplication/QGuiApplicationBind.h
     src/QHBoxLayout/QHBoxLayoutBind.h
+    src/QInputDialog/QInputDialogHandler.h
+    src/QItemSelectionModel/QItemSelectionModelBind.h
+    src/QItemSelectionModel/QItemSelectionModelHandler.h
     src/QLabel/QLabelBind.h
     src/QLCDNumber/QLCDNumberBind.h
     src/QLCDNumber/QLCDNumberHandler.h
@@ -66,6 +71,11 @@ set(MOC_HEADERS
     src/QMenuBar/QMenuBarHandler.h
     src/QMessageBox/QMessageBoxBind.h
     src/QMessageBox/QMessageBoxHandler.h
+    src/QObject/QObjectBind.h
+    src/QObject/QObjectHandler.h
+    src/QPaintDevice/QPaintDeviceBind.h
+    src/QPoint/QPointBind.h
+    src/QPointF/QPointFBind.h
     src/QProgressBar/QProgressBarBind.h
     src/QProgressBar/QProgressBarHandler.h
     src/QPushButton/QPushButtonBind.h
@@ -78,20 +88,22 @@ set(MOC_HEADERS
     src/QScrollBar/QScrollBarHandler.h
     src/QSizeGrip/QSizeGripBind.h
     src/QSlider/QSliderBind.h
+    src/QSlider/QSliderHandler.h
     src/QSortFilterProxyModel/QSortFilterProxyModelBind.h
     src/QSortFilterProxyModel/QSortFilterProxyModelHandler.h
+    src/QSpinBox/QSpinBoxBind.h
+    src/QSpinBox/QSpinBoxHandler.h
     src/QSplitter/QSplitterBind.h
     src/QSplitter/QSplitterHandler.h
     src/QSplitterHandle/QSplitterHandleBind.h
     src/QSplitterHandle/QSplitterHandleHandler.h
     src/QStackedWidget/QStackedWidgetBind.h
     src/QStackedWidget/QStackedWidgetHandler.h
-    src/QSlider/QSliderHandler.h
-    src/QSpinBox/QSpinBoxBind.h
-    src/QSpinBox/QSpinBoxHandler.h
     src/QStandardItem/QStandardItemBind.h
     src/QStandardItemModel/QStandardItemModelBind.h
     src/QStatusBar/QStatusBarBind.h
+    src/QString/QStringBind.h
+    src/QString/QStringHandler.h
     src/QStringListModel/QStringListModelBind.h
     src/QStyle/QStyleBind.h
     src/QTabBar/QTabBarBind.h
@@ -102,6 +114,8 @@ set(MOC_HEADERS
     src/QTabWidget/QTabWidgetHandler.h
     src/QTextEdit/QTextEditBind.h
     src/QTextEdit/QTextEditHandler.h
+    src/QTimer/QTimerBind.h
+    src/QTimer/QTimerHandler.h
     src/QToolBar/QToolBarBind.h
     src/QToolBar/QToolBarHandler.h
     src/QToolBox/QToolBoxBind.h
@@ -110,42 +124,25 @@ set(MOC_HEADERS
     src/QToolButton/QToolButtonHandler.h
     src/QTreeView/QTreeViewBind.h
     src/QTreeView/QTreeViewHandler.h
-    src/QVBoxLayout/QVBoxLayoutBind.h
-    src/QWidget/QWidgetBind.h
-    src/QObject/QObjectBind.h
-    src/QPaintDevice/QPaintDeviceBind.h
-    src/QPoint/QPointBind.h
-    src/QPointF/QPointFBind.h
-    src/QString/QStringBind.h
-    src/QString/QStringHandler.h
     src/QVariant/QVariantBind.h
     src/QVariant/QVariantHandler.h
-    src/QDir/QDirBind.h
-    src/QFileInfo/QFileInfoBind.h
-    src/QItemSelectionModel/QItemSelectionModelBind.h
-    src/QItemSelectionModel/QItemSelectionModelHandler.h
-    src/QObject/QObjectHandler.h
-    src/QInputDialog/QInputDialogHandler.h
+    src/QVBoxLayout/QVBoxLayoutBind.h
+    src/QWidget/QWidgetBind.h
 )
 
 add_library(qt6binding SHARED
     ${MOC_HEADERS}
     src/QAbstractButton/QAbstractButtonBind.cpp
-    src/QAbstractButton/QAbstractButtonHandler.cpp
     src/QAbstractButton/QAbstractButtonCAPI.cpp
+    src/QAbstractButton/QAbstractButtonHandler.cpp
+    src/QAction/QActionBind.cpp
+    src/QAction/QActionCAPI.cpp
+    src/QAction/QActionHandler.cpp
     src/QApplication/QApplicationBind.cpp
-    src/QDialog/QDialogBind.cpp
-    src/QDialog/QDialogHandler.cpp
-    src/QDialog/QDialogCAPI.cpp
-    src/QFrame/QFrameBind.cpp
-    src/QFrame/QFrameCAPI.cpp
     src/QApplication/QApplicationCAPI.cpp
     src/QCheckBox/QCheckBoxBind.cpp
     src/QCheckBox/QCheckBoxCAPI.cpp
     src/QCheckBox/QCheckBoxHandler.cpp
-    src/QTimer/QTimerBind.cpp
-    src/QTimer/QTimerHandler.cpp
-    src/QTimer/QTimerCAPI.cpp
     src/QColor/QColorBind.cpp
     src/QColor/QColorCAPI.cpp
     src/QColorSpace/QColorSpaceBind.cpp
@@ -158,54 +155,69 @@ add_library(qt6binding SHARED
     src/QCursor/QCursorBind.cpp
     src/QCursor/QCursorCAPI.cpp
     src/QDateEdit/QDateEditBind.cpp
-    src/QDateEdit/QDateEditHandler.cpp
     src/QDateEdit/QDateEditCAPI.cpp
+    src/QDateEdit/QDateEditHandler.cpp
     src/QDateTimeEdit/QDateTimeEditBind.cpp
-    src/QDateTimeEdit/QDateTimeEditHandler.cpp
     src/QDateTimeEdit/QDateTimeEditCAPI.cpp
+    src/QDateTimeEdit/QDateTimeEditHandler.cpp
     src/QDial/QDialBind.cpp
-    src/QDial/QDialHandler.cpp
     src/QDial/QDialCAPI.cpp
+    src/QDial/QDialHandler.cpp
+    src/QDialog/QDialogBind.cpp
+    src/QDialog/QDialogCAPI.cpp
+    src/QDialog/QDialogHandler.cpp
+    src/QDir/QDirBind.cpp
+    src/QDir/QDirCAPI.cpp
     src/QDockWidget/QDockWidgetBind.cpp
-    src/QDockWidget/QDockWidgetHandler.cpp
     src/QDockWidget/QDockWidgetCAPI.cpp
+    src/QDockWidget/QDockWidgetHandler.cpp
     src/QDoubleSpinBox/QDoubleSpinBoxBind.cpp
     src/QDoubleSpinBox/QDoubleSpinBoxCAPI.cpp
     src/QDoubleSpinBox/QDoubleSpinBoxHandler.cpp
+    src/QFileInfo/QFileInfoBind.cpp
+    src/QFileInfo/QFileInfoCAPI.cpp
+    src/QFrame/QFrameBind.cpp
+    src/QFrame/QFrameCAPI.cpp
     src/QGraphicsView/QGraphicsViewBind.cpp
-    src/QGraphicsView/QGraphicsViewHandler.cpp
     src/QGraphicsView/QGraphicsViewCAPI.cpp
+    src/QGraphicsView/QGraphicsViewHandler.cpp
     src/QGraphicsWidget/QGraphicsWidgetBind.cpp
-    src/QGraphicsWidget/QGraphicsWidgetHandler.cpp
     src/QGraphicsWidget/QGraphicsWidgetCAPI.cpp
-    src/QGuiApplication/QGuiApplicationBind.cpp
-    src/QGuiApplication/QGuiApplicationCAPI.cpp
+    src/QGraphicsWidget/QGraphicsWidgetHandler.cpp
     src/QGridLayout/QGridLayoutBind.cpp
     src/QGridLayout/QGridLayoutCAPI.cpp
     src/QGroupBox/QGroupBoxBind.cpp
     src/QGroupBox/QGroupBoxCAPI.cpp
     src/QGroupBox/QGroupBoxHandler.cpp
+    src/QGuiApplication/QGuiApplicationBind.cpp
+    src/QGuiApplication/QGuiApplicationCAPI.cpp
     src/QHBoxLayout/QHBoxLayoutBind.cpp
     src/QHBoxLayout/QHBoxLayoutCAPI.cpp
+    src/QInputDialog/QInputDialogBind.cpp
+    src/QInputDialog/QInputDialogCAPI.cpp
+    src/QInputDialog/QInputDialogHandler.cpp
+    src/QItemSelectionModel/QItemSelectionModelBind.cpp
+    src/QItemSelectionModel/QItemSelectionModelCAPI.cpp
+    src/QItemSelectionModel/QItemSelectionModelHandler.cpp
     src/QLabel/QLabelBind.cpp
     src/QLabel/QLabelCAPI.cpp
     src/QLCDNumber/QLCDNumberBind.cpp
     src/QLCDNumber/QLCDNumberCAPI.cpp
     src/QLCDNumber/QLCDNumberHandler.cpp
     src/QLineEdit/QLineEditBind.cpp
-    src/QLineEdit/QLineEditHandler.cpp
     src/QLineEdit/QLineEditCAPI.cpp
+    src/QLineEdit/QLineEditHandler.cpp
     src/QListView/QListViewBind.cpp
     src/QListView/QListViewCAPI.cpp
     src/QListView/QListViewHandler.cpp
     src/QMainWindow/QMainWindowBind.cpp
     src/QMainWindow/QMainWindowCAPI.cpp
     src/QMdiArea/QMdiAreaBind.cpp
-    src/QMdiArea/QMdiAreaHandler.cpp
     src/QMdiArea/QMdiAreaCAPI.cpp
+    src/QMdiArea/QMdiAreaHandler.cpp
     src/QMdiSubWindow/QMdiSubWindowBind.cpp
-    src/QMdiSubWindow/QMdiSubWindowHandler.cpp
     src/QMdiSubWindow/QMdiSubWindowCAPI.cpp
+    src/QMdiSubWindow/QMdiSubWindowHandler.cpp
     src/QMenu/QMenuBind.cpp
     src/QMenu/QMenuCAPI.cpp
     src/QMenu/QMenuHandler.cpp
@@ -213,14 +225,23 @@ add_library(qt6binding SHARED
     src/QMenuBar/QMenuBarCAPI.cpp
     src/QMenuBar/QMenuBarHandler.cpp
     src/QMessageBox/QMessageBoxBind.cpp
-    src/QMessageBox/QMessageBoxHandler.cpp
     src/QMessageBox/QMessageBoxCAPI.cpp
+    src/QMessageBox/QMessageBoxHandler.cpp
+    src/QObject/QObjectBind.cpp
+    src/QObject/QObjectCAPI.cpp
+    src/QObject/QObjectHandler.cpp
+    src/QPaintDevice/QPaintDeviceBind.cpp
+    src/QPaintDevice/QPaintDeviceCAPI.cpp
+    src/QPoint/QPointBind.cpp
+    src/QPoint/QPointCAPI.cpp
+    src/QPointF/QPointFBind.cpp
+    src/QPointF/QPointFCAPI.cpp
     src/QProgressBar/QProgressBarBind.cpp
     src/QProgressBar/QProgressBarCAPI.cpp
     src/QProgressBar/QProgressBarHandler.cpp
     src/QPushButton/QPushButtonBind.cpp
-    src/QPushButton/QPushButtonHandler.cpp
     src/QPushButton/QPushButtonCAPI.cpp
+    src/QPushButton/QPushButtonHandler.cpp
     src/QRadioButton/QRadioButtonBind.cpp
     src/QRadioButton/QRadioButtonCAPI.cpp
     src/QRadioButton/QRadioButtonHandler.cpp
@@ -233,29 +254,32 @@ add_library(qt6binding SHARED
     src/QSizeGrip/QSizeGripBind.cpp
     src/QSizeGrip/QSizeGripCAPI.cpp
     src/QSlider/QSliderBind.cpp
+    src/QSlider/QSliderCAPI.cpp
+    src/QSlider/QSliderHandler.cpp
     src/QSortFilterProxyModel/QSortFilterProxyModelBind.cpp
     src/QSortFilterProxyModel/QSortFilterProxyModelCAPI.cpp
     src/QSortFilterProxyModel/QSortFilterProxyModelHandler.cpp
-    src/QSplitter/QSplitterBind.cpp
-    src/QSplitter/QSplitterHandler.cpp
-    src/QSplitter/QSplitterCAPI.cpp
-    src/QSplitterHandle/QSplitterHandleBind.cpp
-    src/QSplitterHandle/QSplitterHandleHandler.cpp
-    src/QSplitterHandle/QSplitterHandleCAPI.cpp
-    src/QStackedWidget/QStackedWidgetBind.cpp
-    src/QStackedWidget/QStackedWidgetHandler.cpp
-    src/QStackedWidget/QStackedWidgetCAPI.cpp
-    src/QSlider/QSliderCAPI.cpp
-    src/QSlider/QSliderHandler.cpp
     src/QSpinBox/QSpinBoxBind.cpp
     src/QSpinBox/QSpinBoxCAPI.cpp
     src/QSpinBox/QSpinBoxHandler.cpp
+    src/QSplitter/QSplitterBind.cpp
+    src/QSplitter/QSplitterCAPI.cpp
+    src/QSplitter/QSplitterHandler.cpp
+    src/QSplitterHandle/QSplitterHandleBind.cpp
+    src/QSplitterHandle/QSplitterHandleCAPI.cpp
+    src/QSplitterHandle/QSplitterHandleHandler.cpp
+    src/QStackedWidget/QStackedWidgetBind.cpp
+    src/QStackedWidget/QStackedWidgetCAPI.cpp
+    src/QStackedWidget/QStackedWidgetHandler.cpp
     src/QStandardItem/QStandardItemBind.cpp
     src/QStandardItem/QStandardItemCAPI.cpp
     src/QStandardItemModel/QStandardItemModelBind.cpp
     src/QStandardItemModel/QStandardItemModelCAPI.cpp
     src/QStatusBar/QStatusBarBind.cpp
     src/QStatusBar/QStatusBarCAPI.cpp
+    src/QString/QStringBind.cpp
+    src/QString/QStringCAPI.cpp
+    src/QString/QStringHandler.cpp
     src/QStringListModel/QStringListModelBind.cpp
     src/QStringListModel/QStringListModelCAPI.cpp
     src/QStyle/QStyleBind.cpp
@@ -272,6 +296,9 @@ add_library(qt6binding SHARED
     src/QTextEdit/QTextEditBind.cpp
     src/QTextEdit/QTextEditCAPI.cpp
     src/QTextEdit/QTextEditHandler.cpp
+    src/QTimer/QTimerBind.cpp
+    src/QTimer/QTimerCAPI.cpp
+    src/QTimer/QTimerHandler.cpp
     src/QToolBar/QToolBarBind.cpp
     src/QToolBar/QToolBarCAPI.cpp
     src/QToolBar/QToolBarHandler.cpp
@@ -284,35 +311,13 @@ add_library(qt6binding SHARED
     src/QTreeView/QTreeViewBind.cpp
     src/QTreeView/QTreeViewCAPI.cpp
     src/QTreeView/QTreeViewHandler.cpp
+    src/QVariant/QVariantBind.cpp
+    src/QVariant/QVariantCAPI.cpp
+    src/QVariant/QVariantHandler.cpp
     src/QVBoxLayout/QVBoxLayoutBind.cpp
     src/QVBoxLayout/QVBoxLayoutCAPI.cpp
     src/QWidget/QWidgetBind.cpp
     src/QWidget/QWidgetCAPI.cpp
-    src/QObject/QObjectBind.cpp
-    src/QObject/QObjectCAPI.cpp
-    src/QObject/QObjectHandler.cpp
-    src/QPaintDevice/QPaintDeviceBind.cpp
-    src/QPaintDevice/QPaintDeviceCAPI.cpp
-    src/QPoint/QPointBind.cpp
-    src/QPoint/QPointCAPI.cpp
-    src/QPointF/QPointFBind.cpp
-    src/QPointF/QPointFCAPI.cpp
-    src/QString/QStringBind.cpp
-    src/QString/QStringCAPI.cpp
-    src/QString/QStringHandler.cpp
-    src/QVariant/QVariantBind.cpp
-    src/QVariant/QVariantCAPI.cpp
-    src/QVariant/QVariantHandler.cpp
-    src/QDir/QDirBind.cpp
-    src/QDir/QDirCAPI.cpp
-    src/QFileInfo/QFileInfoBind.cpp
-    src/QFileInfo/QFileInfoCAPI.cpp
-    src/QItemSelectionModel/QItemSelectionModelBind.cpp
-    src/QItemSelectionModel/QItemSelectionModelCAPI.cpp
-    src/QItemSelectionModel/QItemSelectionModelHandler.cpp
-    src/QInputDialog/QInputDialogBind.cpp
-    src/QInputDialog/QInputDialogCAPI.cpp
-    src/QInputDialog/QInputDialogHandler.cpp
 )
 
 target_include_directories(qt6binding PUBLIC include include/qt6 src)
