@@ -1,0 +1,9125 @@
+
+# Coding Style
+
+
+## file_structure
+
+# ファイル構造
+
+## 1.1 ヘッダーファイル
+```cpp
+// ヘッダーファイル
+#ifndef BIND_Q_[CLASSNAME]_H
+#define BIND_Q_[CLASSNAME]_H
+
+#include <[QtHeader]>
+#include "[ClassHandler].h"  // 必要な場合
+
+// クラス定義
+class Bind[ClassName] : public [ClassName] {
+    Q_OBJECT  // 必要な場合
+public:
+    // コンストラクタ
+    // パブリックメソッド
+protected:
+    // 保護メンバ
+private:
+    // プライベートメンバ
+};
+
+#endif
+```
+
+## 1.2 実装ファイル
+```cpp
+// 1. 対応するヘッダ
+#include "BindQWidget.h"
+
+// 2. その他のヘッダ
+#include <algorithm>
+#include "QWidgetHandler.h"
+
+// 3. 実装
+BindQWidget::BindQWidget() {
+    // 実装
+}
+```
+
+## 1.3 C APIファイル
+```cpp
+// QWidgetCAPI.cpp
+#include "QWidgetBind.h"
+#include "qwidget.h"
+
+extern "C" {
+    void* QWidget_create(void* parent) {
+        return new BindQWidget(static_cast<QWidget*>(parent));
+    }
+
+    void QWidget_delete(void* widget) {
+        delete static_cast<BindQWidget*>(widget);
+    }
+
+    // その他のAPI関数
+}
+
+
+## naming_conventions
+
+# 命名規則
+
+## 2.1 クラス名
+```cpp
+class BindQWidget;      // バインディングクラス
+class QWidgetHandler;   // ハンドラクラス
+```
+
+## 2.2 メソッド名
+```cpp
+void QWidget_create();  // コンストラクタ
+void QWidget_delete();  // デストラクタ
+void QWidget_show();    // アクション
+```
+
+## 2.3 変数名
+```cpp
+m_handler;              // メンバ変数
+callback;               // コールバック関数
+parentWidget;           // ローカル変数
+```
+
+## 2.4 命名規則の詳細
+
+### クラス名の規則
+- バインディングクラスは`Bind`プレフィックスを使用
+- ハンドラクラスは`Handler`サフィックスを使用
+- Qtクラス名をそのまま使用（例：`QWidget`）
+
+### メソッド名の規則
+- C API関数は`[クラス名]_[操作]`の形式
+- 動詞で始める（create, delete, set, get, show, hide等）
+- キャメルケースを使用
+
+### 変数名の規則
+- メンバ変数は`m_`プレフィックスを使用
+- ローカル変数はキャメルケース
+- 定数は大文字とアンダースコア
+- 一時変数は短く意味のある名前
+
+### 特殊な命名
+- コールバック関数は`[操作]Callback`
+- イベントハンドラは`on[イベント]`
+- シグナルは動詞の現在形または過去形
+- スロットは`on`プレフィックスを使用
+
+
+## comments
+
+# コメント
+
+## 3.1 クラスコメント
+```cpp
+/**
+ * @brief クラスの説明
+ * @details 詳細な説明
+ */
+class SomeClass {
+    /**
+     * @brief メソッドの説明
+     * @param param パラメータの説明
+     * @return 戻り値の説明
+     * @throws 例外の説明
+     */
+    ReturnType someMethod(ParamType param);
+};
+```
+
+## 3.2 関数コメント
+```cpp
+/**
+ * @brief スタイルシートを設定
+ * 
+ * この関数は QWidget::setStyleSheet() の機能を利用します。
+ * QPushButtonはQWidgetを継承しているため、QWidget_setStyleSheet
+ * を再利用することで実装を簡素化しています。
+ *
+ * @param button QPushButtonのポインタ
+ * @param styleSheet 設定するスタイルシート
+ * 
+ * @note この実装はQWidgetの機能を直接利用するため、
+ * QPushButton固有の追加処理は行いません。
+ */
+void QPushButton_setStyleSheet(void* button, const char* styleSheet);
+```
+
+## 3.3 コメントの種類
+
+### ファイルヘッダーコメント
+```cpp
+/**
+ * @file QWidgetBind.h
+ * @brief QWidgetのバインディング実装
+ * @author 作成者名
+ * @date YYYY/MM/DD
+ */
+```
+
+### インラインコメント
+```cpp
+void someFunction() {
+    int count = 0;  // カウンタの初期化
+    
+    // 重要な処理の説明
+    doSomething();
+    
+    /* 複数行の
+       説明が必要な場合 */
+    complexOperation();
+}
+```
+
+### TODO コメント
+```cpp
+// TODO: パフォーマンスの最適化が必要
+// FIXME: メモリリークの可能性あり
+// NOTE: この実装は一時的なものです
+```
+
+## 3.4 コメントのガイドライン
+
+1. コメントの目的
+   - コードの意図を説明する
+   - 複雑なロジックを解説する
+   - APIの使用方法を示す
+   - 注意点や制限事項を記述する
+
+2. コメントの書き方
+   - 簡潔で明確な文章を使用
+   - 技術的な正確さを保つ
+   - 最新の状態を維持する
+   - 冗長な説明を避ける
+
+3. コメントの更新
+   - コード変更時に関連コメントも更新
+   - 古いコメントは削除または修正
+   - TODO コメントは定期的にレビュー
+   - 誤解を招くコメントは避ける
+
+
+## indentation_and_formatting
+
+# インデントとフォーマット
+
+## 4.1 インデント
+- スペース4文字を使用
+- タブ文字は使用しない
+- 継続行は8スペース
+
+例：
+```cpp
+void someFunction() {
+    if (condition) {
+        doSomething();
+        doSomethingElse(
+                parameter1,    // 継続行は8スペース
+                parameter2);
+    }
+}
+```
+
+## 4.2 ブレース
+```cpp
+if (condition) {
+    // 処理
+} else {
+    // 処理
+}
+
+while (condition) {
+    // 処理
+}
+
+class ClassName {
+public:
+    // メンバ
+private:
+    // メンバ
+};
+```
+
+## 4.3 スペース
+```cpp
+// 演算子の前後
+a = b + c;
+if (a < b) {
+}
+
+// カンマの後
+function(a, b, c);
+
+// ポインタ/参照の*と&
+int* ptr;
+int& ref;
+```
+
+## 4.4 行の長さと折り返し
+
+### 基本ルール
+- 1行の最大長は80文字
+- 長い行は適切に折り返す
+- 演算子の前で折り返す
+
+### 関数宣言/定義
+```cpp
+ReturnType LongClassName::longFunctionName(
+    Type1 parameter1,
+    Type2 parameter2,
+    Type3 parameter3
+) {
+    // 実装
+}
+```
+
+### 条件文
+```cpp
+if (longCondition1 &&
+    longCondition2 &&
+    longCondition3) {
+    // 処理
+}
+```
+
+### 関数呼び出し
+```cpp
+someFunction(
+    longArgument1,
+    longArgument2,
+    longArgument3
+);
+```
+
+## 4.5 空行の使用
+
+### 基本ルール
+- 論理的なブロックの間に1行
+- クラス定義の前後に2行
+- ファイル末尾に1行
+
+### 例
+```cpp
+#include <vector>
+#include <string>
+
+// 2行空ける
+class MyClass {
+public:
+    MyClass();
+    
+    // メソッド間に1行
+    void method1();
+    
+    void method2();
+private:
+    int m_value;
+};
+
+// 2行空ける
+class AnotherClass {
+    // ...
+};
+
+
+## file_organization
+
+# ファイル編成
+
+## 5.1 ヘッダファイル
+```cpp
+// 1. システムヘッダ
+#include <vector>
+#include <string>
+
+// 2. Qtヘッダ
+#include <QWidget>
+#include <QObject>
+
+// 3. プロジェクトヘッダ
+#include "QWidgetHandler.h"
+#include "BindQWidget.h"
+```
+
+## 5.2 実装ファイル
+```cpp
+// 1. 対応するヘッダ
+#include "BindQWidget.h"
+
+// 2. その他のヘッダ
+#include <algorithm>
+#include "QWidgetHandler.h"
+
+// 3. 実装
+BindQWidget::BindQWidget() {
+    // 実装
+}
+```
+
+## 5.3 ディレクトリ構造
+```
+qt6binding/
+├── src/              # ソースコード
+│   ├── QWidget/
+│   │   ├── QWidgetBind.h
+│   │   ├── QWidgetBind.cpp
+│   │   ├── QWidgetHandler.h
+│   │   ├── QWidgetHandler.cpp
+│   │   └── QWidgetCAPI.cpp
+│   └── ...
+├── include/          # 公開ヘッダー
+│   └── qt6/
+│       ├── qwidget.h
+│       └── ...
+├── example/          # サンプルコード
+│   └── qwidget/
+│       ├── CMakeLists.txt
+│       └── main.c
+└── build/            # ビルド出力
+```
+
+## 5.4 ファイル命名規則
+
+### ヘッダファイル
+- バインディングクラス: `[QtClass]Bind.h`
+- ハンドラクラス: `[QtClass]Handler.h`
+- C API: `q[class].h` (小文字)
+
+### ソースファイル
+- バインディングクラス: `[QtClass]Bind.cpp`
+- ハンドラクラス: `[QtClass]Handler.cpp`
+- C API: `[QtClass]CAPI.cpp`
+
+### サンプルコード
+- ディレクトリ: `q[class]` (小文字)
+- メインファイル: `main.c`
+- ビルド設定: `CMakeLists.txt`
+
+## 5.5 ファイル内の順序
+
+### ヘッダファイル
+1. インクルードガード
+2. インクルード文
+3. 名前空間（必要な場合）
+4. クラス宣言
+   - public
+   - protected
+   - private
+5. インライン関数の実装
+
+### ソースファイル
+1. インクルード文
+2. 名前空間（必要な場合）
+3. static関数/変数
+4. クラスメソッドの実装
+   - コンストラクタ/デストラクタ
+   - public メソッド
+   - protected メソッド
+   - private メソッド
+5. グローバル関数
+
+
+## code_structure
+
+# コード構造
+
+## 6.1 クラス構造
+```cpp
+class ClassName {
+public:
+    // 1. コンストラクタ/デストラクタ
+    ClassName();
+    ~ClassName();
+    
+    // 2. パブリックメソッド
+    void publicMethod();
+    
+    // 3. パブリックスロット
+    public slots:
+    void onSomething();
+    
+    // 4. シグナル
+    signals:
+    void somethingHappened();
+    
+protected:
+    // 5. 保護メソッド
+    virtual void protectedMethod();
+    
+    // 6. 保護メンバ
+    int m_protectedValue;
+    
+private:
+    // 7. プライベートメソッド
+    void privateMethod();
+    
+    // 8. プライベートメンバ
+    int m_privateValue;
+};
+```
+
+## 6.2 メソッド構造
+```cpp
+ReturnType ClassName::methodName(ParamType param) {
+    // 1. 引数の検証
+    if (!param) {
+        return error;
+    }
+
+    // 2. 前処理
+    prepare();
+
+    // 3. メイン処理
+    ReturnType result = process(param);
+
+    // 4. 後処理
+    cleanup();
+
+    // 5. 結果返却
+    return result;
+}
+```
+
+## 6.3 バインディング固有の構造
+
+### Bindクラス
+```cpp
+class BindQWidget : public QWidget {
+public:
+    // 1. コンストラクタ/デストラクタ
+    explicit BindQWidget(QWidget* parent = nullptr);
+    ~BindQWidget();
+
+    // 2. Qt機能のラッパー
+    void setWindowTitle(const QString& title);
+    QString windowTitle() const;
+
+    // 3. ハンドラ管理
+    void setHandler(QWidgetHandler* handler);
+    QWidgetHandler* handler() const;
+
+private:
+    // 4. メンバ変数
+    QWidgetHandler* m_handler;
+};
+```
+
+### Handlerクラス
+```cpp
+class QWidgetHandler : public QObject {
+    Q_OBJECT
+public:
+    // 1. コンストラクタ/デストラクタ
+    explicit QWidgetHandler(QWidget* widget = nullptr);
+    ~QWidgetHandler();
+
+    // 2. コールバック設定
+    void setDestroyedCallback(void (*callback)(void*));
+    void setWindowTitleChangedCallback(void (*callback)(void*, const char*));
+
+public slots:
+    // 3. シグナル受信スロット
+    void onDestroyed();
+    void onWindowTitleChanged(const QString& title);
+
+private:
+    // 4. メンバ変数
+    QWidget* m_widget;
+    void (*m_destroyedCallback)(void*);
+    void (*m_windowTitleChangedCallback)(void*, const char*);
+};
+```
+
+### C API
+```cpp
+// 1. オブジェクト管理
+void* QWidget_create(void* parent);
+void QWidget_delete(void* widget);
+
+// 2. プロパティ操作
+void QWidget_setWindowTitle(void* widget, const char* title);
+const char* QWidget_windowTitle(void* widget);
+
+// 3. アクション
+void QWidget_show(void* widget);
+void QWidget_hide(void* widget);
+
+// 4. コールバック設定
+void QWidget_setDestroyedCallback(void* widget, void (*callback)(void*));
+```
+
+## 6.4 コード構造のガイドライン
+
+1. 一貫性
+   - 同じパターンを一貫して使用
+   - 命名規則を厳格に守る
+   - レイアウトを統一する
+
+2. 責任の分離
+   - Bindクラス: Qt機能のラッピング
+   - Handlerクラス: シグナル/スロット処理
+   - C API: C言語インターフェース
+
+3. エラー処理
+   - 早期リターン
+   - NULL チェック
+   - 型チェック
+   - エラー状態の伝播
+
+4. メモリ管理
+   - 所有権の明確化
+   - リソースの適切な解放
+   - 循環参照の防止
+   - リークの防止
+
+
+## constraints_and_conventions
+
+# 制約と規約
+
+## 7.1 禁止事項
+- グローバル変数の使用
+- using namespace の使用
+- 複数の継承（特別な場合を除く）
+- マジックナンバーの使用
+- 暗黙の型変換
+- 未初期化変数の使用
+- goto文の使用
+- 再帰的なマクロ
+- インライン関数の過剰な使用
+- 過度に複雑な条件式
+
+## 7.2 推奨事項
+- const の積極的な使用
+- スマートポインタの使用
+- 早期リターン
+- 小さな関数
+- 明示的な型変換
+- 範囲ベースのforループ
+- nullptr の使用（NULL の代わりに）
+- override キーワードの使用
+- noexcept の適切な使用
+- コピー/ムーブの明示的な制御
+
+## 7.3 バインディング固有の規約
+
+### 型変換
+```cpp
+// 推奨
+auto* widget = static_cast<QWidget*>(ptr);
+auto* button = qobject_cast<QPushButton*>(widget);
+
+// 非推奨
+QWidget* widget = (QWidget*)ptr;
+QPushButton* button = dynamic_cast<QPushButton*>(widget);
+```
+
+### メモリ管理
+```cpp
+// 推奨
+void* widget = QWidget_create(parent);  // 親が所有権を持つ
+QWidget_delete(widget);                 // 親がない場合は明示的に削除
+
+// 非推奨
+auto* widget = new QWidget();  // 生のnew/deleteを使用
+delete widget;
+```
+
+### エラー処理
+```cpp
+// 推奨
+if (!ptr) return NULL;
+if (!is_valid(ptr)) return ERROR_INVALID;
+
+// 非推奨
+assert(ptr);  // 実行時アサーションに依存
+if (ptr == NULL) throw std::exception();  // C++例外を使用
+```
+
+## 7.4 セキュリティ規約
+
+### 入力検証
+```cpp
+// 推奨
+void QWidget_setWindowTitle(void* widget, const char* title) {
+    if (!widget || !title) return;
+    if (strlen(title) > MAX_TITLE_LENGTH) return;
+    // ...
+}
+
+// 非推奨
+void QWidget_setWindowTitle(void* widget, const char* title) {
+    static_cast<QWidget*>(widget)->setWindowTitle(title);
+}
+```
+
+### リソース管理
+```cpp
+// 推奨
+class ScopedResource {
+    void* ptr;
+public:
+    explicit ScopedResource(void* p) : ptr(p) {}
+    ~ScopedResource() { if (ptr) cleanup(ptr); }
+};
+
+// 非推奨
+void* ptr = acquire_resource();
+// リソースの使用
+release_resource(ptr);  // 例外時にリークする可能性
+```
+
+## 7.5 パフォーマンス規約
+
+### メモリ効率
+```cpp
+// 推奨
+void process_data(const QString& data);  // 参照渡し
+QString get_data() const&;               // const参照戻り値
+
+// 非推奨
+void process_data(QString data);         // 値渡し
+QString get_data();                      // 値戻り
+```
+
+### 計算効率
+```cpp
+// 推奨
+if (container.empty()) return;           // 早期リターン
+for (const auto& item : container) {}    // 範囲for
+
+// 非推奨
+if (!container.empty()) {                // ネストが深くなる
+    // 処理
+}
+for (int i = 0; i < container.size(); ++i) {}  // 従来のfor
+
+
+# Error Handling
+
+
+## error_code_system
+
+# エラーコード体系
+
+## 1.1 基本エラーコード
+```c
+typedef enum {
+    ERROR_NONE = 0,
+    ERROR_NULL_POINTER = -1,
+    ERROR_INVALID_ARGUMENT = -2,
+    ERROR_MEMORY = -3,
+    ERROR_OPERATION = -4,
+    ERROR_NOT_INITIALIZED = -5,
+    ERROR_ALREADY_EXISTS = -6,
+    ERROR_NOT_FOUND = -7,
+    ERROR_PERMISSION = -8,
+    ERROR_TIMEOUT = -9,
+    ERROR_OVERFLOW = -10,
+    ERROR_UNDERFLOW = -11,
+    ERROR_DIVISION_BY_ZERO = -12,
+    ERROR_INVALID_STATE = -13,
+    ERROR_IO = -14,
+    ERROR_NETWORK = -15,
+    ERROR_PROTOCOL = -16,
+    ERROR_FORMAT = -17,
+    ERROR_SYNTAX = -18,
+    ERROR_LOGIC = -19,
+    ERROR_SYSTEM = -20
+} ErrorCode;
+```
+
+## 1.2 エラー情報構造体
+```c
+typedef struct {
+    ErrorCode code;          // エラーコード
+    const char* message;     // エラーメッセージ
+    const char* file;        // エラー発生ファイル
+    int line;               // エラー発生行
+    const char* function;    // エラー発生関数
+} ErrorInfo;
+```
+
+## 1.3 エラーコードの使用ガイドライン
+
+### エラーコードの選択
+1. 適切なエラーコードの選択
+   - NULL_POINTERは引数検証で使用
+   - INVALID_ARGUMENTは値の範囲チェックで使用
+   - MEMORYはメモリ確保失敗時に使用
+   - OPERATIONは操作失敗時に使用
+
+2. エラーコードの組み合わせ
+   - 複数のエラーが発生した場合は最も重要なものを返す
+   - エラーの詳細はエラー情報構造体に格納
+
+### エラーメッセージの作成
+1. メッセージの形式
+   - 簡潔で明確な説明
+   - エラーの原因を含める
+   - 可能な場合は解決策を示唆
+
+2. メッセージの例
+```c
+// 良い例
+"NULL pointer provided for widget parameter"
+"Value 101 exceeds maximum allowed value of 100"
+
+// 悪い例
+"Error occurred"  // 具体性に欠ける
+"Bad input"      // 情報が不足
+```
+
+## 1.4 エラー情報の設定
+
+### エラー情報の設定関数
+```c
+void set_error(ErrorInfo* info, ErrorCode code, const char* message) {
+    if (info) {
+        info->code = code;
+        info->message = message;
+        info->file = __FILE__;
+        info->line = __LINE__;
+        info->function = __func__;
+    }
+}
+```
+
+### エラー情報の使用例
+```c
+ErrorInfo error_info;
+void* ptr = some_operation();
+if (!ptr) {
+    set_error(&error_info, ERROR_MEMORY,
+              "Failed to allocate memory for widget");
+    return NULL;
+}
+
+
+## error_handling_patterns
+
+# エラー処理パターン
+
+## 2.1 C++側の実装
+```cpp
+// Result型の定義
+struct Result {
+    bool success;
+    const char* error_message;
+    void* data;
+};
+
+// エラー処理を含む操作の実装
+Result handle_operation(void* ptr) {
+    try {
+        // NULLポインタチェック
+        if (!ptr) {
+            return {false, "Null pointer", nullptr};
+        }
+
+        // 型変換と有効性チェック
+        auto* obj = static_cast<SomeClass*>(ptr);
+        if (!obj->isValid()) {
+            return {false, "Invalid object state", nullptr};
+        }
+
+        // 操作の実行
+        void* result = obj->doSomething();
+        return {true, nullptr, result};
+
+    } catch (const std::bad_alloc& e) {
+        return {false, "Memory allocation failed", nullptr};
+    } catch (const std::invalid_argument& e) {
+        return {false, e.what(), nullptr};
+    } catch (const std::exception& e) {
+        return {false, e.what(), nullptr};
+    } catch (...) {
+        return {false, "Unknown error occurred", nullptr};
+    }
+}
+```
+
+## 2.2 C APIの実装
+```cpp
+// エラー情報の設定
+void set_error(ErrorInfo* info, ErrorCode code, const char* message) {
+    if (info) {
+        info->code = code;
+        info->message = message;
+        info->file = __FILE__;
+        info->line = __LINE__;
+        info->function = __func__;
+    }
+}
+
+// C API関数の実装
+ErrorCode operation(void* ptr, void** result) {
+    Result cpp_result = handle_operation(ptr);
+    
+    if (!cpp_result.success) {
+        set_last_error(ERROR_OPERATION, cpp_result.error_message);
+        return ERROR_OPERATION;
+    }
+    
+    *result = cpp_result.data;
+    return ERROR_NONE;
+}
+```
+
+## 2.3 エラー処理のベストプラクティス
+
+### 早期リターン
+```cpp
+ErrorCode process_widget(void* widget) {
+    // 引数の検証
+    if (!widget) {
+        return ERROR_NULL_POINTER;
+    }
+
+    // 型変換と状態チェック
+    auto* w = static_cast<QWidget*>(widget);
+    if (!w->isVisible()) {
+        return ERROR_INVALID_STATE;
+    }
+
+    // メイン処理
+    if (!w->update()) {
+        return ERROR_OPERATION;
+    }
+
+    return ERROR_NONE;
+}
+```
+
+### エラーの伝播
+```cpp
+ErrorCode complex_operation(void* widget) {
+    // 第1ステップ
+    ErrorCode error = step1(widget);
+    if (error != ERROR_NONE) {
+        return error;  // エラーを上位に伝播
+    }
+
+    // 第2ステップ
+    error = step2(widget);
+    if (error != ERROR_NONE) {
+        cleanup_step1(widget);  // 部分的なクリーンアップ
+        return error;
+    }
+
+    return ERROR_NONE;
+}
+```
+
+### リソースの保護
+```cpp
+class ScopedResource {
+    void* ptr;
+public:
+    explicit ScopedResource(void* p) : ptr(p) {}
+    ~ScopedResource() {
+        if (ptr) cleanup(ptr);
+    }
+    void* get() const { return ptr; }
+    void* release() {
+        void* p = ptr;
+        ptr = nullptr;
+        return p;
+    }
+private:
+    ScopedResource(const ScopedResource&) = delete;
+    ScopedResource& operator=(const ScopedResource&) = delete;
+};
+
+ErrorCode safe_operation() {
+    ScopedResource res(acquire_resource());
+    // 操作の実行
+    // 例外が発生してもリソースは自動的に解放される
+    return ERROR_NONE;
+}
+```
+
+## 2.4 エラー処理のアンチパターン
+
+### 避けるべきパターン
+```cpp
+// 1. エラーの無視
+void bad_example1(void* ptr) {
+    static_cast<QWidget*>(ptr)->show();  // エラーチェックなし
+}
+
+// 2. 過剰なネスト
+ErrorCode bad_example2(void* ptr) {
+    if (ptr) {
+        if (is_valid(ptr)) {
+            if (is_ready(ptr)) {
+                // 処理
+            } else {
+                return ERROR_NOT_READY;
+            }
+        } else {
+            return ERROR_INVALID;
+        }
+    } else {
+        return ERROR_NULL_POINTER;
+    }
+    return ERROR_NONE;
+}
+
+// 3. 不適切な例外処理
+void bad_example3(void* ptr) {
+    try {
+        // 処理
+    } catch (...) {
+        // エラーを無視
+    }
+}
+```
+
+### 推奨パターン
+```cpp
+// 1. 適切なエラーチェック
+void good_example1(void* ptr) {
+    if (!ptr) return;
+    auto* widget = static_cast<QWidget*>(ptr);
+    if (!widget->isVisible()) return;
+    widget->show();
+}
+
+// 2. フラット構造
+ErrorCode good_example2(void* ptr) {
+    if (!ptr) return ERROR_NULL_POINTER;
+    if (!is_valid(ptr)) return ERROR_INVALID;
+    if (!is_ready(ptr)) return ERROR_NOT_READY;
+    
+    // 処理
+    return ERROR_NONE;
+}
+
+// 3. 適切な例外処理
+void good_example3(void* ptr) {
+    try {
+        // 処理
+    } catch (const std::exception& e) {
+        // エラーを適切に処理
+        log_error(e.what());
+        cleanup();
+    }
+}
+
+
+## error_handling_strategy
+
+# エラー処理戦略
+
+## 3.1 エラーの検出
+```cpp
+// 1. 引数の検証
+bool validate_arguments(void* ptr, int value) {
+    if (!ptr) {
+        set_last_error(ERROR_NULL_POINTER, "Null pointer provided");
+        return false;
+    }
+    if (value < 0 || value > 100) {
+        set_last_error(ERROR_INVALID_ARGUMENT, "Value out of range");
+        return false;
+    }
+    return true;
+}
+
+// 2. 状態の検証
+bool validate_state(SomeClass* obj) {
+    if (!obj->isInitialized()) {
+        set_last_error(ERROR_NOT_INITIALIZED, "Object not initialized");
+        return false;
+    }
+    if (obj->isLocked()) {
+        set_last_error(ERROR_INVALID_STATE, "Object is locked");
+        return false;
+    }
+    return true;
+}
+```
+
+## 3.2 エラーの伝播
+```cpp
+// 1. エラーチェーンの作成
+ErrorCode process_operation(void* ptr) {
+    // 最初の操作
+    ErrorCode result = first_operation(ptr);
+    if (result != ERROR_NONE) {
+        return result;
+    }
+    
+    // 次の操作
+    result = second_operation(ptr);
+    if (result != ERROR_NONE) {
+        return result;
+    }
+    
+    return ERROR_NONE;
+}
+
+// 2. エラー情報の収集
+void collect_error_info(ErrorInfo* info) {
+    ErrorCode code = get_last_error();
+    const char* message = get_error_message();
+    set_error(info, code, message);
+}
+```
+
+## 3.3 エラー処理戦略のガイドライン
+
+### 1. エラー検出の原則
+- できるだけ早くエラーを検出する
+- 適切なエラーコードを選択する
+- 明確なエラーメッセージを提供する
+- エラーの原因を特定しやすくする
+
+### 2. エラー伝播の原則
+- エラー情報を失わない
+- 適切なクリーンアップを行う
+- エラーチェーンを維持する
+- デバッグ情報を保持する
+
+### 3. エラー回復の原則
+- 可能な場合は回復を試みる
+- 安全な状態を維持する
+- リソースを適切に解放する
+- ユーザーに適切な情報を提供する
+
+## 3.4 エラー処理の実装例
+
+### 基本的なエラー処理
+```cpp
+ErrorCode basic_operation(void* ptr) {
+    // 1. 引数の検証
+    if (!validate_arguments(ptr, 0)) {
+        return get_last_error();
+    }
+
+    // 2. 状態の検証
+    auto* obj = static_cast<SomeClass*>(ptr);
+    if (!validate_state(obj)) {
+        return get_last_error();
+    }
+
+    // 3. 操作の実行
+    try {
+        if (!obj->perform_operation()) {
+            set_last_error(ERROR_OPERATION, "Operation failed");
+            return ERROR_OPERATION;
+        }
+    } catch (const std::exception& e) {
+        set_last_error(ERROR_OPERATION, e.what());
+        return ERROR_OPERATION;
+    }
+
+    return ERROR_NONE;
+}
+```
+
+### 複雑な操作のエラー処理
+```cpp
+ErrorCode complex_operation(void* ptr) {
+    // 1. リソースの確保
+    ScopedResource res(acquire_resource());
+    if (!res.get()) {
+        return ERROR_MEMORY;
+    }
+
+    // 2. 初期化
+    ErrorCode result = initialize_resource(res.get());
+    if (result != ERROR_NONE) {
+        return result;
+    }
+
+    // 3. 操作の実行
+    result = process_resource(res.get());
+    if (result != ERROR_NONE) {
+        cleanup_resource(res.get());
+        return result;
+    }
+
+    // 4. 結果の確認
+    if (!validate_result(res.get())) {
+        cleanup_resource(res.get());
+        return ERROR_INVALID_RESULT;
+    }
+
+    return ERROR_NONE;
+}
+```
+
+## 3.5 エラー処理のテスト
+
+### エラーケースのテスト
+```cpp
+void test_error_handling() {
+    // 1. NULL引数のテスト
+    assert(basic_operation(NULL) == ERROR_NULL_POINTER);
+
+    // 2. 無効な状態のテスト
+    void* obj = create_invalid_object();
+    assert(basic_operation(obj) == ERROR_INVALID_STATE);
+
+    // 3. 操作失敗のテスト
+    void* failing_obj = create_failing_object();
+    assert(basic_operation(failing_obj) == ERROR_OPERATION);
+
+    // 4. エラー情報の検証
+    ErrorInfo info;
+    collect_error_info(&info);
+    assert(info.code == ERROR_OPERATION);
+    assert(strcmp(info.message, "Operation failed") == 0);
+}
+
+
+## error_handling
+
+# エラー処理方針
+
+## 4.1 エラー検出
+```c
+// 1. NULLチェック
+void* widget = QWidget_create(NULL);
+if (!widget) {
+    // エラー処理
+}
+
+// 2. 戻り値チェック
+int result = QWidget_someOperation(widget);
+if (result < 0) {
+    // エラー処理
+}
+```
+
+## 4.2 エラー通知
+1. エラーコードの返却
+2. エラーメッセージの設定
+3. コールバックによる通知
+4. ログ出力
+
+## 4.3 例外処理
+```cpp
+// C++側
+try {
+    // Qt操作
+} catch (const std::exception& e) {
+    // エラー状態に変換
+    return NULL;  // または エラーコード
+}
+
+// C側
+if (error_occurred) {
+    // クリーンアップと回復処理
+}
+
+
+## error_logging
+
+# エラーのログ記録
+
+## 4.1 エラーログの形式
+```cpp
+void log_error(const ErrorInfo* info) {
+    fprintf(stderr, "Error[%d]: %s\n", info->code, info->message);
+    fprintf(stderr, "  at %s:%d\n", info->file, info->line);
+    fprintf(stderr, "  in function: %s\n", info->function);
+}
+```
+
+## 4.2 エラーログレベル
+```cpp
+typedef enum {
+    LOG_LEVEL_ERROR,    // 重大なエラー
+    LOG_LEVEL_WARNING,  // 警告
+    LOG_LEVEL_INFO,     // 情報
+    LOG_LEVEL_DEBUG     // デバッグ情報
+} LogLevel;
+
+void log_message(LogLevel level, const char* format, ...) {
+    va_list args;
+    va_start(args, format);
+    // ログ出力の実装
+    va_end(args);
+}
+```
+
+## 4.3 ログ出力の実装
+
+### ログフォーマッタ
+```cpp
+class LogFormatter {
+public:
+    static std::string format_error(const ErrorInfo* info) {
+        std::stringstream ss;
+        ss << "[ERROR] " << info->message << "\n"
+           << "Code: " << info->code << "\n"
+           << "File: " << info->file << ":" << info->line << "\n"
+           << "Function: " << info->function;
+        return ss.str();
+    }
+
+    static std::string format_warning(const char* message) {
+        return std::string("[WARNING] ") + message;
+    }
+
+    static std::string format_info(const char* message) {
+        return std::string("[INFO] ") + message;
+    }
+
+    static std::string format_debug(const char* message) {
+        return std::string("[DEBUG] ") + message;
+    }
+};
+```
+
+### ログ出力先の管理
+```cpp
+class LogDestination {
+public:
+    virtual ~LogDestination() = default;
+    virtual void write(const std::string& message) = 0;
+};
+
+class FileLogger : public LogDestination {
+    FILE* file;
+public:
+    explicit FileLogger(const char* filename) {
+        file = fopen(filename, "a");
+    }
+    ~FileLogger() {
+        if (file) fclose(file);
+    }
+    void write(const std::string& message) override {
+        if (file) {
+            fprintf(file, "%s\n", message.c_str());
+            fflush(file);
+        }
+    }
+};
+
+class ConsoleLogger : public LogDestination {
+public:
+    void write(const std::string& message) override {
+        fprintf(stderr, "%s\n", message.c_str());
+    }
+};
+```
+
+## 4.4 ログ管理システム
+
+### ログマネージャ
+```cpp
+class LogManager {
+    static std::vector<std::unique_ptr<LogDestination>> destinations;
+    static LogLevel current_level;
+    static std::mutex mutex;
+
+public:
+    static void add_destination(std::unique_ptr<LogDestination> dest) {
+        std::lock_guard<std::mutex> lock(mutex);
+        destinations.push_back(std::move(dest));
+    }
+
+    static void set_level(LogLevel level) {
+        std::lock_guard<std::mutex> lock(mutex);
+        current_level = level;
+    }
+
+    static void log(LogLevel level, const std::string& message) {
+        std::lock_guard<std::mutex> lock(mutex);
+        if (level <= current_level) {
+            for (const auto& dest : destinations) {
+                dest->write(message);
+            }
+        }
+    }
+
+    static void log_error(const ErrorInfo* info) {
+        log(LOG_LEVEL_ERROR, LogFormatter::format_error(info));
+    }
+};
+```
+
+### ログの使用例
+```cpp
+// ログ初期化
+void initialize_logging() {
+    LogManager::add_destination(
+        std::make_unique<FileLogger>("error.log"));
+    LogManager::add_destination(
+        std::make_unique<ConsoleLogger>());
+    LogManager::set_level(LOG_LEVEL_DEBUG);
+}
+
+// エラーログの記録
+void handle_error(const ErrorInfo* info) {
+    LogManager::log_error(info);
+    // エラー処理
+}
+
+// 警告ログの記録
+void report_warning(const char* message) {
+    LogManager::log(LOG_LEVEL_WARNING,
+        LogFormatter::format_warning(message));
+}
+```
+
+## 4.5 ログ出力のガイドライン
+
+### 1. ログレベルの使い分け
+- ERROR: アプリケーションの動作に影響するエラー
+- WARNING: 潜在的な問題や注意が必要な状況
+- INFO: 重要な操作の成功や状態変更
+- DEBUG: 開発時のデバッグ情報
+
+### 2. ログメッセージの作成
+- 明確で具体的な情報を含める
+- タイムスタンプを付加する
+- 関連する識別子を含める
+- エラーの場合は原因と影響を記述する
+
+### 3. ログ出力のパフォーマンス
+- 不要なログを出力しない
+- ログレベルによるフィルタリングを活用する
+- バッファリングを適切に使用する
+- ファイルI/Oの最適化を考慮する
+
+
+## error_recovery
+
+# エラー回復戦略
+
+## 5.1 リソースのクリーンアップ
+```cpp
+// 1. RAII パターン
+class ScopedResource {
+    void* ptr;
+public:
+    explicit ScopedResource(void* p) : ptr(p) {}
+    ~ScopedResource() {
+        if (ptr) {
+            cleanup_resource(ptr);
+        }
+    }
+};
+
+// 2. トランザクション的な処理
+bool atomic_operation() {
+    // バックアップの作成
+    backup();
+    
+    try {
+        // 操作の実行
+        perform_operation();
+        return true;
+    } catch (...) {
+        // エラー時は復元
+        restore();
+        return false;
+    }
+}
+```
+
+## 5.2 エラーからの復帰
+```cpp
+// 1. 再試行メカニズム
+bool retry_operation(int max_attempts) {
+    for (int i = 0; i < max_attempts; i++) {
+        if (perform_operation()) {
+            return true;
+        }
+        // 待機してから再試行
+        sleep_milliseconds(100 * (i + 1));
+    }
+    return false;
+}
+
+// 2. フォールバック処理
+void* get_resource(const char* primary_path) {
+    void* resource = try_primary_path(primary_path);
+    if (!resource) {
+        resource = try_fallback_path(get_fallback_path());
+    }
+    return resource;
+}
+```
+
+## 5.3 エラー回復パターン
+
+### 1. 段階的な回復
+```cpp
+ErrorCode recover_from_error(ErrorCode error) {
+    switch (error) {
+        case ERROR_MEMORY:
+            // メモリの解放を試みる
+            if (free_unused_memory()) {
+                return ERROR_NONE;
+            }
+            break;
+            
+        case ERROR_NETWORK:
+            // ネットワーク接続の再確立を試みる
+            if (reconnect()) {
+                return ERROR_NONE;
+            }
+            break;
+            
+        case ERROR_IO:
+            // 代替パスでの再試行
+            if (retry_with_alternative_path()) {
+                return ERROR_NONE;
+            }
+            break;
+    }
+    
+    return error;  // 回復失敗
+}
+```
+
+### 2. 状態の復元
+```cpp
+class StateBackup {
+    std::map<std::string, std::string> state;
+public:
+    void save(const char* key, const char* value) {
+        state[key] = value;
+    }
+    
+    const char* restore(const char* key) {
+        auto it = state.find(key);
+        return it != state.end() ? it->second.c_str() : nullptr;
+    }
+};
+
+bool safe_operation() {
+    StateBackup backup;
+    
+    // 状態のバックアップ
+    backup.save("window_title", get_window_title());
+    backup.save("window_size", get_window_size());
+    
+    try {
+        // 操作の実行
+        perform_risky_operation();
+        return true;
+    } catch (...) {
+        // 状態の復元
+        set_window_title(backup.restore("window_title"));
+        set_window_size(backup.restore("window_size"));
+        return false;
+    }
+}
+```
+
+## 5.4 回復戦略のガイドライン
+
+### 1. リソース管理の原則
+- RAIIパターンを積極的に使用する
+- リソースの解放順序を考慮する
+- 循環参照を避ける
+- 部分的な解放を可能にする
+
+### 2. エラー回復の原則
+- できるだけ早く回復を試みる
+- 段階的な回復戦略を用意する
+- フォールバックメカニズムを実装する
+- 回復不能な場合は適切に通知する
+
+### 3. 状態管理の原則
+- 重要な状態をバックアップする
+- トランザクション的な処理を実装する
+- ロールバックメカニズムを用意する
+- 一貫性を保証する
+
+## 5.5 回復処理の実装例
+
+### 複雑な操作の回復処理
+```cpp
+ErrorCode complex_operation_with_recovery() {
+    // 1. 状態のバックアップ
+    StateBackup backup;
+    save_current_state(&backup);
+    
+    // 2. 操作の実行
+    ErrorCode result = perform_complex_operation();
+    if (result != ERROR_NONE) {
+        // 3. エラー回復の試行
+        result = recover_from_error(result);
+        if (result != ERROR_NONE) {
+            // 4. 回復失敗時の状態復元
+            restore_state(&backup);
+        }
+    }
+    
+    return result;
+}
+```
+
+### リソース管理と回復
+```cpp
+class ManagedResource {
+    void* ptr;
+    StateBackup backup;
+    bool valid;
+    
+public:
+    explicit ManagedResource(void* p) : ptr(p), valid(true) {
+        if (ptr) {
+            // 初期状態のバックアップ
+            backup_state();
+        }
+    }
+    
+    ~ManagedResource() {
+        if (ptr) {
+            if (!valid) {
+                // 無効な状態の場合は復元を試みる
+                restore_state();
+            }
+            cleanup_resource(ptr);
+        }
+    }
+    
+    bool perform_operation() {
+        try {
+            // 操作の実行
+            do_operation(ptr);
+            return true;
+        } catch (...) {
+            valid = false;
+            return false;
+        }
+    }
+    
+private:
+    void backup_state() {
+        // 状態のバックアップ
+        backup.save("state", get_state(ptr));
+    }
+    
+    void restore_state() {
+        // 状態の復元
+        const char* state = backup.restore("state");
+        if (state) {
+            set_state(ptr, state);
+        }
+    }
+};
+
+
+## debug_support
+
+# デバッグサポート
+
+## 6.1 アサーション
+```c
+#ifdef DEBUG
+#define ASSERT(condition, message) \
+    do { \
+        if (!(condition)) { \
+            log_message(LOG_LEVEL_ERROR, \
+                "Assertion failed: %s\n" \
+                "File: %s\n" \
+                "Line: %d\n" \
+                "Message: %s", \
+                #condition, __FILE__, __LINE__, message); \
+            abort(); \
+        } \
+    } while (0)
+#else
+#define ASSERT(condition, message) ((void)0)
+#endif
+```
+
+## 6.2 エラートレース
+```cpp
+class ErrorTracer {
+    static std::vector<ErrorInfo> error_stack;
+public:
+    static void push(const ErrorInfo& info) {
+        error_stack.push_back(info);
+    }
+    
+    static void dump() {
+        for (const auto& error : error_stack) {
+            log_error(&error);
+        }
+    }
+};
+```
+
+## 6.3 デバッグ支援機能
+
+### エラー情報の収集
+```cpp
+class ErrorCollector {
+    std::vector<ErrorInfo> errors;
+    bool collecting;
+
+public:
+    void start_collecting() {
+        collecting = true;
+        errors.clear();
+    }
+
+    void stop_collecting() {
+        collecting = false;
+    }
+
+    void collect(const ErrorInfo& info) {
+        if (collecting) {
+            errors.push_back(info);
+        }
+    }
+
+    const std::vector<ErrorInfo>& get_errors() const {
+        return errors;
+    }
+
+    void clear() {
+        errors.clear();
+    }
+};
+```
+
+### エラー状態の監視
+```cpp
+class ErrorMonitor {
+    std::unordered_map<std::string, int> error_counts;
+    std::mutex mutex;
+
+public:
+    void record_error(const char* type) {
+        std::lock_guard<std::mutex> lock(mutex);
+        ++error_counts[type];
+    }
+
+    void print_statistics() {
+        std::lock_guard<std::mutex> lock(mutex);
+        for (const auto& [type, count] : error_counts) {
+            printf("Error type '%s': %d occurrences\n",
+                   type.c_str(), count);
+        }
+    }
+
+    bool has_exceeded_threshold(const char* type,
+                              int threshold) {
+        std::lock_guard<std::mutex> lock(mutex);
+        return error_counts[type] > threshold;
+    }
+};
+```
+
+## 6.4 デバッグ用ユーティリティ
+
+### エラー状態のダンプ
+```cpp
+class ErrorDumper {
+public:
+    static void dump_error_info(const ErrorInfo* info) {
+        printf("=== Error Information ===\n");
+        printf("Code: %d\n", info->code);
+        printf("Message: %s\n", info->message);
+        printf("Location: %s:%d\n", info->file, info->line);
+        printf("Function: %s\n", info->function);
+        printf("=======================\n");
+    }
+
+    static void dump_error_stack() {
+        printf("=== Error Stack ===\n");
+        ErrorTracer::dump();
+        printf("==================\n");
+    }
+
+    static void dump_error_statistics() {
+        printf("=== Error Statistics ===\n");
+        ErrorMonitor monitor;
+        monitor.print_statistics();
+        printf("======================\n");
+    }
+};
+```
+
+### デバッグログ
+```cpp
+class DebugLogger {
+    static bool enabled;
+    static LogLevel min_level;
+
+public:
+    static void enable(bool enable = true) {
+        enabled = enable;
+    }
+
+    static void set_min_level(LogLevel level) {
+        min_level = level;
+    }
+
+    static void log(LogLevel level, const char* format, ...) {
+        if (!enabled || level < min_level) return;
+
+        va_list args;
+        va_start(args, format);
+        vprintf(format, args);
+        va_end(args);
+        printf("\n");
+    }
+
+    static void log_error(const ErrorInfo* info) {
+        if (!enabled || LOG_LEVEL_ERROR < min_level) return;
+        ErrorDumper::dump_error_info(info);
+    }
+};
+```
+
+## 6.5 デバッグ支援のガイドライン
+
+### 1. アサーションの使用
+- 重要な前提条件の検証
+- 不変条件の確認
+- 戻り値の検証
+- メモリ状態の確認
+
+### 2. エラートレースの活用
+- エラーの発生順序の記録
+- エラーチェーンの追跡
+- エラーの原因分析
+- デバッグ情報の収集
+
+### 3. デバッグログの管理
+- 適切なログレベルの設定
+- 必要な情報の選択
+- パフォーマンスへの配慮
+- セキュリティ情報の保護
+
+### 4. デバッグツールの使用
+- メモリチェッカー
+- プロファイラ
+- 静的解析ツール
+- デバッガ
+
+
+# Memory Management
+
+
+## basic_principles
+
+# 基本原則
+
+## 1.1 所有権の明確化
+```cpp
+// 1. 明示的な所有権移転
+void* create_owned_resource() {
+    return new Resource();  // 呼び出し側が所有権を持つ
+}
+
+// 2. 参照のみを返す
+const Resource* get_resource_reference() {
+    return &singleton_resource;  // 所有権の移転なし
+}
+```
+
+## 1.2 リソース管理の責任
+```cpp
+// 1. 作成者が解放
+void* creator_responsible() {
+    void* ptr = create_resource();
+    use_resource(ptr);
+    delete_resource(ptr);  // 作成者が解放
+    return nullptr;
+}
+
+// 2. 受け取り側が解放
+void* receiver_responsible() {
+    return create_resource();  // 受け取り側で解放が必要
+}
+```
+
+## 1.3 所有権の原則
+
+### 1. 単一所有者の原則
+- リソースは常に1つの所有者を持つ
+- 所有権の移転は明示的に行う
+- 共有所有権は避ける
+- 循環参照を防ぐ
+
+### 2. 所有権の階層
+- 親オブジェクトが子オブジェクトを所有
+- 親の削除時に子も削除される
+- 子の所有権変更は親を通じて行う
+- 親子関係は明確に管理する
+
+### 3. 一時的な借用
+- 所有権を移転せずに一時的に使用
+- 借用中は所有者が削除しない
+- 借用期間を明確にする
+- 借用中の状態変更に注意
+
+## 1.4 リソース管理の原則
+
+### 1. RAIIパターン
+```cpp
+class ScopedResource {
+    void* ptr;
+public:
+    explicit ScopedResource(void* p) : ptr(p) {}
+    ~ScopedResource() {
+        if (ptr) cleanup(ptr);
+    }
+private:
+    ScopedResource(const ScopedResource&) = delete;
+    ScopedResource& operator=(const ScopedResource&) = delete;
+};
+```
+
+### 2. スマートポインタの使用
+```cpp
+class ResourcePtr {
+    void* ptr;
+public:
+    explicit ResourcePtr(void* p = nullptr) : ptr(p) {}
+    ~ResourcePtr() { reset(); }
+    
+    void reset(void* p = nullptr) {
+        if (ptr) cleanup(ptr);
+        ptr = p;
+    }
+    
+    void* release() {
+        void* p = ptr;
+        ptr = nullptr;
+        return p;
+    }
+    
+    void* get() const { return ptr; }
+    
+private:
+    ResourcePtr(const ResourcePtr&) = delete;
+    ResourcePtr& operator=(const ResourcePtr&) = delete;
+};
+```
+
+## 1.5 メモリ管理のガイドライン
+
+### 1. リソースの確保と解放
+- 必ずcreate/deleteをペアで使用
+- リソースリークを防ぐ
+- エラー時の解放を確実に行う
+- 解放順序を考慮する
+
+### 2. 所有権の管理
+- 所有権の移転を明確にする
+- 共有を避ける
+- 循環参照を防ぐ
+- 親子関係を適切に管理する
+
+### 3. エラー処理
+- リソース確保失敗時の処理
+- 部分的な確保/解放
+- クリーンアップの確実な実行
+- 例外安全性の確保
+
+### 4. デバッグサポート
+- メモリリークの検出
+- 所有権の追跡
+- リソース使用状況の監視
+- エラーの早期発見
+
+
+## memory_management_patterns
+
+# メモリ管理パターン
+
+## 2.1 スコープベースの管理
+```cpp
+// 1. RAIIパターン
+class ScopedResource {
+    void* ptr;
+public:
+    explicit ScopedResource(void* p) : ptr(p) {}
+    ~ScopedResource() {
+        if (ptr) {
+            delete_resource(ptr);
+        }
+    }
+    void* get() const { return ptr; }
+    void* release() {
+        void* p = ptr;
+        ptr = nullptr;
+        return p;
+    }
+private:
+    // コピー禁止
+    ScopedResource(const ScopedResource&) = delete;
+    ScopedResource& operator=(const ScopedResource&) = delete;
+};
+
+// 2. 使用例
+void use_scoped_resource() {
+    ScopedResource res(create_resource());
+    // リソースの使用
+    use_resource(res.get());
+    // スコープ終了時に自動解放
+}
+```
+
+## 2.2 参照カウント
+```cpp
+// 1. 参照カウント管理クラス
+class RefCounted {
+    std::atomic<int> ref_count;
+public:
+    RefCounted() : ref_count(1) {}
+    
+    void add_ref() {
+        ref_count.fetch_add(1, std::memory_order_relaxed);
+    }
+    
+    void release() {
+        if (ref_count.fetch_sub(1, std::memory_order_acq_rel) == 1) {
+            delete this;
+        }
+    }
+protected:
+    virtual ~RefCounted() = default;
+};
+
+// 2. 使用例
+class Resource : public RefCounted {
+public:
+    void do_something() {}
+};
+
+void use_ref_counted() {
+    Resource* res = new Resource();
+    res->add_ref();  // 参照カウント増加
+    use_resource(res);
+    res->release();  // 参照カウント減少
+}
+```
+
+## 2.3 スマートポインタパターン
+
+### 1. 独占所有権
+```cpp
+template<typename T>
+class UniquePtr {
+    T* ptr;
+public:
+    explicit UniquePtr(T* p = nullptr) : ptr(p) {}
+    ~UniquePtr() { delete ptr; }
+    
+    T* get() const { return ptr; }
+    T* release() {
+        T* p = ptr;
+        ptr = nullptr;
+        return p;
+    }
+    
+    void reset(T* p = nullptr) {
+        delete ptr;
+        ptr = p;
+    }
+    
+private:
+    UniquePtr(const UniquePtr&) = delete;
+    UniquePtr& operator=(const UniquePtr&) = delete;
+};
+```
+
+### 2. 共有所有権
+```cpp
+template<typename T>
+class SharedPtr {
+    T* ptr;
+    std::atomic<int>* ref_count;
+    
+public:
+    explicit SharedPtr(T* p = nullptr)
+        : ptr(p), ref_count(p ? new std::atomic<int>(1) : nullptr) {}
+    
+    SharedPtr(const SharedPtr& other)
+        : ptr(other.ptr), ref_count(other.ref_count) {
+        if (ref_count) {
+            ref_count->fetch_add(1, std::memory_order_relaxed);
+        }
+    }
+    
+    ~SharedPtr() {
+        if (ref_count && ref_count->fetch_sub(1,
+            std::memory_order_acq_rel) == 1) {
+            delete ptr;
+            delete ref_count;
+        }
+    }
+    
+    T* get() const { return ptr; }
+};
+```
+
+## 2.4 メモリプールパターン
+
+### 1. 固定サイズプール
+```cpp
+class FixedSizePool {
+    struct Block {
+        Block* next;
+        char data[1];  // 可変サイズ部分
+    };
+    
+    Block* free_list;
+    size_t block_size;
+    
+public:
+    explicit FixedSizePool(size_t size)
+        : free_list(nullptr), block_size(size) {}
+    
+    void* allocate() {
+        if (!free_list) {
+            expand();
+        }
+        Block* block = free_list;
+        free_list = block->next;
+        return block->data;
+    }
+    
+    void deallocate(void* ptr) {
+        Block* block = reinterpret_cast<Block*>(
+            static_cast<char*>(ptr) - offsetof(Block, data));
+        block->next = free_list;
+        free_list = block;
+    }
+    
+private:
+    void expand() {
+        // プールの拡張処理
+    }
+};
+```
+
+### 2. オブジェクトプール
+```cpp
+template<typename T>
+class ObjectPool {
+    std::vector<T*> free_objects;
+    std::mutex mutex;
+    
+public:
+    T* acquire() {
+        std::lock_guard<std::mutex> lock(mutex);
+        if (free_objects.empty()) {
+            return new T();
+        }
+        T* obj = free_objects.back();
+        free_objects.pop_back();
+        return obj;
+    }
+    
+    void release(T* obj) {
+        if (!obj) return;
+        std::lock_guard<std::mutex> lock(mutex);
+        free_objects.push_back(obj);
+    }
+    
+    ~ObjectPool() {
+        for (T* obj : free_objects) {
+            delete obj;
+        }
+    }
+};
+```
+
+## 2.5 メモリ管理パターンのガイドライン
+
+### 1. パターンの選択基準
+- リソースの寿命
+- 所有権の要件
+- パフォーマンス要件
+- スレッド安全性の要件
+
+### 2. パターンの組み合わせ
+- 複数パターンの適切な組み合わせ
+- パターン間の相互作用の考慮
+- 一貫性の維持
+- 複雑さの管理
+
+### 3. エラー処理との統合
+- メモリ確保失敗の処理
+- リソース解放の保証
+- 例外安全性の確保
+- エラー状態の伝播
+
+### 4. デバッグとテスト
+- メモリリークの検出
+- 使用パターンの検証
+- エッジケースのテスト
+- パフォーマンスの測定
+
+
+## memory_management
+
+# メモリ管理方針
+
+## 3.1 オブジェクトの寿命
+```c
+// 1. 明示的な作成と削除
+void* obj = QWidget_create(NULL);
+QWidget_delete(obj);
+
+// 2. 親子関係による自動削除
+void* parent = QWidget_create(NULL);
+void* child = QWidget_create(parent);
+QWidget_delete(parent);  // childは自動削除
+```
+
+## 3.2 リソース管理規則
+1. create/deleteの対応を必須とする
+2. 親オブジェクトの削除で子を自動削除
+3. 一時リソースは関数内で解放
+4. メモリリークの定期的な確認
+
+## 3.3 文字列管理
+```c
+// 1. 文字列の取得
+const char* text = QWidget_windowTitle(widget);
+// 注: 次のAPI呼び出しまで有効
+
+// 2. 文字列の設定
+QWidget_setWindowTitle(widget, "Title");
+// 注: 関数内でコピーを作成
+
+
+## qt_specific_memory_management
+
+# Qt特有のメモリ管理
+
+## 3.1 親子関係の管理
+```cpp
+// 1. 親オブジェクトの設定
+void set_parent_ownership(QWidget* child, QWidget* parent) {
+    child->setParent(parent);  // 親が子の寿命を管理
+}
+
+// 2. 親子関係の解除
+void clear_parent(QWidget* widget) {
+    widget->setParent(nullptr);  // 親子関係の解除
+}
+
+// 3. 親子関係の確認
+bool is_child_of(QWidget* child, QWidget* parent) {
+    return child->parent() == parent;
+}
+```
+
+## 3.2 Qtのスマートポインタ
+```cpp
+// 1. QScopedPointerの使用
+QScopedPointer<QWidget> widget(new QWidget());
+widget->show();  // スコープ終了時に自動削除
+
+// 2. QSharedPointerの使用
+QSharedPointer<QObject> obj = QSharedPointer<QObject>::create();
+```
+
+## 3.3 Qt特有のメモリ管理パターン
+
+### 1. オブジェクト階層
+```cpp
+class WidgetHierarchy {
+public:
+    static void setup_hierarchy(QWidget* parent) {
+        // 子ウィジェットの作成と親子関係の設定
+        auto* child1 = new QWidget(parent);
+        auto* child2 = new QWidget(parent);
+        
+        // 孫ウィジェットの作成
+        auto* grandchild1 = new QWidget(child1);
+        auto* grandchild2 = new QWidget(child2);
+        
+        // parentの削除時に全ての子孫が自動的に削除される
+    }
+    
+    static void reparent(QWidget* widget, QWidget* new_parent) {
+        // 親の変更（所有権の移転）
+        widget->setParent(new_parent);
+    }
+    
+    static void orphan(QWidget* widget) {
+        // 親子関係の解除（所有権の解放）
+        widget->setParent(nullptr);
+        // この時点でwidgetの削除責任は呼び出し側に移る
+    }
+};
+```
+
+### 2. イベントフィルタ
+```cpp
+class EventFilter : public QObject {
+public:
+    bool eventFilter(QObject* watched, QEvent* event) override {
+        // イベントのフィルタリング
+        // watchedオブジェクトの寿命管理に注意
+        return QObject::eventFilter(watched, event);
+    }
+};
+```
+
+## 3.4 メモリ管理の実装例
+
+### 1. ウィジェット管理
+```cpp
+class WidgetManager {
+    QWidget* parent_widget;
+    std::vector<QWidget*> managed_widgets;
+    
+public:
+    explicit WidgetManager(QWidget* parent)
+        : parent_widget(parent) {}
+    
+    QWidget* create_widget() {
+        auto* widget = new QWidget(parent_widget);
+        managed_widgets.push_back(widget);
+        return widget;
+    }
+    
+    void remove_widget(QWidget* widget) {
+        auto it = std::find(managed_widgets.begin(),
+                          managed_widgets.end(), widget);
+        if (it != managed_widgets.end()) {
+            managed_widgets.erase(it);
+            widget->deleteLater();  // 安全な削除
+        }
+    }
+    
+    ~WidgetManager() {
+        // 明示的なクリーンアップは不要
+        // 親ウィジェットの削除時に自動的に解放される
+    }
+};
+```
+
+### 2. リソース管理
+```cpp
+class ResourceManager {
+    QObject* parent_object;
+    QHash<QString, QObject*> resources;
+    
+public:
+    explicit ResourceManager(QObject* parent)
+        : parent_object(parent) {}
+    
+    void add_resource(const QString& key, QObject* resource) {
+        resource->setParent(parent_object);  // 所有権の設定
+        resources.insert(key, resource);
+    }
+    
+    QObject* get_resource(const QString& key) {
+        return resources.value(key);
+    }
+    
+    void remove_resource(const QString& key) {
+        if (auto* resource = resources.take(key)) {
+            resource->setParent(nullptr);  // 所有権の解除
+            resource->deleteLater();
+        }
+    }
+};
+```
+
+## 3.5 メモリ管理のガイドライン
+
+### 1. 親子関係の使用
+- 適切な親オブジェクトの選択
+- 所有権の明確な管理
+- 循環参照の防止
+- 親子関係の変更に注意
+
+### 2. スマートポインタの選択
+- QScopedPointerの積極的な使用
+- QSharedPointerの適切な使用
+- 生ポインタの最小限の使用
+- 所有権の明確な表現
+
+### 3. 削除タイミング
+- deleteLater()の適切な使用
+- イベントループとの連携
+- 非同期削除の考慮
+- 安全な解放の保証
+
+### 4. デバッグとテスト
+- 親子関係の検証
+- メモリリークの検出
+- 削除順序の確認
+- 循環参照のチェック
+
+
+## c_api_memory_management
+
+# C APIのメモリ管理
+
+## 4.1 リソース作成/削除
+```c
+// 1. 作成関数
+void* Widget_create() {
+    try {
+        return new QWidget();
+    } catch (...) {
+        return nullptr;
+    }
+}
+
+// 2. 削除関数
+void Widget_delete(void* ptr) {
+    if (ptr) {
+        delete static_cast<QWidget*>(ptr);
+    }
+}
+
+// 3. エラー処理付き作成
+void* Widget_create_safe(ErrorInfo* error) {
+    try {
+        void* ptr = new QWidget();
+        if (!ptr) {
+            set_error(error, ERROR_MEMORY,
+                     "Failed to create widget");
+        }
+        return ptr;
+    } catch (const std::exception& e) {
+        set_error(error, ERROR_OPERATION, e.what());
+        return nullptr;
+    }
+}
+```
+
+## 4.2 一時リソースの管理
+```c
+// 1. 文字列バッファ
+const char* get_string_content(void* widget) {
+    static thread_local char buffer[1024];
+    if (!widget) return nullptr;
+    
+    auto* w = static_cast<QWidget*>(widget);
+    QByteArray utf8 = w->windowTitle().toUtf8();
+    strncpy(buffer, utf8.constData(), sizeof(buffer) - 1);
+    buffer[sizeof(buffer) - 1] = '\0';
+    return buffer;
+}
+
+// 2. 配列の管理
+typedef struct {
+    void** items;
+    int count;
+} ItemArray;
+
+ItemArray* create_item_array() {
+    auto* array = new ItemArray();
+    array->items = nullptr;
+    array->count = 0;
+    return array;
+}
+
+void delete_item_array(ItemArray* array) {
+    if (array) {
+        delete[] array->items;
+        delete array;
+    }
+}
+```
+
+## 4.3 リソース管理パターン
+
+### 1. 親子関係の管理
+```c
+// 1. 親の設定
+void Widget_setParent(void* widget, void* parent) {
+    if (!widget) return;
+    auto* w = static_cast<QWidget*>(widget);
+    w->setParent(static_cast<QWidget*>(parent));
+}
+
+// 2. 親の取得
+void* Widget_parent(void* widget) {
+    if (!widget) return nullptr;
+    auto* w = static_cast<QWidget*>(widget);
+    return w->parent();
+}
+
+// 3. 子の列挙
+ItemArray* Widget_children(void* widget) {
+    if (!widget) return nullptr;
+    
+    auto* w = static_cast<QWidget*>(widget);
+    auto children = w->children();
+    
+    auto* array = create_item_array();
+    array->count = children.size();
+    array->items = new void*[array->count];
+    
+    for (int i = 0; i < array->count; ++i) {
+        array->items[i] = children[i];
+    }
+    
+    return array;
+}
+```
+
+### 2. リソースの所有権管理
+```c
+// 1. 所有権の移転
+void* Widget_takeOwnership(void* widget) {
+    if (!widget) return nullptr;
+    auto* w = static_cast<QWidget*>(widget);
+    w->setParent(nullptr);  // 親子関係の解除
+    return widget;
+}
+
+// 2. 所有権の確認
+bool Widget_hasParent(void* widget) {
+    if (!widget) return false;
+    auto* w = static_cast<QWidget*>(widget);
+    return w->parent() != nullptr;
+}
+```
+
+## 4.4 メモリ管理の実装例
+
+### 1. リソースプール
+```c
+typedef struct {
+    void** items;
+    int capacity;
+    int count;
+    std::mutex mutex;
+} ResourcePool;
+
+ResourcePool* create_resource_pool(int initial_capacity) {
+    auto* pool = new ResourcePool();
+    pool->capacity = initial_capacity;
+    pool->count = 0;
+    pool->items = new void*[initial_capacity];
+    return pool;
+}
+
+void* resource_pool_acquire(ResourcePool* pool) {
+    std::lock_guard<std::mutex> lock(pool->mutex);
+    if (pool->count > 0) {
+        return pool->items[--pool->count];
+    }
+    return create_resource();
+}
+
+void resource_pool_release(ResourcePool* pool, void* resource) {
+    std::lock_guard<std::mutex> lock(pool->mutex);
+    if (pool->count < pool->capacity) {
+        pool->items[pool->count++] = resource;
+    } else {
+        delete_resource(resource);
+    }
+}
+
+void delete_resource_pool(ResourcePool* pool) {
+    if (!pool) return;
+    for (int i = 0; i < pool->count; ++i) {
+        delete_resource(pool->items[i]);
+    }
+    delete[] pool->items;
+    delete pool;
+}
+```
+
+### 2. リソースキャッシュ
+```c
+typedef struct {
+    std::unordered_map<std::string, void*> cache;
+    std::mutex mutex;
+} ResourceCache;
+
+ResourceCache* create_resource_cache() {
+    return new ResourceCache();
+}
+
+void* resource_cache_get(ResourceCache* cache,
+                        const char* key) {
+    std::lock_guard<std::mutex> lock(cache->mutex);
+    auto it = cache->cache.find(key);
+    if (it != cache->cache.end()) {
+        return it->second;
+    }
+    void* resource = create_resource();
+    cache->cache[key] = resource;
+    return resource;
+}
+
+void resource_cache_remove(ResourceCache* cache,
+                         const char* key) {
+    std::lock_guard<std::mutex> lock(cache->mutex);
+    auto it = cache->cache.find(key);
+    if (it != cache->cache.end()) {
+        delete_resource(it->second);
+        cache->cache.erase(it);
+    }
+}
+
+void delete_resource_cache(ResourceCache* cache) {
+    if (!cache) return;
+    for (const auto& [key, resource] : cache->cache) {
+        delete_resource(resource);
+    }
+    delete cache;
+}
+```
+
+## 4.5 メモリ管理のガイドライン
+
+### 1. リソース管理の原則
+- 所有権の明確化
+- エラー処理の徹底
+- リソースリークの防止
+- スレッド安全性の確保
+
+### 2. 一時リソースの扱い
+- バッファサイズの適切な設定
+- スレッドローカルストレージの活用
+- オーバーフロー対策
+- クリーンアップの確実な実行
+
+### 3. エラー処理
+- NULLチェックの徹底
+- エラー情報の提供
+- 部分的な失敗の処理
+- リソースの適切な解放
+
+### 4. デバッグサポート
+- メモリリークの追跡
+- リソース使用状況の監視
+- エラーの検出
+- デバッグ情報の提供
+
+
+## memory_leak_prevention
+
+# メモリリーク防止
+
+## 5.1 リソーストラッキング
+```cpp
+class ResourceTracker {
+    static std::unordered_map<void*, std::string> allocations;
+    static std::mutex mutex;
+public:
+    static void track(void* ptr, const std::string& type) {
+        std::lock_guard<std::mutex> lock(mutex);
+        allocations[ptr] = type;
+    }
+    
+    static void untrack(void* ptr) {
+        std::lock_guard<std::mutex> lock(mutex);
+        allocations.erase(ptr);
+    }
+    
+    static void dump_leaks() {
+        std::lock_guard<std::mutex> lock(mutex);
+        for (const auto& [ptr, type] : allocations) {
+            fprintf(stderr, "Leak: %p (%s)\n", ptr, type.c_str());
+        }
+    }
+};
+```
+
+## 5.2 デバッグ支援
+```cpp
+// 1. アロケーションカウンタ
+class AllocationCounter {
+    static std::atomic<size_t> count;
+public:
+    static void increment() {
+        count.fetch_add(1, std::memory_order_relaxed);
+    }
+    
+    static void decrement() {
+        count.fetch_sub(1, std::memory_order_relaxed);
+    }
+    
+    static size_t get_count() {
+        return count.load(std::memory_order_relaxed);
+    }
+};
+
+// 2. メモリ使用量トラッカー
+class MemoryUsageTracker {
+    static std::atomic<size_t> total_bytes;
+public:
+    static void add_allocation(size_t bytes) {
+        total_bytes.fetch_add(bytes, std::memory_order_relaxed);
+    }
+    
+    static void remove_allocation(size_t bytes) {
+        total_bytes.fetch_sub(bytes, std::memory_order_relaxed);
+    }
+    
+    static size_t get_total_bytes() {
+        return total_bytes.load(std::memory_order_relaxed);
+    }
+};
+```
+
+## 5.3 リソース監視システム
+
+### 1. リソースウォッチャー
+```cpp
+class ResourceWatcher {
+    struct ResourceInfo {
+        std::string type;
+        std::string location;
+        size_t size;
+        std::chrono::steady_clock::time_point creation_time;
+    };
+    
+    static std::unordered_map<void*, ResourceInfo> resources;
+    static std::mutex mutex;
+    
+public:
+    static void watch(void* ptr, const std::string& type,
+                     const std::string& location, size_t size) {
+        std::lock_guard<std::mutex> lock(mutex);
+        resources[ptr] = {
+            type,
+            location,
+            size,
+            std::chrono::steady_clock::now()
+        };
+    }
+    
+    static void unwatch(void* ptr) {
+        std::lock_guard<std::mutex> lock(mutex);
+        resources.erase(ptr);
+    }
+    
+    static void report() {
+        std::lock_guard<std::mutex> lock(mutex);
+        for (const auto& [ptr, info] : resources) {
+            auto age = std::chrono::steady_clock::now() -
+                      info.creation_time;
+            fprintf(stderr,
+                "Resource %p:\n"
+                "  Type: %s\n"
+                "  Location: %s\n"
+                "  Size: %zu bytes\n"
+                "  Age: %lld ms\n",
+                ptr,
+                info.type.c_str(),
+                info.location.c_str(),
+                info.size,
+                std::chrono::duration_cast<
+                    std::chrono::milliseconds>(age).count());
+        }
+    }
+};
+```
+
+### 2. リソースガード
+```cpp
+template<typename T>
+class ResourceGuard {
+    T* ptr;
+    std::string type;
+    std::string location;
+    
+public:
+    ResourceGuard(T* p, const std::string& t,
+                 const std::string& loc)
+        : ptr(p), type(t), location(loc) {
+        if (ptr) {
+            ResourceWatcher::watch(ptr, type, location,
+                                 sizeof(T));
+        }
+    }
+    
+    ~ResourceGuard() {
+        if (ptr) {
+            ResourceWatcher::unwatch(ptr);
+            delete ptr;
+        }
+    }
+    
+    T* get() const { return ptr; }
+    T* release() {
+        T* p = ptr;
+        ptr = nullptr;
+        if (p) {
+            ResourceWatcher::unwatch(p);
+        }
+        return p;
+    }
+};
+```
+
+## 5.4 メモリリーク検出
+
+### 1. スタックトレース収集
+```cpp
+class StackTraceCollector {
+public:
+    static std::string get_stack_trace() {
+        std::stringstream ss;
+        void* stack[128];
+        int frames = backtrace(stack, 128);
+        char** symbols = backtrace_symbols(stack, frames);
+        
+        if (symbols) {
+            for (int i = 0; i < frames; ++i) {
+                ss << symbols[i] << "\n";
+            }
+            free(symbols);
+        }
+        
+        return ss.str();
+    }
+};
+```
+
+### 2. メモリリーク検出器
+```cpp
+class LeakDetector {
+    struct AllocationInfo {
+        size_t size;
+        std::string stack_trace;
+        std::chrono::steady_clock::time_point time;
+    };
+    
+    static std::unordered_map<void*,
+                             AllocationInfo> allocations;
+    static std::mutex mutex;
+    
+public:
+    static void on_allocation(void* ptr, size_t size) {
+        std::lock_guard<std::mutex> lock(mutex);
+        allocations[ptr] = {
+            size,
+            StackTraceCollector::get_stack_trace(),
+            std::chrono::steady_clock::now()
+        };
+    }
+    
+    static void on_deallocation(void* ptr) {
+        std::lock_guard<std::mutex> lock(mutex);
+        allocations.erase(ptr);
+    }
+    
+    static void report_leaks() {
+        std::lock_guard<std::mutex> lock(mutex);
+        for (const auto& [ptr, info] : allocations) {
+            fprintf(stderr,
+                "Memory leak detected:\n"
+                "  Address: %p\n"
+                "  Size: %zu bytes\n"
+                "  Allocation time: %lld ms ago\n"
+                "Stack trace:\n%s\n",
+                ptr,
+                info.size,
+                std::chrono::duration_cast<
+                    std::chrono::milliseconds>(
+                    std::chrono::steady_clock::now() -
+                    info.time).count(),
+                info.stack_trace.c_str());
+        }
+    }
+};
+```
+
+## 5.5 メモリリーク防止のガイドライン
+
+### 1. コーディング規約
+- RAIIパターンの使用
+- スマートポインタの活用
+- 所有権の明確化
+- リソース管理の一貫性
+
+### 2. デバッグ手法
+- メモリリーク検出ツールの使用
+- リソーストラッキングの活用
+- スタックトレースの収集
+- 定期的なメモリ使用量の監視
+
+### 3. テスト戦略
+- メモリリークテストの自動化
+- エッジケースのテスト
+- 長時間実行テスト
+- リソース枯渇テスト
+
+### 4. 運用対策
+- メモリ使用量の監視
+- リソース使用状況のログ
+- アラート設定
+- 定期的なメモリ解放
+
+
+# Signal Slot
+
+
+## basic_concepts
+
+# シグナル・スロットの基本概念
+
+## 1.1 シグナル/スロットの対応
+```cpp
+// C++側のシグナル/スロット
+class QButtonBind : public QPushButton {
+    Q_OBJECT
+signals:
+    void clicked(bool checked = false);
+public slots:
+    void onClicked(bool checked);
+};
+
+// C側のコールバック
+typedef void (*ButtonCallback)(void* sender, bool checked);
+```
+
+## 1.2 コールバック管理
+```cpp
+// 1. コールバック保持
+class CallbackHolder {
+    std::unordered_map<std::string, void*> callbacks;
+public:
+    void setCallback(const std::string& signal, void* callback) {
+        callbacks[signal] = callback;
+    }
+    
+    void* getCallback(const std::string& signal) {
+        auto it = callbacks.find(signal);
+        return (it != callbacks.end()) ? it->second : nullptr;
+    }
+};
+
+// 2. コールバックディスパッチ
+void dispatch_callback(void* sender, const char* signal, void* data) {
+    auto* holder = get_callback_holder(sender);
+    if (auto callback = holder->getCallback(signal)) {
+        reinterpret_cast<void (*)(void*, void*)>(callback)(sender, data);
+    }
+}
+```
+
+## 1.3 シグナル/スロットの基本パターン
+
+### 1. シグナルの定義
+```cpp
+// 1. 基本的なシグナル
+signals:
+    void valueChanged(int value);
+    void stateChanged(bool state);
+    void textChanged(const QString& text);
+
+// 2. パラメータなしのシグナル
+signals:
+    void clicked();
+    void pressed();
+    void released();
+
+// 3. 複数パラメータのシグナル
+signals:
+    void itemSelected(int row, int column);
+    void rangeChanged(int min, int max);
+    void dataChanged(const QModelIndex& topLeft,
+                    const QModelIndex& bottomRight);
+```
+
+### 2. スロットの定義
+```cpp
+// 1. パブリックスロット
+public slots:
+    void setValue(int value);
+    void setText(const QString& text);
+    void setEnabled(bool enabled);
+
+// 2. プロテクテッドスロット
+protected slots:
+    void updateDisplay();
+    void handleError(const QString& message);
+
+// 3. プライベートスロット
+private slots:
+    void cleanup();
+    void initialize();
+```
+
+## 1.4 シグナル/スロットの接続パターン
+
+### 1. 直接接続
+```cpp
+// 1. 基本的な接続
+connect(sender, SIGNAL(valueChanged(int)),
+        receiver, SLOT(handleValue(int)));
+
+// 2. 新しい構文での接続
+connect(sender, &Sender::valueChanged,
+        receiver, &Receiver::handleValue);
+
+// 3. ラムダ式での接続
+connect(sender, &Sender::valueChanged,
+        [](int value) {
+            // 値の処理
+        });
+```
+
+### 2. キューイング接続
+```cpp
+// 1. キューイング接続の指定
+connect(sender, &Sender::valueChanged,
+        receiver, &Receiver::handleValue,
+        Qt::QueuedConnection);
+
+// 2. 自動接続タイプの選択
+connect(sender, &Sender::valueChanged,
+        receiver, &Receiver::handleValue,
+        Qt::AutoConnection);
+```
+
+## 1.5 シグナル/スロットのガイドライン
+
+### 1. シグナルの設計
+- 意味のある名前を使用
+- 必要な情報のみを送信
+- 適切なパラメータ型を選択
+- ドキュメントを提供
+
+### 2. スロットの設計
+- 単一責任の原則に従う
+- エラー処理を含める
+- パフォーマンスを考慮
+- 再入可能性を確保
+
+### 3. 接続の管理
+- 適切な接続タイプを選択
+- メモリリークを防止
+- 循環参照を避ける
+- デバッグ情報を提供
+
+### 4. エラー処理
+- シグナル発行の失敗を処理
+- スロット実行の失敗を処理
+- 接続エラーを検出
+- リソースのクリーンアップ
+
+
+## signal_handler_implementation
+
+# シグナルハンドラの実装
+
+## 2.1 ハンドラクラス
+```cpp
+// 1. 基本ハンドラ
+class QWidgetHandler : public QObject {
+    Q_OBJECT
+public:
+    explicit QWidgetHandler(QWidget* target);
+    void setCallback(const char* signal, void* callback);
+
+private slots:
+    void onSignal();
+    void onSignalWithBool(bool value);
+    void onSignalWithInt(int value);
+    void onSignalWithString(const QString& value);
+
+private:
+    QWidget* m_target;
+    std::unordered_map<std::string, void*> m_callbacks;
+};
+
+// 2. 特殊化ハンドラ
+class QButtonHandler : public QWidgetHandler {
+    Q_OBJECT
+public:
+    explicit QButtonHandler(QAbstractButton* button);
+
+private slots:
+    void onClicked(bool checked);
+    void onToggled(bool checked);
+    void onPressed();
+    void onReleased();
+};
+```
+
+## 2.2 シグナル接続
+```cpp
+// 1. 直接接続
+void connect_signal_direct(QObject* sender, const char* signal,
+                         QObject* receiver, const char* slot) {
+    QObject::connect(sender, signal, receiver, slot,
+                    Qt::DirectConnection);
+}
+
+// 2. キューイング接続
+void connect_signal_queued(QObject* sender, const char* signal,
+                          QObject* receiver, const char* slot) {
+    QObject::connect(sender, signal, receiver, slot,
+                    Qt::QueuedConnection);
+}
+```
+
+## 2.3 シグナルハンドラの実装パターン
+
+### 1. 基本的なハンドラ実装
+```cpp
+class SignalHandler : public QObject {
+    Q_OBJECT
+public:
+    using Callback = void (*)(void*, void*);
+    
+    void setCallback(const char* signal, Callback callback) {
+        callbacks[signal] = callback;
+    }
+    
+private slots:
+    void handleSignal() {
+        if (auto callback = callbacks["signal"]) {
+            callback(sender(), nullptr);
+        }
+    }
+    
+    void handleSignalWithValue(int value) {
+        if (auto callback = callbacks["signalWithValue"]) {
+            callback(sender(), &value);
+        }
+    }
+    
+private:
+    std::unordered_map<std::string, Callback> callbacks;
+};
+```
+
+### 2. パラメータ変換
+```cpp
+class ParameterConverter {
+public:
+    // 基本型の変換
+    static void convert_to_c(const QVariant& value, void* data) {
+        switch (value.type()) {
+            case QVariant::Bool:
+                *static_cast<bool*>(data) = value.toBool();
+                break;
+            case QVariant::Int:
+                *static_cast<int*>(data) = value.toInt();
+                break;
+            case QVariant::String: {
+                auto str = value.toString().toUtf8();
+                strncpy(static_cast<char*>(data),
+                       str.constData(), str.size() + 1);
+                break;
+            }
+        }
+    }
+    
+    // C++からCへの変換
+    template<typename T>
+    static void* wrap_value(const T& value) {
+        auto* data = new T(value);
+        return static_cast<void*>(data);
+    }
+    
+    // CからC++への変換
+    template<typename T>
+    static T unwrap_value(void* data) {
+        return *static_cast<T*>(data);
+    }
+};
+```
+
+## 2.4 シグナルハンドラの管理
+
+### 1. ハンドラ管理クラス
+```cpp
+class HandlerManager {
+    std::unordered_map<QObject*,
+                       std::unique_ptr<SignalHandler>> handlers;
+    std::mutex mutex;
+    
+public:
+    SignalHandler* get_handler(QObject* obj) {
+        std::lock_guard<std::mutex> lock(mutex);
+        auto it = handlers.find(obj);
+        if (it != handlers.end()) {
+            return it->second.get();
+        }
+        auto handler = std::make_unique<SignalHandler>();
+        auto* ptr = handler.get();
+        handlers[obj] = std::move(handler);
+        return ptr;
+    }
+    
+    void remove_handler(QObject* obj) {
+        std::lock_guard<std::mutex> lock(mutex);
+        handlers.erase(obj);
+    }
+};
+```
+
+### 2. シグナル接続管理
+```cpp
+class ConnectionManager {
+    struct Connection {
+        QObject* sender;
+        QObject* receiver;
+        QMetaObject::Connection connection;
+    };
+    
+    std::vector<Connection> connections;
+    std::mutex mutex;
+    
+public:
+    void add_connection(QObject* sender,
+                       QObject* receiver,
+                       QMetaObject::Connection conn) {
+        std::lock_guard<std::mutex> lock(mutex);
+        connections.push_back({sender, receiver, conn});
+    }
+    
+    void disconnect_all() {
+        std::lock_guard<std::mutex> lock(mutex);
+        for (const auto& conn : connections) {
+            QObject::disconnect(conn.connection);
+        }
+        connections.clear();
+    }
+    
+    void disconnect_sender(QObject* sender) {
+        std::lock_guard<std::mutex> lock(mutex);
+        auto it = std::remove_if(
+            connections.begin(), connections.end(),
+            [sender](const Connection& conn) {
+                if (conn.sender == sender) {
+                    QObject::disconnect(conn.connection);
+                    return true;
+                }
+                return false;
+            });
+        connections.erase(it, connections.end());
+    }
+};
+```
+
+## 2.5 シグナルハンドラのガイドライン
+
+### 1. ハンドラの設計
+- 単一責任の原則に従う
+- スレッド安全性を確保
+- リソース管理を適切に行う
+- エラー処理を含める
+
+### 2. パラメータ変換
+- 型安全性を確保
+- メモリ管理に注意
+- エラーチェックを行う
+- パフォーマンスを考慮
+
+### 3. 接続管理
+- リソースリークを防止
+- 接続の追跡を行う
+- クリーンアップを確実に実行
+- デバッグ情報を提供
+
+### 4. エラー処理
+- シグナル処理の失敗を検出
+- エラー状態を伝播
+- リソースを適切に解放
+- エラーログを記録
+
+
+## c_api_interface
+
+# C APIインターフェース
+
+## 3.1 コールバック設定
+```c
+// 1. シグナルコールバックの設定
+void Widget_setCallback(void* widget, const char* signal,
+                       void (*callback)(void*, void*)) {
+    auto* handler = get_handler(widget);
+    handler->setCallback(signal, reinterpret_cast<void*>(callback));
+}
+
+// 2. イベントフィルタの設定
+void Widget_setEventFilter(void* widget,
+                         bool (*filter)(void*, void*)) {
+    auto* handler = get_handler(widget);
+    handler->setEventFilter(filter);
+}
+```
+
+## 3.2 シグナル発行
+```c
+// 1. 手動シグナル発行
+void Button_click(void* button) {
+    auto* btn = static_cast<QAbstractButton*>(button);
+    btn->click();
+}
+
+// 2. カスタムシグナル発行
+void Widget_emitCustomSignal(void* widget, const char* signal,
+                           void* data) {
+    auto* handler = get_handler(widget);
+    handler->emitSignal(signal, data);
+}
+```
+
+## 3.3 C API実装パターン
+
+### 1. コールバック設定関数
+```c
+// 1. 単一パラメータのコールバック
+void Button_setClickedCallback(void* button,
+                             void (*callback)(void*)) {
+    auto* handler = get_handler(button);
+    handler->setClickedCallback(callback);
+}
+
+// 2. 複数パラメータのコールバック
+void Widget_setPositionChangedCallback(
+    void* widget,
+    void (*callback)(void*, int, int)) {
+    auto* handler = get_handler(widget);
+    handler->setPositionChangedCallback(callback);
+}
+
+// 3. カスタムデータ付きコールバック
+void Widget_setCallbackWithData(
+    void* widget,
+    void (*callback)(void*, void*),
+    void* user_data) {
+    auto* handler = get_handler(widget);
+    handler->setCallbackWithData(callback, user_data);
+}
+```
+
+### 2. シグナル発行関数
+```c
+// 1. 基本的なシグナル発行
+void Widget_emitSignal(void* widget, const char* signal) {
+    auto* handler = get_handler(widget);
+    handler->emitSignal(signal);
+}
+
+// 2. パラメータ付きシグナル発行
+void Widget_emitSignalWithInt(void* widget,
+                             const char* signal,
+                             int value) {
+    auto* handler = get_handler(widget);
+    handler->emitSignalWithInt(signal, value);
+}
+
+// 3. 複合データのシグナル発行
+void Widget_emitSignalWithStruct(
+    void* widget,
+    const char* signal,
+    const DataStruct* data) {
+    auto* handler = get_handler(widget);
+    handler->emitSignalWithStruct(signal, data);
+}
+```
+
+## 3.4 C API使用例
+
+### 1. コールバックの使用
+```c
+// 1. コールバック関数の定義
+void on_button_clicked(void* button) {
+    printf("Button clicked: %p\n", button);
+}
+
+// 2. コールバックの設定
+void setup_button(void* button) {
+    Button_setClickedCallback(button, on_button_clicked);
+}
+
+// 3. 複数パラメータのコールバック
+void on_position_changed(void* widget, int x, int y) {
+    printf("Position changed: %d, %d\n", x, y);
+}
+
+void setup_widget(void* widget) {
+    Widget_setPositionChangedCallback(widget,
+                                    on_position_changed);
+}
+```
+
+### 2. シグナル発行の使用
+```c
+// 1. 基本的なシグナル発行
+void trigger_button(void* button) {
+    Button_click(button);  // クリックシグナルを発行
+}
+
+// 2. カスタムシグナルの発行
+void trigger_custom_signal(void* widget) {
+    DataStruct data = {1, "test"};
+    Widget_emitSignalWithStruct(widget, "customSignal", &data);
+}
+```
+
+## 3.5 C APIのガイドライン
+
+### 1. コールバック設計
+- 型安全性の確保
+- エラー処理の追加
+- リソース管理の考慮
+- デバッグ情報の提供
+
+### 2. シグナル発行
+- パラメータの検証
+- エラー状態の伝播
+- スレッド安全性の確保
+- パフォーマンスの最適化
+
+### 3. メモリ管理
+- リソースリークの防止
+- 所有権の明確化
+- クリーンアップの保証
+- 循環参照の防止
+
+### 4. エラー処理
+- NULLポインタのチェック
+- 型変換の検証
+- エラー状態の通知
+- リカバリ処理の実装
+
+
+## data_conversion
+
+# データ変換
+
+## 4.1 基本型の変換
+```cpp
+// 1. C++からCへの変換
+void convert_to_c(const QVariant& value, void* data) {
+    switch (value.type()) {
+        case QVariant::Bool:
+            *static_cast<bool*>(data) = value.toBool();
+            break;
+        case QVariant::Int:
+            *static_cast<int*>(data) = value.toInt();
+            break;
+        case QVariant::String: {
+            auto str = value.toString().toUtf8();
+            strncpy(static_cast<char*>(data), str.constData(),
+                   str.size() + 1);
+            break;
+        }
+    }
+}
+
+// 2. CからC++への変換
+QVariant convert_from_c(void* data, int type) {
+    switch (type) {
+        case BOOL_TYPE:
+            return QVariant(*static_cast<bool*>(data));
+        case INT_TYPE:
+            return QVariant(*static_cast<int*>(data));
+        case STRING_TYPE:
+            return QVariant(QString::fromUtf8(
+                static_cast<char*>(data)));
+        default:
+            return QVariant();
+    }
+}
+```
+
+## 4.2 複合型の変換
+```cpp
+// 1. 構造体の変換
+struct Point {
+    int x;
+    int y;
+};
+
+void convert_point(const QPoint& qpoint, Point* point) {
+    point->x = qpoint.x();
+    point->y = qpoint.y();
+}
+
+QPoint convert_point(const Point* point) {
+    return QPoint(point->x, point->y);
+}
+
+// 2. 配列の変換
+struct Array {
+    void** items;
+    int count;
+};
+
+void convert_list(const QList<QObject*>& list, Array* array) {
+    array->count = list.size();
+    array->items = new void*[array->count];
+    for (int i = 0; i < array->count; ++i) {
+        array->items[i] = list[i];
+    }
+}
+```
+
+## 4.3 データ変換パターン
+
+### 1. 値型の変換
+```cpp
+class ValueConverter {
+public:
+    // 基本型の変換
+    template<typename T>
+    static T convert_value(void* data) {
+        return *static_cast<T*>(data);
+    }
+    
+    // 列挙型の変換
+    template<typename EnumType>
+    static EnumType convert_enum(int value) {
+        return static_cast<EnumType>(value);
+    }
+    
+    // フラグの変換
+    template<typename FlagType>
+    static FlagType convert_flags(unsigned int flags) {
+        return static_cast<FlagType>(flags);
+    }
+};
+```
+
+### 2. オブジェクト型の変換
+```cpp
+class ObjectConverter {
+public:
+    // ポインタの変換
+    template<typename T>
+    static T* convert_pointer(void* ptr) {
+        return static_cast<T*>(ptr);
+    }
+    
+    // スマートポインタの変換
+    template<typename T>
+    static QSharedPointer<T> convert_to_shared(void* ptr) {
+        return QSharedPointer<T>(static_cast<T*>(ptr));
+    }
+    
+    // 所有権の移転
+    template<typename T>
+    static T* take_ownership(void* ptr) {
+        auto* obj = static_cast<T*>(ptr);
+        obj->setParent(nullptr);
+        return obj;
+    }
+};
+```
+
+## 4.4 データ変換の実装例
+
+### 1. シグナルパラメータの変換
+```cpp
+class SignalParameterConverter {
+public:
+    // 単一パラメータの変換
+    template<typename T>
+    static void convert_parameter(void* src, void* dst) {
+        *static_cast<T*>(dst) = *static_cast<T*>(src);
+    }
+    
+    // 複数パラメータの変換
+    template<typename... Args>
+    static void convert_parameters(void* src,
+                                 std::tuple<Args...>& dst) {
+        // パラメータタプルの変換
+    }
+    
+    // パラメータパックの変換
+    static void convert_parameter_pack(void* src,
+                                     void** dst,
+                                     int count) {
+        std::memcpy(dst, src, count * sizeof(void*));
+    }
+};
+```
+
+### 2. コールバックパラメータの変換
+```cpp
+class CallbackParameterConverter {
+public:
+    // コールバックデータの変換
+    template<typename T>
+    static void convert_callback_data(void* src,
+                                    void (*callback)(void*, T)) {
+        callback(src, *static_cast<T*>(src));
+    }
+    
+    // コールバック結果の変換
+    template<typename R>
+    static R convert_callback_result(void* result) {
+        return *static_cast<R*>(result);
+    }
+    
+    // エラー状態の変換
+    static bool convert_error_state(void* error) {
+        return static_cast<bool>(error);
+    }
+};
+```
+
+## 4.5 データ変換のガイドライン
+
+### 1. 型安全性
+- 型チェックの実施
+- キャストの安全性確保
+- エラー処理の追加
+- 境界チェックの実装
+
+### 2. メモリ管理
+- バッファサイズの確認
+- メモリリークの防止
+- 一時バッファの管理
+- クリーンアップの保証
+
+### 3. パフォーマンス
+- 不要なコピーの回避
+- バッファの再利用
+- キャッシュの活用
+- 最適化の検討
+
+### 4. エラー処理
+- 変換エラーの検出
+- エラー状態の伝播
+- リカバリ処理の実装
+- デバッグ情報の提供
+
+
+## signal_slot
+
+# シグナル/スロット処理
+
+## 5.1 コールバック定義
+```c
+// 1. コールバック関数型
+typedef void (*ButtonClickCallback)(void* button);
+
+// 2. コールバック設定
+void QPushButton_setClickCallback(
+    void* button,
+    ButtonClickCallback callback
+);
+```
+
+## 5.2 イベント処理フロー
+1. Qt シグナル発生
+2. Handler クラスがシグナルを受信
+3. 登録されたコールバックを呼び出し
+4. C言語側で処理を実行
+
+## 5.3 実装例
+```cpp
+// C++側（Handler）
+class QPushButtonHandler : public QObject {
+    Q_OBJECT
+public:
+    void setClickCallback(ButtonClickCallback cb) {
+        m_callback = cb;
+    }
+
+public slots:
+    void onClick() {
+        if (m_callback) {
+            m_callback(m_button);
+        }
+    }
+
+private:
+    ButtonClickCallback m_callback;
+    QPushButton* m_button;
+};
+
+// C側（使用例）
+void onButtonClick(void* button) {
+    // クリック時の処理
+}
+
+void setup() {
+    void* button = QPushButton_create(NULL);
+    QPushButton_setClickCallback(button, onButtonClick);
+}
+
+
+# Inheritance
+
+
+## basic_principles
+
+# 基本原則
+
+## 1.1 継承階層の設計
+```cpp
+// 1. 基底クラスインターフェース
+class BindQObject {
+public:
+    virtual ~BindQObject() = default;
+    virtual void* handle() const = 0;
+    virtual void setParent(void* parent) = 0;
+    virtual const char* className() const = 0;
+};
+
+// 2. 基本実装
+class BindQWidget : public QWidget, public BindQObject {
+public:
+    void* handle() const override { return (void*)this; }
+    void setParent(void* parent) override {
+        QWidget::setParent(static_cast<QWidget*>(parent));
+    }
+    const char* className() const override {
+        return "QWidget";
+    }
+};
+```
+
+## 1.2 継承チェーン
+```cpp
+// 1. 継承チェーンの定義
+class BindQAbstractButton : public QAbstractButton,
+                          public BindQWidget {
+public:
+    using QAbstractButton::QAbstractButton;
+    const char* className() const override {
+        return "QAbstractButton";
+    }
+};
+
+class BindQPushButton : public QPushButton,
+                       public BindQAbstractButton {
+public:
+    using QPushButton::QPushButton;
+    const char* className() const override {
+        return "QPushButton";
+    }
+};
+
+
+## type_conversion_and_validation
+
+# 型変換と検証
+
+## 2.1 ダウンキャスト
+```cpp
+// 1. 安全なダウンキャスト
+template<typename T>
+T* safe_cast(void* ptr) {
+    if (!ptr) return nullptr;
+    
+    auto* obj = static_cast<BindQObject*>(ptr);
+    if (auto* cast = dynamic_cast<T*>(obj)) {
+        return cast;
+    }
+    return nullptr;
+}
+
+// 2. 型チェック
+bool is_type(void* ptr, const char* type) {
+    if (!ptr) return false;
+    
+    auto* obj = static_cast<BindQObject*>(ptr);
+    return strcmp(obj->className(), type) == 0;
+}
+```
+
+## 2.2 型情報の管理
+```cpp
+// 1. 型情報レジストリ
+class TypeRegistry {
+    static std::unordered_map<std::string,
+                             std::vector<std::string>> inheritance_map;
+public:
+    static void registerInheritance(const std::string& derived,
+                                  const std::string& base) {
+        inheritance_map[derived].push_back(base);
+    }
+    
+    static bool isSubclassOf(const std::string& derived,
+                            const std::string& base) {
+        auto it = inheritance_map.find(derived);
+        if (it == inheritance_map.end()) return false;
+        
+        const auto& bases = it->second;
+        return std::find(bases.begin(), bases.end(),
+                        base) != bases.end();
+    }
+};
+
+// 2. 型情報の登録
+void register_types() {
+    TypeRegistry::registerInheritance("QPushButton",
+                                    "QAbstractButton");
+    TypeRegistry::registerInheritance("QAbstractButton",
+                                    "QWidget");
+    TypeRegistry::registerInheritance("QWidget",
+                                    "QObject");
+}
+
+
+## method_inheritance
+
+# メソッドの継承
+
+## 3.1 仮想関数の実装
+```cpp
+// 1. 純粋仮想関数
+class BindQAbstractButton : public QAbstractButton {
+protected:
+    void paintEvent(QPaintEvent* event) override {
+        // デフォルトの実装
+        QStylePainter painter(this);
+        QStyleOptionButton option;
+        initStyleOption(&option);
+        painter.drawControl(QStyle::CE_PushButton, option);
+    }
+};
+
+// 2. 仮想関数のオーバーライド
+class BindQPushButton : public QPushButton {
+protected:
+    bool event(QEvent* event) override {
+        // カスタムイベント処理
+        if (event->type() == QEvent::Type::User) {
+            handleCustomEvent(event);
+            return true;
+        }
+        return QPushButton::event(event);
+    }
+};
+```
+
+## 3.2 シグナル/スロットの継承
+```cpp
+// 1. 基底クラスのシグナル
+class BindQAbstractButton : public QAbstractButton {
+    Q_OBJECT
+signals:
+    void clicked(bool checked = false);
+    void pressed();
+    void released();
+};
+
+// 2. 派生クラスでのシグナル処理
+class BindQPushButton : public QPushButton {
+    Q_OBJECT
+private slots:
+    void onClicked(bool checked) {
+        // 基底クラスのシグナルを処理
+        if (m_clickCallback) {
+            m_clickCallback(this, checked);
+        }
+    }
+};
+
+
+## c_api_implementation
+
+# C APIの実装
+
+## 4.1 基底クラスのAPI
+```c
+// 1. 共通関数
+void* QObject_create() {
+    return new BindQObject();
+}
+
+void QObject_delete(void* obj) {
+    delete static_cast<BindQObject*>(obj);
+}
+
+void QObject_setParent(void* obj, void* parent) {
+    auto* object = static_cast<BindQObject*>(obj);
+    object->setParent(parent);
+}
+
+// 2. 型チェック関数
+bool QObject_isWidget(void* obj) {
+    return dynamic_cast<QWidget*>(
+        static_cast<BindQObject*>(obj)) != nullptr;
+}
+```
+
+## 4.2 派生クラスのAPI
+```c
+// 1. 特殊化された関数
+void* QPushButton_create(void* parent) {
+    auto* button = new BindQPushButton(
+        static_cast<QWidget*>(parent));
+    button->setParent(parent);
+    return button;
+}
+
+void QPushButton_setText(void* button, const char* text) {
+    if (auto* btn = safe_cast<BindQPushButton>(button)) {
+        btn->setText(QString::fromUtf8(text));
+    }
+}
+
+// 2. 継承されたメソッドのラッパー
+void QPushButton_show(void* button) {
+    // QWidgetから継承したshow()の呼び出し
+    if (auto* btn = safe_cast<BindQPushButton>(button)) {
+        btn->show();
+    }
+}
+
+
+## memory_management
+
+# メモリ管理
+
+## 5.1 所有権の管理
+```cpp
+// 1. 親子関係の管理
+void set_parent_ownership(void* child, void* parent) {
+    if (auto* c = safe_cast<BindQObject>(child)) {
+        c->setParent(parent);
+    }
+}
+
+// 2. 自動削除の管理
+class AutoDeleteHandler : public QObject {
+public:
+    explicit AutoDeleteHandler(QObject* target)
+        : m_target(target) {
+        target->setParent(this);
+    }
+    
+    ~AutoDeleteHandler() {
+        delete m_target;
+    }
+
+private:
+    QObject* m_target;
+};
+```
+
+## 5.2 リソースの解放
+```cpp
+// 1. 階層的な解放
+void delete_widget_hierarchy(void* widget) {
+    if (auto* w = safe_cast<BindQWidget>(widget)) {
+        // 子ウィジェットは自動的に削除される
+        delete w;
+    }
+}
+
+// 2. 参照カウントの管理
+class RefCountedWidget : public BindQWidget {
+    std::atomic<int> ref_count{1};
+public:
+    void addRef() {
+        ref_count.fetch_add(1, std::memory_order_relaxed);
+    }
+    
+    void release() {
+        if (ref_count.fetch_sub(1,
+            std::memory_order_acq_rel) == 1) {
+            delete this;
+        }
+    }
+};
+
+
+## debug_support
+
+# デバッグサポート
+
+## 6.1 継承関係の検証
+```cpp
+// 1. 継承チェーン検証
+class InheritanceValidator {
+public:
+    static bool validateChain(void* obj) {
+        auto* base = static_cast<BindQObject*>(obj);
+        std::vector<std::string> chain;
+        
+        while (base) {
+            chain.push_back(base->className());
+            base = dynamic_cast<BindQObject*>(
+                base->parent());
+        }
+        
+        return validateChainIntegrity(chain);
+    }
+
+private:
+    static bool validateChainIntegrity(
+        const std::vector<std::string>& chain) {
+        for (size_t i = 0; i < chain.size() - 1; ++i) {
+            if (!TypeRegistry::isSubclassOf(
+                chain[i], chain[i + 1])) {
+                return false;
+            }
+        }
+        return true;
+    }
+};
+
+// 2. メモリレイアウト検証
+class LayoutValidator {
+public:
+    static bool validateLayout(void* obj) {
+        auto* base = static_cast<BindQObject*>(obj);
+        
+        // QObjectオフセットの検証
+        auto* qobj = dynamic_cast<QObject*>(base);
+        if (!qobj) return false;
+        
+        // QWidgetオフセットの検証
+        if (auto* widget = dynamic_cast<QWidget*>(base)) {
+            if (static_cast<void*>(qobj) !=
+                static_cast<void*>(widget)) {
+                return false;
+            }
+        }
+        
+        return true;
+    }
+};
+```
+
+## 6.2 継承関係のトレース
+```cpp
+// 1. 継承チェーンの出力
+void dump_inheritance_chain(void* obj) {
+    auto* base = static_cast<BindQObject*>(obj);
+    std::vector<std::string> chain;
+    
+    while (base) {
+        chain.push_back(base->className());
+        base = dynamic_cast<BindQObject*>(
+            base->parent());
+    }
+    
+    qDebug() << "Inheritance chain:";
+    for (const auto& type : chain) {
+        qDebug() << " -" << type.c_str();
+    }
+}
+
+// 2. 仮想関数テーブルの検証
+class VTableValidator {
+public:
+    static bool validateVTable(void* obj) {
+        auto* base = static_cast<BindQObject*>(obj);
+        
+        // 仮想関数の呼び出しテスト
+        bool handle_valid = base->handle() != nullptr;
+        bool classname_valid = base->className() != nullptr;
+        
+        // 派生クラス固有の仮想関数テスト
+        if (auto* widget = dynamic_cast<QWidget*>(base)) {
+            bool event_valid = widget->event(nullptr) == false;
+            return handle_valid && classname_valid &&
+                   event_valid;
+        }
+        
+        return handle_valid && classname_valid;
+    }
+};
+
+
+## implementation_patterns
+
+# 継承メソッドの実装パターン
+
+## 7.1 基本原則
+```markdown
+1. 継承の扱い
+   - Qt6クラスの多くはQObjectやQWidgetなどを継承している
+   - C言語では継承を直接表現できない
+   - 継承元のメソッドもバインディングに含める必要がある
+
+2. コード効率化
+   - すべてのメソッドを再実装せず、継承元の関数を活用
+   - 既存のバインディング関数をラップして再利用
+   - 重複コードを最小限に抑える
+```
+
+## 7.2 実装パターン
+```c
+// 1. 継承元の関数を直接利用
+void QPushButton_setStyleSheet(void* button, const char* styleSheet) {
+    // QWidgetの関数を再利用
+    QWidget_setStyleSheet(button, styleSheet);
+}
+
+// 2. 型変換を含む実装
+void QDialog_setLayout(void* dialog, void* layout) {
+    // QWidgetのメソッドを利用
+    QWidget_setLayout(dialog, layout);
+}
+
+// 3. 追加処理が必要な場合
+void QMainWindow_setMenuBar(void* window, void* menuBar) {
+    // 型チェックと追加処理
+    if (!is_type(window, "QMainWindow")) return;
+    QWidget_setParent(menuBar, window);  // 継承元の処理
+    // QMainWindow固有の処理
+    static_cast<QMainWindow*>(window)->setMenuBar(
+        static_cast<QMenuBar*>(menuBar));
+}
+```
+
+## 7.3 実装例
+```cpp
+// 1. スタイルシートの設定
+// QWidget（基底クラス）の実装
+void QWidget_setStyleSheet(void* widget, const char* styleSheet) {
+    if (auto* w = safe_cast<QWidget>(widget)) {
+        w->setStyleSheet(QString::fromUtf8(styleSheet));
+    }
+}
+
+// QPushButton（派生クラス）の実装
+void QPushButton_setStyleSheet(void* button, const char* styleSheet) {
+    // 基底クラスの関数を再利用
+    QWidget_setStyleSheet(button, styleSheet);
+}
+
+// 2. イベントハンドリング
+// QWidget（基底クラス）の実装
+void QWidget_show(void* widget) {
+    if (auto* w = safe_cast<QWidget>(widget)) {
+        w->show();
+    }
+}
+
+// QDialog（派生クラス）の実装
+void QDialog_show(void* dialog) {
+    // 基底クラスの関数を再利用
+    QWidget_show(dialog);
+}
+```
+
+## 7.4 実装の選択基準
+```markdown
+1. 直接再利用
+   - 継承元の実装で十分な場合
+   - 追加の処理が不要な場合
+   - 型変換のみが必要な場合
+
+2. ラッパー実装
+   - 追加の検証が必要な場合
+   - エラー処理を追加する場合
+   - パラメータの変換が必要な場合
+
+3. 完全な再実装
+   - 派生クラス固有の処理が必要な場合
+   - 継承元の動作を変更する場合
+   - パフォーマンスの最適化が必要な場合
+```
+
+## 7.5 実装のガイドライン
+```markdown
+1. 基本方針
+   - 可能な限り継承元の関数を再利用
+   - 重複コードを避ける
+   - 保守性を重視
+
+2. 実装手順
+   - 継承元の機能を確認
+   - 必要な追加処理を特定
+   - 適切な実装パターンを選択
+
+3. 注意点
+   - 型の安全性を確保
+   - エラー処理を適切に実装
+   - パフォーマンスを考慮
+```
+
+## 7.6 ドキュメント例
+```c
+/**
+ * @brief スタイルシートを設定
+ * 
+ * この関数は QWidget::setStyleSheet() の機能を利用します。
+ * QPushButtonはQWidgetを継承しているため、QWidget_setStyleSheet
+ * を再利用することで実装を簡素化しています。
+ *
+ * @param button QPushButtonのポインタ
+ * @param styleSheet 設定するスタイルシート
+ * 
+ * @note この実装はQWidgetの機能を直接利用するため、
+ * QPushButton固有の追加処理は行いません。
+ */
+void QPushButton_setStyleSheet(void* button, const char* styleSheet) {
+    QWidget_setStyleSheet(button, styleSheet);
+}
+
+
+# Thread Safety
+
+
+## thread_safety
+
+# スレッド安全性
+
+## 5.1 スレッドセーフなシグナル処理
+```cpp
+// 1. スレッドセーフなコールバック呼び出し
+void invoke_callback_safe(QObject* sender, void* callback,
+                        void* data) {
+    if (QThread::currentThread() == sender->thread()) {
+        // 同じスレッドなら直接呼び出し
+        reinterpret_cast<void (*)(void*, void*)>(callback)(
+            sender, data);
+    } else {
+        // 異なるスレッドならキューイング
+        QMetaObject::invokeMethod(sender, [=]() {
+            reinterpret_cast<void (*)(void*, void*)>(callback)(
+                sender, data);
+        }, Qt::QueuedConnection);
+    }
+}
+
+// 2. スレッドセーフなイベント処理
+class ThreadSafeHandler : public QObject {
+    Q_OBJECT
+    std::mutex mutex;
+    std::queue<std::function<void()>> eventQueue;
+
+public slots:
+    void processEvents() {
+        std::lock_guard<std::mutex> lock(mutex);
+        while (!eventQueue.empty()) {
+            eventQueue.front()();
+            eventQueue.pop();
+        }
+    }
+
+public:
+    void postEvent(std::function<void()> event) {
+        std::lock_guard<std::mutex> lock(mutex);
+        eventQueue.push(std::move(event));
+        QMetaObject::invokeMethod(this, "processEvents",
+                                Qt::QueuedConnection);
+    }
+};
+```
+
+## 5.2 スレッドセーフなデータ管理
+
+### 1. スレッドセーフなコールバック管理
+```cpp
+class ThreadSafeCallbackManager {
+    std::unordered_map<std::string, void*> callbacks;
+    std::mutex mutex;
+    
+public:
+    void setCallback(const std::string& signal, void* callback) {
+        std::lock_guard<std::mutex> lock(mutex);
+        callbacks[signal] = callback;
+    }
+    
+    void* getCallback(const std::string& signal) {
+        std::lock_guard<std::mutex> lock(mutex);
+        auto it = callbacks.find(signal);
+        return (it != callbacks.end()) ? it->second : nullptr;
+    }
+    
+    void removeCallback(const std::string& signal) {
+        std::lock_guard<std::mutex> lock(mutex);
+        callbacks.erase(signal);
+    }
+};
+```
+
+### 2. スレッドセーフなリソース管理
+```cpp
+class ThreadSafeResourceManager {
+    std::unordered_map<void*, std::unique_ptr<QObject>> resources;
+    std::mutex mutex;
+    
+public:
+    void addResource(void* key, std::unique_ptr<QObject> resource) {
+        std::lock_guard<std::mutex> lock(mutex);
+        resources[key] = std::move(resource);
+    }
+    
+    QObject* getResource(void* key) {
+        std::lock_guard<std::mutex> lock(mutex);
+        auto it = resources.find(key);
+        return (it != resources.end()) ? it->second.get() : nullptr;
+    }
+    
+    void removeResource(void* key) {
+        std::lock_guard<std::mutex> lock(mutex);
+        resources.erase(key);
+    }
+};
+```
+
+## 5.3 スレッドセーフな実装パターン
+
+### 1. スレッドローカルストレージ
+```cpp
+class ThreadLocalStorage {
+    static thread_local std::unordered_map<std::string, void*> storage;
+    
+public:
+    static void setValue(const std::string& key, void* value) {
+        storage[key] = value;
+    }
+    
+    static void* getValue(const std::string& key) {
+        auto it = storage.find(key);
+        return (it != storage.end()) ? it->second : nullptr;
+    }
+    
+    static void removeValue(const std::string& key) {
+        storage.erase(key);
+    }
+};
+```
+
+### 2. ロックフリーデータ構造
+```cpp
+template<typename T>
+class LockFreeQueue {
+    struct Node {
+        T data;
+        std::atomic<Node*> next;
+    };
+    
+    std::atomic<Node*> head;
+    std::atomic<Node*> tail;
+    
+public:
+    void push(T value) {
+        Node* node = new Node{value, nullptr};
+        Node* oldTail = tail.load();
+        
+        while (!tail.compare_exchange_weak(oldTail, node)) {
+            oldTail = tail.load();
+        }
+        
+        oldTail->next = node;
+    }
+    
+    bool pop(T& value) {
+        Node* oldHead = head.load();
+        Node* newHead;
+        
+        do {
+            if (!oldHead) return false;
+            newHead = oldHead->next;
+        } while (!head.compare_exchange_weak(oldHead, newHead));
+        
+        value = oldHead->data;
+        delete oldHead;
+        return true;
+    }
+};
+```
+
+## 5.4 スレッド安全性の実装例
+
+### 1. スレッドセーフなシグナルハンドラ
+```cpp
+class ThreadSafeSignalHandler : public QObject {
+    Q_OBJECT
+    std::mutex callbackMutex;
+    std::unordered_map<std::string, void*> callbacks;
+    
+public:
+    void setCallback(const std::string& signal, void* callback) {
+        std::lock_guard<std::mutex> lock(callbackMutex);
+        callbacks[signal] = callback;
+    }
+    
+private slots:
+    void handleSignal() {
+        std::lock_guard<std::mutex> lock(callbackMutex);
+        auto it = callbacks.find("signal");
+        if (it != callbacks.end()) {
+            reinterpret_cast<void (*)(void*)>(it->second)(this);
+        }
+    }
+};
+```
+
+### 2. スレッドセーフなイベントディスパッチャ
+```cpp
+class ThreadSafeEventDispatcher {
+    std::mutex mutex;
+    std::condition_variable cv;
+    std::queue<std::function<void()>> events;
+    bool running;
+    std::thread worker;
+    
+public:
+    ThreadSafeEventDispatcher() : running(true) {
+        worker = std::thread([this]() {
+            processEvents();
+        });
+    }
+    
+    ~ThreadSafeEventDispatcher() {
+        {
+            std::lock_guard<std::mutex> lock(mutex);
+            running = false;
+        }
+        cv.notify_one();
+        worker.join();
+    }
+    
+    void postEvent(std::function<void()> event) {
+        std::lock_guard<std::mutex> lock(mutex);
+        events.push(std::move(event));
+        cv.notify_one();
+    }
+    
+private:
+    void processEvents() {
+        while (true) {
+            std::function<void()> event;
+            {
+                std::unique_lock<std::mutex> lock(mutex);
+                cv.wait(lock, [this]() {
+                    return !running || !events.empty();
+                });
+                
+                if (!running && events.empty()) {
+                    break;
+                }
+                
+                event = std::move(events.front());
+                events.pop();
+            }
+            event();
+        }
+    }
+};
+```
+
+## 5.5 スレッド安全性のガイドライン
+
+### 1. 基本原則
+- データ競合の防止
+- デッドロックの回避
+- メモリバリアの適切な使用
+- スレッドの同期制御
+
+### 2. 実装方針
+- ロックの最小化
+- アトミック操作の活用
+- スレッドローカルの利用
+- イベントループの活用
+
+### 3. パフォーマンス考慮
+- ロックの粒度の最適化
+- 待機時間の最小化
+- キャッシュラインの考慮
+- スレッド数の適正化
+
+### 4. デバッグ支援
+- デッドロックの検出
+- 競合状態の検出
+- パフォーマンスの計測
+- ログの記録
+
+
+## thread_safety
+
+# スレッド安全性
+
+## 6.1 基本原則
+- メインスレッドでのGUI操作
+- スレッドセーフなリソース管理
+- 排他制御の実装
+
+## 6.2 実装方針
+1. スレッド間通信の制御
+   - シグナル/スロットを利用した安全な通信
+   - イベントキューによるメッセージング
+   - スレッド間の同期制御
+
+2. リソースの適切なロック
+   - ミューテックスによる保護
+   - リードライトロック
+   - アトミック操作
+
+3. スレッドセーフなコールバック
+   - メインスレッドでの実行保証
+   - コールバックキューの管理
+   - 再入可能な実装
+
+4. デッドロック防止
+   - ロック順序の一貫性
+   - タイムアウトの設定
+   - デッドロック検出機構
+
+## 6.3 実装例
+```cpp
+// スレッドセーフなコールバック実行
+void invoke_callback(void* obj, Callback cb) {
+    if (QThread::currentThread() == qApp->thread()) {
+        // メインスレッドなら直接実行
+        cb(obj);
+    } else {
+        // 別スレッドならメインスレッドにポスト
+        QMetaObject::invokeMethod(qApp, [=]() {
+            cb(obj);
+        }, Qt::QueuedConnection);
+    }
+}
+
+
+# Performance
+
+
+## performance_monitoring
+
+# パフォーマンスモニタリング
+
+## 6.1 シグナル処理時間の計測
+```cpp
+// 1. シグナルタイマー
+class SignalTimer : public QObject {
+    Q_OBJECT
+    QElapsedTimer timer;
+    std::unordered_map<std::string, qint64> timings;
+
+public:
+    void startTiming(const QString& signal) {
+        timer.start();
+    }
+
+    void endTiming(const QString& signal) {
+        timings[signal.toStdString()] += timer.elapsed();
+    }
+
+    void dumpTimings() {
+        for (const auto& [signal, time] : timings) {
+            qDebug() << "Signal:" << signal.c_str()
+                     << "Total time:" << time << "ms";
+        }
+    }
+};
+
+// 2. シグナル処理プロファイラ
+class SignalProfiler {
+    struct ProfileData {
+        qint64 totalTime;
+        qint64 callCount;
+        qint64 maxTime;
+        qint64 minTime;
+    };
+    
+    std::unordered_map<std::string, ProfileData> profiles;
+    std::mutex mutex;
+    
+public:
+    void recordSignal(const std::string& signal, qint64 time) {
+        std::lock_guard<std::mutex> lock(mutex);
+        auto& profile = profiles[signal];
+        profile.totalTime += time;
+        profile.callCount++;
+        profile.maxTime = std::max(profile.maxTime, time);
+        profile.minTime = profile.minTime == 0 ?
+            time : std::min(profile.minTime, time);
+    }
+    
+    void dumpProfiles() {
+        std::lock_guard<std::mutex> lock(mutex);
+        for (const auto& [signal, profile] : profiles) {
+            qDebug() << "Signal:" << signal.c_str()
+                     << "\n  Total time:" << profile.totalTime << "ms"
+                     << "\n  Call count:" << profile.callCount
+                     << "\n  Average time:"
+                     << (profile.totalTime / profile.callCount) << "ms"
+                     << "\n  Max time:" << profile.maxTime << "ms"
+                     << "\n  Min time:" << profile.minTime << "ms";
+        }
+    }
+};
+```
+
+## 6.2 コールバック頻度の監視
+```cpp
+// 1. コールバックモニタ
+class CallbackMonitor {
+    static std::unordered_map<void*, int> callCounts;
+    static std::mutex mutex;
+
+public:
+    static void incrementCount(void* callback) {
+        std::lock_guard<std::mutex> lock(mutex);
+        ++callCounts[callback];
+    }
+
+    static void dumpStatistics() {
+        std::lock_guard<std::mutex> lock(mutex);
+        for (const auto& [callback, count] : callCounts) {
+            qDebug() << "Callback:" << callback
+                     << "Called:" << count << "times";
+        }
+    }
+};
+
+// 2. コールバック頻度アナライザ
+class CallbackAnalyzer {
+    struct CallbackStats {
+        int totalCalls;
+        std::chrono::steady_clock::time_point lastCall;
+        std::vector<double> intervals;
+    };
+    
+    std::unordered_map<void*, CallbackStats> stats;
+    std::mutex mutex;
+    
+public:
+    void recordCall(void* callback) {
+        std::lock_guard<std::mutex> lock(mutex);
+        auto& stat = stats[callback];
+        auto now = std::chrono::steady_clock::now();
+        
+        if (stat.totalCalls > 0) {
+            auto interval = std::chrono::duration_cast<
+                std::chrono::milliseconds>(
+                now - stat.lastCall).count();
+            stat.intervals.push_back(interval);
+        }
+        
+        stat.lastCall = now;
+        stat.totalCalls++;
+    }
+    
+    void analyzeCallbacks() {
+        std::lock_guard<std::mutex> lock(mutex);
+        for (const auto& [callback, stat] : stats) {
+            if (stat.intervals.empty()) continue;
+            
+            double sum = std::accumulate(
+                stat.intervals.begin(),
+                stat.intervals.end(), 0.0);
+            double mean = sum / stat.intervals.size();
+            
+            double sq_sum = std::inner_product(
+                stat.intervals.begin(),
+                stat.intervals.end(),
+                stat.intervals.begin(), 0.0);
+            double stdev = std::sqrt(
+                sq_sum / stat.intervals.size() - mean * mean);
+            
+            qDebug() << "Callback:" << callback
+                     << "\n  Total calls:" << stat.totalCalls
+                     << "\n  Average interval:" << mean << "ms"
+                     << "\n  Standard deviation:" << stdev << "ms";
+        }
+    }
+};
+```
+
+## 6.3 パフォーマンス監視システム
+
+### 1. メトリクスコレクタ
+```cpp
+class MetricsCollector {
+    struct Metrics {
+        qint64 signalCount;
+        qint64 totalProcessingTime;
+        qint64 callbackCount;
+        qint64 totalCallbackTime;
+        std::vector<qint64> processingTimes;
+    };
+    
+    std::unordered_map<std::string, Metrics> metrics;
+    std::mutex mutex;
+    
+public:
+    void recordSignalMetrics(const std::string& signal,
+                            qint64 processingTime) {
+        std::lock_guard<std::mutex> lock(mutex);
+        auto& m = metrics[signal];
+        m.signalCount++;
+        m.totalProcessingTime += processingTime;
+        m.processingTimes.push_back(processingTime);
+    }
+    
+    void recordCallbackMetrics(const std::string& signal,
+                              qint64 callbackTime) {
+        std::lock_guard<std::mutex> lock(mutex);
+        auto& m = metrics[signal];
+        m.callbackCount++;
+        m.totalCallbackTime += callbackTime;
+    }
+    
+    void generateReport() {
+        std::lock_guard<std::mutex> lock(mutex);
+        for (const auto& [signal, m] : metrics) {
+            qDebug() << "Signal:" << signal.c_str()
+                     << "\n  Signal count:" << m.signalCount
+                     << "\n  Total processing time:"
+                     << m.totalProcessingTime << "ms"
+                     << "\n  Average processing time:"
+                     << (m.totalProcessingTime / m.signalCount)
+                     << "ms"
+                     << "\n  Callback count:" << m.callbackCount
+                     << "\n  Total callback time:"
+                     << m.totalCallbackTime << "ms"
+                     << "\n  Average callback time:"
+                     << (m.totalCallbackTime / m.callbackCount)
+                     << "ms";
+        }
+    }
+};
+```
+
+### 2. パフォーマンスアラート
+```cpp
+class PerformanceAlert {
+    struct Threshold {
+        qint64 maxProcessingTime;
+        qint64 maxCallbackTime;
+        int maxCallbackFrequency;
+    };
+    
+    std::unordered_map<std::string, Threshold> thresholds;
+    std::function<void(const std::string&)> alertCallback;
+    std::mutex mutex;
+    
+public:
+    void setThreshold(const std::string& signal,
+                     const Threshold& threshold) {
+        std::lock_guard<std::mutex> lock(mutex);
+        thresholds[signal] = threshold;
+    }
+    
+    void setAlertCallback(
+        std::function<void(const std::string&)> callback) {
+        std::lock_guard<std::mutex> lock(mutex);
+        alertCallback = callback;
+    }
+    
+    void checkMetrics(const std::string& signal,
+                     qint64 processingTime,
+                     qint64 callbackTime,
+                     int frequency) {
+        std::lock_guard<std::mutex> lock(mutex);
+        auto it = thresholds.find(signal);
+        if (it == thresholds.end()) return;
+        
+        const auto& threshold = it->second;
+        std::stringstream alert;
+        bool hasAlert = false;
+        
+        if (processingTime > threshold.maxProcessingTime) {
+            alert << "Processing time exceeded: "
+                  << processingTime << "ms";
+            hasAlert = true;
+        }
+        
+        if (callbackTime > threshold.maxCallbackTime) {
+            if (hasAlert) alert << "\n";
+            alert << "Callback time exceeded: "
+                  << callbackTime << "ms";
+            hasAlert = true;
+        }
+        
+        if (frequency > threshold.maxCallbackFrequency) {
+            if (hasAlert) alert << "\n";
+            alert << "Callback frequency exceeded: "
+                  << frequency << " calls/sec";
+            hasAlert = true;
+        }
+        
+        if (hasAlert && alertCallback) {
+            alertCallback(alert.str());
+        }
+    }
+};
+```
+
+## 6.4 パフォーマンス最適化のガイドライン
+
+### 1. シグナル処理の最適化
+- 不要なシグナル発行の削減
+- シグナルパラメータの最小化
+- キューイング接続の適切な使用
+- シグナルの優先順位付け
+
+### 2. コールバック処理の最適化
+- コールバック処理の軽量化
+- コールバックチェーンの最適化
+- メモリアロケーションの最小化
+- キャッシュの活用
+
+### 3. リソース使用の最適化
+- メモリ使用量の監視
+- CPU使用率の監視
+- スレッド使用の最適化
+- I/O操作の最適化
+
+### 4. モニタリングの最適化
+- 必要な情報のみを収集
+- 収集頻度の適正化
+- ストレージ使用量の考慮
+- パフォーマンスへの影響の最小化
+
+
+## performance
+
+# パフォーマンス考慮
+
+## 7.1 最適化方針
+1. 不要なコピーの削減
+   - ポインタ渡しの活用
+   - 参照渡しの利用
+   - 一時オブジェクトの最小化
+
+2. メモリアロケーションの最小化
+   - オブジェクトプール
+   - メモリアリーナ
+   - スタック領域の活用
+
+3. キャッシュの活用
+   - 文字列キャッシュ
+   - オブジェクトキャッシュ
+   - 計算結果のキャッシュ
+
+4. 効率的な型変換
+   - 直接キャスト
+   - テンプレート活用
+   - 変換コストの最小化
+
+## 7.2 監視項目
+- メモリ使用量
+  * ヒープ割り当て
+  * スタック使用量
+  * メモリフラグメンテーション
+
+- CPU使用率
+  * シグナル/スロット処理
+  * 型変換オーバーヘッド
+  * コールバック実行
+
+- レスポンス時間
+  * イベント処理遅延
+  * UI更新速度
+  * コールバック応答時間
+
+- リソース解放の遅延
+  * メモリ解放タイミング
+  * リソースクリーンアップ
+  * キャッシュ破棄
+
+
+# Build Deploy
+
+
+## cmake_settings
+
+# CMake設定
+
+## 1.1 基本設定
+```cmake
+# 1. プロジェクト設定
+cmake_minimum_required(VERSION 3.16)
+project(qt6binding VERSION 1.0.0 LANGUAGES CXX)
+
+# 2. コンパイラ設定
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+
+# 3. ビルドタイプ設定
+if(NOT CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE Release)
+endif()
+
+# 4. コンパイラフラグ
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Werror")
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g -O0")
+set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O2")
+```
+
+## 1.2 Qt6の設定
+```cmake
+# 1. Qt6の検索
+find_package(Qt6 REQUIRED COMPONENTS
+    Core
+    Gui
+    Widgets
+)
+
+# 2. 自動MOC設定
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
+set(CMAKE_AUTOUIC ON)
+
+# 3. Qt6のリンク設定
+target_link_libraries(${PROJECT_NAME} PRIVATE
+    Qt6::Core
+    Qt6::Gui
+    Qt6::Widgets
+)
+```
+
+## 1.3 プラットフォーム固有の設定
+
+### 1. Windows設定
+```cmake
+if(WIN32)
+    # 1. DLLエクスポート設定
+    set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
+    
+    # 2. Windows固有の定義
+    target_compile_definitions(${PROJECT_NAME} PRIVATE
+        WIN32_LEAN_AND_MEAN
+        NOMINMAX
+        _CRT_SECURE_NO_WARNINGS
+    )
+    
+    # 3. リンカーフラグ
+    set(CMAKE_SHARED_LINKER_FLAGS 
+        "${CMAKE_SHARED_LINKER_FLAGS} /SUBSYSTEM:WINDOWS")
+endif()
+```
+
+### 2. macOS設定
+```cmake
+if(APPLE)
+    # 1. RPATHの設定
+    set(CMAKE_MACOSX_RPATH ON)
+    set_target_properties(${PROJECT_NAME} PROPERTIES
+        INSTALL_RPATH "@loader_path/../lib"
+    )
+    
+    # 2. フレームワーク設定
+    set_target_properties(${PROJECT_NAME} PROPERTIES
+        FRAMEWORK TRUE
+        FRAMEWORK_VERSION A
+        MACOSX_FRAMEWORK_IDENTIFIER com.example.qt6binding
+    )
+    
+    # 3. デプロイメントターゲット
+    set(CMAKE_OSX_DEPLOYMENT_TARGET "10.15")
+endif()
+```
+
+### 3. Linux設定
+```cmake
+if(UNIX AND NOT APPLE)
+    # 1. RPATH設定
+    set_target_properties(${PROJECT_NAME} PROPERTIES
+        INSTALL_RPATH "$ORIGIN/../lib"
+        BUILD_WITH_INSTALL_RPATH TRUE
+    )
+    
+    # 2. 共有ライブラリのバージョン
+    set_target_properties(${PROJECT_NAME} PROPERTIES
+        VERSION ${PROJECT_VERSION}
+        SOVERSION ${PROJECT_VERSION_MAJOR}
+    )
+    
+    # 3. インストールディレクトリ
+    include(GNUInstallDirs)
+endif()
+```
+
+## 1.4 CMakeガイドライン
+
+### 1. プロジェクト設定
+- 適切なバージョン要件
+- 必要な言語の指定
+- プロジェクト情報の設定
+- ビルドタイプの設定
+
+### 2. コンパイラ設定
+- C++標準の指定
+- 警告レベルの設定
+- 最適化レベルの設定
+- デバッグ情報の設定
+
+### 3. Qt6設定
+- 必要なコンポーネントの指定
+- 自動ツールの設定
+- リンク設定の最適化
+- 依存関係の管理
+
+### 4. プラットフォーム対応
+- プラットフォーム固有の設定
+- 互換性の確保
+- パス設定の適切な管理
+- インストール設定の調整
+
+
+## build_settings
+
+# ビルド設定
+
+## 2.1 ターゲット設定
+```cmake
+# 1. ソースファイルの収集
+file(GLOB_RECURSE SOURCES
+    "src/*.cpp"
+    "src/*.h"
+)
+
+# 2. ライブラリターゲットの定義
+add_library(${PROJECT_NAME} SHARED
+    ${SOURCES}
+    ${MOC_HEADERS}
+)
+
+# 3. インクルードディレクトリ
+target_include_directories(${PROJECT_NAME}
+    PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+        $<INSTALL_INTERFACE:include>
+    PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/src
+)
+```
+
+## 2.2 依存関係の設定
+```cmake
+# 1. パッケージの検索
+find_package(Threads REQUIRED)
+
+# 2. 依存関係のリンク
+target_link_libraries(${PROJECT_NAME}
+    PRIVATE
+        Threads::Threads
+)
+
+# 3. コンパイル定義
+target_compile_definitions(${PROJECT_NAME}
+    PRIVATE
+        QT_NO_KEYWORDS
+        $<$<CONFIG:Debug>:QT_DEBUG>
+        $<$<CONFIG:Release>:QT_NO_DEBUG>
+)
+```
+
+## 2.3 ビルド設定のパターン
+
+### 1. ライブラリ設定
+```cmake
+# 1. 共有ライブラリ
+add_library(${PROJECT_NAME} SHARED
+    ${SOURCES}
+)
+
+# 2. 静的ライブラリ
+add_library(${PROJECT_NAME}_static STATIC
+    ${SOURCES}
+)
+
+# 3. オブジェクトライブラリ
+add_library(${PROJECT_NAME}_obj OBJECT
+    ${SOURCES}
+)
+```
+
+### 2. ターゲットプロパティ
+```cmake
+# 1. 出力名の設定
+set_target_properties(${PROJECT_NAME} PROPERTIES
+    OUTPUT_NAME "qt6binding"
+    DEBUG_POSTFIX "d"
+)
+
+# 2. バージョン情報の設定
+set_target_properties(${PROJECT_NAME} PROPERTIES
+    VERSION ${PROJECT_VERSION}
+    SOVERSION ${PROJECT_VERSION_MAJOR}
+)
+
+# 3. エクスポート設定
+set_target_properties(${PROJECT_NAME} PROPERTIES
+    C_VISIBILITY_PRESET hidden
+    CXX_VISIBILITY_PRESET hidden
+    VISIBILITY_INLINES_HIDDEN ON
+)
+```
+
+## 2.4 ビルドオプション
+
+### 1. コンパイルオプション
+```cmake
+# 1. 警告レベル
+if(MSVC)
+    target_compile_options(${PROJECT_NAME} PRIVATE
+        /W4
+        /WX
+    )
+else()
+    target_compile_options(${PROJECT_NAME} PRIVATE
+        -Wall
+        -Wextra
+        -Werror
+    )
+endif()
+
+# 2. 最適化オプション
+target_compile_options(${PROJECT_NAME} PRIVATE
+    $<$<CONFIG:Release>:-O2>
+    $<$<CONFIG:Debug>:-O0 -g>
+)
+```
+
+### 2. リンクオプション
+```cmake
+# 1. 基本設定
+target_link_options(${PROJECT_NAME} PRIVATE
+    $<$<PLATFORM_ID:Windows>:/SUBSYSTEM:WINDOWS>
+)
+
+# 2. RPATHの設定
+if(APPLE)
+    set_target_properties(${PROJECT_NAME} PROPERTIES
+        INSTALL_RPATH "@loader_path/../lib"
+    )
+elseif(UNIX)
+    set_target_properties(${PROJECT_NAME} PROPERTIES
+        INSTALL_RPATH "$ORIGIN/../lib"
+    )
+endif()
+```
+
+## 2.5 ビルド設定のガイドライン
+
+### 1. ターゲット設定
+- 適切なターゲット種別の選択
+- ソースファイルの整理
+- インクルードパスの管理
+- 出力設定の最適化
+
+### 2. 依存関係管理
+- 必要なパッケージの検索
+- 適切なリンク設定
+- バージョン要件の指定
+- 互換性の確保
+
+### 3. コンパイル設定
+- 警告レベルの設定
+- 最適化オプションの選択
+- デバッグ情報の制御
+- プラットフォーム対応
+
+### 4. リンク設定
+- 共有/静的リンクの選択
+- RPATHの適切な設定
+- シンボルの可視性制御
+- バージョン情報の管理
+
+
+## install_settings
+
+# インストール設定
+
+## 3.1 ファイルのインストール
+```cmake
+# 1. ヘッダーのインストール
+install(FILES
+    ${PUBLIC_HEADERS}
+    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}
+)
+
+# 2. ライブラリのインストール
+install(TARGETS ${PROJECT_NAME}
+    EXPORT ${PROJECT_NAME}Targets
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    FRAMEWORK DESTINATION Library/Frameworks
+)
+
+# 3. CMake設定ファイルのインストール
+install(EXPORT ${PROJECT_NAME}Targets
+    FILE ${PROJECT_NAME}Targets.cmake
+    NAMESPACE ${PROJECT_NAME}::
+    DESTINATION lib/cmake/${PROJECT_NAME}
+)
+```
+
+## 3.2 パッケージ設定
+```cmake
+# 1. バージョンファイルの生成
+include(CMakePackageConfigHelpers)
+write_basic_package_version_file(
+    "${PROJECT_NAME}ConfigVersion.cmake"
+    VERSION ${PROJECT_VERSION}
+    COMPATIBILITY SameMajorVersion
+)
+
+# 2. 設定ファイルの生成
+configure_package_config_file(
+    "${PROJECT_SOURCE_DIR}/cmake/${PROJECT_NAME}Config.cmake.in"
+    "${PROJECT_BINARY_DIR}/${PROJECT_NAME}Config.cmake"
+    INSTALL_DESTINATION lib/cmake/${PROJECT_NAME}
+)
+
+# 3. パッケージファイルのインストール
+install(FILES
+    "${PROJECT_BINARY_DIR}/${PROJECT_NAME}Config.cmake"
+    "${PROJECT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake"
+    DESTINATION lib/cmake/${PROJECT_NAME}
+)
+```
+
+## 3.3 インストール設定のパターン
+
+### 1. 基本インストール
+```cmake
+# 1. 実行ファイルのインストール
+install(TARGETS ${PROJECT_NAME}
+    RUNTIME DESTINATION bin
+)
+
+# 2. ライブラリのインストール
+install(TARGETS ${PROJECT_NAME}
+    LIBRARY DESTINATION lib
+    ARCHIVE DESTINATION lib
+)
+
+# 3. ヘッダーのインストール
+install(FILES ${HEADERS}
+    DESTINATION include/${PROJECT_NAME}
+)
+```
+
+### 2. コンポーネント別インストール
+```cmake
+# 1. コンポーネントの定義
+install(TARGETS ${PROJECT_NAME}
+    RUNTIME
+        COMPONENT Runtime
+        DESTINATION bin
+    LIBRARY
+        COMPONENT Development
+        DESTINATION lib
+    ARCHIVE
+        COMPONENT Development
+        DESTINATION lib
+)
+
+# 2. ヘッダーのインストール
+install(FILES ${HEADERS}
+    COMPONENT Development
+    DESTINATION include/${PROJECT_NAME}
+)
+
+# 3. ドキュメントのインストール
+install(FILES ${DOC_FILES}
+    COMPONENT Documentation
+    DESTINATION share/doc/${PROJECT_NAME}
+)
+```
+
+## 3.4 インストールスクリプト
+
+### 1. インストール後のスクリプト
+```cmake
+# 1. キャッシュの更新
+install(CODE "
+    execute_process(
+        COMMAND ldconfig
+    )
+")
+
+# 2. シンボリックリンクの作成
+install(CODE "
+    execute_process(
+        COMMAND ${CMAKE_COMMAND} -E create_symlink
+            ${CMAKE_INSTALL_PREFIX}/lib/lib${PROJECT_NAME}.so
+            ${CMAKE_INSTALL_PREFIX}/lib/lib${PROJECT_NAME}.so.${PROJECT_VERSION}
+    )
+")
+```
+
+### 2. プラットフォーム固有のスクリプト
+```cmake
+# 1. Windows用スクリプト
+if(WIN32)
+    install(CODE "
+        execute_process(
+            COMMAND regsvr32 /s \${CMAKE_INSTALL_PREFIX}/bin/${PROJECT_NAME}.dll
+        )
+    ")
+endif()
+
+# 2. Linux用スクリプト
+if(UNIX AND NOT APPLE)
+    install(CODE "
+        execute_process(
+            COMMAND ldconfig
+        )
+    ")
+endif()
+```
+
+## 3.5 インストール設定のガイドライン
+
+### 1. ファイル構成
+- 適切なディレクトリ構造
+- ファイルの分類と整理
+- パーミッションの設定
+- バージョン管理
+
+### 2. パッケージング
+- 依存関係の管理
+- バージョン互換性
+- コンポーネントの分割
+- 設定ファイルの提供
+
+### 3. プラットフォーム対応
+- パスの適切な設定
+- プラットフォーム固有の処理
+- インストール先の調整
+- 環境変数の設定
+
+### 4. インストール後の処理
+- キャッシュの更新
+- シンボリックリンクの作成
+- 権限の設定
+- 環境の設定
+
+
+## deployment
+
+# デプロイメント
+
+## 4.1 依存関係の収集
+```cmake
+# 1. 依存DLLの収集（Windows）
+if(WIN32)
+    include(DeployQt)
+    windeployqt(${PROJECT_NAME}
+        --no-compiler-runtime
+        --no-translations
+        --no-system-d3d-compiler
+        $<TARGET_FILE:${PROJECT_NAME}>
+    )
+endif()
+
+# 2. 依存ライブラリの収集（macOS）
+if(APPLE)
+    include(DeployQt)
+    macdeployqt(${PROJECT_NAME}
+        --no-plugins
+        $<TARGET_FILE:${PROJECT_NAME}>
+    )
+endif()
+```
+
+## 4.2 パッケージング
+```cmake
+# 1. CPack設定
+set(CPACK_PACKAGE_NAME ${PROJECT_NAME})
+set(CPACK_PACKAGE_VENDOR "Example")
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY
+    "Qt6 C bindings library")
+set(CPACK_PACKAGE_VERSION ${PROJECT_VERSION})
+set(CPACK_PACKAGE_INSTALL_DIRECTORY ${PROJECT_NAME})
+
+# 2. プラットフォーム固有のパッケージ
+if(WIN32)
+    set(CPACK_GENERATOR "NSIS")
+    set(CPACK_NSIS_ENABLE_UNINSTALL_BEFORE_INSTALL ON)
+elseif(APPLE)
+    set(CPACK_GENERATOR "DragNDrop")
+else()
+    set(CPACK_GENERATOR "DEB")
+    set(CPACK_DEBIAN_PACKAGE_MAINTAINER "maintainer@example.com")
+endif()
+
+include(CPack)
+```
+
+## 4.3 デプロイメントパターン
+
+### 1. 基本デプロイメント
+```cmake
+# 1. 実行ファイルのデプロイ
+install(TARGETS ${PROJECT_NAME}
+    RUNTIME DESTINATION bin
+    LIBRARY DESTINATION lib
+)
+
+# 2. 依存ライブラリのデプロイ
+file(GLOB DEPS_LIBS
+    "${Qt6_DIR}/bin/*.dll"
+    "${Qt6_DIR}/lib/*.so*"
+)
+install(FILES ${DEPS_LIBS}
+    DESTINATION lib
+)
+
+# 3. リソースのデプロイ
+install(DIRECTORY resources
+    DESTINATION share/${PROJECT_NAME}
+)
+```
+
+### 2. プラットフォーム別デプロイメント
+```cmake
+# 1. Windows用デプロイメント
+if(WIN32)
+    # DLLのデプロイ
+    install(FILES
+        ${CMAKE_BINARY_DIR}/${PROJECT_NAME}.dll
+        DESTINATION bin
+    )
+    
+    # レジストリ設定
+    install(CODE "
+        execute_process(
+            COMMAND reg add \"HKLM\\Software\\${PROJECT_NAME}\"
+        )
+    ")
+endif()
+
+# 2. Linux用デプロイメント
+if(UNIX AND NOT APPLE)
+    # 共有ライブラリのデプロイ
+    install(FILES
+        ${CMAKE_BINARY_DIR}/lib${PROJECT_NAME}.so
+        DESTINATION lib
+    )
+    
+    # デスクトップエントリのデプロイ
+    install(FILES
+        ${PROJECT_NAME}.desktop
+        DESTINATION share/applications
+    )
+endif()
+```
+
+## 4.4 デプロイメントスクリプト
+
+### 1. 依存関係の解決
+```cmake
+# 1. 依存関係の検出
+function(detect_dependencies TARGET_NAME)
+    get_target_property(DEPS ${TARGET_NAME} LINK_LIBRARIES)
+    foreach(DEP ${DEPS})
+        if(TARGET ${DEP})
+            get_target_property(DEP_TYPE ${DEP} TYPE)
+            if(DEP_TYPE STREQUAL "SHARED_LIBRARY")
+                # 依存ライブラリの処理
+            endif()
+        endif()
+    endforeach()
+endfunction()
+
+# 2. 依存関係のコピー
+function(copy_dependencies TARGET_NAME DEST_DIR)
+    get_target_property(TARGET_LOCATION ${TARGET_NAME}
+        LOCATION)
+    get_filename_component(TARGET_DIR ${TARGET_LOCATION}
+        DIRECTORY)
+    file(GLOB DEPS
+        "${TARGET_DIR}/*.dll"
+        "${TARGET_DIR}/*.so*"
+        "${TARGET_DIR}/*.dylib"
+    )
+    file(COPY ${DEPS} DESTINATION ${DEST_DIR})
+endfunction()
+```
+
+### 2. パッケージ作成スクリプト
+```cmake
+# 1. アーカイブの作成
+function(create_archive TARGET_NAME VERSION)
+    set(ARCHIVE_NAME
+        "${TARGET_NAME}-${VERSION}-${CMAKE_SYSTEM_NAME}")
+    add_custom_target(dist
+        COMMAND ${CMAKE_COMMAND} -E tar "czf"
+            "${ARCHIVE_NAME}.tar.gz" .
+        WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+    )
+endfunction()
+
+# 2. インストーラの作成
+function(create_installer TARGET_NAME VERSION)
+    if(WIN32)
+
+
+## test_settings
+
+# テスト設定
+
+## 5.1 テストの有効化
+```cmake
+# 1. テストの設定
+enable_testing()
+add_subdirectory(tests)
+
+# 2. テストターゲットの定義
+add_executable(${PROJECT_NAME}_test
+    ${TEST_SOURCES}
+)
+
+# 3. テストの依存関係
+target_link_libraries(${PROJECT_NAME}_test
+    PRIVATE
+        ${PROJECT_NAME}
+        Qt6::Test
+)
+```
+
+## 5.2 テストの実行
+```cmake
+# 1. テストケースの追加
+add_test(NAME ${PROJECT_NAME}_test
+         COMMAND ${PROJECT_NAME}_test)
+
+# 2. テスト環境の設定
+set_tests_properties(${PROJECT_NAME}_test
+    PROPERTIES
+        ENVIRONMENT "QT_QPA_PLATFORM=offscreen"
+)
+
+# 3. カバレッジの設定
+if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+    target_compile_options(${PROJECT_NAME}_test
+        PRIVATE
+            --coverage
+    )
+    target_link_options(${PROJECT_NAME}_test
+        PRIVATE
+            --coverage
+    )
+endif()
+```
+
+## 5.3 テスト設定のパターン
+
+### 1. 単体テスト設定
+```cmake
+# 1. テストフレームワークの設定
+find_package(GTest REQUIRED)
+include(GoogleTest)
+
+# 2. テストターゲットの作成
+add_executable(unit_tests
+    test_widget.cpp
+    test_button.cpp
+    test_dialog.cpp
+)
+
+# 3. テストのリンク設定
+target_link_libraries(unit_tests
+    PRIVATE
+        ${PROJECT_NAME}
+        GTest::GTest
+        GTest::Main
+)
+
+# 4. テストの登録
+gtest_discover_tests(unit_tests)
+```
+
+### 2. 統合テスト設定
+```cmake
+# 1. 統合テストの定義
+add_executable(integration_tests
+    test_widget_interaction.cpp
+    test_dialog_flow.cpp
+)
+
+# 2. テスト依存関係の設定
+target_link_libraries(integration_tests
+    PRIVATE
+        ${PROJECT_NAME}
+        Qt6::Test
+)
+
+# 3. テスト環境の設定
+set_tests_properties(integration_tests
+    PROPERTIES
+        ENVIRONMENT "QT_QPA_PLATFORM=offscreen"
+)
+```
+
+## 5.4 テストスクリプト
+
+### 1. テスト実行スクリプト
+```cmake
+# 1. テストスイートの実行
+function(run_test_suite SUITE_NAME)
+    add_custom_target(test_${SUITE_NAME}
+        COMMAND ${CMAKE_CTEST_COMMAND}
+            --output-on-failure
+            --test-dir ${CMAKE_BINARY_DIR}
+            -R ${SUITE_NAME}
+    )
+endfunction()
+
+# 2. カバレッジレポートの生成
+function(generate_coverage_report TARGET_NAME)
+    add_custom_target(coverage_${TARGET_NAME}
+        COMMAND lcov --capture
+            --directory ${CMAKE_BINARY_DIR}
+            --output-file coverage.info
+        COMMAND genhtml coverage.info
+            --output-directory coverage_report
+    )
+endfunction()
+```
+
+### 2. テスト環境設定スクリプト
+```cmake
+# 1. テストデータの準備
+function(prepare_test_data TEST_NAME)
+    add_custom_command(TARGET ${TEST_NAME}
+        PRE_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+            ${CMAKE_SOURCE_DIR}/test/data
+            ${CMAKE_BINARY_DIR}/test/data
+    )
+endfunction()
+
+# 2. テスト環境のクリーンアップ
+function(cleanup_test_env TEST_NAME)
+    add_custom_command(TARGET ${TEST_NAME}
+        POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E remove_directory
+            ${CMAKE_BINARY_DIR}/test/data
+    )
+endfunction()
+```
+
+## 5.5 テスト設定のガイドライン
+
+### 1. テスト構成
+- 適切なテストフレームワークの選択
+- テストケースの分類と整理
+- テスト環境の設定
+- カバレッジ測定の設定
+
+### 2. テスト実行
+- 自動テストの設定
+- テスト結果の収集
+- エラー報告の設定
+- パフォーマンス測定
+
+### 3. テストデータ
+- テストデータの管理
+- 環境の準備と後処理
+- リソースの管理
+- 一時ファイルの扱い
+
+### 4. 品質管理
+- カバレッジ目標の設定
+- 性能要件の確認
+- エラー検出の強化
+- レポート生成の自動化
+
+
+# Version Release
+
+
+## versioning_rules
+
+# バージョニング規則
+
+## 1.1 セマンティックバージョニング
+```text
+MAJOR.MINOR.PATCH (例: 1.2.3)
+
+1. MAJOR: 互換性のない変更
+   - APIの破壊的変更
+   - 既存機能の削除
+   - 動作の大幅な変更
+
+2. MINOR: 後方互換性のある機能追加
+   - 新しいクラスのバインディング追加
+   - 既存クラスへのメソッド追加
+   - オプショナルな機能の追加
+
+3. PATCH: バグ修正
+   - メモリリークの修正
+   - クラッシュの修正
+   - ドキュメントの修正
+```
+
+## 1.2 バージョン管理ファイル
+```cmake
+# version.cmake
+set(QT6BINDING_VERSION_MAJOR 1)
+set(QT6BINDING_VERSION_MINOR 0)
+set(QT6BINDING_VERSION_PATCH 0)
+
+set(QT6BINDING_VERSION
+    "${QT6BINDING_VERSION_MAJOR}.${QT6BINDING_VERSION_MINOR}.${QT6BINDING_VERSION_PATCH}")
+
+configure_file(
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/version.h.in
+    ${CMAKE_CURRENT_BINARY_DIR}/include/version.h
+)
+```
+
+## 1.3 バージョン管理パターン
+
+### 1. バージョン情報の定義
+```cpp
+// version.h.in
+#define QT6BINDING_VERSION_MAJOR @QT6BINDING_VERSION_MAJOR@
+#define QT6BINDING_VERSION_MINOR @QT6BINDING_VERSION_MINOR@
+#define QT6BINDING_VERSION_PATCH @QT6BINDING_VERSION_PATCH@
+#define QT6BINDING_VERSION "@QT6BINDING_VERSION@"
+
+// バージョン文字列の生成
+#define QT6BINDING_VERSION_STR \
+    QT6BINDING_VERSION " (" __DATE__ " " __TIME__ ")"
+
+// バージョン番号の生成
+#define QT6BINDING_VERSION_NUMBER \
+    ((QT6BINDING_VERSION_MAJOR << 16) | \
+     (QT6BINDING_VERSION_MINOR << 8) | \
+     (QT6BINDING_VERSION_PATCH))
+```
+
+### 2. バージョン情報の利用
+```cpp
+// バージョン情報の取得
+const char* get_version() {
+    return QT6BINDING_VERSION;
+}
+
+// バージョン番号の比較
+bool is_version_compatible(int required_version) {
+    return QT6BINDING_VERSION_NUMBER >= required_version;
+}
+
+// バージョン文字列の取得
+const char* get_version_string() {
+    return QT6BINDING_VERSION_STR;
+}
+```
+
+## 1.4 バージョン管理スクリプト
+
+### 1. バージョン更新スクリプト
+```python
+#!/usr/bin/env python3
+import re
+import sys
+
+def update_version(version_file, new_version):
+    major, minor, patch = map(int, new_version.split('.'))
+    
+    with open(version_file, 'r') as f:
+        content = f.read()
+    
+    content = re.sub(
+        r'set\(QT6BINDING_VERSION_MAJOR \d+\)',
+        f'set(QT6BINDING_VERSION_MAJOR {major})',
+        content
+    )
+    content = re.sub(
+        r'set\(QT6BINDING_VERSION_MINOR \d+\)',
+        f'set(QT6BINDING_VERSION_MINOR {minor})',
+        content
+    )
+    content = re.sub(
+        r'set\(QT6BINDING_VERSION_PATCH \d+\)',
+        f'set(QT6BINDING_VERSION_PATCH {patch})',
+        content
+    )
+    
+    with open(version_file, 'w') as f:
+        f.write(content)
+```
+
+### 2. バージョン検証スクリプト
+```python
+#!/usr/bin/env python3
+import re
+import sys
+
+def validate_version(version):
+    if not re.match(r'^\d+\.\d+\.\d+$', version):
+        return False
+    
+    major, minor, patch = map(int, version.split('.'))
+    
+    # バージョン番号の範囲チェック
+    if not (0 <= major <= 99 and
+            0 <= minor <= 99 and
+            0 <= patch <= 99):
+        return False
+    
+    return True
+```
+
+## 1.5 バージョニングのガイドライン
+
+### 1. バージョン番号の選択
+- 破壊的変更の判断基準
+- 機能追加の基準
+- バグ修正の基準
+- プレリリースの扱い
+
+### 2. バージョン管理
+- バージョン情報の一元管理
+- 更新手順の標準化
+- 変更履歴の管理
+- 互換性の確保
+
+### 3. リリース管理
+- リリースタグの付け方
+- ブランチ戦略との連携
+- バージョン更新の自動化
+- リリースノートの作成
+
+### 4. 互換性管理
+- APIの互換性維持
+- ABI互換性の確保
+- 後方互換性のテスト
+- 非互換変更の告知
+
+
+## git_operation_rules
+
+# Git運用ルール
+
+## 2.1 ブランチ戦略
+```text
+1. メインブランチ
+   - main: 安定版のコード
+   - develop: 開発版のコード
+
+2. 機能ブランチ
+   - feature/[機能名]: 新機能の開発
+   例: feature/qwidget-binding
+
+3. リリースブランチ
+   - release/v[バージョン]: リリース準備
+   例: release/v1.2.0
+
+4. 修正ブランチ
+   - hotfix/[問題]: 緊急バグ修正
+   例: hotfix/memory-leak
+```
+
+## 2.2 コミットメッセージ
+```text
+# 基本形式
+<type>: <description>
+
+<details>
+
+<notes>
+
+# タイプ一覧
+feat: 新機能
+fix: バグ修正
+update: 機能改善
+refactor: リファクタリング
+test: テスト関連
+docs: ドキュメント
+build: ビルド関連
+ci: CI関連
+
+# 例
+feat: QWidgetバインディングの実装
+
+- 基本的なメソッドの実装
+- シグナル/スロットの処理
+- メモリ管理の実装
+
+Resolves #123
+```
+
+## 2.3 ブランチ管理パターン
+
+### 1. 機能開発フロー
+```bash
+# 1. 機能ブランチの作成
+git checkout -b feature/new-widget develop
+
+# 2. 開発作業
+git add .
+git commit -m "feat: 新しいウィジェットの実装"
+
+# 3. developブランチへのマージ
+git checkout develop
+git merge --no-ff feature/new-widget
+
+# 4. 機能ブランチの削除
+git branch -d feature/new-widget
+```
+
+### 2. リリースフロー
+```bash
+# 1. リリースブランチの作成
+git checkout -b release/v1.2.0 develop
+
+# 2. バージョン番号の更新
+# version.cmakeの編集
+
+# 3. リリース準備のコミット
+git commit -m "release: バージョン1.2.0の準備"
+
+# 4. mainブランチへのマージ
+git checkout main
+git merge --no-ff release/v1.2.0
+git tag -a v1.2.0 -m "バージョン1.2.0"
+
+# 5. developブランチへのマージ
+git checkout develop
+git merge --no-ff release/v1.2.0
+
+# 6. リリースブランチの削除
+git branch -d release/v1.2.0
+```
+
+## 2.4 Git運用スクリプト
+
+### 1. ブランチ管理スクリプト
+```python
+#!/usr/bin/env python3
+import subprocess
+import sys
+
+def create_feature_branch(feature_name):
+    """機能ブランチを作成"""
+    subprocess.run([
+        'git', 'checkout', '-b',
+        f'feature/{feature_name}', 'develop'
+    ])
+
+def finish_feature_branch(feature_name):
+    """機能ブランチを完了"""
+    subprocess.run([
+        'git', 'checkout', 'develop'
+    ])
+    subprocess.run([
+        'git', 'merge', '--no-ff',
+        f'feature/{feature_name}'
+    ])
+    subprocess.run([
+        'git', 'branch', '-d',
+        f'feature/{feature_name}'
+    ])
+```
+
+### 2. リリース管理スクリプト
+```python
+#!/usr/bin/env python3
+import subprocess
+import sys
+
+def create_release_branch(version):
+    """リリースブランチを作成"""
+    subprocess.run([
+        'git', 'checkout', '-b',
+        f'release/v{version}', 'develop'
+    ])
+
+def finish_release_branch(version):
+    """リリースブランチを完了"""
+    # mainブランチへのマージ
+    subprocess.run(['git', 'checkout', 'main'])
+    subprocess.run([
+        'git', 'merge', '--no-ff',
+        f'release/v{version}'
+    ])
+    subprocess.run([
+        'git', 'tag', '-a',
+        f'v{version}',
+        '-m', f'バージョン{version}'
+    ])
+    
+    # developブランチへのマージ
+    subprocess.run(['git', 'checkout', 'develop'])
+    subprocess.run([
+        'git', 'merge', '--no-ff',
+        f'release/v{version}'
+    ])
+    
+    # リリースブランチの削除
+    subprocess.run([
+        'git', 'branch', '-d',
+        f'release/v{version}'
+    ])
+```
+
+## 2.5 Git運用のガイドライン
+
+### 1. ブランチ運用
+- ブランチの命名規則
+- マージの方針
+- コンフリクトの解決
+- クリーンアップの基準
+
+### 2. コミット管理
+- コミットの粒度
+- メッセージの書き方
+- 変更の分類
+- レビューの基準
+
+### 3. タグ管理
+- タグの付け方
+- バージョン番号との対応
+- 説明の書き方
+- 署名の方針
+
+### 4. コラボレーション
+- プルリクエストの運用
+- レビュープロセス
+- マージの承認フロー
+- コントリビューションの管理
+
+
+## release_process
+
+# リリースプロセス
+
+## 3.1 リリース準備
+```bash
+# 1. リリースブランチの作成
+git checkout -b release/v1.2.0 develop
+
+# 2. バージョン番号の更新
+# version.cmakeの編集
+
+# 3. CHANGELOGの更新
+cat << EOF > CHANGELOG.md
+# 1.2.0 (2025-03-01)
+
+## 追加機能
+- QWidgetバインディング
+- QButtonバインディング
+- QPushButtonバインディング
+
+## バグ修正
+- メモリリークの修正
+- シグナル接続の問題修正
+
+## その他の改善
+- ドキュメントの更新
+- テストカバレッジの向上
+EOF
+
+# 4. コミット
+git add version.cmake CHANGELOG.md
+git commit -m "release: バージョン1.2.0"
+```
+
+## 3.2 リリースチェックリスト
+```markdown
+## 前提条件の確認
+- [ ] すべてのテストが成功
+- [ ] メモリリークなし
+- [ ] APIドキュメント更新済み
+- [ ] CHANGELOGの更新
+
+## ビルド確認
+- [ ] Windows
+  - [ ] Debug/Release
+  - [ ] 32/64ビット
+  - [ ] 依存関係の確認
+- [ ] macOS
+  - [ ] Intel/ARM
+  - [ ] 依存関係の確認
+- [ ] Linux
+  - [ ] 主要ディストリビューション
+  - [ ] 依存関係の確認
+
+## パッケージング
+- [ ] ヘッダファイルの包含
+- [ ] ライブラリファイルの包含
+- [ ] ドキュメントの包含
+- [ ] ライセンスファイルの包含
+- [ ] サンプルコードの包含
+```
+
+## 3.3 リリース手順
+```bash
+# 1. mainブランチへのマージ
+git checkout main
+git merge --no-ff release/v1.2.0
+git tag -a v1.2.0 -m "バージョン1.2.0"
+
+# 2. developブランチへのマージ
+git checkout develop
+git merge --no-ff release/v1.2.0
+
+# 3. リリースブランチの削除
+git branch -d release/v1.2.0
+
+# 4. タグのプッシュ
+git push origin main develop --tags
+```
+
+## 3.4 リリーススクリプト
+
+### 1. リリース準備スクリプト
+```python
+#!/usr/bin/env python3
+import os
+import sys
+import subprocess
+from datetime import datetime
+
+def prepare_release(version):
+    """リリースの準備を行う"""
+    # リリースブランチの作成
+    subprocess.run([
+        'git', 'checkout', '-b',
+        f'release/v{version}', 'develop'
+    ])
+    
+    # バージョン番号の更新
+    update_version_file(version)
+    
+    # CHANGELOGの更新
+    update_changelog(version)
+    
+    # コミット
+    subprocess.run([
+        'git', 'add', 'version.cmake', 'CHANGELOG.md'
+    ])
+    subprocess.run([
+        'git', 'commit', '-m',
+        f'release: バージョン{version}'
+    ])
+
+def update_version_file(version):
+    """バージョンファイルを更新"""
+    major, minor, patch = version.split('.')
+    content = f'''
+set(QT6BINDING_VERSION_MAJOR {major})
+set(QT6BINDING_VERSION_MINOR {minor})
+set(QT6BINDING_VERSION_PATCH {patch})
+'''
+    with open('version.cmake', 'w') as f:
+        f.write(content)
+
+def update_changelog(version):
+    """CHANGELOGを更新"""
+    today = datetime.now().strftime('%Y-%m-%d')
+    content = f'''# {version} ({today})
+
+## 追加機能
+- 新機能の説明
+
+## バグ修正
+- バグ修正の説明
+
+## その他の改善
+- 改善点の説明
+'''
+    with open('CHANGELOG.md', 'w') as f:
+        f.write(content)
+```
+
+### 2. リリース実行スクリプト
+```python
+#!/usr/bin/env python3
+import os
+import sys
+import subprocess
+
+def execute_release(version):
+    """リリースを実行"""
+    # mainブランチへのマージ
+    subprocess.run(['git', 'checkout', 'main'])
+    subprocess.run([
+        'git', 'merge', '--no-ff',
+        f'release/v{version}'
+    ])
+    subprocess.run([
+        'git', 'tag', '-a',
+        f'v{version}',
+        '-m', f'バージョン{version}'
+    ])
+    
+    # developブランチへのマージ
+    subprocess.run(['git', 'checkout', 'develop'])
+    subprocess.run([
+        'git', 'merge', '--no-ff',
+        f'release/v{version}'
+    ])
+    
+    # リリースブランチの削除
+    subprocess.run([
+        'git', 'branch', '-d',
+        f'release/v{version}'
+    ])
+    
+    # タグのプッシュ
+    subprocess.run([
+        'git', 'push', 'origin',
+        'main', 'develop', '--tags'
+    ])
+```
+
+## 3.5 リリースのガイドライン
+
+### 1. リリース準備
+- バージョン番号の選択
+- 変更履歴の整理
+- ドキュメントの更新
+- テストの実施
+
+### 2. 品質確認
+- テストカバレッジの確認
+- パフォーマンステスト
+- メモリリークチェック
+- 依存関係の確認
+
+### 3. パッケージング
+- 必要なファイルの確認
+- ライセンスの確認
+- ドキュメントの確認
+- サンプルコードの確認
+
+### 4. 配布
+- リリースノートの作成
+- パッケージの署名
+- 配布チャネルの準備
+- アナウンスの準備
+
+
+## documentation_management
+
+# ドキュメント管理
+
+## 4.1 APIドキュメント
+```markdown
+# バージョン別APIドキュメント
+docs/
+  ├── v1.0/
+  │   ├── api/
+  │   ├── examples/
+  │   └── migration/
+  └── v1.1/
+      ├── api/
+      ├── examples/
+      └── migration/
+```
+
+## 4.2 リリースノート
+```markdown
+# バージョン1.2.0
+
+## 主な変更点
+- QWidgetバインディングの追加
+- パフォーマンスの改善
+- バグ修正
+
+## 破壊的変更
+なし
+
+## 非推奨機能
+- `old_function()` → `new_function()`に置き換え
+
+## バグ修正
+- #123: メモリリークの修正
+- #124: シグナル接続の問題修正
+
+## 既知の問題
+- #125: 特定条件下でのクラッシュ
+```
+
+## 4.3 ドキュメント管理パターン
+
+### 1. APIドキュメントの構成
+```markdown
+# クラス名
+
+## 概要
+クラスの基本的な説明と用途
+
+## コンストラクタ
+```c
+void* ClassName_create(void* parent);
+```
+新しいインスタンスを作成します。
+
+### パラメータ
+- parent: 親オブジェクト（NULL可）
+
+### 戻り値
+- 成功時: 新しいインスタンスへのポインタ
+- 失敗時: NULL
+
+## メソッド
+### method_name
+```c
+void ClassName_methodName(void* ptr, int param);
+```
+メソッドの説明
+
+### パラメータ
+- ptr: インスタンスへのポインタ
+- param: パラメータの説明
+
+### 戻り値
+なし
+
+## シグナル
+### signalName
+```c
+void ClassName_setSignalCallback(void* ptr, void (*callback)(void*));
+```
+シグナルの説明
+
+### パラメータ
+- ptr: インスタンスへのポインタ
+- callback: コールバック関数
+
+## 使用例
+```c
+void* obj = ClassName_create(NULL);
+ClassName_methodName(obj, 42);
+ClassName_delete(obj);
+```
+```
+
+### 2. リリースノートの構成
+```markdown
+# バージョン X.Y.Z (YYYY-MM-DD)
+
+## 概要
+このリリースの主な変更点や目的
+
+## 新機能
+- 機能1の説明
+- 機能2の説明
+
+## 変更点
+- 変更1の説明
+- 変更2の説明
+
+## バグ修正
+- バグ1の説明 (#123)
+- バグ2の説明 (#124)
+
+## 非推奨化
+- 機能1 → 代替機能の説明
+- 機能2 → 代替機能の説明
+
+## 破壊的変更
+- 変更1の説明と移行方法
+- 変更2の説明と移行方法
+
+## 既知の問題
+- 問題1の説明 (#125)
+- 問題2の説明 (#126)
+
+## 謝辞
+- 貢献者1
+- 貢献者2
+```
+
+## 4.4 ドキュメント生成スクリプト
+
+### 1. APIドキュメント生成
+```python
+#!/usr/bin/env python3
+import os
+import re
+import sys
+
+def generate_api_docs(source_dir, output_dir):
+    """APIドキュメントを生成"""
+    # ヘッダーファイルの収集
+    headers = collect_headers(source_dir)
+    
+    # 各ヘッダーの解析
+    for header in headers:
+        doc = parse_header(header)
+        write_doc(doc, output_dir)
+
+def parse_header(header_file):
+    """ヘッダーファイルを解析"""
+    doc = {
+        'class': '',
+        'methods': [],
+        'signals': [],
+        'examples': []
+    }
+    
+    with open(header_file, 'r') as f:
+        content = f.read()
+    
+    # クラス名の抽出
+    class_match = re.search(r'// Class: (\w+)', content)
+    if class_match:
+        doc['class'] = class_match.group(1)
+    
+    # メソッドの抽出
+    method_matches = re.finditer(
+        r'/\*\*\s*\n\s*\*(.*?)\*/\s*\n\s*(\w+\s+\w+\([^)]*\));',
+        content,
+        re.DOTALL
+    )
+    for match in method_matches:
+        doc['methods'].append({
+            'comment': match.group(1).strip(),
+            'signature': match.group(2).strip()
+        })
+    
+    return doc
+
+def write_doc(doc, output_dir):
+    """ドキュメントを書き出し"""
+    output_file = os.path.join(
+        output_dir,
+        f"{doc['class']}.md"
+    )
+    
+    with open(output_file, 'w') as f:
+        f.write(f"# {doc['class']}\n\n")
+        
+        # メソッドの出力
+        f.write("## Methods\n\n")
+        for method in doc['methods']:
+            f.write(f"### {method['signature']}\n")
+            f.write(f"{method['comment']}\n\n")
+```
+
+### 2. リリースノート生成
+```python
+#!/usr/bin/env python3
+import os
+import sys
+from datetime import datetime
+
+def generate_release_notes(version, changes):
+    """リリースノートを生成"""
+    today = datetime.now().strftime('%Y-%m-%d')
+    
+    content = f"""# バージョン {version} ({today})
+
+## 概要
+{changes['summary']}
+
+## 新機能
+"""
+    
+    for feature in changes['features']:
+        content += f"- {feature}\n"
+    
+    content += "\n## バグ修正\n"
+    for fix in changes['fixes']:
+        content += f"- {fix}\n"
+    
+    content += "\n## その他の改善\n"
+    for improvement in changes['improvements']:
+        content += f"- {improvement}\n"
+    
+    return content
+```
+
+## 4.5 ドキュメント管理のガイドライン
+
+### 1. ドキュメントの構成
+- 一貫した形式
+- 明確な階層構造
+- 適切な分類
+- バージョン管理
+
+### 2. 内容の品質
+- 正確性の確保
+- 完全性の確認
+- 最新性の維持
+- 例の充実
+
+### 3. メンテナンス
+- 定期的な更新
+- 古い情報の削除
+- リンクの確認
+- フィードバックの反映
+
+### 4. アクセシビリティ
+- 検索性の向上
+- ナビゲーションの改善
+- 多言語対応
+- フォーマットの統一
+
+
+## quality_management
+
+# 品質管理
+
+## 5.1 コードレビュー基準
+```markdown
+## レビュー項目
+1. コーディング規約
+   - 命名規則の遵守
+   - フォーマットの一貫性
+   - コメントの適切性
+
+2. 機能
+   - 仕様との一致
+   - エッジケースの考慮
+   - エラー処理の適切性
+
+3. パフォーマンス
+   - メモリ使用量
+   - CPU使用量
+   - 応答性能
+
+4. テスト
+   - ユニットテストの網羅性
+   - エッジケースのテスト
+   - パフォーマンステスト
+```
+
+## 5.2 リリース判定基準
+```markdown
+## 必須条件
+1. テストカバレッジ
+   - ライン: 80%以上
+   - ブランチ: 70%以上
+   - 関数: 90%以上
+
+2. 静的解析
+   - 重大な警告なし
+   - 中程度の警告対応済み
+
+3. パフォーマンス
+   - ベースラインから20%以内
+   - メモリリークなし
+
+4. ドキュメント
+   - API完全網羅
+   - サンプルコード更新
+   - 移行ガイド作成
+```
+
+## 5.3 品質管理パターン
+
+### 1. コードレビューパターン
+```markdown
+## レビュープロセス
+
+1. 事前確認
+   - コーディング規約の遵守
+   - 自動テストの実行
+   - 静的解析の実行
+
+2. 機能レビュー
+   - 仕様との整合性
+   - ロジックの正確性
+   - エラー処理の妥当性
+
+3. 実装レビュー
+   - アルゴリズムの効率性
+   - メモリ管理の適切性
+   - 命名の適切性
+
+4. テストレビュー
+   - テストケースの網羅性
+   - エッジケースの考慮
+   - テストコードの品質
+```
+
+### 2. 品質メトリクス
+```python
+class QualityMetrics:
+    def __init__(self):
+        self.metrics = {
+            'test_coverage': 0.0,
+            'code_complexity': 0.0,
+            'memory_usage': 0.0,
+            'performance_score': 0.0
+        }
+    
+    def calculate_metrics(self):
+        """品質メトリクスを計算"""
+        self.calculate_test_coverage()
+        self.calculate_code_complexity()
+        self.calculate_memory_usage()
+        self.calculate_performance()
+    
+    def meets_criteria(self):
+        """品質基準を満たすか確認"""
+        return (
+            self.metrics['test_coverage'] >= 0.8 and
+            self.metrics['code_complexity'] <= 15.0 and
+            self.metrics['memory_usage'] <= 100.0 and
+            self.metrics['performance_score'] >= 0.8
+        )
+```
+
+## 5.4 品質管理スクリプト
+
+### 1. テスト実行スクリプト
+```python
+#!/usr/bin/env python3
+import subprocess
+import sys
+
+def run_quality_checks():
+    """品質チェックを実行"""
+    # 1. 静的解析
+    run_static_analysis()
+    
+    # 2. ユニットテスト
+    run_unit_tests()
+    
+    # 3. カバレッジ計測
+    check_coverage()
+    
+    # 4. パフォーマンステスト
+    run_performance_tests()
+
+def run_static_analysis():
+    """静的解析を実行"""
+    subprocess.run(['cppcheck', '--enable=all', 'src'])
+    subprocess.run(['clang-tidy', 'src/*.cpp'])
+
+def run_unit_tests():
+    """ユニットテストを実行"""
+    subprocess.run(['ctest', '--output-on-failure'])
+
+def check_coverage():
+    """カバレッジを計測"""
+    subprocess.run(['lcov', '--capture',
+                   '--directory', '.',
+                   '--output-file', 'coverage.info'])
+    subprocess.run(['genhtml', 'coverage.info',
+                   '--output-directory', 'coverage'])
+
+def run_performance_tests():
+    """パフォーマンステストを実行"""
+    subprocess.run(['./performance_tests'])
+```
+
+### 2. メトリクス収集スクリプト
+```python
+#!/usr/bin/env python3
+import os
+import sys
+import json
+
+def collect_metrics():
+    """品質メトリクスを収集"""
+    metrics = {
+        'test_coverage': get_test_coverage(),
+        'code_complexity': get_code_complexity(),
+        'memory_usage': get_memory_usage(),
+        'performance': get_performance_metrics()
+    }
+    
+    save_metrics(metrics)
+    return metrics
+
+def get_test_coverage():
+    """テストカバレッジを取得"""
+    # カバレッジ情報の解析
+    coverage = 0.0
+    with open('coverage.info', 'r') as f:
+        # カバレッジ情報の解析ロジック
+        pass
+    return coverage
+
+def get_code_complexity():
+    """コード複雑度を計算"""
+    # 複雑度の計算ロジック
+    complexity = 0.0
+    return complexity
+
+def save_metrics(metrics):
+    """メトリクスを保存"""
+    with open('metrics.json', 'w') as f:
+        json.dump(metrics, f, indent=2)
+```
+
+## 5.5 品質管理のガイドライン
+
+### 1. レビュープロセス
+- レビュー基準の明確化
+- レビュー手順の標準化
+- フィードバックの収集
+- 改善点の追跡
+
+### 2. 品質指標
+- メトリクスの定義
+- 測定方法の確立
+- 基準値の設定
+- 傾向分析の実施
+
+### 3. 改善プロセス
+- 問題点の特定
+- 原因分析の実施
+- 対策の立案と実施
+- 効果の検証
+
+### 4. 継続的改善
+- 定期的な評価
+- プロセスの見直し
+- 基準の更新
+- チーム育成
+
+
+## maintenance_and_support
+
+# 保守とサポート
+
+## 6.1 バージョンサポート方針
+```markdown
+## サポート期間
+1. LTSバージョン
+   - 3年間のバグ修正
+   - 2年間のセキュリティ修正
+
+2. 通常バージョン
+   - 1年間のバグ修正
+   - 6ヶ月間のセキュリティ修正
+
+## サポート終了プロセス
+1. 告知
+   - 6ヶ月前: 事前告知
+   - 3ヶ月前: リマインダー
+   - 1ヶ月前: 最終告知
+
+2. 移行支援
+   - 移行ガイドの提供
+   - 移行ツールの提供
+   - サポートの強化
+```
+
+## 6.2 バグ修正方針
+```markdown
+## 優先度
+1. Critical
+   - セキュリティ問題
+   - クラッシュ
+   - データ損失
+
+2. High
+   - 主要機能の不具合
+   - パフォーマンス問題
+   - 互換性問題
+
+3. Medium
+   - UI/UXの問題
+   - 軽微な機能不具合
+   - ドキュメントの誤り
+
+4. Low
+   - 体裁の問題
+   - 機能改善要望
+   - 最適化要望
+```
+
+## 6.3 保守管理パターン
+
+### 1. バグ追跡パターン
+```python
+class BugTracker:
+    def __init__(self):
+        self.bugs = []
+        self.priorities = ['Critical', 'High', 'Medium', 'Low']
+    
+    def add_bug(self, bug):
+        """バグを追加"""
+        self.bugs.append(bug)
+        self.sort_by_priority()
+    
+    def sort_by_priority(self):
+        """優先度でソート"""
+        self.bugs.sort(
+            key=lambda x: self.priorities.index(x['priority'])
+        )
+    
+    def get_critical_bugs(self):
+        """重要なバグを取得"""
+        return [bug for bug in self.bugs
+                if bug['priority'] == 'Critical']
+```
+
+### 2. サポート管理パターン
+```python
+class SupportManager:
+    def __init__(self):
+        self.versions = {}
+    
+    def add_version(self, version, is_lts=False):
+        """バージョンを追加"""
+        self.versions[version] = {
+            'is_lts': is_lts,
+            'release_date': datetime.now(),
+            'bug_support_end': None,
+            'security_support_end': None
+        }
+        self.calculate_support_period(version)
+    
+    def calculate_support_period(self, version):
+        """サポート期間を計算"""
+        v = self.versions[version]
+        if v['is_lts']:
+            v['bug_support_end'] = (
+                v['release_date'] + timedelta(days=365*3)
+            )
+            v['security_support_end'] = (
+                v['release_date'] + timedelta(days=365*2)
+            )
+        else:
+            v['bug_support_end'] = (
+                v['release_date'] + timedelta(days=365)
+            )
+            v['security_support_end'] = (
+                v['release_date'] + timedelta(days=180)
+            )
+```
+
+## 6.4 保守スクリプト
+
+### 1. バグ管理スクリプト
+```python
+#!/usr/bin/env python3
+import json
+import sys
+from datetime import datetime
+
+def manage_bugs():
+    """バグを管理"""
+    # バグ情報の読み込み
+    bugs = load_bugs()
+    
+    # 優先度の更新
+    update_priorities(bugs)
+    
+    # 期限切れバグの処理
+    handle_expired_bugs(bugs)
+    
+    # バグ情報の保存
+    save_bugs(bugs)
+
+def load_bugs():
+    """バグ情報を読み込み"""
+    try:
+        with open('bugs.json', 'r') as f:
+            return json.load(f)
+    except FileNotFoundError:
+        return []
+
+def update_priorities(bugs):
+    """優先度を更新"""
+    for bug in bugs:
+        # 経過時間による優先度の調整
+        age = datetime.now() - datetime.fromisoformat(
+            bug['reported_date']
+        )
+        if age.days > 30 and bug['priority'] == 'Low':
+            bug['priority'] = 'Medium'
+
+def handle_expired_bugs(bugs):
+    """期限切れバグを処理"""
+    for bug in bugs:
+        if bug['status'] == 'open':
+            age = datetime.now() - datetime.fromisoformat(
+                bug['reported_date']
+            )
+            if age.days > 90:
+                # 長期未解決バグの処理
+                escalate_bug(bug)
+
+def escalate_bug(bug):
+    """バグをエスカレーション"""
+    if bug['priority'] != 'Critical':
+        bug['priority'] = 'High'
+        bug['escalated'] = True
+```
+
+### 2. サポート管理スクリプト
+```python
+#!/usr/bin/env python3
+import json
+import sys
+from datetime import datetime, timedelta
+
+def manage_support():
+    """サポートを管理"""
+    # サポート情報の読み込み
+    support = load_support_info()
+    
+    # サポート期限の確認
+    check_support_periods(support)
+    
+    # 告知の生成
+    generate_notifications(support)
+    
+    # サポート情報の保存
+    save_support_info(support)
+
+def check_support_periods(support):
+    """サポート期限を確認"""
+    now = datetime.now()
+    for version, info in support.items():
+        # バグ修正サポート期限の確認
+        if now > info['bug_support_end']:
+            info['bug_support_active'] = False
+        
+        # セキュリティサポート期限の確認
+        if now > info['security_support_end']:
+            info['security_support_active'] = False
+
+def generate_notifications(support):
+    """告知を生成"""
+    now = datetime.now()
+    notifications = []
+    
+    for version, info in support.items():
+        # 6ヶ月前の告知
+        if (info['bug_support_end'] - now).days == 180:
+            notifications.append({
+                'version': version,
+                'type': '6month_notice',
+                'date': now.isoformat()
+            })
+        
+        # 3ヶ月前の告知
+        if (info['bug_support_end'] - now).days == 90:
+            notifications.append({
+                'version': version,
+                'type': '3month_notice',
+                'date': now.isoformat()
+            })
+        
+        # 1ヶ月前の告知
+        if (info['bug_support_end'] - now).days == 30:
+            notifications.append({
+                'version': version,
+                'type': '1month_notice',
+                'date': now.isoformat()
+            })
+    
+    save_notifications(notifications)
+```
+
+## 6.5 保守のガイドライン
+
+### 1. バグ管理
+- 優先度の判断基準
+- 対応期限の設定
+- エスカレーション基準
+- 解決の検証
+
+### 2. サポート管理
+- サポート期間の設定
+- 告知のタイミング
+- 移行支援の内容
+- 終了後の対応
+
+### 3. 品質維持
+- 定期的な検証
+- 性能監視
+- セキュリティ確認
+- 互換性テスト
+
+### 4. ユーザー支援
+- 問い合わせ対応
+- 技術サポート
+- ドキュメント更新
+- トレーニング提供
+
+
+## binding_class
+
+# バインディングクラスの実装パターン
+
+## 1.1 基本構造
+```cpp
+// [QtClass]Bind.h
+class Bind[QtClass] : public [QtClass] {
+    Q_OBJECT  // シグナル/スロットを使用する場合
+
+public:
+    explicit Bind[QtClass]([QtClass] *parent = nullptr);
+    ~Bind[QtClass]();
+
+    // Qtメソッドのラッパー
+    void someMethod();
+
+    // Handlerの設定（必要な場合）
+    void setHandler([QtClass]Handler *handler);
+    [QtClass]Handler *handler() const;
+
+private:
+    [QtClass]Handler *m_handler;  // 必要な場合
+};
+```
+
+## 1.2 実装例
+```cpp
+// QPushButtonBind.h
+class BindQPushButton : public QPushButton {
+    Q_OBJECT
+public:
+    explicit BindQPushButton(QWidget *parent = nullptr);
+    ~BindQPushButton();
+
+    void setHandler(QPushButtonHandler *handler);
+    QPushButtonHandler *handler() const;
+
+private:
+    QPushButtonHandler *m_handler;
+};
+```
+
+## 1.3 実装のポイント
+1. 継承関係
+   - 対象のQtクラスを直接継承
+   - 必要に応じてQ_OBJECTマクロを使用
+   - 複数継承は避ける
+
+2. メンバ構成
+   - コンストラクタ/デストラクタ
+   - ラッパーメソッド
+   - ハンドラ管理
+   - プライベートメンバ
+
+3. 命名規則
+   - クラス名は「Bind[QtClass]」
+   - メソッド名はQt準拠
+   - メンバ変数は「m_」プレフィックス
+
+
+## handler_class
+
+# ハンドラクラスの実装パターン
+
+## 2.1 基本構造
+```cpp
+// [QtClass]Handler.h
+class [QtClass]Handler : public QObject {
+    Q_OBJECT
+public:
+    explicit [QtClass]Handler(QObject *parent = nullptr);
+    ~[QtClass]Handler();
+
+    // コールバック設定メソッド
+    void setSignalCallback([QtClass]SignalCallback callback);
+
+public slots:
+    void onSignal();  // シグナル受信用スロット
+
+private:
+    [QtClass]SignalCallback m_signalCallback;
+};
+```
+
+## 2.2 実装例
+```cpp
+// QTextEditHandler.h
+class TextEditHandler : public QObject {
+    Q_OBJECT
+public:
+    explicit TextEditHandler(QObject *parent = nullptr);
+    ~TextEditHandler();
+
+    void setTextChangedCallback(void (*callback)());
+    void setCursorPositionChangedCallback(void (*callback)());
+
+public slots:
+    void onTextChanged();
+    void onCursorPositionChanged();
+
+private:
+    void (*m_textChangedCallback)();
+    void (*m_cursorPositionChangedCallback)();
+};
+```
+
+## 2.3 実装のポイント
+1. 基本構成
+   - QObjectを継承
+   - Q_OBJECTマクロを使用
+   - コールバック関数ポインタの管理
+   - シグナル受信用スロットの実装
+
+2. スレッド安全性
+   - コールバックの安全な呼び出し
+   - スレッド間通信の考慮
+   - リソースの保護
+
+3. メモリ管理
+   - 親オブジェクトによる自動削除
+   - コールバックの寿命管理
+   - リソースのクリーンアップ
+
+4. エラー処理
+   - コールバックのNULLチェック
+   - 例外の適切な処理
+   - エラー状態の伝播
+
+
+## c_api
+
+# C API実装パターン
+
+## 3.1 基本構造
+```cpp
+// [QtClass]CAPI.cpp
+extern "C" {
+    // オブジェクト作成/削除
+    void* [QtClass]_create(void* parent) {
+        return new Bind[QtClass](reinterpret_cast<[QtClass]*>(parent));
+    }
+
+    void [QtClass]_delete(void* ptr) {
+        delete static_cast<Bind[QtClass]*>(ptr);
+    }
+
+    // メソッド呼び出し
+    void [QtClass]_someMethod(void* ptr) {
+        static_cast<Bind[QtClass]*>(ptr)->someMethod();
+    }
+
+    // コールバック設定
+    void [QtClass]_setSignalCallback(void* ptr, [QtClass]SignalCallback callback) {
+        auto* obj = static_cast<Bind[QtClass]*>(ptr);
+        [QtClass]Handler* handler = obj->handler();
+        if (!handler) {
+            handler = new [QtClass]Handler(obj);
+            obj->setHandler(handler);
+        }
+        handler->setSignalCallback(callback);
+    }
+}
+```
+
+## 3.2 実装例
+```cpp
+// QTextEditCAPI.cpp
+extern "C" {
+    void* QTextEdit_create(void* parent) {
+        return new BindQTextEdit(reinterpret_cast<QWidget*>(parent));
+    }
+
+    void QTextEdit_setText(void* text_edit, const char* text) {
+        static_cast<BindQTextEdit*>(text_edit)->setText(
+            QString::fromUtf8(text)
+        );
+    }
+
+    void QTextEdit_setTextChangedCallback(
+        void* text_edit,
+        void (*callback)()
+    ) {
+        auto* edit = static_cast<BindQTextEdit*>(text_edit);
+        TextEditHandler* handler = edit->handler();
+        if (!handler) {
+            handler = new TextEditHandler(edit);
+            edit->setTextEditHandler(handler);
+        }
+        handler->setTextChangedCallback(callback);
+    }
+}
+```
+
+## 3.3 実装のポイント
+1. 関数命名規則
+   - クラス名とメソッド名をアンダースコアで区切る
+   - 動詞で始まるメソッド名
+   - get/setプレフィックスの使用
+
+2. 型変換
+   - void*からの適切なキャスト
+   - 文字列のUTF-8変換
+   - 数値型の変換
+
+3. エラー処理
+   - NULLポインタチェック
+   - 例外のキャッチと変換
+   - エラーコードの返却
+
+4. メモリ管理
+   - リソースの確保と解放
+   - 親子関係の管理
+   - 一時オブジェクトの処理
+
+
+## inheritance
+
+# 継承関係の実装パターン
+
+## 4.1 基本パターン
+```cpp
+// 基底クラス
+class BindQWidget : public QWidget {
+    Q_OBJECT
+public:
+    // 共通機能
+    void setEnabled(bool enabled);
+    bool isEnabled() const;
+    // ...
+protected:
+    // 派生クラスで使用する機能
+    QWidgetHandler* handler() const;
+private:
+    QWidgetHandler* m_handler;
+};
+
+// 派生クラス
+class BindQPushButton : public QPushButton {
+    Q_OBJECT
+public:
+    // 追加機能
+    void setText(const QString& text);
+    QString text() const;
+    // ...
+};
+```
+
+## 4.2 実装例
+```cpp
+// QAbstractButtonBind.h → QPushButtonBind.h
+class BindQAbstractButton : public QAbstractButton {
+    Q_OBJECT
+public:
+    void setClickCallback(void (*callback)());
+protected:
+    QAbstractButtonHandler *m_handler;
+};
+
+class BindQPushButton : public QPushButton {
+    Q_OBJECT
+public:
+    // QPushButton固有の機能
+    using BindQAbstractButton::setClickCallback;
+};
+```
+
+## 4.3 実装のポイント
+1. 継承階層の設計
+   - 共通機能の抽出
+   - インターフェースの一貫性
+   - 適切な抽象化レベル
+
+2. メソッドの継承
+   - 基底クラスのメソッド再利用
+   - 仮想関数のオーバーライド
+   - using宣言の活用
+
+3. メンバ変数の管理
+   - protected メンバの利用
+   - private メンバのカプセル化
+   - 継承先での拡張
+
+4. シグナル/スロットの継承
+   - 基底クラスのシグナル再利用
+   - 新しいシグナルの追加
+   - コールバック管理の継承
+
+
+## signal_slot
+
+# シグナル/スロット実装パターン
+
+## 5.1 基本パターン
+```cpp
+// ハンドラでシグナルを受信
+class Handler : public QObject {
+    Q_OBJECT
+public:
+    void setCallback(void (*callback)());
+
+public slots:
+    void onSignal() {
+        if (m_callback) m_callback();
+    }
+
+private:
+    void (*m_callback)();
+};
+
+// バインディングクラスでシグナルを接続
+class Binding : public QObject {
+    Q_OBJECT
+public:
+    void setupConnections() {
+        connect(this, SIGNAL(signal()),
+                m_handler, SLOT(onSignal()));
+    }
+};
+```
+
+## 5.2 実装例
+```cpp
+// QPushButtonHandler
+void QPushButtonHandler::setClickCallback(void (*callback)()) {
+    m_clickCallback = callback;
+}
+
+void QPushButtonHandler::onClick() {
+    if (m_clickCallback) m_clickCallback();
+}
+
+// QPushButtonBind
+BindQPushButton::BindQPushButton(QWidget *parent)
+    : QPushButton(parent)
+{
+    connect(this, SIGNAL(clicked()),
+            m_handler, SLOT(onClick()));
+}
+```
+
+## 5.3 実装のポイント
+1. シグナル定義
+   - シグナルの引数型
+   - シグナルの発行タイミング
+   - シグナルの伝播
+
+2. スロット実装
+   - スロットの引数処理
+   - スロットの実行コンテキスト
+   - スロットのエラー処理
+
+3. コールバック管理
+   - コールバック関数の型定義
+   - コールバックの登録/解除
+   - コールバックの実行制御
+
+4. スレッド考慮
+   - シグナルの接続タイプ
+   - スレッド間通信
+   - 同期/非同期実行
+
+
+## error_handling
+
+# エラー処理パターン
+
+## 6.1 NULLチェックパターン
+```cpp
+void* ptr = [QtClass]_create(parent);
+if (!ptr) {
+    // エラー処理
+    return NULL;
+}
+
+// 引数のNULLチェック
+void [QtClass]_someMethod(void* ptr) {
+    if (!ptr) {
+        // エラー処理
+        return;
+    }
+    // 処理の実行
+}
+```
+
+## 6.2 例外処理パターン
+```cpp
+extern "C" void* [QtClass]_someOperation(void* ptr) {
+    try {
+        auto* obj = static_cast<Bind[QtClass]*>(ptr);
+        return obj->someOperation();
+    } catch (const std::exception& e) {
+        // エラー状態に変換
+        return NULL;
+    } catch (...) {
+        // 未知の例外をキャッチ
+        return NULL;
+    }
+}
+```
+
+## 6.3 実装のポイント
+1. エラーチェック
+   - NULLポインタの検証
+   - 引数の範囲チェック
+   - 型の整合性確認
+
+2. エラー通知
+   - エラーコードの返却
+   - エラーメッセージの設定
+   - エラー状態の伝播
+
+3. リソース管理
+   - エラー時のクリーンアップ
+   - メモリリークの防止
+   - リソースの適切な解放
+
+4. 回復処理
+   - エラーからの復帰
+   - 代替処理の実行
+   - 状態の復元
+
+
+## memory_management
+
+# メモリ管理パターン
+
+## 7.1 リソース確保パターン
+```cpp
+// 1. 単一リソース
+void* obj = [QtClass]_create(NULL);
+if (!obj) return NULL;
+// 使用
+[QtClass]_delete(obj);
+
+// 2. 複数リソース
+void* obj1 = [QtClass1]_create(NULL);
+if (!obj1) return NULL;
+
+void* obj2 = [QtClass2]_create(obj1);
+if (!obj2) {
+    [QtClass1]_delete(obj1);
+    return NULL;
+}
+```
+
+## 7.2 文字列管理パターン
+```cpp
+// 文字列の取得
+const char* str = [QtClass]_getText(ptr);
+// 使用
+// 注: 次のAPI呼び出しまで有効
+
+// 文字列の設定
+[QtClass]_setText(ptr, "text");
+// 注: 内部でコピーを作成
+```
+
+## 7.3 実装のポイント
+1. リソースの所有権
+   - 明示的な所有権移転
+   - 親子関係による自動管理
+   - 一時リソースの管理
+
+2. メモリ解放
+   - 適切なタイミングでの解放
+   - リソースリークの防止
+   - 循環参照の回避
+
+3. スレッド安全性
+   - スレッドセーフな解放
+   - 同期制御の実装
+   - 競合状態の防止
+
+4. エラー処理
+   - メモリ確保失敗の処理
+   - 部分的な解放
+   - クリーンアップ処理
+
+
+## testing
+
+# テストパターン
+
+## 8.1 基本テストパターン
+```c
+void test_widget_creation() {
+    void* widget = QWidget_create(NULL);
+    assert(widget != NULL);
+    QWidget_delete(widget);
+}
+
+void test_widget_properties() {
+    void* widget = QWidget_create(NULL);
+    QWidget_setEnabled(widget, true);
+    assert(QWidget_isEnabled(widget));
+    QWidget_delete(widget);
+}
+```
+
+## 8.2 コールバックテストパターン
+```c
+static bool callback_called = false;
+
+void test_callback(void* ptr) {
+    callback_called = true;
+}
+
+void test_signal_emission() {
+    void* button = QPushButton_create(NULL);
+    QPushButton_setClickCallback(button, test_callback);
+    
+    // シグナルのエミュレート
+    QPushButton_click(button);
+    
+    assert(callback_called);
+    QPushButton_delete(button);
+}
+```
+
+## 8.3 実装のポイント
+1. テストケースの設計
+   - 基本機能のテスト
+   - エッジケースのテスト
+   - エラー条件のテスト
+
+2. リソース管理
+   - テスト前の初期化
+   - テスト後のクリーンアップ
+   - リソースリークの検出
+
+3. コールバックテスト
+   - シグナル発行の検証
+   - コールバック呼び出しの確認
+   - パラメータの検証
+
+4. エラー処理テスト
+   - エラー状態の検証
+   - 例外処理の確認
+   - 回復処理の検証
+
+
+## qt6binding_inheritance_implementation
+
+# Qt6バインディングにおける継承関係の実装手順
+
+このドキュメントでは、Qt6バインディングで新しいクラスを追加する際に、継承関係を適切に実装するための具体的な手順を説明します。
+
+## 目次
+
+1. [実装の概要](#実装の概要)
+2. [実装手順](#実装手順)
+3. [具体的な実装例](#具体的な実装例)
+4. [継承チェーンの実装例](#継承チェーンの実装例)
+5. [トラブルシューティング](#トラブルシューティング)
+
+## 実装の概要
+
+Qt6バインディングでは、Qtの継承関係を以下の3層構造で実装します：
+
+1. **Handler層** - Qt側のクラスを扱うC++クラス
+2. **Bind層** - C++とC言語の橋渡しをする静的メソッドを提供するクラス
+3. **CAPI層** - C言語から呼び出せる関数群
+
+継承関係を実装する場合、これら3層すべてで適切に対応する必要があります。
+
+## 実装手順
+
+新しいQtクラスのバインディングを作成し、継承関係を適切に実装するための手順は以下の通りです：
+
+### 1. 継承関係の把握
+
+まず、実装するクラスの継承関係を把握します。例えば、`QPushButton`は`QAbstractButton`を継承し、`QAbstractButton`は`QWidget`を継承し、`QWidget`は`QObject`を継承しています。
+
+### 2. Handler層の実装
+
+1. **Handlerクラスの作成**：
+   - 基底クラスのHandlerを継承したHandlerクラスを作成します
+   - 例：`QPushButtonHandler`は`QAbstractButtonHandler`を継承
+
+   ```cpp
+   // QPushButtonHandler.h
+   #ifndef Q_PUSH_BUTTON_HANDLER_H
+   #define Q_PUSH_BUTTON_HANDLER_H
+
+   #include "../QAbstractButton/QAbstractButtonHandler.h"
+   #include <QPushButton>
+
+   class QPushButtonHandler : public QAbstractButtonHandler {
+   public:
+       explicit QPushButtonHandler(QPushButton* button = nullptr);
+       virtual ~QPushButtonHandler();
+
+       // QPushButtonの固有機能
+       void setFlat(bool flat);
+       bool isFlat() const;
+       // ...
+
+       // QPushButtonへのアクセス
+       QPushButton* pushButton() const;
+   };
+
+   #endif // Q_PUSH_BUTTON_HANDLER_H
+   ```
+
+2. **Handlerクラスの実装**：
+   - 基底クラスのコンストラクタを呼び出し、適切に初期化します
+   - クラス固有のメソッドを実装します
+
+   ```cpp
+   // QPushButtonHandler.cpp
+   #include "QPushButtonHandler.h"
+
+   QPushButtonHandler::QPushButtonHandler(QPushButton* button)
+       : QAbstractButtonHandler(button)
+   {
+   }
+
+   QPushButtonHandler::~QPushButtonHandler()
+   {
+   }
+
+   void QPushButtonHandler::setFlat(bool flat)
+   {
+       if (pushButton()) {
+           pushButton()->setFlat(flat);
+       }
+   }
+
+   bool QPushButtonHandler::isFlat() const
+   {
+       return pushButton() ? pushButton()->isFlat() : false;
+   }
+
+   QPushButton* QPushButtonHandler::pushButton() const
+   {
+       return qobject_cast<QPushButton*>(widget());
+   }
+   ```
+
+### 3. Bind層の実装
+
+1. **Bindクラスの作成**：
+   - クラス固有のメソッドと基底クラスへの委譲メソッドを定義します
+
+   ```cpp
+   // QPushButtonBind.h
+   #ifndef Q_PUSH_BUTTON_BIND_H
+   #define Q_PUSH_BUTTON_BIND_H
+
+   #include "QPushButtonHandler.h"
+   #include "../QAbstractButton/QAbstractButtonBind.h"
+
+   class QPushButtonBind {
+   public:
+       // 作成・削除
+       static QPushButton* create(QWidget* parent = nullptr);
+       static void destroy(QPushButton* button);
+
+       // QPushButton固有の機能
+       static void setFlat(void* button, bool flat);
+       static bool isFlat(void* button);
+       // ...
+
+       // QAbstractButtonの機能を委譲
+       static void setText(void* button, const char* text) {
+           QAbstractButtonBind::setText(button, text);
+       }
+       // ...
+
+       // QWidgetの機能を委譲
+       static void resize(void* button, int w, int h) {
+           QWidgetBind::resize(button, w, h);
+       }
+       // ...
+
+       // QObjectの機能を委譲
+       static void setObjectName(void* button, const char* name) {
+           QObjectBind::setObjectName(button, name);
+       }
+       // ...
+   };
+
+   #endif // Q_PUSH_BUTTON_BIND_H
+   ```
+
+2. **Bindクラスの実装**：
+   - クラス固有のメソッドを実装します
+   - 基底クラスへの委譲メソッドはインライン実装が多いです
+
+   ```cpp
+   // QPushButtonBind.cpp
+   #include "QPushButtonBind.h"
+
+   QPushButton* QPushButtonBind::create(QWidget* parent)
+   {
+       return new QPushButton(parent);
+   }
+
+   void QPushButtonBind::destroy(QPushButton* button)
+   {
+       delete button;
+   }
+
+   void QPushButtonBind::setFlat(void* button, bool flat)
+   {
+       if (button) {
+           static_cast<QPushButtonHandler*>(button)->setFlat(flat);
+       }
+   }
+
+   bool QPushButtonBind::isFlat(void* button)
+   {
+       if (button) {
+           return static_cast<QPushButtonHandler*>(button)->isFlat();
+       }
+       return false;
+   }
+   ```
+
+### 4. CAPI層の実装
+
+1. **C言語ヘッダーの作成**：
+   - C言語から呼び出せる関数を宣言します
+   - 基底クラスのヘッダーをインクルードして継承関係を示します
+
+   ```c
+   // qpushbutton.h
+   #ifndef QT_QPUSHBUTTON_H
+   #define QT_QPUSHBUTTON_H
+
+   #include <stdbool.h>
+   #include "qabstractbutton.h" // 基底クラスのヘッダー
+
+   #ifdef __cplusplus
+   extern "C" {
+   #endif
+
+   // 作成・削除
+   void* QPushButton_create(void* parent);
+   void QPushButton_delete(void* button);
+
+   // QPushButton固有の機能
+   void QPushButton_setFlat(void* button, bool flat);
+   bool QPushButton_isFlat(void* button);
+   // ...
+
+   // QAbstractButtonから継承した機能
+   void QPushButton_setText(void* button, const char* text);
+   // ...
+
+   // QWidgetから継承した機能
+   void QPushButton_resize(void* button, int w, int h);
+   // ...
+
+   // QObjectから継承した機能
+   void QPushButton_setObjectName(void* button, const char* name);
+   // ...
+
+   #ifdef __cplusplus
+   }
+   #endif
+
+   #endif // QT_QPUSHBUTTON_H
+   ```
+
+2. **CAPI関数の実装**：
+   - Bindクラスのメソッドを呼び出す関数を実装します
+
+   ```cpp
+   // QPushButtonCAPI.cpp
+   #include "QPushButtonBind.h"
+   #include "qpushbutton.h"
+
+   extern "C" {
+
+   void* QPushButton_create(void* parent)
+   {
+       return QPushButtonBind::create(static_cast<QWidget*>(parent));
+   }
+
+   void QPushButton_delete(void* button)
+   {
+       QPushButtonBind::destroy(static_cast<QPushButton*>(button));
+   }
+
+   void QPushButton_setFlat(void* button, bool flat)
+   {
+       QPushButtonBind::setFlat(button, flat);
+   }
+
+   bool QPushButton_isFlat(void* button)
+   {
+       return QPushButtonBind::isFlat(button);
+   }
+
+   // QAbstractButtonから継承した機能
+   void QPushButton_setText(void* button, const char* text)
+   {
+       QPushButtonBind::setText(button, text);
+   }
+
+   // QWidgetから継承した機能
+   void QPushButton_resize(void* button, int w, int h)
+   {
+       QPushButtonBind::resize(button, w, h);
+   }
+
+   // QObjectから継承した機能
+   void QPushButton_setObjectName(void* button, const char* name)
+   {
+       QPushButtonBind::setObjectName(button, name);
+   }
+
+   // ...
+
+   }
+   ```
+
+## 具体的な実装例
+
+以下に、QObjectの機能をQWidgetに継承させる具体的な実装例を示します。
+
+### Handler層
+
+```cpp
+// QWidgetHandler.h
+class QWidgetHandler : public QObjectHandler {
+public:
+    explicit QWidgetHandler(QWidget* widget = nullptr);
+    // ...
+
+    // QObjectHandlerのメソッドを必要に応じてオーバーライド
+    void setObjectName(const QString &name) override;
+    // ...
+};
+
+// QWidgetHandler.cpp
+QWidgetHandler::QWidgetHandler(QWidget* widget)
+    : QObjectHandler(widget), m_widget(widget)
+{
+}
+
+void QWidgetHandler::setObjectName(const QString &name)
+{
+    // 必要に応じてQWidget固有の処理を追加
+    QObjectHandler::setObjectName(name);
+}
+```
+
+### Bind層
+
+```cpp
+// QWidgetBind.h
+class QWidgetBind {
+public:
+    // QWidget固有のメソッド
+    static void resize(void* widget, int w, int h);
+    // ...
+
+    // QObjectの機能を委譲
+    static void setObjectName(void* widget, const char* name) {
+        QObjectBind::setObjectName(widget, name);
+    }
+    // ...
+};
+
+// QWidgetBind.cpp
+void QWidgetBind::resize(void* widget, int w, int h)
+{
+    if (widget) {
+        static_cast<QWidgetHandler*>(widget)->resize(w, h);
+    }
+}
+```
+
+### CAPI層
+
+```cpp
+// QWidgetCAPI.cpp
+extern "C" {
+
+void QWidget_resize(void* widget, int w, int h)
+{
+    QWidgetBind::resize(widget, w, h);
+}
+
+// QObjectから継承した機能
+void QWidget_setObjectName(void* widget, const char* name)
+{
+    QWidgetBind::setObjectName(widget, name);
+}
+
+// ...
+
+}
+```
+
+## 継承チェーンの実装例
+
+複数レベルの継承がある場合（例：QObject → QWidget → QPushButton）、各レベルで適切に機能を実装します。
+
+```
+QObject
+  ↓
+QWidget
+  ↓
+QAbstractButton
+  ↓
+QPushButton
+```
+
+この場合、QPushButtonのバインディングでは：
+
+1. QPushButtonHandlerはQAbstractButtonHandlerを継承
+2. QPushButtonBindはQAbstractButtonBindの機能を委譲
+3. QPushButtonのCAPI関数はQAbstractButtonの機能も提供
+
+同様に、QAbstractButtonのバインディングでは：
+
+1. QAbstractButtonHandlerはQWidgetHandlerを継承
+2. QAbstractButtonBindはQWidgetBindの機能を委譲
+3. QAbstractButtonのCAPI関数はQWidgetの機能も提供
+
+## トラブルシューティング
+
+### 継承関係の問題
+
+**問題**: 基底クラスの機能が継承先クラスで利用できない
+
+**解決策**:
+1. 継承関係が正しく実装されているか確認する
+2. 基底クラスのHandlerが正しく初期化されているか確認する
+3. 委譲メソッドが正しく実装されているか確認する
+
+### キャストの問題
+
+**問題**: キャストエラーが発生する
+
+**解決策**:
+1. 適切な型キャストを使用する（static_cast, dynamic_cast, qobject_cast）
+2. ポインタの型が正しいか確認する
+3. nullポインタチェックを追加する
+
+### メモリリークの問題
+
+**問題**: メモリリークが発生する
+
+**解決策**:
+1. 文字列などのリソースの所有権を明確にする
+2. 必要に応じてスマートポインタを使用する
+3. デストラクタで適切にリソースを解放する
+
+
+## qt6binding_inheritance_guide
+
+# Qt6バインディングにおける継承関係の実装ガイド
+
+このドキュメントでは、Qt6のC++クラスの継承関係をC言語バインディングで適切に実装するための方法を説明します。Qtの多くのクラスは`QObject`を継承しており、継承したクラスは`QObject`の機能も使えますが、バインディングでは明示的に実装する必要があります。
+
+## 目次
+
+1. [継承関係の基本概念](#継承関係の基本概念)
+2. [バインディングの3層構造](#バインディングの3層構造)
+3. [QObjectの機能を継承先クラスに実装する方法](#qobjectの機能を継承先クラスに実装する方法)
+4. [実装例：QWidgetにQObjectの機能を追加する](#実装例qwidgetにqobjectの機能を追加する)
+5. [継承チェーンの実装](#継承チェーンの実装)
+6. [シグナル・スロットの継承](#シグナルスロットの継承)
+7. [ベストプラクティス](#ベストプラクティス)
+
+## 継承関係の基本概念
+
+Qtでは、多くのクラスが`QObject`を基底クラスとして継承しています。例えば：
+
+```
+QObject
+  └── QWidget
+       ├── QPushButton
+       ├── QLabel
+       └── QLineEdit
+```
+
+C++では継承によって基底クラスの機能を自動的に利用できますが、C言語バインディングでは明示的に実装する必要があります。
+
+## バインディングの3層構造
+
+Qt6バインディングは以下の3層構造で実装されています：
+
+1. **Handlerクラス** - Qt側のクラスを扱うC++クラス
+2. **Bindクラス** - C++とC言語の橋渡しをする静的メソッドを提供するクラス
+3. **CAPI関数** - C言語から呼び出せる関数群
+
+継承関係を実装する場合、これら3層すべてで適切に対応する必要があります。
+
+## QObjectの機能を継承先クラスに実装する方法
+
+### 1. Handlerクラスでの実装
+
+継承先クラスのHandlerクラスで、QObjectHandlerの機能を実装します。
+
+```cpp
+// 例：QWidgetHandlerクラス
+class QWidgetHandler : public QObjectHandler {
+public:
+    // QWidgetHandler固有のメソッド
+    void resize(int w, int h);
+    void move(int x, int y);
+    // ...
+
+    // QObjectHandlerのメソッドをオーバーライド（必要な場合）
+    void setObjectName(const QString &name) override;
+    // ...
+};
+```
+
+### 2. Bindクラスでの実装
+
+継承先クラスのBindクラスで、QObjectBindの機能を委譲または実装します。
+
+```cpp
+// 例：QWidgetBindクラス
+class QWidgetBind {
+public:
+    // QWidgetBind固有のメソッド
+    static void resize(void* widget, int w, int h);
+    static void move(void* widget, int x, int y);
+    // ...
+
+    // QObjectBindの機能を委譲
+    static void setObjectName(void* widget, const char* name) {
+        QObjectBind::setObjectName(widget, name);
+    }
+    // ...
+};
+```
+
+### 3. CAPI関数での実装
+
+継承先クラスのCAPI関数で、QObjectのCAPI関数と同等の機能を提供します。
+
+```c
+// 例：QWidgetのCAPI関数
+void QWidget_setObjectName(void* widget, const char* name) {
+    QWidgetBind::setObjectName(widget, name);
+}
+// ...
+```
+
+## 実装例：QWidgetにQObjectの機能を追加する
+
+以下に、QWidgetクラスにQObjectの機能を追加する具体的な実装例を示します。
+
+### Handler層の実装
+
+```cpp
+// QWidgetHandler.h
+#ifndef Q_WIDGET_HANDLER_H
+#define Q_WIDGET_HANDLER_H
+
+#include "../QObject/QObjectHandler.h"
+#include <QWidget>
+
+class QWidgetHandler : public QObjectHandler {
+public:
+    explicit QWidgetHandler(QWidget* widget = nullptr);
+    virtual ~QWidgetHandler();
+
+    // QWidgetの固有機能
+    void resize(int w, int h);
+    void move(int x, int y);
+    // ...
+
+    // QObjectHandlerの機能をオーバーライド（必要な場合）
+    void setObjectName(const QString &name) override;
+    // ...
+
+    // QWidgetへのアクセス
+    QWidget* widget() const;
+
+private:
+    QWidget* m_widget;
+};
+
+#endif // Q_WIDGET_HANDLER_H
+```
+
+```cpp
+// QWidgetHandler.cpp
+#include "QWidgetHandler.h"
+
+QWidgetHandler::QWidgetHandler(QWidget* widget)
+    : QObjectHandler(widget), m_widget(widget)
+{
+}
+
+QWidgetHandler::~QWidgetHandler()
+{
+}
+
+void QWidgetHandler::resize(int w, int h)
+{
+    if (m_widget) {
+        m_widget->resize(w, h);
+    }
+}
+
+void QWidgetHandler::move(int x, int y)
+{
+    if (m_widget) {
+        m_widget->move(x, y);
+    }
+}
+
+void QWidgetHandler::setObjectName(const QString &name)
+{
+    // 必要に応じてQWidgetに特化した実装を行う
+    QObjectHandler::setObjectName(name);
+}
+
+QWidget* QWidgetHandler::widget() const
+{
+    return m_widget;
+}
+```
+
+### Bind層の実装
+
+```cpp
+// QWidgetBind.h
+#ifndef Q_WIDGET_BIND_H
+#define Q_WIDGET_BIND_H
+
+#include "QWidgetHandler.h"
+#include "../QObject/QObjectBind.h"
+
+class QWidgetBind {
+public:
+    // QWidgetの固有機能
+    static void resize(void* widget, int w, int h);
+    static void move(void* widget, int x, int y);
+    // ...
+
+    // QObjectの機能を委譲
+    static void setObjectName(void* widget, const char* name);
+    static char* objectName(void* widget);
+    // ...
+
+private:
+    static QWidgetHandler* handler(void* widget);
+};
+
+#endif // Q_WIDGET_BIND_H
+```
+
+```cpp
+// QWidgetBind.cpp
+#include "QWidgetBind.h"
+#include <QString>
+
+void QWidgetBind::resize(void* widget, int w, int h)
+{
+    handler(widget)->resize(w, h);
+}
+
+void QWidgetBind::move(void* widget, int x, int y)
+{
+    handler(widget)->move(x, y);
+}
+
+void QWidgetBind::setObjectName(void* widget, const char* name)
+{
+    handler(widget)->setObjectName(QString::fromUtf8(name));
+}
+
+char* QWidgetBind::objectName(void* widget)
+{
+    QString name = handler(widget)->objectName();
+    return qstrdup(name.toUtf8().constData());
+}
+
+QWidgetHandler* QWidgetBind::handler(void* widget)
+{
+    return static_cast<QWidgetHandler*>(widget);
+}
+```
+
+### CAPI層の実装
+
+```cpp
+// QWidgetCAPI.cpp
+#include "QWidgetBind.h"
+#include "qwidget.h"
+
+extern "C" {
+
+void QWidget_resize(void* widget, int w, int h)
+{
+    QWidgetBind::resize(widget, w, h);
+}
+
+void QWidget_move(void* widget, int x, int y)
+{
+    QWidgetBind::move(widget, x, y);
+}
+
+// QObjectの機能
+void QWidget_setObjectName(void* widget, const char* name)
+{
+    QWidgetBind::setObjectName(widget, name);
+}
+
+char* QWidget_objectName(void* widget)
+{
+    return QWidgetBind::objectName(widget);
+}
+
+// ...
+
+}
+```
+
+```c
+// qwidget.h (C言語ヘッダー)
+#ifndef QT_QWIDGET_H
+#define QT_QWIDGET_H
+
+#include <stdbool.h>
+#include "qobject.h" // QObjectの機能も使えることを示す
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+// QWidgetの固有機能
+void QWidget_resize(void* widget, int w, int h);
+void QWidget_move(void* widget, int x, int y);
+// ...
+
+// QObjectから継承した機能
+void QWidget_setObjectName(void* widget, const char* name);
+char* QWidget_objectName(void* widget);
+// ...
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif // QT_QWIDGET_H
+```
+
+## 継承チェーンの実装
+
+複数レベルの継承がある場合（例：QObject → QWidget → QPushButton）、各レベルで適切に機能を実装する必要があります。
+
+1. 各レベルのHandlerクラスが前のレベルを継承
+2. 各レベルのBindクラスが前のレベルの機能を委譲または実装
+3. 各レベルのCAPI関数が前のレベルの機能を提供
+
+## シグナル・スロットの継承
+
+Qtのシグナル・スロットシステムも継承関係で適切に扱う必要があります。
+
+1. 基底クラスのシグナルを継承先クラスでも利用できるようにする
+2. 継承先クラス固有のシグナルを追加する
+3. コールバック関数の設定メカニズムを各レベルで実装する
+
+```cpp
+// 例：QWidgetのシグナルコールバック設定
+void QWidget_setDestroyedCallback(void* widget, void (*callback)(void*))
+{
+    // QObjectのDestroyedシグナルを利用
+    QObject_setDestroyedCallback(widget, callback);
+}
+
+void QWidget_setCustomContextMenuRequestedCallback(void* widget, void (*callback)(void*, const void*))
+{
+    // QWidget固有のシグナル
+    static_cast<BindQWidget*>(widget)->setCustomContextMenuRequestedCallback(
+        reinterpret_cast<WidgetCustomContextMenuRequestedCallback>(callback)
+    );
+}
+```
+
+## ベストプラクティス
+
+1. **一貫性を保つ** - 継承関係全体で命名規則や実装パターンを一貫させる
+2. **重複を避ける** - 基底クラスの機能を再実装せず、委譲を活用する
+3. **型安全性を確保** - キャストは慎重に行い、型の整合性を確保する
+4. **メモリ管理に注意** - 特にC言語側に返す文字列などのリソース管理に注意
+5. **ドキュメント化** - 継承関係や利用可能な機能を明確にドキュメント化する
+
+以上のガイドラインに従うことで、Qtの継承関係をC言語バインディングで適切に実装できます。
+
+
+## qt6binding_signal_slot_inheritance
+
+# Qt6バインディングにおけるシグナル・スロットの継承実装
+
+このドキュメントでは、Qt6バインディングでシグナル・スロットメカニズムを継承関係の中で適切に実装するための方法を説明します。
+
+## 目次
+
+1. [シグナル・スロットの基本概念](#シグナルスロットの基本概念)
+2. [継承関係におけるシグナル・スロット](#継承関係におけるシグナルスロット)
+3. [実装手順](#実装手順)
+4. [具体的な実装例](#具体的な実装例)
+5. [トラブルシューティング](#トラブルシューティング)
+
+## シグナル・スロットの基本概念
+
+Qtのシグナル・スロットは、オブジェクト間の通信メカニズムです。C言語バインディングでは、シグナルをコールバック関数として実装します。
+
+基本的な実装パターン：
+
+1. シグナルに対応するコールバック関数の型を定義
+2. コールバック関数を設定するメソッドを実装
+3. シグナル発生時にコールバック関数を呼び出す
+
+## 継承関係におけるシグナル・スロット
+
+継承関係では、基底クラスのシグナルは派生クラスでも利用できます。C言語バインディングでも同様に、基底クラスのシグナルに対応するコールバック関数を派生クラスでも設定・利用できるようにする必要があります。
+
+例えば：
+- `QObject`の`destroyed()`シグナルは`QWidget`でも利用可能
+- `QWidget`の`customContextMenuRequested()`シグナルは`QPushButton`でも利用可能
+
+## 実装手順
+
+### 1. コールバック関数の型定義
+
+各クラスのシグナルに対応するコールバック関数の型を定義します。
+
+```cpp
+// QObjectのシグナル用コールバック
+typedef void (*ObjectDestroyedCallback)(void*);
+typedef void (*ObjectNameChangedCallback)(void*, const QString*);
+
+// QWidgetのシグナル用コールバック
+typedef void (*WidgetCustomContextMenuRequestedCallback)(void*, const QPoint*);
+```
+
+### 2. Bindクラスでのコールバック設定メソッド
+
+基底クラスと派生クラスの両方でコールバック設定メソッドを実装します。
+
+```cpp
+// QObjectBind.h
+class QObjectBind {
+public:
+    // ...
+    static void setDestroyedCallback(void* object, ObjectDestroyedCallback callback);
+    static void setObjectNameChangedCallback(void* object, ObjectNameChangedCallback callback);
+};
+
+// QWidgetBind.h
+class QWidgetBind {
+public:
+    // ...
+    // QWidgetのシグナル
+    static void setCustomContextMenuRequestedCallback(void* widget, WidgetCustomContextMenuRequestedCallback callback);
+    
+    // QObjectのシグナルを委譲
+    static void setDestroyedCallback(void* widget, ObjectDestroyedCallback callback) {
+        QObjectBind::setDestroyedCallback(widget, callback);
+    }
+    
+    static void setObjectNameChangedCallback(void* widget, ObjectNameChangedCallback callback) {
+        QObjectBind::setObjectNameChangedCallback(widget, callback);
+    }
+};
+```
+
+### 3. CAPI関数の実装
+
+基底クラスと派生クラスの両方でCAPI関数を実装します。
+
+```cpp
+// QObjectCAPI.cpp
+extern "C" {
+    void QObject_setDestroyedCallback(void* object, void (*callback)(void*)) {
+        QObjectBind::setDestroyedCallback(object, callback);
+    }
+    
+    void QObject_setObjectNameChangedCallback(void* object, void (*callback)(void*, const char*)) {
+        // 型変換が必要な場合は適切に処理
+        QObjectBind::setObjectNameChangedCallback(object, 
+            reinterpret_cast<ObjectNameChangedCallback>(callback));
+    }
+}
+
+// QWidgetCAPI.cpp
+extern "C" {
+    // QWidgetのシグナル
+    void QWidget_setCustomContextMenuRequestedCallback(void* widget, void (*callback)(void*, const void*)) {
+        QWidgetBind::setCustomContextMenuRequestedCallback(widget,
+            reinterpret_cast<WidgetCustomContextMenuRequestedCallback>(callback));
+    }
+    
+    // QObjectのシグナルを委譲
+    void QWidget_setDestroyedCallback(void* widget, void (*callback)(void*)) {
+        QWidgetBind::setDestroyedCallback(widget, callback);
+    }
+    
+    void QWidget_setObjectNameChangedCallback(void* widget, void (*callback)(void*, const char*)) {
+        QWidgetBind::setObjectNameChangedCallback(widget,
+            reinterpret_cast<ObjectNameChangedCallback>(callback));
+    }
+}
+```
+
+## 具体的な実装例
+
+以下に、QObjectのdestroyedシグナルをQWidgetで利用する具体的な実装例を示します。
+
+### Handler層
+
+```cpp
+// BindQObject.h
+class BindQObject : public QObject {
+    Q_OBJECT
+public:
+    // ...
+    void setDestroyedCallback(ObjectDestroyedCallback callback);
+    
+private slots:
+    void onDestroyed();
+    
+private:
+    ObjectDestroyedCallback destroyedCallback;
+};
+
+// BindQWidget.h
+class BindQWidget : public QWidget {
+    Q_OBJECT
+public:
+    // ...
+    // QWidgetのシグナル用
+    void setCustomContextMenuRequestedCallback(WidgetCustomContextMenuRequestedCallback callback);
+    
+    // QObjectのシグナルは基底クラスから継承されるので、
+    // 明示的に再実装する必要はない
+    
+private slots:
+    void onCustomContextMenuRequested(const QPoint &pos);
+    
+private:
+    WidgetCustomContextMenuRequestedCallback customContextMenuRequestedCallback;
+};
+```
+
+### Bind層
+
+```cpp
+// QObjectBind.cpp
+void QObjectBind::setDestroyedCallback(void* object, ObjectDestroyedCallback callback)
+{
+    if (object) {
+        static_cast<BindQObject*>(object)->setDestroyedCallback(callback);
+    }
+}
+
+// QWidgetBind.cpp
+void QWidgetBind::setCustomContextMenuRequestedCallback(void* widget, WidgetCustomContextMenuRequestedCallback callback)
+{
+    if (widget) {
+        static_cast<BindQWidget*>(widget)->setCustomContextMenuRequestedCallback(callback);
+    }
+}
+
+// QObjectのシグナルを委譲するメソッドはヘッダーでインライン実装
+```
+
+### CAPI層
+
+```cpp
+// QObjectCAPI.cpp
+extern "C" {
+    void QObject_setDestroyedCallback(void* object, void (*callback)(void*))
+    {
+        QObjectBind::setDestroyedCallback(object, callback);
+    }
+}
+
+// QWidgetCAPI.cpp
+extern "C" {
+    void QWidget_setCustomContextMenuRequestedCallback(void* widget, void (*callback)(void*, const void*))
+    {
+        QWidgetBind::setCustomContextMenuRequestedCallback(widget,
+            reinterpret_cast<WidgetCustomContextMenuRequestedCallback>(callback));
+    }
+    
+    void QWidget_setDestroyedCallback(void* widget, void (*callback)(void*))
+    {
+        QWidgetBind::setDestroyedCallback(widget, callback);
+    }
+}
+```
+
+### C言語側での使用例
+
+```c
+// QObjectのdestroyedシグナルを利用
+void on_object_destroyed(void* object)
+{
+    printf("Object destroyed: %p\n", object);
+}
+
+void setup_object()
+{
+    void* obj = QObject_create(NULL);
+    QObject_setDestroyedCallback(obj, on_object_destroyed);
+}
+
+// QWidgetでQObjectのdestroyedシグナルを利用
+void setup_widget()
+{
+    void* widget = QWidget_create(NULL);
+    QWidget_setDestroyedCallback(widget, on_object_destroyed);
+}
+```
+
+## 複雑なシグナルの処理
+
+パラメータが複雑なシグナルの場合、コールバックコンテキストを使用して処理します。
+
+```cpp
+// コールバックコンテキスト
+namespace {
+    struct CallbackContext {
+        static void (*current_callback)(void*, const char*);
+        
+        static void wrapper(void* obj, const QString* name) {
+            if (current_callback) {
+                current_callback(obj, name->toUtf8().constData());
+            }
+        }
+    };
+    
+    // 静的メンバ変数の定義
+    void (*CallbackContext::current_callback)(void*, const char*) = nullptr;
+}
+
+// コールバック設定
+void QObject_setObjectNameChangedCallback(void* object, void (*callback)(void*, const char*))
+{
+    auto obj = static_cast<BindQObject*>(object);
+    CallbackContext::current_callback = callback;
+    obj->setObjectNameChangedCallback(CallbackContext::wrapper);
+}
+```
+
+## トラブルシューティング
+
+### シグナルが発火しない問題
+
+**問題**: シグナルが発火してもコールバックが呼ばれない
+
+**解決策**:
+1. シグナルとスロットの接続が正しく行われているか確認する
+2. コールバック関数が正しく設定されているか確認する
+3. コールバック関数がnullでないかチェックを追加する
+
+### パラメータ変換の問題
+
+**問題**: シグナルのパラメータがコールバック関数に正しく渡されない
+
+**解決策**:
+1. 型変換が正しく行われているか確認する
+2. 文字列などのリソースの寿命を適切に管理する
+3. 必要に応じてラッパー関数を使用する
+
+### メモリリークの問題
+
+**問題**: シグナル処理でメモリリークが発生する
+
+**解決策**:
+1. 一時オブジェクトの解放を確実に行う
+2. コールバック内で確保したリソースを適切に解放する
+3. オブジェクトの寿命とコールバックの関係を明確にする
+
+
+## thread_safety
+
+# Qt6バインディングにおけるスレッド安全性
+
+このドキュメントでは、Qt6バインディングプロジェクトにおけるスレッド安全性の実装規則を説明します。
+詳細な内容は以下のセクションに分かれています：
+
+1. [基本原則](thread_safety/1_basic_principles.md)
+   - スレッド安全性の定義
+   - 並行処理の基本
+   - 同期メカニズム
+   - デッドロック防止
+
+2. [シグナル/スロットのスレッド安全性](thread_safety/2_signal_slot_thread_safety.md)
+   - シグナルの発行
+   - スロットの実行
+   - イベントループとの連携
+   - クロススレッド通信
+
+3. [リソース管理](thread_safety/3_resource_management.md)
+   - メモリ管理
+   - ファイル操作
+   - ネットワーク操作
+   - データベース操作
+
+4. [同期プリミティブ](thread_safety/4_synchronization_primitives.md)
+   - ミューテックス
+   - セマフォ
+   - 条件変数
+   - アトミック操作
+
+5. [スレッドプール](thread_safety/5_thread_pool.md)
+   - タスク管理
+   - リソース制御
+   - 優先度制御
+   - エラー処理
+
+6. [スレッド安全なデータ構造](thread_safety/6_thread_safety.md)
+   - コンテナ
+   - キュー
+   - キャッシュ
+   - ロックフリーデータ構造
+
+
+## build_deploy
+
+# Qt6バインディングにおけるビルドとデプロイメントガイド
+
+このドキュメントでは、Qt6バインディングプロジェクトにおけるビルドとデプロイメントの規則を説明します。
+詳細な内容は以下のセクションに分かれています：
+
+1. [CMake設定](build_deploy/1_cmake_settings.md)
+   - 基本設定
+   - Qt6の設定
+   - プラットフォーム固有の設定
+   - CMakeガイドライン
+
+2. [ビルド設定](build_deploy/2_build_settings.md)
+   - ターゲット設定
+   - 依存関係の設定
+   - ビルド設定のパターン
+   - ビルドオプション
+   - ビルド設定のガイドライン
+
+3. [インストール設定](build_deploy/3_install_settings.md)
+   - ファイルのインストール
+   - パッケージ設定
+   - インストール設定のパターン
+   - インストールスクリプト
+   - インストール設定のガイドライン
+
+4. [デプロイメント](build_deploy/4_deployment.md)
+   - 依存関係の収集
+   - パッケージング
+   - デプロイメントパターン
+   - デプロイメントスクリプト
+
+5. [テスト設定](build_deploy/5_test_settings.md)
+   - テストの有効化
+   - テストの実行
+   - テスト設定のパターン
+   - テストスクリプト
+   - テスト設定のガイドライン
+
+
+## error_handling
+
+# Qt6バインディングにおけるエラー処理ガイド
+
+このドキュメントでは、Qt6バインディングプロジェクトにおけるエラー処理の規則を説明します。
+詳細な内容は以下のセクションに分かれています：
+
+1. [エラーコード体系](error_handling/1_error_code_system.md)
+   - 基本エラーコード
+   - エラー情報構造体
+   - エラーコードの使用ガイドライン
+   - エラー情報の設定
+
+2. [エラー処理パターン](error_handling/2_error_handling_patterns.md)
+   - C++側の実装
+   - C APIの実装
+   - エラー処理のベストプラクティス
+   - エラー処理のアンチパターン
+
+3. [エラー処理戦略](error_handling/3_error_handling_strategy.md)
+   - エラーの検出
+   - エラーの伝播
+   - エラー処理戦略のガイドライン
+   - エラー処理の実装例
+
+4. [エラーのログ記録](error_handling/4_error_logging.md)
+   - エラーログの形式
+   - エラーログレベル
+   - ログ出力の実装
+   - ログ管理システム
+   - ログ出力のガイドライン
+
+5. [エラー回復戦略](error_handling/5_error_recovery.md)
+   - リソースのクリーンアップ
+   - エラーからの復帰
+   - エラー回復パターン
+   - 回復戦略のガイドライン
+   - 回復処理の実装例
+
+6. [デバッグサポート](error_handling/6_debug_support.md)
+   - アサーション
+   - エラートレース
+   - デバッグ支援機能
+   - デバッグ用ユーティリティ
+   - デバッグ支援のガイドライン
+
+
+## signal_slot
+
+# Qt6バインディングにおけるシグナル・スロットガイド
+
+このドキュメントでは、Qt6バインディングプロジェクトにおけるシグナル・スロットの実装規則を説明します。
+詳細な内容は以下のセクションに分かれています：
+
+1. [基本概念](signal_slot/1_basic_concepts.md)
+   - シグナル/スロットの対応
+   - コールバック管理
+   - シグナル/スロットの基本パターン
+   - シグナル/スロットの接続パターン
+   - シグナル/スロットのガイドライン
+
+2. [シグナルハンドラの実装](signal_slot/2_signal_handler_implementation.md)
+   - ハンドラクラス
+   - シグナル接続
+   - シグナルハンドラの実装パターン
+   - シグナルハンドラの管理
+   - シグナルハンドラのガイドライン
+
+3. [C APIインターフェース](signal_slot/3_c_api_interface.md)
+   - コールバック設定
+   - シグナル発行
+   - C API実装パターン
+   - C API使用例
+   - C APIのガイドライン
+
+4. [データ変換](signal_slot/4_data_conversion.md)
+   - 基本型の変換
+   - 複合型の変換
+   - データ変換パターン
+   - データ変換の実装例
+   - データ変換のガイドライン
+
+5. [スレッド安全性](signal_slot/5_thread_safety.md)
+   - スレッドセーフなシグナル処理
+   - スレッドセーフなデータ管理
+   - スレッドセーフな実装パターン
+   - スレッド安全性の実装例
+   - スレッド安全性のガイドライン
+
+6. [パフォーマンスモニタリング](signal_slot/6_performance_monitoring.md)
+   - シグナル処理時間の計測
+   - コールバック頻度の監視
+   - パフォーマンス監視システム
+   - パフォーマンス最適化のガイドライン
+
+
+## version_release
+
+# Qt6バインディングにおけるバージョン管理とリリースガイド
+
+このドキュメントでは、Qt6バインディングプロジェクトにおけるバージョン管理とリリースの規則を説明します。
+詳細な内容は以下のセクションに分かれています：
+
+1. [バージョニング規則](version_release/1_versioning_rules.md)
+   - セマンティックバージョニング
+   - バージョン管理ファイル
+   - バージョン管理パターン
+   - バージョン管理スクリプト
+   - バージョニングのガイドライン
+
+2. [Git運用ルール](version_release/2_git_operation_rules.md)
+   - ブランチ戦略
+   - コミットメッセージ
+   - ブランチ管理パターン
+   - Git運用スクリプト
+   - Git運用のガイドライン
+
+3. [リリースプロセス](version_release/3_release_process.md)
+   - リリース準備
+   - リリースチェックリスト
+   - リリース手順
+   - リリーススクリプト
+   - リリースのガイドライン
+
+4. [ドキュメント管理](version_release/4_documentation_management.md)
+   - APIドキュメント
+   - リリースノート
+   - ドキュメント管理パターン
+   - ドキュメント生成スクリプト
+   - ドキュメント管理のガイドライン
+
+5. [品質管理](version_release/5_quality_management.md)
+   - コードレビュー基準
+   - リリース判定基準
+   - 品質管理パターン
+   - 品質管理スクリプト
+   - 品質管理のガイドライン
+
+6. [保守とサポート](version_release/6_maintenance_and_support.md)
+   - バージョンサポート方針
+   - バグ修正方針
+   - 保守管理パターン
+   - 保守スクリプト
+   - 保守のガイドライン
+
+
+## inheritance
+
+# Qt6バインディングにおける継承関係の実装ガイド
+
+このドキュメントでは、Qt6のC++クラスの継承関係をC言語バインディングで適切に実装するための方法を説明します。
+詳細な内容は以下のセクションに分かれています：
+
+1. [基本原則](inheritance/1_basic_principles.md)
+   - 継承階層の設計
+   - 継承チェーン
+
+2. [型変換と検証](inheritance/2_type_conversion_and_validation.md)
+   - ダウンキャスト
+   - 型情報の管理
+
+3. [メソッドの継承](inheritance/3_method_inheritance.md)
+   - 仮想関数の実装
+   - シグナル/スロットの継承
+
+4. [C APIの実装](inheritance/4_c_api_implementation.md)
+   - 基底クラスのAPI
+   - 派生クラスのAPI
+
+5. [メモリ管理](inheritance/5_memory_management.md)
+   - 所有権の管理
+   - リソースの解放
+
+6. [デバッグサポート](inheritance/6_debug_support.md)
+   - 継承関係の検証
+   - 継承関係のトレース
+
+7. [継承メソッドの実装パターン](inheritance/7_implementation_patterns.md)
+   - 基本原則
+   - 実装パターン
+   - 実装例
+   - 実装の選択基準
+   - 実装のガイドライン
+   - ドキュメント例
+
+
+## performance
+
+# Qt6バインディングにおけるパフォーマンス
+
+このドキュメントでは、Qt6バインディングプロジェクトにおけるパフォーマンスの最適化と監視に関する規則を説明します。
+詳細な内容は以下のセクションに分かれています：
+
+1. [基本原則](performance/1_basic_principles.md)
+   - パフォーマンスの定義
+   - 測定方法
+   - 最適化の原則
+   - トレードオフの考慮
+
+2. [メモリ最適化](performance/2_memory_optimization.md)
+   - メモリ使用量の削減
+   - メモリアロケーションの最適化
+   - キャッシュの活用
+   - メモリレイアウトの最適化
+
+3. [CPU最適化](performance/3_cpu_optimization.md)
+   - アルゴリズムの最適化
+   - ループの最適化
+   - 条件分岐の最適化
+   - SIMD命令の活用
+
+4. [I/O最適化](performance/4_io_optimization.md)
+   - ファイルI/O
+   - ネットワークI/O
+   - データベースアクセス
+   - バッファリング戦略
+
+5. [並列処理](performance/5_parallel_processing.md)
+   - マルチスレッド
+   - 非同期処理
+   - 並列アルゴリズム
+   - 負荷分散
+
+6. [プロファイリング](performance/6_profiling.md)
+   - パフォーマンス測定
+   - ボトルネック分析
+   - メモリリーク検出
+   - 最適化の検証
+
+7. [パフォーマンスモニタリング](performance/7_performance_monitoring.md)
+   - メトリクスの収集
+   - アラートの設定
+   - トレンド分析
+   - レポート生成
+
+
+## index
+
+# Qt6バインディング プロジェクトルール インデックス
+
+## 1. ルールの構成
+
+このディレクトリには、Qt6バインディングプロジェクトの開発に関する各種ルールが含まれています。
+
+### 1.1 コア開発ルール
+- [コーディングスタイル](coding_style.md)
+  - ファイル構造
+  - 命名規則
+  - コメント
+  - インデントとフォーマット
+  - ファイル編成
+  - コード構造
+  - 制約と規約
+
+- [エラー処理](error_handling.md)
+  - エラーコード体系
+  - エラー処理パターン
+  - エラー処理戦略
+  - エラーログ記録
+  - エラー回復
+  - デバッグサポート
+
+- [メモリ管理](memory_management.md)
+  - 基本原則
+  - メモリ管理パターン
+  - Qt特有のメモリ管理
+  - C APIのメモリ管理
+  - メモリリーク防止
+
+### 1.2 Qt固有のルール
+- [シグナル/スロット](signal_slot.md)
+  - 基本概念
+  - シグナルハンドラの実装
+  - C APIインターフェース
+  - データ変換
+
+- [継承関係](inheritance.md)
+  - 基本原則
+  - 型変換と検証
+  - メソッドの継承
+  - C APIの実装
+  - メモリ管理
+  - デバッグサポート
+  - 実装パターン
+
+- [バインディングパターン](binding_patterns.md)
+  - バインディングクラス
+  - ハンドラクラス
+  - C API
+  - 継承
+  - シグナル/スロット
+  - エラー処理
+  - メモリ管理
+  - テスト
+
+### 1.3 パフォーマンスと安全性
+- [スレッド安全性](thread_safety.md)
+  - 基本原則
+  - シグナル/スロットのスレッド安全性
+  - リソース管理
+  - 同期プリミティブ
+  - スレッドプール
+  - スレッド安全なデータ構造
+
+- [パフォーマンス](performance.md)
+  - 基本原則
+  - メモリ最適化
+  - CPU最適化
+  - I/O最適化
+  - 並列処理
+  - プロファイリング
+  - パフォーマンスモニタリング
+
+### 1.4 プロジェクト管理ルール
+- [ビルドとデプロイメント](build_deploy.md)
+  - CMake設定
+  - ビルド設定
+  - インストール設定
+  - デプロイメント
+  - テスト設定
+
+- [バージョン管理とリリース](version_release.md)
+  - バージョニング規則
+  - Git運用ルール
+  - リリースプロセス
+  - ドキュメント管理
+  - 品質管理
+  - 保守とサポート
+
+## 2. ルールの適用
+
+### 2.1 優先順位
+1. 安全性に関するルール
+   - メモリ管理
+   - エラー処理
+   - スレッド安全性
+
+2. 機能性に関するルール
+   - シグナル/スロット
+   - 継承関係
+   - API設計
+
+3. 保守性に関するルール
+   - コーディングスタイル
+   - ドキュメント
+   - テスト
+
+### 2.2 例外事項
+- パフォーマンス最適化のための例外
+- プラットフォーム固有の例外
+- 後方互換性のための例外
+
+## 3. 相互参照
+
+### 3.1 ルール間の関係
+```mermaid
+graph TD
+    CS[コーディングスタイル] --> EH[エラー処理]
+    CS --> MM[メモリ管理]
+    EH --> MM
+    SS[シグナル/スロット] --> EH
+    SS --> MM
+    IN[継承関係] --> MM
+    IN --> SS
+    IN --> CS
+    BD[ビルド/デプロイ] --> VR[バージョン/リリース]
+    TS[スレッド安全性] --> MM
+    TS --> SS
+    PF[パフォーマンス] --> MM
+    PF --> TS
+```
+
+### 3.2 依存関係
+- メモリ管理 ← エラー処理
+- シグナル/スロット ← スレッド安全性
+- 継承関係 ← メモリ管理、コーディングスタイル
+- ビルド設定 ← プラットフォーム要件
+- パフォーマンス ← メモリ管理、スレッド安全性
+
+
+## coding_style
+
+# Qt6バインディングにおけるコーディングスタイル
+
+このドキュメントでは、Qt6バインディングプロジェクトにおけるコーディングスタイルの規則を説明します。
+詳細な内容は以下のセクションに分かれています：
+
+1. [ファイル構造](coding_style/1_file_structure.md)
+   - ヘッダーファイル
+   - 実装ファイル
+   - C APIファイル
+
+2. [命名規則](coding_style/2_naming_conventions.md)
+   - クラス名
+   - メソッド名
+   - 変数名
+   - 命名規則の詳細
+
+3. [コメント](coding_style/3_comments.md)
+   - クラスコメント
+   - 関数コメント
+   - コメントの種類
+   - コメントのガイドライン
+
+4. [インデントとフォーマット](coding_style/4_indentation_and_formatting.md)
+   - インデント
+   - ブレース
+   - スペース
+   - 行の長さと折り返し
+   - 空行の使用
+
+5. [ファイル編成](coding_style/5_file_organization.md)
+   - ヘッダファイル
+   - 実装ファイル
+   - ディレクトリ構造
+   - ファイル命名規則
+   - ファイル内の順序
+
+6. [コード構造](coding_style/6_code_structure.md)
+   - クラス構造
+   - メソッド構造
+   - バインディング固有の構造
+   - コード構造のガイドライン
+
+7. [制約と規約](coding_style/7_constraints_and_conventions.md)
+   - 禁止事項
+   - 推奨事項
+   - バインディング固有の規約
+   - セキュリティ規約
+   - パフォーマンス規約
+
+
+## memory_management
+
+# Qt6バインディングにおけるメモリ管理ガイド
+
+このドキュメントでは、Qt6バインディングプロジェクトにおけるメモリ管理の規則を説明します。
+詳細な内容は以下のセクションに分かれています：
+
+1. [基本原則](memory_management/1_basic_principles.md)
+   - 所有権の明確化
+   - リソース管理の責任
+   - 所有権の原則
+   - リソース管理の原則
+   - メモリ管理のガイドライン
+
+2. [メモリ管理パターン](memory_management/2_memory_management_patterns.md)
+   - スコープベースの管理
+   - 参照カウント
+   - スマートポインタパターン
+   - メモリプールパターン
+   - メモリ管理パターンのガイドライン
+
+3. [Qt特有のメモリ管理](memory_management/3_qt_specific_memory_management.md)
+   - 親子関係の管理
+   - Qtのスマートポインタ
+   - Qt特有のメモリ管理パターン
+   - メモリ管理の実装例
+   - メモリ管理のガイドライン
+
+4. [C APIのメモリ管理](memory_management/4_c_api_memory_management.md)
+   - リソース作成/削除
+   - 一時リソースの管理
+   - リソース管理パターン
+   - メモリ管理の実装例
+   - メモリ管理のガイドライン
+
+5. [メモリリーク防止](memory_management/5_memory_leak_prevention.md)
+   - リソーストラッキング
+   - デバッグ支援
+   - リソース監視システム
+   - メモリリーク検出
+   - メモリリーク防止のガイドライン
+
+
+## binding_patterns
+
+# Qt6バインディングにおけるバインディングパターン
+
+このドキュメントでは、Qt6バインディングプロジェクトにおけるバインディングパターンの実装規則を説明します。
+詳細な内容は以下のセクションに分かれています：
+
+1. [バインディングクラス](binding_patterns/1_binding_class.md)
+   - クラス構造
+   - メソッド実装
+   - 型変換
+   - エラー処理
+
+2. [ハンドラクラス](binding_patterns/2_handler_class.md)
+   - イベント処理
+   - シグナル管理
+   - リソース管理
+   - 状態管理
+
+3. [C API](binding_patterns/3_c_api.md)
+   - 関数インターフェース
+   - パラメータ変換
+   - エラー処理
+   - リソース管理
+
+4. [継承](binding_patterns/4_inheritance.md)
+   - 継承関係の実装
+   - メソッドの委譲
+   - 型変換
+   - メモリ管理
+
+5. [シグナル/スロット](binding_patterns/5_signal_slot.md)
+   - シグナルの実装
+   - スロットの実装
+   - コールバック管理
+   - イベント処理
+
+6. [エラー処理](binding_patterns/6_error_handling.md)
+   - エラーコード
+   - エラー情報
+   - 例外処理
+   - リカバリ
+
+7. [メモリ管理](binding_patterns/7_memory_management.md)
+   - リソース管理
+   - 所有権管理
+   - メモリリーク防止
+   - クリーンアップ
+
+8. [テスト](binding_patterns/8_testing.md)
+   - ユニットテスト
+   - 統合テスト
+   - パフォーマンステスト
+   - メモリテスト
