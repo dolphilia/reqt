@@ -78,6 +78,8 @@ set(MOC_HEADERS
     src/QScrollBar/QScrollBarHandler.h
     src/QSizeGrip/QSizeGripBind.h
     src/QSlider/QSliderBind.h
+    src/QSortFilterProxyModel/QSortFilterProxyModelBind.h
+    src/QSortFilterProxyModel/QSortFilterProxyModelHandler.h
     src/QSplitter/QSplitterBind.h
     src/QSplitter/QSplitterHandler.h
     src/QSplitterHandle/QSplitterHandleBind.h
@@ -122,6 +124,8 @@ set(MOC_HEADERS
     src/QFileInfo/QFileInfoBind.h
     src/QItemSelectionModel/QItemSelectionModelBind.h
     src/QItemSelectionModel/QItemSelectionModelHandler.h
+    src/QObject/QObjectHandler.h
+    src/QInputDialog/QInputDialogHandler.h
 )
 
 add_library(qt6binding SHARED
@@ -229,6 +233,9 @@ add_library(qt6binding SHARED
     src/QSizeGrip/QSizeGripBind.cpp
     src/QSizeGrip/QSizeGripCAPI.cpp
     src/QSlider/QSliderBind.cpp
+    src/QSortFilterProxyModel/QSortFilterProxyModelBind.cpp
+    src/QSortFilterProxyModel/QSortFilterProxyModelCAPI.cpp
+    src/QSortFilterProxyModel/QSortFilterProxyModelHandler.cpp
     src/QSplitter/QSplitterBind.cpp
     src/QSplitter/QSplitterHandler.cpp
     src/QSplitter/QSplitterCAPI.cpp
@@ -282,8 +289,8 @@ add_library(qt6binding SHARED
     src/QWidget/QWidgetBind.cpp
     src/QWidget/QWidgetCAPI.cpp
     src/QObject/QObjectBind.cpp
-    src/QObject/QObjectHandler.cpp
     src/QObject/QObjectCAPI.cpp
+    src/QObject/QObjectHandler.cpp
     src/QPaintDevice/QPaintDeviceBind.cpp
     src/QPaintDevice/QPaintDeviceCAPI.cpp
     src/QPoint/QPointBind.cpp
@@ -291,18 +298,21 @@ add_library(qt6binding SHARED
     src/QPointF/QPointFBind.cpp
     src/QPointF/QPointFCAPI.cpp
     src/QString/QStringBind.cpp
-    src/QString/QStringHandler.cpp
     src/QString/QStringCAPI.cpp
+    src/QString/QStringHandler.cpp
     src/QVariant/QVariantBind.cpp
-    src/QVariant/QVariantHandler.cpp
     src/QVariant/QVariantCAPI.cpp
+    src/QVariant/QVariantHandler.cpp
     src/QDir/QDirBind.cpp
     src/QDir/QDirCAPI.cpp
     src/QFileInfo/QFileInfoBind.cpp
     src/QFileInfo/QFileInfoCAPI.cpp
     src/QItemSelectionModel/QItemSelectionModelBind.cpp
-    src/QItemSelectionModel/QItemSelectionModelHandler.cpp
     src/QItemSelectionModel/QItemSelectionModelCAPI.cpp
+    src/QItemSelectionModel/QItemSelectionModelHandler.cpp
+    src/QInputDialog/QInputDialogBind.cpp
+    src/QInputDialog/QInputDialogCAPI.cpp
+    src/QInputDialog/QInputDialogHandler.cpp
 )
 
 target_include_directories(qt6binding PUBLIC include include/qt6 src)

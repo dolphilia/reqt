@@ -47,6 +47,7 @@
 #include "qscrollbar.h"
 #include "qsizegrip.h"
 #include "qslider.h"
+#include "qsortfilterproxymodel.h"
 #include "qspinbox.h"
 #include "qsplitter.h"
 #include "qsplitterhandle.h"
