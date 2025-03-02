@@ -1,39 +1,21 @@
-# 実装済み機能
+# 実装済み機能の概要
 
-## 1.1 基本ウィジェット
-- [x] QWidget
-- [x] QPushButton
-- [x] QLabel
-- [x] QLineEdit
-- [x] QTextEdit
-- [x] QCheckBox
-- [x] QRadioButton
+## 1.1 主要機能カテゴリ
+- 基本ウィジェット：95% 完了
+- コンテナウィジェット：80% 完了
+- データモデル：70% 完了
+- レイアウト：60% 完了
+- その他のコンポーネント：85% 完了
 
-## 1.2 コンテナウィジェット
-- [x] QDialog
-- [x] QFrame
-- [x] QGroupBox
-- [ ] QMainWindow
-- [ ] QMdiArea
-- [x] QScrollArea
+## 1.2 詳細情報
+各クラスの詳細な実装状況は、[classes/ ディレクトリ](../classes/)を参照してください。
 
-## 1.3 データモデル
-- [x] QFileSystemModel
-- [x] QItemSelectionModel
-- [ ] QStandardItemModel
-- [ ] QStringListModel
-- [x] QSortFilterProxyModel
+## 1.3 最近の実装
+- QAction（アクション）
+- QSortFilterProxyModel（フィルタモデル）
+- QColorSpace（色空間）
 
-## 1.4 レイアウト
-- [x] QVBoxLayout
-- [x] QHBoxLayout
-- [ ] QGridLayout
-- [ ] QFormLayout
-
-## 1.5 その他のコンポーネント
-- [x] QPoint/QPointF
-- [x] QColorSpace
-- [x] QMessageBox
-- [x] QInputDialog
-- [ ] QFileDialog
-- [x] QAction
+## 1.4 次期リリース目標
+- QMainWindowの基本機能実装
+- メニューシステムの統合
+- ステータスバーのサポート
