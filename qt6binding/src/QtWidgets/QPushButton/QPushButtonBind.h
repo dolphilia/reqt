@@ -5,7 +5,8 @@
 
 typedef void (*QPushButtonClickCallback)(void* button);
 
-class QPushButtonBind {
+class QPushButtonBind : public QPushButton {
+    Q_OBJECT
 public:
     static QPushButton* create(const char* text, QWidget* parent = nullptr);
     static void destroy(QPushButton* button);
