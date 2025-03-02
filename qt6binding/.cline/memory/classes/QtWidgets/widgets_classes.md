@@ -58,7 +58,7 @@
 - [ ] QSplashScreen
 
 ## レイアウト
-- [ ] QBoxLayout
+- [x] QBoxLayout
 - [x] QHBoxLayout
 - [x] QVBoxLayout
 - [x] QGridLayout

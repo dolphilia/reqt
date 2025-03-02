@@ -17,6 +17,8 @@ set(MOC_HEADERS
     src/QAction/QActionBind.h
     src/QAction/QActionHandler.h
     src/QApplication/QApplicationBind.h
+    src/QBoxLayout/QBoxLayoutBind.h
+    src/QBoxLayout/QBoxLayoutHandler.h
     src/QCheckBox/QCheckBoxBind.h
     src/QCheckBox/QCheckBoxHandler.h
     src/QColor/QColorBind.h
@@ -58,7 +60,6 @@ set(MOC_HEADERS
     src/QLineEdit/QLineEditBind.h
     src/QLineEdit/QLineEditHandler.h
     src/QListView/QListViewBind.h
-    src/QListView/QListViewHandler.h
     src/QListView/QListViewHandler.h
     src/QMainWindow/QMainWindowBind.h
     src/QMdiArea/QMdiAreaBind.h
@@ -140,6 +141,9 @@ add_library(qt6binding SHARED
     src/QAction/QActionHandler.cpp
     src/QApplication/QApplicationBind.cpp
     src/QApplication/QApplicationCAPI.cpp
+    src/QBoxLayout/QBoxLayoutBind.cpp
+    src/QBoxLayout/QBoxLayoutCAPI.cpp
+    src/QBoxLayout/QBoxLayoutHandler.cpp
     src/QCheckBox/QCheckBoxBind.cpp
     src/QCheckBox/QCheckBoxCAPI.cpp
     src/QCheckBox/QCheckBoxHandler.cpp
