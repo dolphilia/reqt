@@ -1,120 +1,120 @@
 # QtCore クラス
 
 ## 基本クラス
-- QAbstractAnimation
-- QAbstractEventDispatcher
-- QAbstractItemModel
-- QAbstractListModel
-- QAbstractNativeEventFilter
-- QAbstractProxyModel
-- QAbstractTableModel
-- QAnimationGroup
-- QBasicTimer
-- QBuffer
-- QCoreApplication
-- QDataStream
-- QDateTime
-- QDeadlineTimer
-- QDir
-- QDirIterator
-- QEvent
-- QEventLoop
-- QFile
-- QFileInfo
-- QFileSystemWatcher
-- QIODevice
-- QLibrary
-- QMutex
-- QObject
-- QProcess
-- QResource
-- QSettings
-- QSharedMemory
-- QSignalBlocker
-- QSocketNotifier
-- QSystemSemaphore
-- QTemporaryDir
-- QTemporaryFile
-- QTextStream
-- QThread
-- QThreadPool
-- QTimer
-- QTranslator
-- QWaitCondition
+- [ ] QAbstractAnimation
+- [ ] QAbstractEventDispatcher
+- [ ] QAbstractItemModel
+- [ ] QAbstractListModel
+- [ ] QAbstractNativeEventFilter
+- [ ] QAbstractProxyModel
+- [ ] QAbstractTableModel
+- [ ] QAnimationGroup
+- [ ] QBasicTimer
+- [ ] QBuffer
+- [x] QCoreApplication
+- [ ] QDataStream
+- [ ] QDateTime
+- [ ] QDeadlineTimer
+- [x] QDir
+- [ ] QDirIterator
+- [ ] QEvent
+- [ ] QEventLoop
+- [ ] QFile
+- [x] QFileInfo
+- [ ] QFileSystemWatcher
+- [ ] QIODevice
+- [ ] QLibrary
+- [ ] QMutex
+- [x] QObject
+- [ ] QProcess
+- [ ] QResource
+- [ ] QSettings
+- [ ] QSharedMemory
+- [ ] QSignalBlocker
+- [ ] QSocketNotifier
+- [ ] QSystemSemaphore
+- [ ] QTemporaryDir
+- [ ] QTemporaryFile
+- [ ] QTextStream
+- [ ] QThread
+- [ ] QThreadPool
+- [x] QTimer
+- [ ] QTranslator
+- [ ] QWaitCondition
 
 ## データ型
-- QByteArray
-- QByteArrayList
-- QByteArrayView
-- QChar
-- QDate
-- QDateTime
-- QEasingCurve
-- QLine
-- QLineF
-- QLocale
-- QMargins
-- QMarginsF
-- QMetaType
-- QMimeData
-- QMimeDatabase
-- QMimeType
-- QModelIndex
-- QPersistentModelIndex
-- QPoint
-- QPointF
-- QRect
-- QRectF
-- QSize
-- QSizeF
-- QString
-- QStringList
-- QTime
-- QTimeZone
-- QUrl
-- QUuid
-- QVariant
+- [ ] QByteArray
+- [ ] QByteArrayList
+- [ ] QByteArrayView
+- [ ] QChar
+- [ ] QDate
+- [ ] QDateTime
+- [ ] QEasingCurve
+- [ ] QLine
+- [ ] QLineF
+- [ ] QLocale
+- [ ] QMargins
+- [ ] QMarginsF
+- [ ] QMetaType
+- [ ] QMimeData
+- [ ] QMimeDatabase
+- [ ] QMimeType
+- [ ] QModelIndex
+- [ ] QPersistentModelIndex
+- [x] QPoint
+- [x] QPointF
+- [ ] QRect
+- [ ] QRectF
+- [ ] QSize
+- [ ] QSizeF
+- [x] QString
+- [ ] QStringList
+- [ ] QTime
+- [ ] QTimeZone
+- [ ] QUrl
+- [ ] QUuid
+- [x] QVariant
 
 ## コレクションクラス
-- QCache
-- QHash
-- QList
-- QMap
-- QMultiHash
-- QMultiMap
-- QQueue
-- QSet
-- QStack
-- QVector
+- [ ] QCache
+- [ ] QHash
+- [ ] QList
+- [ ] QMap
+- [ ] QMultiHash
+- [ ] QMultiMap
+- [ ] QQueue
+- [ ] QSet
+- [ ] QStack
+- [ ] QVector
 
 ## 並列処理
-- QFuture
-- QFutureIterator
-- QFutureSynchronizer
-- QFutureWatcher
-- QPromise
-- QRunnable
-- QThread
-- QThreadPool
+- [ ] QFuture
+- [ ] QFutureIterator
+- [ ] QFutureSynchronizer
+- [ ] QFutureWatcher
+- [ ] QPromise
+- [ ] QRunnable
+- [ ] QThread
+- [ ] QThreadPool
 
 ## その他
-- QCommandLineOption
-- QCommandLineParser
-- QCoreApplication
-- QDebug
-- QElapsedTimer
-- QFileSelector
-- QGlobalStatic
-- QLibraryInfo
-- QLoggingCategory
-- QMessageLogger
-- QMetaObject
-- QOperatingSystemVersion
-- QPluginLoader
-- QRandomGenerator
-- QRegularExpression
-- QStandardPaths
-- QStorageInfo
-- QTextBoundaryFinder
-- QTimerEvent
-- QVersionNumber
+- [ ] QCommandLineOption
+- [ ] QCommandLineParser
+- [x] QCoreApplication
+- [ ] QDebug
+- [ ] QElapsedTimer
+- [ ] QFileSelector
+- [ ] QGlobalStatic
+- [ ] QLibraryInfo
+- [ ] QLoggingCategory
+- [ ] QMessageLogger
+- [ ] QMetaObject
+- [ ] QOperatingSystemVersion
+- [ ] QPluginLoader
+- [ ] QRandomGenerator
+- [ ] QRegularExpression
+- [ ] QStandardPaths
+- [ ] QStorageInfo
+- [ ] QTextBoundaryFinder
+- [ ] QTimerEvent
+- [ ] QVersionNumber
