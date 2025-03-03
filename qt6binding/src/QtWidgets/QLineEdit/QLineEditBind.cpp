@@ -3,20 +3,18 @@
 
 QLineEditBind::QLineEditBind(QWidget* parent)
     : QLineEdit(parent)
-    , handler(new LineEditHandler(this))
-{
-    connect(this, &QLineEdit::textChanged, handler, &LineEditHandler::onTextChanged);
-    connect(this, &QLineEdit::textEdited, handler, &LineEditHandler::onTextEdited);
-    connect(this, &QLineEdit::returnPressed, handler, &LineEditHandler::onReturnPressed);
+    , handler(new QLineEditHandler(this)) {
+    connect(this, &QLineEdit::textChanged, handler, &QLineEditHandler::onTextChanged);
+    connect(this, &QLineEdit::textEdited, handler, &QLineEditHandler::onTextEdited);
+    connect(this, &QLineEdit::returnPressed, handler, &QLineEditHandler::onReturnPressed);
 }
 
 QLineEditBind::QLineEditBind(const QString& text, QWidget* parent)
     : QLineEdit(text, parent)
-    , handler(new LineEditHandler(this))
-{
-    connect(this, &QLineEdit::textChanged, handler, &LineEditHandler::onTextChanged);
-    connect(this, &QLineEdit::textEdited, handler, &LineEditHandler::onTextEdited);
-    connect(this, &QLineEdit::returnPressed, handler, &LineEditHandler::onReturnPressed);
+    , handler(new QLineEditHandler(this)) {
+    connect(this, &QLineEdit::textChanged, handler, &QLineEditHandler::onTextChanged);
+    connect(this, &QLineEdit::textEdited, handler, &QLineEditHandler::onTextEdited);
+    connect(this, &QLineEdit::returnPressed, handler, &QLineEditHandler::onReturnPressed);
 }
 
 QLineEditBind::~QLineEditBind() {
@@ -27,10 +25,10 @@ void QLineEditBind::setTextChangedCallback(TextChangedCallback callback) const {
     handler->setTextChangedCallback(callback);
 }
 
-void QLineEditBind::setTextEditedCallback(TextChangedCallback callback) const {
+void QLineEditBind::setTextEditedCallback(TextEditedCallback callback) const {
     handler->setTextEditedCallback(callback);
 }
 
-void QLineEditBind::setReturnPressedCallback(TextChangedCallback callback) const {
+void QLineEditBind::setReturnPressedCallback(ReturnPressedCallback callback) const {
     handler->setReturnPressedCallback(callback);
 }

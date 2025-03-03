@@ -1,24 +1,26 @@
-#ifndef LINEEDIT_HANDLER_H
-#define LINEEDIT_HANDLER_H
+#ifndef QLINEEDIT_HANDLER_H
+#define QLINEEDIT_HANDLER_H
 
 #include <QObject>
 
-class LineEditHandler : public QObject {
+class QLineEditHandler : public QObject {
     Q_OBJECT
     typedef void (*TextChangedCallback)(void*, const char*);
+    typedef void (*TextEditedCallback)(void*, const char*);
+    typedef void (*ReturnPressedCallback)(void*, const char*);
 public:
-    explicit LineEditHandler(QObject* parent = nullptr);
+    explicit QLineEditHandler(QObject* parent = nullptr);
     void setTextChangedCallback(TextChangedCallback callback);
-    void setTextEditedCallback(TextChangedCallback callback);
-    void setReturnPressedCallback(TextChangedCallback callback);
+    void setTextEditedCallback(TextEditedCallback callback);
+    void setReturnPressedCallback(ReturnPressedCallback callback);
 public slots:
     void onTextChanged(const QString& text) const;
     void onTextEdited(const QString& text) const;
     void onReturnPressed() const;
 private:
     TextChangedCallback textChangedCallback;
-    TextChangedCallback textEditedCallback;
-    TextChangedCallback returnPressedCallback;
+    TextEditedCallback textEditedCallback;
+    ReturnPressedCallback returnPressedCallback;
 };
 
-#endif // LINEEDIT_HANDLER_H
+#endif // QLINEEDIT_HANDLER_H
