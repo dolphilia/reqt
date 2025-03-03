@@ -5,8 +5,7 @@ DialHandler::DialHandler(QObject* parent)
     , valueChangedCallback(nullptr)
     , sliderMovedCallback(nullptr)
     , sliderPressedCallback(nullptr)
-    , sliderReleasedCallback(nullptr)
-{
+    , sliderReleasedCallback(nullptr) {
 }
 
 void DialHandler::setValueChangedCallback(ValueChangedCallback callback) {

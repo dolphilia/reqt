@@ -4,8 +4,7 @@ CheckBoxHandler::CheckBoxHandler(QObject* parent)
     : QObject(parent)
     , stateCallback(nullptr)
     , toggleCallback(nullptr)
-    , clickedCallback(nullptr)
-{
+    , clickedCallback(nullptr) {
 }
 
 void CheckBoxHandler::setStateChangedCallback(StateCallback callback) {

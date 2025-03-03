@@ -3,8 +3,7 @@
 
 QDialBind::QDialBind(QWidget* parent)
     : QDial(parent)
-    , handler(new DialHandler(this))
-{
+    , handler(new DialHandler(this)) {
     connect(this, &QDial::valueChanged, handler, &DialHandler::onValueChanged);
     connect(this, &QDial::sliderMoved, handler, &DialHandler::onSliderMoved);
     connect(this, &QDial::sliderPressed, handler, &DialHandler::onSliderPressed);

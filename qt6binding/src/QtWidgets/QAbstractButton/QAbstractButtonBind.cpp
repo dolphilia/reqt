@@ -12,8 +12,7 @@ QAbstractButtonBind::QAbstractButtonBind(QWidget* parent)
     connect(this, &QAbstractButton::toggled, handler, &QAbstractButtonHandler::onToggled);
 }
 
-QAbstractButtonBind::~QAbstractButtonBind()
-{
+QAbstractButtonBind::~QAbstractButtonBind() {
     delete handler;
 }
 
@@ -34,13 +33,11 @@ void QAbstractButtonBind::setToggledCallback(ToggleCallback callback) const {
 }
 
 bool QAbstractButtonBind::hitButton(const QPoint &pos) const {
-    // 単純にウィジェット全体をクリック可能領域とする
-    return rect().contains(pos);
+    return rect().contains(pos); // 単純にウィジェット全体をクリック可能領域とする
 }
 
 void QAbstractButtonBind::paintEvent(QPaintEvent* event) {
     Q_UNUSED(event);
     QPainter painter(this);
-    // 最小限の描画：背景の矩形などを描く（本来は適切なスタイルを適用するべき）
-    painter.drawRect(rect());
+    painter.drawRect(rect()); // 最小限の描画：背景の矩形などを描く（本来は適切なスタイルを適用するべき）
 }

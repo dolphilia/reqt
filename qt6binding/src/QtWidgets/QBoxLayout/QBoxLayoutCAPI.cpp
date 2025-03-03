@@ -13,8 +13,7 @@ enum QBoxLayoutDirection {
 
 // Creation/Deletion
 void* QBoxLayout_create(int direction, void* parent) {
-    return new QBoxLayout(static_cast<QBoxLayout::Direction>(direction),
-                             static_cast<QWidget*>(parent));
+    return new QBoxLayout(static_cast<QBoxLayout::Direction>(direction), static_cast<QWidget*>(parent));
 }
 
 void QBoxLayout_delete(void* layout) {
@@ -23,25 +22,19 @@ void QBoxLayout_delete(void* layout) {
 
 // Layout operations
 void QBoxLayout_addLayout(void* layout, void* sublayout, int stretch) {
-    static_cast<QBoxLayout*>(layout)->addLayout(
-        static_cast<QLayout*>(sublayout), stretch);
+    static_cast<QBoxLayout*>(layout)->addLayout(static_cast<QLayout*>(sublayout), stretch);
 }
 
 void QBoxLayout_insertLayout(void* layout, int index, void* sublayout, int stretch) {
-    static_cast<QBoxLayout*>(layout)->insertLayout(
-        index, static_cast<QLayout*>(sublayout), stretch);
+    static_cast<QBoxLayout*>(layout)->insertLayout(index, static_cast<QLayout*>(sublayout), stretch);
 }
 
 void QBoxLayout_addWidget(void* layout, void* widget, int stretch, int alignment) {
-    static_cast<QBoxLayout*>(layout)->addWidget(
-        static_cast<QWidget*>(widget), stretch,
-        static_cast<Qt::Alignment>(alignment));
+    static_cast<QBoxLayout*>(layout)->addWidget(static_cast<QWidget*>(widget), stretch, static_cast<Qt::Alignment>(alignment));
 }
 
 void QBoxLayout_insertWidget(void* layout, int index, void* widget, int stretch, int alignment) {
-    static_cast<QBoxLayout*>(layout)->insertWidget(
-        index, static_cast<QWidget*>(widget), stretch,
-        static_cast<Qt::Alignment>(alignment));
+    static_cast<QBoxLayout*>(layout)->insertWidget(index, static_cast<QWidget*>(widget), stretch, static_cast<Qt::Alignment>(alignment));
 }
 
 // Spacer operations
@@ -71,8 +64,7 @@ int QBoxLayout_direction(void* layout) {
 }
 
 void QBoxLayout_setDirection(void* layout, int direction) {
-    static_cast<QBoxLayout*>(layout)->setDirection(
-        static_cast<QBoxLayout::Direction>(direction));
+    static_cast<QBoxLayout*>(layout)->setDirection(static_cast<QBoxLayout::Direction>(direction));
 }
 
 // Stretch management
@@ -81,13 +73,11 @@ void QBoxLayout_setStretch(void* layout, int index, int stretch) {
 }
 
 bool QBoxLayout_setStretchFactorWidget(void* layout, void* widget, int stretch) {
-    return static_cast<QBoxLayout*>(layout)->setStretchFactor(
-        static_cast<QWidget*>(widget), stretch);
+    return static_cast<QBoxLayout*>(layout)->setStretchFactor(static_cast<QWidget*>(widget), stretch);
 }
 
 bool QBoxLayout_setStretchFactorLayout(void* layout, void* sublayout, int stretch) {
-    return static_cast<QBoxLayout*>(layout)->setStretchFactor(
-        static_cast<QLayout*>(sublayout), stretch);
+    return static_cast<QBoxLayout*>(layout)->setStretchFactor(static_cast<QLayout*>(sublayout), stretch);
 }
 
 int QBoxLayout_stretch(void* layout, int index) {
