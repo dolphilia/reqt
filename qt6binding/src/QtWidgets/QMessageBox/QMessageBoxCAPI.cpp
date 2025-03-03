@@ -5,11 +5,11 @@ extern "C" {
 
 // コンストラクタ/デストラクタ
 void* QMessageBox_create(void* parent) {
-    return QMessageBoxBind::create(static_cast<QWidget*>(parent));
+    return new QMessageBoxBind(static_cast<QWidget*>(parent));
 }
 
 void* QMessageBox_createWithIcon(int icon, const char* title, const char* text, int buttons, void* parent, int f) {
-    return QMessageBoxBind::createWithIcon(
+    return new QMessageBoxBind(
         static_cast<QMessageBox::Icon>(icon),
         QString::fromUtf8(title),
         QString::fromUtf8(text),
@@ -20,144 +20,144 @@ void* QMessageBox_createWithIcon(int icon, const char* title, const char* text, 
 }
 
 void QMessageBox_delete(void* messageBox) {
-    QMessageBoxBind::destroy(static_cast<QMessageBox*>(messageBox));
+    delete static_cast<QMessageBoxBind*>(messageBox);
 }
 
 // プロパティ取得
 const char* QMessageBox_detailedText(void* messageBox) {
-    return QMessageBoxBind::detailedText(static_cast<QMessageBox*>(messageBox)).toUtf8().constData();
+    return static_cast<QMessageBoxBind*>(messageBox)->detailedText().toUtf8().constData();
 }
 
 int QMessageBox_icon(void* messageBox) {
-    return static_cast<int>(QMessageBoxBind::icon(static_cast<QMessageBox*>(messageBox)));
+    return static_cast<int>(static_cast<QMessageBoxBind*>(messageBox)->icon());
 }
 
 void* QMessageBox_iconPixmap(void* messageBox) {
-    return QMessageBoxBind::iconPixmap(static_cast<QMessageBox*>(messageBox));
+    return const_cast<QPixmap*>(&static_cast<QMessageBoxBind*>(messageBox)->iconPixmap());
 }
 
 const char* QMessageBox_informativeText(void* messageBox) {
-    return QMessageBoxBind::informativeText(static_cast<QMessageBox*>(messageBox)).toUtf8().constData();
+    return static_cast<QMessageBoxBind*>(messageBox)->informativeText().toUtf8().constData();
 }
 
 int QMessageBox_standardButtons(void* messageBox) {
-    return static_cast<int>(QMessageBoxBind::standardButtons(static_cast<QMessageBox*>(messageBox)));
+    return static_cast<int>(static_cast<QMessageBoxBind*>(messageBox)->standardButtons());
 }
 
 const char* QMessageBox_text(void* messageBox) {
-    return QMessageBoxBind::text(static_cast<QMessageBox*>(messageBox)).toUtf8().constData();
+    return static_cast<QMessageBoxBind*>(messageBox)->text().toUtf8().constData();
 }
 
 int QMessageBox_textFormat(void* messageBox) {
-    return static_cast<int>(QMessageBoxBind::textFormat(static_cast<QMessageBox*>(messageBox)));
+    return static_cast<int>(static_cast<QMessageBoxBind*>(messageBox)->textFormat());
 }
 
 int QMessageBox_textInteractionFlags(void* messageBox) {
-    return static_cast<int>(QMessageBoxBind::textInteractionFlags(static_cast<QMessageBox*>(messageBox)));
+    return static_cast<int>(static_cast<QMessageBoxBind*>(messageBox)->textInteractionFlags());
 }
 
 // プロパティ設定
 void QMessageBox_setDetailedText(void* messageBox, const char* text) {
-    QMessageBoxBind::setDetailedText(static_cast<QMessageBox*>(messageBox), QString::fromUtf8(text));
+    static_cast<QMessageBoxBind*>(messageBox)->setDetailedText(QString::fromUtf8(text));
 }
 
 void QMessageBox_setIcon(void* messageBox, int icon) {
-    QMessageBoxBind::setIcon(static_cast<QMessageBox*>(messageBox), static_cast<QMessageBox::Icon>(icon));
+    static_cast<QMessageBoxBind*>(messageBox)->setIcon(static_cast<QMessageBox::Icon>(icon));
 }
 
 void QMessageBox_setIconPixmap(void* messageBox, void* pixmap) {
-    QMessageBoxBind::setIconPixmap(static_cast<QMessageBox*>(messageBox), *static_cast<QPixmap*>(pixmap));
+    static_cast<QMessageBoxBind*>(messageBox)->setIconPixmap(*static_cast<QPixmap*>(pixmap));
 }
 
 void QMessageBox_setInformativeText(void* messageBox, const char* text) {
-    QMessageBoxBind::setInformativeText(static_cast<QMessageBox*>(messageBox), QString::fromUtf8(text));
+    static_cast<QMessageBoxBind*>(messageBox)->setInformativeText(QString::fromUtf8(text));
 }
 
 void QMessageBox_setStandardButtons(void* messageBox, int buttons) {
-    QMessageBoxBind::setStandardButtons(static_cast<QMessageBox*>(messageBox), static_cast<QMessageBox::StandardButtons>(buttons));
+    static_cast<QMessageBoxBind*>(messageBox)->setStandardButtons(static_cast<QMessageBox::StandardButtons>(buttons));
 }
 
 void QMessageBox_setText(void* messageBox, const char* text) {
-    QMessageBoxBind::setText(static_cast<QMessageBox*>(messageBox), QString::fromUtf8(text));
+    static_cast<QMessageBoxBind*>(messageBox)->setText(QString::fromUtf8(text));
 }
 
 void QMessageBox_setTextFormat(void* messageBox, int format) {
-    QMessageBoxBind::setTextFormat(static_cast<QMessageBox*>(messageBox), static_cast<Qt::TextFormat>(format));
+    static_cast<QMessageBoxBind*>(messageBox)->setTextFormat(static_cast<Qt::TextFormat>(format));
 }
 
 void QMessageBox_setTextInteractionFlags(void* messageBox, int flags) {
-    QMessageBoxBind::setTextInteractionFlags(static_cast<QMessageBox*>(messageBox), static_cast<Qt::TextInteractionFlags>(flags));
+    static_cast<QMessageBoxBind*>(messageBox)->setTextInteractionFlags(static_cast<Qt::TextInteractionFlags>(flags));
 }
 
 void QMessageBox_setWindowTitle(void* messageBox, const char* title) {
-    QMessageBoxBind::setWindowTitle(static_cast<QMessageBox*>(messageBox), QString::fromUtf8(title));
+    static_cast<QMessageBoxBind*>(messageBox)->setWindowTitle(QString::fromUtf8(title));
 }
 
 // ボタン関連
 void* QMessageBox_addButton(void* messageBox, int button) {
-    return QMessageBoxBind::addButton(static_cast<QMessageBox*>(messageBox), static_cast<QMessageBox::StandardButton>(button));
+    return static_cast<QMessageBoxBind*>(messageBox)->addButton(static_cast<QMessageBox::StandardButton>(button));
 }
 
 void* QMessageBox_addButtonWithText(void* messageBox, const char* text, int role) {
-    return QMessageBoxBind::addButtonWithText(static_cast<QMessageBox*>(messageBox), QString::fromUtf8(text), static_cast<QMessageBox::ButtonRole>(role));
+    return static_cast<QMessageBoxBind*>(messageBox)->addButton(QString::fromUtf8(text), static_cast<QMessageBox::ButtonRole>(role));
 }
 
 void QMessageBox_removeButton(void* messageBox, void* button) {
-    QMessageBoxBind::removeButton(static_cast<QMessageBox*>(messageBox), static_cast<QAbstractButton*>(button));
+    static_cast<QMessageBoxBind*>(messageBox)->removeButton(static_cast<QAbstractButton*>(button));
 }
 
 void* QMessageBox_button(void* messageBox, int which) {
-    return QMessageBoxBind::button(static_cast<QMessageBox*>(messageBox), static_cast<QMessageBox::StandardButton>(which));
+    return static_cast<QMessageBoxBind*>(messageBox)->button(static_cast<QMessageBox::StandardButton>(which));
 }
 
 int QMessageBox_buttonRole(void* messageBox, void* button) {
-    return static_cast<int>(QMessageBoxBind::buttonRole(static_cast<QMessageBox*>(messageBox), static_cast<QAbstractButton*>(button)));
+    return static_cast<int>(static_cast<QMessageBoxBind*>(messageBox)->buttonRole(static_cast<QAbstractButton*>(button)));
 }
 
 int QMessageBox_standardButton(void* messageBox, void* button) {
-    return static_cast<int>(QMessageBoxBind::standardButton(static_cast<QMessageBox*>(messageBox), static_cast<QAbstractButton*>(button)));
+    return static_cast<int>(static_cast<QMessageBoxBind*>(messageBox)->standardButton(static_cast<QAbstractButton*>(button)));
 }
 
 void* QMessageBox_defaultButton(void* messageBox) {
-    return QMessageBoxBind::defaultButton(static_cast<QMessageBox*>(messageBox));
+    return static_cast<QMessageBoxBind*>(messageBox)->defaultButton();
 }
 
 void QMessageBox_setDefaultButton(void* messageBox, void* button) {
-    QMessageBoxBind::setDefaultButton(static_cast<QMessageBox*>(messageBox), static_cast<QPushButton*>(button));
+    static_cast<QMessageBoxBind*>(messageBox)->setDefaultButton(static_cast<QPushButton*>(button));
 }
 
 void QMessageBox_setDefaultButtonStandard(void* messageBox, int button) {
-    QMessageBoxBind::setDefaultButtonStandard(static_cast<QMessageBox*>(messageBox), static_cast<QMessageBox::StandardButton>(button));
+    static_cast<QMessageBoxBind*>(messageBox)->setDefaultButton(static_cast<QMessageBox::StandardButton>(button));
 }
 
 void* QMessageBox_escapeButton(void* messageBox) {
-    return QMessageBoxBind::escapeButton(static_cast<QMessageBox*>(messageBox));
+    return static_cast<QMessageBoxBind*>(messageBox)->escapeButton();
 }
 
 void QMessageBox_setEscapeButton(void* messageBox, void* button) {
-    QMessageBoxBind::setEscapeButton(static_cast<QMessageBox*>(messageBox), static_cast<QAbstractButton*>(button));
+    static_cast<QMessageBoxBind*>(messageBox)->setEscapeButton(static_cast<QAbstractButton*>(button));
 }
 
 void QMessageBox_setEscapeButtonStandard(void* messageBox, int button) {
-    QMessageBoxBind::setEscapeButtonStandard(static_cast<QMessageBox*>(messageBox), static_cast<QMessageBox::StandardButton>(button));
+    static_cast<QMessageBoxBind*>(messageBox)->setEscapeButton(static_cast<QMessageBox::StandardButton>(button));
 }
 
 // チェックボックス関連
 void* QMessageBox_checkBox(void* messageBox) {
-    return QMessageBoxBind::checkBox(static_cast<QMessageBox*>(messageBox));
+    return static_cast<QMessageBoxBind*>(messageBox)->checkBox();
 }
 
 void QMessageBox_setCheckBox(void* messageBox, void* cb) {
-    QMessageBoxBind::setCheckBox(static_cast<QMessageBox*>(messageBox), static_cast<QCheckBox*>(cb));
+    static_cast<QMessageBoxBind*>(messageBox)->setCheckBox(static_cast<QCheckBox*>(cb));
 }
 
 // アクション
 int QMessageBox_exec(void* messageBox) {
-    return QMessageBoxBind::exec(static_cast<QMessageBox*>(messageBox));
+    return static_cast<QMessageBoxBind*>(messageBox)->exec();
 }
 
 void QMessageBox_open(void* messageBox) {
-    QMessageBoxBind::open(static_cast<QMessageBox*>(messageBox));
+    static_cast<QMessageBoxBind*>(messageBox)->open();
 }
 
 // スタティック関数
@@ -211,10 +211,8 @@ int QMessageBox_warning(void* parent, const char* title, const char* text, int b
 
 // シグナルハンドラ設定
 void QMessageBox_setButtonClickedCallback(void* messageBox, void (*callback)(void*, void*), void* data) {
-    QMessageBoxBind::setButtonClickedCallback(
-        static_cast<QMessageBox*>(messageBox),
-        reinterpret_cast<void (*)(void*, QAbstractButton*)>(callback),
-        data
+    static_cast<QMessageBoxBind*>(messageBox)->setButtonClickedCallback(
+        reinterpret_cast<void (*)(void*, QAbstractButton*)>(callback)
     );
 }
 

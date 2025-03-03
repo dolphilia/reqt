@@ -1,20 +1,19 @@
 #include "QMessageBoxHandler.h"
 
-QMessageBoxHandler::QMessageBoxHandler(QMessageBox* messageBox, QObject* parent)
+QMessageBoxHandler::QMessageBoxHandler(QObject* parent)
     : QObject(parent)
-    , buttonClickedCallback(nullptr)
-    , buttonClickedData(nullptr)
-{
-    connect(messageBox, &QMessageBox::buttonClicked, this, &QMessageBoxHandler::onButtonClicked);
+    , buttonClickedCallback(nullptr) {
 }
 
-QMessageBoxHandler::~QMessageBoxHandler()
-{
+QMessageBoxHandler::~QMessageBoxHandler() {
 }
 
-void QMessageBoxHandler::onButtonClicked(QAbstractButton* button)
-{
+void QMessageBoxHandler::setButtonClickedCallback(ButtonClickedCallback callback) {
+    buttonClickedCallback = callback;
+}
+
+void QMessageBoxHandler::onButtonClicked(QAbstractButton* button) const {
     if (buttonClickedCallback) {
-        buttonClickedCallback(buttonClickedData, button);
+        buttonClickedCallback(parent(), button);
     }
 }

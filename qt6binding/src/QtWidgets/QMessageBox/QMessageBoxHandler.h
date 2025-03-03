@@ -7,19 +7,19 @@
 
 class QMessageBoxHandler : public QObject {
     Q_OBJECT
+    typedef void (*ButtonClickedCallback)(void*, QAbstractButton*);
 
 public:
-    QMessageBoxHandler(QMessageBox* messageBox, QObject* parent = nullptr);
+    explicit QMessageBoxHandler(QObject* parent = nullptr);
     ~QMessageBoxHandler();
 
-    // シグナルコールバック関数ポインタ
-    void (*buttonClickedCallback)(void* data, QAbstractButton* button);
-
-    // コールバックデータ
-    void* buttonClickedData;
+    void setButtonClickedCallback(ButtonClickedCallback callback);
 
 public slots:
-    void onButtonClicked(QAbstractButton* button);
+    void onButtonClicked(QAbstractButton* button) const;
+
+private:
+    ButtonClickedCallback buttonClickedCallback;
 };
 
 #endif // QMESSAGEBOX_HANDLER_H
