@@ -6,18 +6,20 @@
 
 class QGraphicsViewBind : public QGraphicsView {
     Q_OBJECT
-
+    typedef void (*SceneRectChangedCallback)(void*, double, double, double, double);
+    typedef void (*ScaleChangedCallback)(void*, double, double);
+    typedef void (*TransformChangedCallback)(void*);
 public:
     explicit QGraphicsViewBind(QWidget* parent = nullptr);
     explicit QGraphicsViewBind(QGraphicsScene* scene, QWidget* parent = nullptr);
     ~QGraphicsViewBind() override;
 
-    void setSceneRectChangedCallback(void (*callback)(void*, double, double, double, double));
-    void setScaleChangedCallback(void (*callback)(void*, double, double));
-    void setTransformChangedCallback(void (*callback)(void*));
+    void setSceneRectChangedCallback(SceneRectChangedCallback callback) const;
+    void setScaleChangedCallback(ScaleChangedCallback callback) const;
+    void setTransformChangedCallback(TransformChangedCallback callback) const;
 
 private:
-    QGraphicsViewHandler* handler;
+    GraphicsViewHandler* handler;
 };
 
 #endif // QGRAPHICSVIEW_BIND_H

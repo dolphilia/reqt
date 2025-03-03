@@ -5,6 +5,10 @@
 extern "C" {
 #endif
 
+typedef void (*SceneRectChangedCallback)(void*, double, double, double, double);
+typedef void (*ScaleChangedCallback)(void*, double, double);
+typedef void (*TransformChangedCallback)(void*);
+
 void* QGraphicsView_create(void* parent);
 void* QGraphicsView_createWithScene(void* scene, void* parent);
 void QGraphicsView_delete(void* view);
@@ -23,9 +27,9 @@ void QGraphicsView_ensureVisible(void* view, double x, double y, double width, d
 void QGraphicsView_fitInView(void* view, double x, double y, double width, double height);
 void QGraphicsView_setRenderHint(void* view, int hint, bool enabled);
 void QGraphicsView_setDragMode(void* view, int mode);
-void QGraphicsView_setSceneRectChangedCallback(void* view, void (*callback)(void*, double, double, double, double));
-void QGraphicsView_setScaleChangedCallback(void* view, void (*callback)(void*, double, double));
-void QGraphicsView_setTransformChangedCallback(void* view, void (*callback)(void*));
+void QGraphicsView_setSceneRectChangedCallback(void* view, SceneRectChangedCallback callback);
+void QGraphicsView_setScaleChangedCallback(void* view, ScaleChangedCallback callback);
+void QGraphicsView_setTransformChangedCallback(void* view, TransformChangedCallback callback);
 
 #ifdef __cplusplus
 }
