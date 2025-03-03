@@ -1,23 +1,19 @@
 #include "QLCDNumberHandler.h"
 
-LCDNumberHandler::LCDNumberHandler(QObject *parent)
+QLCDNumberHandler::QLCDNumberHandler(QObject* parent)
     : QObject(parent)
-    , m_overflowCallback(nullptr)
+    , overflowCallback(nullptr)
 {
 }
 
-LCDNumberHandler::~LCDNumberHandler()
+void QLCDNumberHandler::setOverflowCallback(OverflowCallback callback)
 {
+    overflowCallback = callback;
 }
 
-void LCDNumberHandler::setOverflowCallback(void (*callback)())
+void QLCDNumberHandler::onOverflow() const
 {
-    m_overflowCallback = callback;
-}
-
-void LCDNumberHandler::onOverflow()
-{
-    if (m_overflowCallback) {
-        m_overflowCallback();
+    if (overflowCallback) {
+        overflowCallback(nullptr);
     }
 }

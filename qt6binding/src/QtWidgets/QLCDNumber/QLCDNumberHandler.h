@@ -1,22 +1,20 @@
-#ifndef HANDLER_LCD_NUMBER_H
-#define HANDLER_LCD_NUMBER_H
+#ifndef QLCDNUMBER_HANDLER_H
+#define QLCDNUMBER_HANDLER_H
 
 #include <QObject>
 
-class LCDNumberHandler : public QObject {
+class QLCDNumberHandler : public QObject {
     Q_OBJECT
-
+    typedef void (*OverflowCallback)(void*);
 public:
-    explicit LCDNumberHandler(QObject *parent = nullptr);
-    ~LCDNumberHandler();
-
-    void setOverflowCallback(void (*callback)());
+    explicit QLCDNumberHandler(QObject* parent = nullptr);
+    void setOverflowCallback(OverflowCallback callback);
 
 public slots:
-    void onOverflow();
+    void onOverflow() const;
 
 private:
-    void (*m_overflowCallback)();
+    OverflowCallback overflowCallback;
 };
 
-#endif // HANDLER_LCD_NUMBER_H
+#endif // QLCDNUMBER_HANDLER_H

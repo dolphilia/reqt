@@ -1,39 +1,25 @@
 #include "QLCDNumberBind.h"
 
-BindQLCDNumber::BindQLCDNumber(QWidget *parent)
+QLCDNumberBind::QLCDNumberBind(QWidget* parent)
     : QLCDNumber(parent)
-    , m_handler(nullptr)
 {
+    handler = new QLCDNumberHandler(this);
+    connect(this, &QLCDNumber::overflow, handler, &QLCDNumberHandler::onOverflow);
 }
 
-BindQLCDNumber::BindQLCDNumber(uint numDigits, QWidget *parent)
+QLCDNumberBind::QLCDNumberBind(uint numDigits, QWidget* parent)
     : QLCDNumber(numDigits, parent)
-    , m_handler(nullptr)
 {
+    handler = new QLCDNumberHandler(this);
+    connect(this, &QLCDNumber::overflow, handler, &QLCDNumberHandler::onOverflow);
 }
 
-BindQLCDNumber::~BindQLCDNumber()
+QLCDNumberBind::~QLCDNumberBind()
 {
-    delete m_handler;
+    delete handler;
 }
 
-void BindQLCDNumber::setLCDNumberHandler(LCDNumberHandler *handler)
+void QLCDNumberBind::setOverflowCallback(OverflowCallback callback) const
 {
-    if (m_handler) {
-        disconnect(this, &QLCDNumber::overflow,
-                  m_handler, &LCDNumberHandler::onOverflow);
-        delete m_handler;
-    }
-
-    m_handler = handler;
-
-    if (m_handler) {
-        connect(this, &QLCDNumber::overflow,
-                m_handler, &LCDNumberHandler::onOverflow);
-    }
-}
-
-LCDNumberHandler *BindQLCDNumber::handler() const
-{
-    return m_handler;
+    handler->setOverflowCallback(callback);
 }

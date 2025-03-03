@@ -1,20 +1,21 @@
-#ifndef BIND_Q_LCD_NUMBER_H
-#define BIND_Q_LCD_NUMBER_H
+#ifndef QLCDNUMBER_BIND_H
+#define QLCDNUMBER_BIND_H
 
 #include <QLCDNumber>
 #include "QLCDNumberHandler.h"
 
-class BindQLCDNumber : public QLCDNumber {
+class QLCDNumberBind : public QLCDNumber {
+    Q_OBJECT
+    typedef void (*OverflowCallback)(void*);
 public:
-    BindQLCDNumber(QWidget *parent = nullptr);
-    explicit BindQLCDNumber(uint numDigits, QWidget *parent = nullptr);
-    ~BindQLCDNumber();
+    explicit QLCDNumberBind(QWidget *parent = nullptr);
+    explicit QLCDNumberBind(uint numDigits, QWidget *parent = nullptr);
+    ~QLCDNumberBind() override;
 
-    void setLCDNumberHandler(LCDNumberHandler *handler);
-    LCDNumberHandler *handler() const;
+    void setOverflowCallback(OverflowCallback callback) const;
 
 private:
-    LCDNumberHandler *m_handler;
+    QLCDNumberHandler* handler;
 };
 
-#endif // BIND_Q_LCD_NUMBER_H
+#endif // QLCDNUMBER_BIND_H

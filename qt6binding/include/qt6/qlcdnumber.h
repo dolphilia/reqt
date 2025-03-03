@@ -46,9 +46,9 @@ bool QLCDNumber_checkOverflowInt(void* lcd, int num);
 #define QLCDNUMBER_BIN 3
 
 // Callbacks
-typedef void (*QLCDNumberOverflowCallback)();
+typedef void (*OverflowCallback)(void*);
 
-void QLCDNumber_setOverflowCallback(void* lcd, QLCDNumberOverflowCallback callback);
+void QLCDNumber_setOverflowCallback(void* lcd, OverflowCallback callback);
 
 #ifdef __cplusplus
 }
