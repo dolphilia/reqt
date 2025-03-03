@@ -14,6 +14,12 @@ void QMainWindow_delete(void* mainWindow) {
     delete static_cast<QMainWindowBind*>(mainWindow);
 }
 
+typedef void (*WindowTitleChangedCallback)(void*, const char*);
+
+void QMainWindow_setWindowTitleChangedCallback(void* mainWindow, WindowTitleChangedCallback callback) {
+    static_cast<QMainWindowBind*>(mainWindow)->setWindowTitleChangedCallback(callback);
+}
+
 void QMainWindow_setCentralWidget(void* mainWindow, void* widget) {
     static_cast<QMainWindowBind*>(mainWindow)->setCentralWidget(static_cast<QWidget*>(widget));
 }
