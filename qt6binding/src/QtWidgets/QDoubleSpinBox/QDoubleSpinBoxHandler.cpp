@@ -1,36 +1,27 @@
 #include "QDoubleSpinBoxHandler.h"
 
-DoubleSpinBoxHandler::DoubleSpinBoxHandler(QObject *parent)
+DoubleSpinBoxHandler::DoubleSpinBoxHandler(QObject* parent)
     : QObject(parent)
-    , m_valueChangedCallback(nullptr)
-    , m_editingFinishedCallback(nullptr)
-{
+    , valueCallback(nullptr)
+    , editingCallback(nullptr) {
 }
 
-DoubleSpinBoxHandler::~DoubleSpinBoxHandler()
-{
+void DoubleSpinBoxHandler::setValueChangedCallback(ValueChangedCallback callback) {
+    valueCallback = callback;
 }
 
-void DoubleSpinBoxHandler::setValueChangedCallback(void (*callback)(double value))
-{
-    m_valueChangedCallback = callback;
+void DoubleSpinBoxHandler::setEditingFinishedCallback(EditingFinishedCallback callback) {
+    editingCallback = callback;
 }
 
-void DoubleSpinBoxHandler::setEditingFinishedCallback(void (*callback)())
-{
-    m_editingFinishedCallback = callback;
-}
-
-void DoubleSpinBoxHandler::onValueChanged(double value)
-{
-    if (m_valueChangedCallback) {
-        m_valueChangedCallback(value);
+void DoubleSpinBoxHandler::onValueChanged(double value) const {
+    if (valueCallback) {
+        valueCallback(parent(), value);
     }
 }
 
-void DoubleSpinBoxHandler::onEditingFinished()
-{
-    if (m_editingFinishedCallback) {
-        m_editingFinishedCallback();
+void DoubleSpinBoxHandler::onEditingFinished() const {
+    if (editingCallback) {
+        editingCallback(parent());
     }
 }

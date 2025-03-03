@@ -1,20 +1,20 @@
-#ifndef BIND_Q_DOUBLE_SPIN_BOX_H
-#define BIND_Q_DOUBLE_SPIN_BOX_H
+#ifndef QDOUBLESPINBOX_BIND_H
+#define QDOUBLESPINBOX_BIND_H
 
-#include <QDoubleSpinBox>
 #include "QDoubleSpinBoxHandler.h"
+#include <QDoubleSpinBox>
 
-class BindQDoubleSpinBox : public QDoubleSpinBox {
+class QDoubleSpinBoxBind : public QDoubleSpinBox {
     Q_OBJECT
+    typedef void (*ValueChangedCallback)(void*, double);
+    typedef void (*EditingFinishedCallback)(void*);
 public:
-    explicit BindQDoubleSpinBox(QWidget *parent = nullptr);
-    ~BindQDoubleSpinBox();
-
-    void setDoubleSpinBoxHandler(DoubleSpinBoxHandler *handler);
-    DoubleSpinBoxHandler *handler() const;
-
+    explicit QDoubleSpinBoxBind(QWidget* parent = nullptr);
+    ~QDoubleSpinBoxBind() override;
+    void setValueChangedCallback(ValueChangedCallback callback) const;
+    void setEditingFinishedCallback(EditingFinishedCallback callback) const;
 private:
-    DoubleSpinBoxHandler *m_handler;
+    DoubleSpinBoxHandler* handler;
 };
 
-#endif // BIND_Q_DOUBLE_SPIN_BOX_H
+#endif // QDOUBLESPINBOX_BIND_H

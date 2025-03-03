@@ -46,11 +46,11 @@ void QDoubleSpinBox_stepDown(void* double_spin_box);
 const char* QDoubleSpinBox_text(void* double_spin_box);
 
 // Callbacks
-typedef void (*QDoubleSpinBoxValueChangedCallback)(double value);
-typedef void (*QDoubleSpinBoxEditingFinishedCallback)();
+typedef void (*ValueChangedCallback)(void* doubleSpinBox, double value);
+typedef void (*EditingFinishedCallback)(void* doubleSpinBox);
 
-void QDoubleSpinBox_setValueChangedCallback(void* double_spin_box, QDoubleSpinBoxValueChangedCallback callback);
-void QDoubleSpinBox_setEditingFinishedCallback(void* double_spin_box, QDoubleSpinBoxEditingFinishedCallback callback);
+void QDoubleSpinBox_setValueChangedCallback(void* doubleSpinBox, ValueChangedCallback callback);
+void QDoubleSpinBox_setEditingFinishedCallback(void* doubleSpinBox, EditingFinishedCallback callback);
 
 #ifdef __cplusplus
 }

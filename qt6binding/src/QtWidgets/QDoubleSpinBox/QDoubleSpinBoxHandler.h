@@ -1,24 +1,22 @@
-#ifndef HANDLER_DOUBLE_SPIN_BOX_H
-#define HANDLER_DOUBLE_SPIN_BOX_H
+#ifndef DOUBLESPINBOX_HANDLER_H
+#define DOUBLESPINBOX_HANDLER_H
 
 #include <QObject>
 
 class DoubleSpinBoxHandler : public QObject {
     Q_OBJECT
+    typedef void (*ValueChangedCallback)(void*, double);
+    typedef void (*EditingFinishedCallback)(void*);
 public:
-    explicit DoubleSpinBoxHandler(QObject *parent = nullptr);
-    ~DoubleSpinBoxHandler();
-
-    void setValueChangedCallback(void (*callback)(double value));
-    void setEditingFinishedCallback(void (*callback)());
-
+    explicit DoubleSpinBoxHandler(QObject* parent = nullptr);
+    void setValueChangedCallback(ValueChangedCallback callback);
+    void setEditingFinishedCallback(EditingFinishedCallback callback);
 public slots:
-    void onValueChanged(double value);
-    void onEditingFinished();
-
+    void onValueChanged(double value) const;
+    void onEditingFinished() const;
 private:
-    void (*m_valueChangedCallback)(double value);
-    void (*m_editingFinishedCallback)();
+    ValueChangedCallback valueCallback;
+    EditingFinishedCallback editingCallback;
 };
 
-#endif // HANDLER_DOUBLE_SPIN_BOX_H
+#endif // DOUBLESPINBOX_HANDLER_H

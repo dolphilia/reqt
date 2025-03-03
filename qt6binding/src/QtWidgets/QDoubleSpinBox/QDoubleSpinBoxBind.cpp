@@ -1,37 +1,21 @@
 #include "QDoubleSpinBoxBind.h"
+#include "QDoubleSpinBoxHandler.h"
 
-BindQDoubleSpinBox::BindQDoubleSpinBox(QWidget *parent)
+QDoubleSpinBoxBind::QDoubleSpinBoxBind(QWidget* parent)
     : QDoubleSpinBox(parent)
-    , m_handler(nullptr)
-{
+    , handler(new DoubleSpinBoxHandler(this)) {
+    connect(this, QOverload<double>::of(&QDoubleSpinBox::valueChanged), handler, &DoubleSpinBoxHandler::onValueChanged);
+    connect(this, &QDoubleSpinBox::editingFinished, handler, &DoubleSpinBoxHandler::onEditingFinished);
 }
 
-BindQDoubleSpinBox::~BindQDoubleSpinBox()
-{
-    delete m_handler;
+QDoubleSpinBoxBind::~QDoubleSpinBoxBind() {
+    delete handler;
 }
 
-void BindQDoubleSpinBox::setDoubleSpinBoxHandler(DoubleSpinBoxHandler *handler)
-{
-    if (m_handler) {
-        disconnect(this, QOverload<double>::of(&QDoubleSpinBox::valueChanged),
-                  m_handler, &DoubleSpinBoxHandler::onValueChanged);
-        disconnect(this, &QDoubleSpinBox::editingFinished,
-                  m_handler, &DoubleSpinBoxHandler::onEditingFinished);
-        delete m_handler;
-    }
-
-    m_handler = handler;
-
-    if (m_handler) {
-        connect(this, QOverload<double>::of(&QDoubleSpinBox::valueChanged),
-                m_handler, &DoubleSpinBoxHandler::onValueChanged);
-        connect(this, &QDoubleSpinBox::editingFinished,
-                m_handler, &DoubleSpinBoxHandler::onEditingFinished);
-    }
+void QDoubleSpinBoxBind::setValueChangedCallback(ValueChangedCallback callback) const {
+    handler->setValueChangedCallback(callback);
 }
 
-DoubleSpinBoxHandler *BindQDoubleSpinBox::handler() const
-{
-    return m_handler;
+void QDoubleSpinBoxBind::setEditingFinishedCallback(EditingFinishedCallback callback) const {
+    handler->setEditingFinishedCallback(callback);
 }
