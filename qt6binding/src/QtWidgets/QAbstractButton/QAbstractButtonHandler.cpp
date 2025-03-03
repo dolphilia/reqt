@@ -1,52 +1,50 @@
 #include "QAbstractButtonHandler.h"
 
 QAbstractButtonHandler::QAbstractButtonHandler(QAbstractButton* button, QObject* parent)
-    : QObject(parent),
-      clickedCallback(nullptr),
-      pressedCallback(nullptr),
-      releasedCallback(nullptr),
-      toggledCallback(nullptr),
-      clickedData(nullptr),
-      pressedData(nullptr),
-      releasedData(nullptr),
-      toggledData(nullptr)
+    : QObject(parent)
+    , clickedCallback(nullptr)
+    , pressedCallback(nullptr)
+    , releasedCallback(nullptr)
+    , toggledCallback(nullptr)
 {
-    // シグナルとスロットを接続
-    connect(button, &QAbstractButton::clicked, this, &QAbstractButtonHandler::onClicked);
-    connect(button, &QAbstractButton::pressed, this, &QAbstractButtonHandler::onPressed);
-    connect(button, &QAbstractButton::released, this, &QAbstractButtonHandler::onReleased);
-    connect(button, &QAbstractButton::toggled, this, &QAbstractButtonHandler::onToggled);
 }
 
-QAbstractButtonHandler::~QAbstractButtonHandler()
-{
-    // 特に何もする必要はない
+void QAbstractButtonHandler::setClickedCallback(ClickedCallback callback) {
+    clickedCallback = callback;
 }
 
-void QAbstractButtonHandler::onClicked(bool checked)
-{
+void QAbstractButtonHandler::setPressedCallback(PressedCallback callback) {
+    pressedCallback = callback;
+}
+
+void QAbstractButtonHandler::setReleasedCallback(ReleasedCallback callback) {
+    releasedCallback = callback;
+}
+
+void QAbstractButtonHandler::setToggledCallback(ToggledCallback callback) {
+    toggledCallback = callback;
+}
+
+void QAbstractButtonHandler::onClicked(bool checked) const {
     if (clickedCallback) {
-        clickedCallback(clickedData, checked);
+        clickedCallback(parent(), checked);
     }
 }
 
-void QAbstractButtonHandler::onPressed()
-{
+void QAbstractButtonHandler::onPressed() const {
     if (pressedCallback) {
-        pressedCallback(pressedData);
+        pressedCallback(parent());
     }
 }
 
-void QAbstractButtonHandler::onReleased()
-{
+void QAbstractButtonHandler::onReleased() const {
     if (releasedCallback) {
-        releasedCallback(releasedData);
+        releasedCallback(parent());
     }
 }
 
-void QAbstractButtonHandler::onToggled(bool checked)
-{
+void QAbstractButtonHandler::onToggled(bool checked) const {
     if (toggledCallback) {
-        toggledCallback(toggledData, checked);
+        toggledCallback(parent(), checked);
     }
 }

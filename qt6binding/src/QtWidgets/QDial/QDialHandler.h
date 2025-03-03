@@ -14,8 +14,6 @@ class DialHandler : public QObject {
     Q_OBJECT
 public:
     explicit DialHandler(QObject* parent = nullptr);
-    DialHandler(const DialHandler&) = delete;
-    DialHandler& operator=(const DialHandler&) = delete;
 
     void setValueChangedCallback(ValueChangedCallback callback);
     void setSliderMovedCallback(SliderMovedCallback callback);
@@ -23,10 +21,10 @@ public:
     void setSliderReleasedCallback(SliderReleasedCallback callback);
 
 public slots:
-    void onValueChanged(int value);
-    void onSliderMoved(int position);
-    void onSliderPressed();
-    void onSliderReleased();
+    void onValueChanged(int value) const;
+    void onSliderMoved(int position) const;
+    void onSliderPressed() const;
+    void onSliderReleased() const;
 
 private:
     ValueChangedCallback valueChangedCallback;

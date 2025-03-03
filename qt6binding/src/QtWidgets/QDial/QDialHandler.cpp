@@ -25,25 +25,25 @@ void DialHandler::setSliderReleasedCallback(SliderReleasedCallback callback) {
     sliderReleasedCallback = callback;
 }
 
-void DialHandler::onValueChanged(int value) {
+void DialHandler::onValueChanged(int value) const {
     if (valueChangedCallback) {
         valueChangedCallback(parent(), value);
     }
 }
 
-void DialHandler::onSliderMoved(int position) {
+void DialHandler::onSliderMoved(int position) const {
     if (sliderMovedCallback) {
         sliderMovedCallback(parent(), position);
     }
 }
 
-void DialHandler::onSliderPressed() {
+void DialHandler::onSliderPressed() const {
     if (sliderPressedCallback) {
         sliderPressedCallback(parent());
     }
 }
 
-void DialHandler::onSliderReleased() {
+void DialHandler::onSliderReleased() const {
     if (sliderReleasedCallback) {
         sliderReleasedCallback(parent());
     }

@@ -1,6 +1,7 @@
 add_subdirectory(qcheckbox)
 add_subdirectory(qcolor)
 add_subdirectory(qcolorspace)
+add_subdirectory(qdial)
 add_subdirectory(qdialog)
 add_subdirectory(qpoint)
 add_subdirectory(qpointf)

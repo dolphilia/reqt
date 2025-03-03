@@ -4,30 +4,32 @@
 #include <QObject>
 #include <QAbstractButton>
 
+typedef void (*ClickedCallback)(void* data, bool checked);
+typedef void (*PressedCallback)(void* data);
+typedef void (*ReleasedCallback)(void* data);
+typedef void (*ToggledCallback)(void* data, bool checked);
+
 class QAbstractButtonHandler : public QObject {
     Q_OBJECT
-
 public:
-    QAbstractButtonHandler(QAbstractButton* button, QObject* parent = nullptr);
-    ~QAbstractButtonHandler();
+    explicit QAbstractButtonHandler(QAbstractButton* button, QObject* parent = nullptr);
 
-    // シグナルコールバック関数ポインタ
-    void (*clickedCallback)(void* data, bool checked);
-    void (*pressedCallback)(void* data);
-    void (*releasedCallback)(void* data);
-    void (*toggledCallback)(void* data, bool checked);
-
-    // コールバックデータ
-    void* clickedData;
-    void* pressedData;
-    void* releasedData;
-    void* toggledData;
+    void setClickedCallback(ClickedCallback callback);
+    void setPressedCallback(PressedCallback callback);
+    void setReleasedCallback(ReleasedCallback callback);
+    void setToggledCallback(ToggledCallback callback);
 
 public slots:
-    void onClicked(bool checked);
-    void onPressed();
-    void onReleased();
-    void onToggled(bool checked);
+    void onClicked(bool checked) const;
+    void onPressed() const;
+    void onReleased() const;
+    void onToggled(bool checked) const;
+
+private:
+    ClickedCallback clickedCallback;
+    PressedCallback pressedCallback;
+    ReleasedCallback releasedCallback;
+    ToggledCallback toggledCallback;
 };
 
 #endif // QABSTRACTBUTTON_HANDLER_H

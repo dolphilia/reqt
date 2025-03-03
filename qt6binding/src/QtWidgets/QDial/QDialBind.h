@@ -12,31 +12,10 @@ public:
     ~QDialBind() override;
 
     // コールバック設定
-    void setValueChangedCallback(ValueChangedCallback callback);
-    void setSliderMovedCallback(SliderMovedCallback callback);
-    void setSliderPressedCallback(SliderPressedCallback callback);
-    void setSliderReleasedCallback(SliderReleasedCallback callback);
-
-    // プロパティ設定
-    using QDial::setMinimum;
-    using QDial::setMaximum;
-    using QDial::setRange;
-    using QDial::setValue;
-    using QDial::setSingleStep;
-    using QDial::setPageStep;
-    using QDial::setNotchTarget;
-    using QDial::setNotchesVisible;
-    using QDial::setWrapping;
-
-    // プロパティ取得
-    using QDial::minimum;
-    using QDial::maximum;
-    using QDial::value;
-    using QDial::singleStep;
-    using QDial::pageStep;
-    using QDial::notchTarget;
-    using QDial::notchesVisible;
-    using QDial::wrapping;
+    void setValueChangedCallback(ValueChangedCallback callback) const;
+    void setSliderMovedCallback(SliderMovedCallback callback) const;
+    void setSliderPressedCallback(SliderPressedCallback callback) const;
+    void setSliderReleasedCallback(SliderReleasedCallback callback) const;
 
 private:
     DialHandler* handler;
