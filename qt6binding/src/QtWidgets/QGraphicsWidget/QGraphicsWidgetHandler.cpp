@@ -1,39 +1,32 @@
 #include "QGraphicsWidgetHandler.h"
 #include <QRectF>
 
-QGraphicsWidgetHandler::QGraphicsWidgetHandler(QObject* parent)
+GraphicsWidgetHandler::GraphicsWidgetHandler(QObject* parent)
     : QObject(parent)
-    , widget(nullptr)
     , geometryChangedCallback(nullptr)
-    , layoutChangedCallback(nullptr)
-{
+    , layoutChangedCallback(nullptr) {
 }
 
-void QGraphicsWidgetHandler::setWidget(QGraphicsWidget* widget) {
-    this->widget = widget;
-    if (widget) {
-        connect(widget, &QGraphicsWidget::geometryChanged, this, &QGraphicsWidgetHandler::onGeometryChanged);
-        connect(widget, &QGraphicsWidget::layoutChanged, this, &QGraphicsWidgetHandler::onLayoutChanged);
-    }
-}
-
-void QGraphicsWidgetHandler::setGeometryChangedCallback(GeometryChangedCallback callback) {
+void GraphicsWidgetHandler::setGeometryChangedCallback(GeometryChangedCallback callback) {
     geometryChangedCallback = callback;
 }
 
-void QGraphicsWidgetHandler::setLayoutChangedCallback(LayoutChangedCallback callback) {
+void GraphicsWidgetHandler::setLayoutChangedCallback(LayoutChangedCallback callback) {
     layoutChangedCallback = callback;
 }
 
-void QGraphicsWidgetHandler::onGeometryChanged() {
-    if (geometryChangedCallback && widget) {
-        QRectF rect = widget->geometry();
-        geometryChangedCallback(widget, rect.x(), rect.y(), rect.width(), rect.height());
+void GraphicsWidgetHandler::onGeometryChanged() {
+    if (geometryChangedCallback) {
+        QGraphicsWidget* widget = qobject_cast<QGraphicsWidget*>(parent());
+        if (widget) {
+            QRectF rect = widget->geometry();
+            geometryChangedCallback(parent(), rect.x(), rect.y(), rect.width(), rect.height());
+        }
     }
 }
 
-void QGraphicsWidgetHandler::onLayoutChanged() {
-    if (layoutChangedCallback && widget) {
-        layoutChangedCallback(widget);
+void GraphicsWidgetHandler::onLayoutChanged() {
+    if (layoutChangedCallback) {
+        layoutChangedCallback(parent());
     }
 }

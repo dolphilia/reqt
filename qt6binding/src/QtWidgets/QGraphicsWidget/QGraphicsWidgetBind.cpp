@@ -1,20 +1,21 @@
 #include "QGraphicsWidgetBind.h"
+#include "QGraphicsWidgetHandler.h"
 
 QGraphicsWidgetBind::QGraphicsWidgetBind(QGraphicsItem* parent)
     : QGraphicsWidget(parent)
-    , handler(new QGraphicsWidgetHandler(this))
-{
-    handler->setWidget(this);
+    , handler(new GraphicsWidgetHandler(this)) {
+    connect(this, &QGraphicsWidget::geometryChanged, handler, &GraphicsWidgetHandler::onGeometryChanged);
+    connect(this, &QGraphicsWidget::layoutChanged, handler, &GraphicsWidgetHandler::onLayoutChanged);
 }
 
 QGraphicsWidgetBind::~QGraphicsWidgetBind() {
     delete handler;
 }
 
-void QGraphicsWidgetBind::setGeometryChangedCallback(void (*callback)(void*, double, double, double, double)) {
+void QGraphicsWidgetBind::setGeometryChangedCallback(GeometryChangedCallback callback) const {
     handler->setGeometryChangedCallback(callback);
 }
 
-void QGraphicsWidgetBind::setLayoutChangedCallback(void (*callback)(void*)) {
+void QGraphicsWidgetBind::setLayoutChangedCallback(LayoutChangedCallback callback) const {
     handler->setLayoutChangedCallback(callback);
 }

@@ -5,6 +5,9 @@
 extern "C" {
 #endif
 
+typedef void (*GeometryChangedCallback)(void*, double, double, double, double);
+typedef void (*LayoutChangedCallback)(void*);
+
 void* QGraphicsWidget_create(void* parent);
 void QGraphicsWidget_delete(void* widget);
 void QGraphicsWidget_setGeometry(void* widget, double x, double y, double width, double height);
@@ -19,8 +22,8 @@ void QGraphicsWidget_setSizePolicy(void* widget, int horizontal, int vertical);
 void QGraphicsWidget_setWindowFlags(void* widget, int flags);
 int QGraphicsWidget_windowFlags(void* widget);
 void QGraphicsWidget_setWindowTitle(void* widget, const char* title);
-void QGraphicsWidget_setGeometryChangedCallback(void* widget, void (*callback)(void*, double, double, double, double));
-void QGraphicsWidget_setLayoutChangedCallback(void* widget, void (*callback)(void*));
+void QGraphicsWidget_setGeometryChangedCallback(void* widget, GeometryChangedCallback callback);
+void QGraphicsWidget_setLayoutChangedCallback(void* widget, LayoutChangedCallback callback);
 
 #ifdef __cplusplus
 }

@@ -1,21 +1,20 @@
 #ifndef QGRAPHICSWIDGET_BIND_H
 #define QGRAPHICSWIDGET_BIND_H
 
-#include <QGraphicsWidget>
 #include "QGraphicsWidgetHandler.h"
+#include <QGraphicsWidget>
 
 class QGraphicsWidgetBind : public QGraphicsWidget {
     Q_OBJECT
-
+    typedef void (*GeometryChangedCallback)(void*, double, double, double, double);
+    typedef void (*LayoutChangedCallback)(void*);
 public:
     explicit QGraphicsWidgetBind(QGraphicsItem* parent = nullptr);
     ~QGraphicsWidgetBind() override;
-
-    void setGeometryChangedCallback(void (*callback)(void*, double, double, double, double));
-    void setLayoutChangedCallback(void (*callback)(void*));
-
+    void setGeometryChangedCallback(GeometryChangedCallback callback) const;
+    void setLayoutChangedCallback(LayoutChangedCallback callback) const;
 private:
-    QGraphicsWidgetHandler* handler;
+    GraphicsWidgetHandler* handler;
 };
 
 #endif // QGRAPHICSWIDGET_BIND_H
