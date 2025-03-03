@@ -1,4 +1,5 @@
 #include "QFrameBind.h"
+#include "qframe.h"
 
 extern "C" {
 
@@ -22,20 +23,20 @@ extern "C" {
 
 // コンストラクタ/デストラクタ
 void* QFrame_create(void* parent, unsigned int flags) {
-    return QFrameBind::create(static_cast<QWidget*>(parent), static_cast<Qt::WindowFlags>(flags));
+    return new QFrameBind(static_cast<QWidget*>(parent), static_cast<Qt::WindowFlags>(flags));
 }
 
 void QFrame_delete(void* frame) {
-    QFrameBind::destroy(static_cast<QFrame*>(frame));
+    delete static_cast<QFrameBind*>(frame);
 }
 
 // プロパティ取得
 void* QFrame_frameRect(void* frame) {
-    return QFrameBind::frameRect(static_cast<QFrame*>(frame));
+    return new QRect(static_cast<QFrameBind*>(frame)->frameRect());
 }
 
 int QFrame_frameShadow(void* frame) {
-    QFrame::Shadow shadow = QFrameBind::frameShadow(static_cast<QFrame*>(frame));
+    QFrame::Shadow shadow = static_cast<QFrameBind*>(frame)->frameShadow();
     switch (shadow) {
         case QFrame::Plain: return QFRAME_SHADOW_PLAIN;
         case QFrame::Raised: return QFRAME_SHADOW_RAISED;
@@ -45,7 +46,7 @@ int QFrame_frameShadow(void* frame) {
 }
 
 int QFrame_frameShape(void* frame) {
-    QFrame::Shape shape = QFrameBind::frameShape(static_cast<QFrame*>(frame));
+    QFrame::Shape shape = static_cast<QFrameBind*>(frame)->frameShape();
     switch (shape) {
         case QFrame::NoFrame: return QFRAME_SHAPE_NOFRAME;
         case QFrame::Box: return QFRAME_SHAPE_BOX;
@@ -59,28 +60,28 @@ int QFrame_frameShape(void* frame) {
 }
 
 int QFrame_frameStyle(void* frame) {
-    return QFrameBind::frameStyle(static_cast<QFrame*>(frame));
+    return static_cast<QFrameBind*>(frame)->frameStyle();
 }
 
 int QFrame_frameWidth(void* frame) {
-    return QFrameBind::frameWidth(static_cast<QFrame*>(frame));
+    return static_cast<QFrameBind*>(frame)->frameWidth();
 }
 
 int QFrame_lineWidth(void* frame) {
-    return QFrameBind::lineWidth(static_cast<QFrame*>(frame));
+    return static_cast<QFrameBind*>(frame)->lineWidth();
 }
 
 int QFrame_midLineWidth(void* frame) {
-    return QFrameBind::midLineWidth(static_cast<QFrame*>(frame));
+    return static_cast<QFrameBind*>(frame)->midLineWidth();
 }
 
 void* QFrame_sizeHint(void* frame) {
-    return QFrameBind::sizeHint(static_cast<QFrame*>(frame));
+    return new QSize(static_cast<QFrameBind*>(frame)->sizeHint());
 }
 
 // プロパティ設定
 void QFrame_setFrameRect(void* frame, void* rect) {
-    QFrameBind::setFrameRect(static_cast<QFrame*>(frame), static_cast<QRect*>(rect));
+    static_cast<QFrameBind*>(frame)->setFrameRect(*static_cast<QRect*>(rect));
 }
 
 void QFrame_setFrameShadow(void* frame, int shadow) {
@@ -91,7 +92,7 @@ void QFrame_setFrameShadow(void* frame, int shadow) {
         case QFRAME_SHADOW_SUNKEN: qshadow = QFrame::Sunken; break;
         default: qshadow = QFrame::Plain; break;
     }
-    QFrameBind::setFrameShadow(static_cast<QFrame*>(frame), qshadow);
+    static_cast<QFrameBind*>(frame)->setFrameShadow(qshadow);
 }
 
 void QFrame_setFrameShape(void* frame, int shape) {
@@ -106,19 +107,19 @@ void QFrame_setFrameShape(void* frame, int shape) {
         case QFRAME_SHAPE_WINPANEL: qshape = QFrame::WinPanel; break;
         default: qshape = QFrame::NoFrame; break;
     }
-    QFrameBind::setFrameShape(static_cast<QFrame*>(frame), qshape);
+    static_cast<QFrameBind*>(frame)->setFrameShape(qshape);
 }
 
 void QFrame_setFrameStyle(void* frame, int style) {
-    QFrameBind::setFrameStyle(static_cast<QFrame*>(frame), style);
+    static_cast<QFrameBind*>(frame)->setFrameStyle(style);
 }
 
 void QFrame_setLineWidth(void* frame, int width) {
-    QFrameBind::setLineWidth(static_cast<QFrame*>(frame), width);
+    static_cast<QFrameBind*>(frame)->setLineWidth(width);
 }
 
 void QFrame_setMidLineWidth(void* frame, int width) {
-    QFrameBind::setMidLineWidth(static_cast<QFrame*>(frame), width);
+    static_cast<QFrameBind*>(frame)->setMidLineWidth(width);
 }
 
 }
