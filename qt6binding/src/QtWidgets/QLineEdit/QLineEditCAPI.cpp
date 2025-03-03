@@ -1,89 +1,128 @@
 #include "QLineEditBind.h"
+#include <QString>
 
 extern "C" {
 
-void* QLineEdit_create(const char* text, void* parent) {
-    return QLineEditBind::create(text, static_cast<QWidget*>(parent));
+void* QLineEdit_create(void* parent) {
+    return new QLineEditBind(static_cast<QWidget*>(parent));
+}
+
+void* QLineEdit_create_2(const char* text, void* parent) {
+    return new QLineEditBind(QString::fromUtf8(text), reinterpret_cast<QWidget*>(parent));
 }
 
 void QLineEdit_delete(void* lineEdit) {
-    QLineEditBind::destroy(static_cast<QLineEdit*>(lineEdit));
+    delete static_cast<QLineEditBind*>(lineEdit);
 }
 
 void QLineEdit_setText(void* lineEdit, const char* text) {
-    QLineEditBind::setText(static_cast<QLineEdit*>(lineEdit), text);
+    if (lineEdit && text) {
+        static_cast<QLineEditBind*>(lineEdit)->setText(QString::fromUtf8(text));
+    }
 }
 
 const char* QLineEdit_text(void* lineEdit) {
-    return QLineEditBind::text(static_cast<QLineEdit*>(lineEdit));
+    if (lineEdit) {
+        static QString str;
+        str = static_cast<QLineEditBind*>(lineEdit)->text();
+        return str.toUtf8().constData();
+    }
+    return nullptr;
 }
 
 void QLineEdit_setPlaceholderText(void* lineEdit, const char* text) {
-    QLineEditBind::setPlaceholderText(static_cast<QLineEdit*>(lineEdit), text);
+    if (lineEdit && text) {
+        static_cast<QLineEditBind*>(lineEdit)->setPlaceholderText(QString::fromUtf8(text));
+    }
 }
 
 const char* QLineEdit_placeholderText(void* lineEdit) {
-    return QLineEditBind::placeholderText(static_cast<QLineEdit*>(lineEdit));
+    if (lineEdit) {
+        static QString str;
+        str = static_cast<QLineEditBind*>(lineEdit)->placeholderText();
+        return str.toUtf8().constData();
+    }
+    return nullptr;
 }
 
 void QLineEdit_setMaxLength(void* lineEdit, int length) {
-    QLineEditBind::setMaxLength(static_cast<QLineEdit*>(lineEdit), length);
+    if (lineEdit) {
+        static_cast<QLineEditBind*>(lineEdit)->setMaxLength(length);
+    }
 }
 
 int QLineEdit_maxLength(void* lineEdit) {
-    return QLineEditBind::maxLength(static_cast<QLineEdit*>(lineEdit));
+    return lineEdit ? static_cast<QLineEditBind*>(lineEdit)->maxLength() : 0;
 }
 
 void QLineEdit_setReadOnly(void* lineEdit, bool readOnly) {
-    QLineEditBind::setReadOnly(static_cast<QLineEdit*>(lineEdit), readOnly);
+    if (lineEdit) {
+        static_cast<QLineEditBind*>(lineEdit)->setReadOnly(readOnly);
+    }
 }
 
 bool QLineEdit_isReadOnly(void* lineEdit) {
-    return QLineEditBind::isReadOnly(static_cast<QLineEdit*>(lineEdit));
+    return lineEdit ? static_cast<QLineEditBind*>(lineEdit)->isReadOnly() : false;
 }
 
 void QLineEdit_setClearButtonEnabled(void* lineEdit, bool enable) {
-    QLineEditBind::setClearButtonEnabled(static_cast<QLineEdit*>(lineEdit), enable);
+    if (lineEdit) {
+        static_cast<QLineEditBind*>(lineEdit)->setClearButtonEnabled(enable);
+    }
 }
 
 bool QLineEdit_isClearButtonEnabled(void* lineEdit) {
-    return QLineEditBind::isClearButtonEnabled(static_cast<QLineEdit*>(lineEdit));
+    return lineEdit ? static_cast<QLineEditBind*>(lineEdit)->isClearButtonEnabled() : false;
 }
 
 void QLineEdit_setEnabled(void* lineEdit, bool enabled) {
-    QLineEditBind::setEnabled(static_cast<QLineEdit*>(lineEdit), enabled);
+    if (lineEdit) {
+        static_cast<QLineEditBind*>(lineEdit)->setEnabled(enabled);
+    }
 }
 
 bool QLineEdit_isEnabled(void* lineEdit) {
-    return QLineEditBind::isEnabled(static_cast<QLineEdit*>(lineEdit));
+    return lineEdit ? static_cast<QLineEditBind*>(lineEdit)->isEnabled() : false;
 }
 
 void QLineEdit_clear(void* lineEdit) {
-    QLineEditBind::clear(static_cast<QLineEdit*>(lineEdit));
+    if (lineEdit) {
+        static_cast<QLineEditBind*>(lineEdit)->clear();
+    }
 }
 
 void QLineEdit_selectAll(void* lineEdit) {
-    QLineEditBind::selectAll(static_cast<QLineEdit*>(lineEdit));
+    if (lineEdit) {
+        static_cast<QLineEditBind*>(lineEdit)->selectAll();
+    }
 }
 
 void QLineEdit_setEchoMode(void* lineEdit, int mode) {
-    QLineEditBind::setEchoMode(static_cast<QLineEdit*>(lineEdit), mode);
+    if (lineEdit) {
+        static_cast<QLineEditBind*>(lineEdit)->setEchoMode(static_cast<QLineEdit::EchoMode>(mode));
+    }
 }
 
 int QLineEdit_echoMode(void* lineEdit) {
-    return QLineEditBind::echoMode(static_cast<QLineEdit*>(lineEdit));
+    return lineEdit ? static_cast<int>(static_cast<QLineEditBind*>(lineEdit)->echoMode()) : 0;
 }
 
-void QLineEdit_setTextChangedCallback(void* lineEdit, QLineEditTextChangedCallback callback) {
-    QLineEditBind::setTextChangedCallback(static_cast<QLineEdit*>(lineEdit), callback);
+void QLineEdit_setTextChangedCallback(void* lineEdit, void (*callback)(void*, const char*)) {
+    if (lineEdit) {
+        static_cast<QLineEditBind*>(lineEdit)->setTextChangedCallback(callback);
+    }
 }
 
-void QLineEdit_setTextEditedCallback(void* lineEdit, QLineEditTextChangedCallback callback) {
-    QLineEditBind::setTextEditedCallback(static_cast<QLineEdit*>(lineEdit), callback);
+void QLineEdit_setTextEditedCallback(void* lineEdit, void (*callback)(void*, const char*)) {
+    if (lineEdit) {
+        static_cast<QLineEditBind*>(lineEdit)->setTextEditedCallback(callback);
+    }
 }
 
-void QLineEdit_setReturnPressedCallback(void* lineEdit, QLineEditTextChangedCallback callback) {
-    QLineEditBind::setReturnPressedCallback(static_cast<QLineEdit*>(lineEdit), callback);
+void QLineEdit_setReturnPressedCallback(void* lineEdit, void (*callback)(void*, const char*)) {
+    if (lineEdit) {
+        static_cast<QLineEditBind*>(lineEdit)->setReturnPressedCallback(callback);
+    }
 }
 
 }

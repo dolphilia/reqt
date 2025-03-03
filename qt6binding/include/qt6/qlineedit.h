@@ -14,7 +14,8 @@ extern "C" {
 #define QLINEEDIT_PASSWORDECHOONEDIT 3
 
 // QLineEdit
-void* QLineEdit_create(const char* text, void* parent);
+void* QLineEdit_create(void* parent);
+void* QLineEdit_create_2(const char* text, void* parent);
 void QLineEdit_delete(void* lineEdit);
 void QLineEdit_setText(void* lineEdit, const char* text);
 const char* QLineEdit_text(void* lineEdit);
