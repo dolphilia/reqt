@@ -1,87 +1,77 @@
 #include "QDialogBind.h"
-#include <QSize>
 
 extern "C" {
 
-// QDialog::DialogCode 列挙型の定数
-#define QDIALOG_DIALOG_CODE_ACCEPTED 1
-#define QDIALOG_DIALOG_CODE_REJECTED 0
-
-// コンストラクタ/デストラクタ
-void* QDialog_create(void* parent, unsigned int flags) {
-    return QDialogBind::create(static_cast<QWidget*>(parent), static_cast<Qt::WindowFlags>(flags));
+void* QDialog_new(void* parent, unsigned int flags) {
+    return new QDialogBind(static_cast<QWidget*>(parent), static_cast<Qt::WindowFlags>(flags));
 }
 
 void QDialog_delete(void* dialog) {
-    QDialogBind::destroy(static_cast<QDialog*>(dialog));
+    delete static_cast<QDialogBind*>(dialog);
 }
 
-// プロパティ取得
 bool QDialog_isSizeGripEnabled(void* dialog) {
-    return QDialogBind::isSizeGripEnabled(static_cast<QDialog*>(dialog));
+    return static_cast<QDialogBind*>(dialog)->isSizeGripEnabled();
 }
 
 int QDialog_result(void* dialog) {
-    return QDialogBind::result(static_cast<QDialog*>(dialog));
+    return static_cast<QDialogBind*>(dialog)->result();
 }
 
 void* QDialog_minimumSizeHint(void* dialog) {
-    return QDialogBind::minimumSizeHint(static_cast<QDialog*>(dialog));
+    return new QSize(static_cast<QDialogBind*>(dialog)->minimumSizeHint());
 }
 
 void* QDialog_sizeHint(void* dialog) {
-    return QDialogBind::sizeHint(static_cast<QDialog*>(dialog));
+    return new QSize(static_cast<QDialogBind*>(dialog)->sizeHint());
 }
 
-// プロパティ設定
 void QDialog_setModal(void* dialog, bool modal) {
-    QDialogBind::setModal(static_cast<QDialog*>(dialog), modal);
+    static_cast<QDialogBind*>(dialog)->setModal(modal);
 }
 
 void QDialog_setResult(void* dialog, int result) {
-    QDialogBind::setResult(static_cast<QDialog*>(dialog), result);
+    static_cast<QDialogBind*>(dialog)->setResult(result);
 }
 
 void QDialog_setSizeGripEnabled(void* dialog, bool enabled) {
-    QDialogBind::setSizeGripEnabled(static_cast<QDialog*>(dialog), enabled);
+    static_cast<QDialogBind*>(dialog)->setSizeGripEnabled(enabled);
 }
 
 void QDialog_setVisible(void* dialog, bool visible) {
-    QDialogBind::setVisible(static_cast<QDialog*>(dialog), visible);
+    static_cast<QDialogBind*>(dialog)->setVisible(visible);
 }
 
-// アクション
 void QDialog_accept(void* dialog) {
-    QDialogBind::accept(static_cast<QDialog*>(dialog));
+    static_cast<QDialogBind*>(dialog)->accept();
 }
 
 void QDialog_done(void* dialog, int result) {
-    QDialogBind::done(static_cast<QDialog*>(dialog), result);
+    static_cast<QDialogBind*>(dialog)->done(result);
 }
 
 int QDialog_exec(void* dialog) {
-    return QDialogBind::exec(static_cast<QDialog*>(dialog));
+    return static_cast<QDialogBind*>(dialog)->exec();
 }
 
 void QDialog_open(void* dialog) {
-    QDialogBind::open(static_cast<QDialog*>(dialog));
+    static_cast<QDialogBind*>(dialog)->open();
 }
 
 void QDialog_reject(void* dialog) {
-    QDialogBind::reject(static_cast<QDialog*>(dialog));
+    static_cast<QDialogBind*>(dialog)->reject();
 }
 
-// シグナルハンドラ設定
-void QDialog_setAcceptedCallback(void* dialog, void (*callback)(void*), void* data) {
-    QDialogBind::setAcceptedCallback(static_cast<QDialog*>(dialog), callback, data);
+void QDialog_setAcceptedCallback(void* dialog, void (*callback)(void*)) {
+    static_cast<QDialogBind*>(dialog)->setDialogAcceptedCallback(callback);
 }
 
-void QDialog_setFinishedCallback(void* dialog, void (*callback)(void*, int), void* data) {
-    QDialogBind::setFinishedCallback(static_cast<QDialog*>(dialog), callback, data);
+void QDialog_setFinishedCallback(void* dialog, void (*callback)(void*, int)) {
+    static_cast<QDialogBind*>(dialog)->setDialogFinishedCallback(callback);
 }
 
-void QDialog_setRejectedCallback(void* dialog, void (*callback)(void*), void* data) {
-    QDialogBind::setRejectedCallback(static_cast<QDialog*>(dialog), callback, data);
+void QDialog_setRejectedCallback(void* dialog, void (*callback)(void*)) {
+    static_cast<QDialogBind*>(dialog)->setDialogRejectedCallback(callback);
 }
 
 }

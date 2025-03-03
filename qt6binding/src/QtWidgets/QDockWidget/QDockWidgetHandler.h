@@ -6,29 +6,30 @@
 
 class DockWidgetHandler : public QObject {
     Q_OBJECT
+    typedef void (*AllowedAreasChangedCallback)(void*, int);
+    typedef void (*DockLocationChangedCallback)(void*, int);
+    typedef void (*FeaturesChangedCallback)(void*, int);
+    typedef void (*TopLevelChangedCallback)(void*, bool);
+    typedef void (*VisibilityChangedCallback)(void*, bool);
 public:
     explicit DockWidgetHandler(QObject* parent = nullptr);
-    void setDockWidget(QDockWidget* dockWidget);
-    void setAllowedAreasChangedCallback(void (*callback)(void*, int));
-    void setDockLocationChangedCallback(void (*callback)(void*, int));
-    void setFeaturesChangedCallback(void (*callback)(void*, int));
-    void setTopLevelChangedCallback(void (*callback)(void*, bool));
-    void setVisibilityChangedCallback(void (*callback)(void*, bool));
-
+    void setAllowedAreasChangedCallback(AllowedAreasChangedCallback callback);
+    void setDockLocationChangedCallback(DockLocationChangedCallback callback);
+    void setFeaturesChangedCallback(FeaturesChangedCallback callback);
+    void setTopLevelChangedCallback(TopLevelChangedCallback callback);
+    void setVisibilityChangedCallback(VisibilityChangedCallback callback);
 public slots:
-    void onAllowedAreasChanged(Qt::DockWidgetAreas allowedAreas);
-    void onDockLocationChanged(Qt::DockWidgetArea area);
-    void onFeaturesChanged(QDockWidget::DockWidgetFeatures features);
-    void onTopLevelChanged(bool topLevel);
-    void onVisibilityChanged(bool visible);
-
+    void onAllowedAreasChanged(Qt::DockWidgetAreas allowedAreas) const;
+    void onDockLocationChanged(Qt::DockWidgetArea area) const;
+    void onFeaturesChanged(QDockWidget::DockWidgetFeatures features) const;
+    void onTopLevelChanged(bool topLevel) const;
+    void onVisibilityChanged(bool visible) const;
 private:
-    QDockWidget* dockWidget;
-    void (*allowedAreasChangedCallback)(void*, int);
-    void (*dockLocationChangedCallback)(void*, int);
-    void (*featuresChangedCallback)(void*, int);
-    void (*topLevelChangedCallback)(void*, bool);
-    void (*visibilityChangedCallback)(void*, bool);
+    AllowedAreasChangedCallback allowedAreasChangedCallback;
+    DockLocationChangedCallback dockLocationChangedCallback;
+    FeaturesChangedCallback featuresChangedCallback;
+    TopLevelChangedCallback topLevelChangedCallback;
+    VisibilityChangedCallback visibilityChangedCallback;
 };
 
 #endif // DOCKWIDGET_HANDLER_H

@@ -1,42 +1,39 @@
 #include "QDialogHandler.h"
 
-QDialogHandler::QDialogHandler(QDialog* dialog, QObject* parent)
-    : QObject(parent),
-      acceptedCallback(nullptr),
-      finishedCallback(nullptr),
-      rejectedCallback(nullptr),
-      acceptedData(nullptr),
-      finishedData(nullptr),
-      rejectedData(nullptr)
+QDialogHandler::QDialogHandler(QObject* parent)
+    : QObject(parent)
+    , acceptedCallback(nullptr)
+    , finishedCallback(nullptr)
+    , rejectedCallback(nullptr)
 {
-    // シグナルとスロットを接続
-    connect(dialog, &QDialog::accepted, this, &QDialogHandler::onAccepted);
-    connect(dialog, &QDialog::finished, this, &QDialogHandler::onFinished);
-    connect(dialog, &QDialog::rejected, this, &QDialogHandler::onRejected);
 }
 
-QDialogHandler::~QDialogHandler()
-{
-    // 特に何もする必要はない
+void QDialogHandler::setDialogAcceptedCallback(DialogAcceptedCallback callback) {
+    acceptedCallback = callback;
 }
 
-void QDialogHandler::onAccepted()
-{
+void QDialogHandler::setDialogFinishedCallback(DialogFinishedCallback callback) {
+    finishedCallback = callback;
+}
+
+void QDialogHandler::setDialogRejectedCallback(DialogRejectedCallback callback) {
+    rejectedCallback = callback;
+}
+
+void QDialogHandler::onDialogAccepted() const {
     if (acceptedCallback) {
-        acceptedCallback(acceptedData);
+        acceptedCallback(parent());
     }
 }
 
-void QDialogHandler::onFinished(int result)
-{
+void QDialogHandler::onDialogFinished(int result) const {
     if (finishedCallback) {
-        finishedCallback(finishedData, result);
+        finishedCallback(parent(), result);
     }
 }
 
-void QDialogHandler::onRejected()
-{
+void QDialogHandler::onDialogRejected() const {
     if (rejectedCallback) {
-        rejectedCallback(rejectedData);
+        rejectedCallback(parent());
     }
 }

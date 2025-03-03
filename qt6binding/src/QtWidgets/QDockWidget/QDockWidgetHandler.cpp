@@ -2,70 +2,59 @@
 
 DockWidgetHandler::DockWidgetHandler(QObject* parent)
     : QObject(parent)
-    , dockWidget(nullptr)
     , allowedAreasChangedCallback(nullptr)
     , dockLocationChangedCallback(nullptr)
     , featuresChangedCallback(nullptr)
     , topLevelChangedCallback(nullptr)
-    , visibilityChangedCallback(nullptr)
-{
+    , visibilityChangedCallback(nullptr) {
 }
 
-void DockWidgetHandler::setDockWidget(QDockWidget* dockWidget) {
-    this->dockWidget = dockWidget;
-    connect(dockWidget, &QDockWidget::allowedAreasChanged, this, &DockWidgetHandler::onAllowedAreasChanged);
-    connect(dockWidget, &QDockWidget::dockLocationChanged, this, &DockWidgetHandler::onDockLocationChanged);
-    connect(dockWidget, &QDockWidget::featuresChanged, this, &DockWidgetHandler::onFeaturesChanged);
-    connect(dockWidget, &QDockWidget::topLevelChanged, this, &DockWidgetHandler::onTopLevelChanged);
-    connect(dockWidget, &QDockWidget::visibilityChanged, this, &DockWidgetHandler::onVisibilityChanged);
-}
-
-void DockWidgetHandler::setAllowedAreasChangedCallback(void (*callback)(void*, int)) {
+void DockWidgetHandler::setAllowedAreasChangedCallback(AllowedAreasChangedCallback callback) {
     allowedAreasChangedCallback = callback;
 }
 
-void DockWidgetHandler::setDockLocationChangedCallback(void (*callback)(void*, int)) {
+void DockWidgetHandler::setDockLocationChangedCallback(DockLocationChangedCallback callback) {
     dockLocationChangedCallback = callback;
 }
 
-void DockWidgetHandler::setFeaturesChangedCallback(void (*callback)(void*, int)) {
+void DockWidgetHandler::setFeaturesChangedCallback(FeaturesChangedCallback callback) {
     featuresChangedCallback = callback;
 }
 
-void DockWidgetHandler::setTopLevelChangedCallback(void (*callback)(void*, bool)) {
+void DockWidgetHandler::setTopLevelChangedCallback(TopLevelChangedCallback callback) {
     topLevelChangedCallback = callback;
 }
 
-void DockWidgetHandler::setVisibilityChangedCallback(void (*callback)(void*, bool)) {
+void DockWidgetHandler::setVisibilityChangedCallback(VisibilityChangedCallback callback) {
     visibilityChangedCallback = callback;
 }
 
-void DockWidgetHandler::onAllowedAreasChanged(Qt::DockWidgetAreas allowedAreas) {
-    if (allowedAreasChangedCallback && dockWidget) {
-        allowedAreasChangedCallback(dockWidget, static_cast<int>(allowedAreas));
+void DockWidgetHandler::onAllowedAreasChanged(Qt::DockWidgetAreas allowedAreas) const {
+    if (allowedAreasChangedCallback) {
+        allowedAreasChangedCallback(parent(), static_cast<int>(allowedAreas));
     }
 }
 
-void DockWidgetHandler::onDockLocationChanged(Qt::DockWidgetArea area) {
-    if (dockLocationChangedCallback && dockWidget) {
-        dockLocationChangedCallback(dockWidget, static_cast<int>(area));
+void DockWidgetHandler::onDockLocationChanged(Qt::DockWidgetArea area) const {
+    if (dockLocationChangedCallback) {
+        dockLocationChangedCallback(parent(), static_cast<int>(area));
     }
 }
 
-void DockWidgetHandler::onFeaturesChanged(QDockWidget::DockWidgetFeatures features) {
-    if (featuresChangedCallback && dockWidget) {
-        featuresChangedCallback(dockWidget, static_cast<int>(features));
+void DockWidgetHandler::onFeaturesChanged(QDockWidget::DockWidgetFeatures features) const {
+    if (featuresChangedCallback) {
+        featuresChangedCallback(parent(), static_cast<int>(features));
     }
 }
 
-void DockWidgetHandler::onTopLevelChanged(bool topLevel) {
-    if (topLevelChangedCallback && dockWidget) {
-        topLevelChangedCallback(dockWidget, topLevel);
+void DockWidgetHandler::onTopLevelChanged(bool topLevel) const {
+    if (topLevelChangedCallback) {
+        topLevelChangedCallback(parent(), topLevel);
     }
 }
 
-void DockWidgetHandler::onVisibilityChanged(bool visible) {
-    if (visibilityChangedCallback && dockWidget) {
-        visibilityChangedCallback(dockWidget, visible);
+void DockWidgetHandler::onVisibilityChanged(bool visible) const {
+    if (visibilityChangedCallback) {
+        visibilityChangedCallback(parent(), visible);
     }
 }
