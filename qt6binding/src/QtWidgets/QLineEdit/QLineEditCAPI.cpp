@@ -8,7 +8,7 @@ void* QLineEdit_create(void* parent) {
 }
 
 void* QLineEdit_create_2(const char* text, void* parent) {
-    return new QLineEditBind(QString::fromUtf8(text), reinterpret_cast<QWidget*>(parent));
+    return new QLineEditBind(QString::fromUtf8(text), static_cast<QWidget*>(parent));
 }
 
 void QLineEdit_delete(void* lineEdit) {

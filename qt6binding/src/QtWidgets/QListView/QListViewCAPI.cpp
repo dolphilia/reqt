@@ -1,139 +1,144 @@
 #include "QListViewBind.h"
 #include "qlistview.h"
-#include "QListViewHandler.h"
 
 extern "C" {
 
 void* QListView_create(void* parent) {
-    return QListViewBind::create(static_cast<QWidget*>(parent));
+    return new QListViewBind(static_cast<QWidget*>(parent));
 }
 
 void QListView_delete(void* listView) {
-    QListViewBind::destroy(static_cast<QListView*>(listView));
+    delete static_cast<QListViewBind*>(listView);
 }
 
 void QListView_setModel(void* listView, void* model) {
-    QListViewBind::setModel(static_cast<QListView*>(listView), static_cast<QAbstractItemModel*>(model));
+    static_cast<QListViewBind*>(listView)->setModel(static_cast<QAbstractItemModel*>(model));
 }
 
 void* QListView_model(void* listView) {
-    return QListViewBind::model(static_cast<QListView*>(listView));
+    return static_cast<QListViewBind*>(listView)->model();
 }
 
 void QListView_setSelectionMode(void* listView, int mode) {
-    QListViewBind::setSelectionMode(static_cast<QListView*>(listView), mode);
+    static_cast<QListViewBind*>(listView)->setSelectionMode(static_cast<QAbstractItemView::SelectionMode>(mode));
 }
 
 int QListView_selectionMode(void* listView) {
-    return QListViewBind::selectionMode(static_cast<QListView*>(listView));
+    return static_cast<int>(static_cast<QListViewBind*>(listView)->selectionMode());
 }
 
 void QListView_setFlow(void* listView, int flow) {
-    QListViewBind::setFlow(static_cast<QListView*>(listView), flow);
+    static_cast<QListViewBind*>(listView)->setFlow(static_cast<QListView::Flow>(flow));
 }
 
 int QListView_flow(void* listView) {
-    return QListViewBind::flow(static_cast<QListView*>(listView));
+    return static_cast<int>(static_cast<QListViewBind*>(listView)->flow());
 }
 
 void QListView_setWrapping(void* listView, bool wrap) {
-    QListViewBind::setWrapping(static_cast<QListView*>(listView), wrap);
+    static_cast<QListViewBind*>(listView)->setWrapping(wrap);
 }
 
 bool QListView_isWrapping(void* listView) {
-    return QListViewBind::isWrapping(static_cast<QListView*>(listView));
+    return static_cast<QListViewBind*>(listView)->isWrapping();
 }
 
 void QListView_setResizeMode(void* listView, int mode) {
-    QListViewBind::setResizeMode(static_cast<QListView*>(listView), mode);
+    static_cast<QListViewBind*>(listView)->setResizeMode(static_cast<QListView::ResizeMode>(mode));
 }
 
 int QListView_resizeMode(void* listView) {
-    return QListViewBind::resizeMode(static_cast<QListView*>(listView));
+    return static_cast<int>(static_cast<QListViewBind*>(listView)->resizeMode());
 }
 
 void QListView_setSpacing(void* listView, int space) {
-    QListViewBind::setSpacing(static_cast<QListView*>(listView), space);
+    static_cast<QListViewBind*>(listView)->setSpacing(space);
 }
 
 int QListView_spacing(void* listView) {
-    return QListViewBind::spacing(static_cast<QListView*>(listView));
+    return static_cast<QListViewBind*>(listView)->spacing();
 }
 
 void QListView_setBatchSize(void* listView, int batchSize) {
-    QListViewBind::setBatchSize(static_cast<QListView*>(listView), batchSize);
+    static_cast<QListViewBind*>(listView)->setBatchSize(batchSize);
 }
 
 int QListView_batchSize(void* listView) {
-    return QListViewBind::batchSize(static_cast<QListView*>(listView));
+    return static_cast<QListViewBind*>(listView)->batchSize();
 }
 
 void QListView_setGridSize(void* listView, int width, int height) {
-    QListViewBind::setGridSize(static_cast<QListView*>(listView), width, height);
+    static_cast<QListViewBind*>(listView)->setGridSize(QSize(width, height));
 }
 
 void QListView_gridSize(void* listView, int* width, int* height) {
-    QListViewBind::gridSize(static_cast<QListView*>(listView), width, height);
+    QSize size = static_cast<QListViewBind*>(listView)->gridSize();
+    if (width) *width = size.width();
+    if (height) *height = size.height();
 }
 
 void QListView_setViewMode(void* listView, int mode) {
-    QListViewBind::setViewMode(static_cast<QListView*>(listView), mode);
+    static_cast<QListViewBind*>(listView)->setViewMode(static_cast<QListView::ViewMode>(mode));
 }
 
 int QListView_viewMode(void* listView) {
-    return QListViewBind::viewMode(static_cast<QListView*>(listView));
+    return static_cast<int>(static_cast<QListViewBind*>(listView)->viewMode());
 }
 
 void QListView_setUniformItemSizes(void* listView, bool enable) {
-    QListViewBind::setUniformItemSizes(static_cast<QListView*>(listView), enable);
+    static_cast<QListViewBind*>(listView)->setUniformItemSizes(enable);
 }
 
 bool QListView_uniformItemSizes(void* listView) {
-    return QListViewBind::uniformItemSizes(static_cast<QListView*>(listView));
+    return static_cast<QListViewBind*>(listView)->uniformItemSizes();
 }
 
 void QListView_setWordWrap(void* listView, bool on) {
-    QListViewBind::setWordWrap(static_cast<QListView*>(listView), on);
+    static_cast<QListViewBind*>(listView)->setWordWrap(on);
 }
 
 bool QListView_wordWrap(void* listView) {
-    return QListViewBind::wordWrap(static_cast<QListView*>(listView));
+    return static_cast<QListViewBind*>(listView)->wordWrap();
 }
 
 void QListView_setSelectionRectVisible(void* listView, bool show) {
-    QListViewBind::setSelectionRectVisible(static_cast<QListView*>(listView), show);
+    static_cast<QListViewBind*>(listView)->setSelectionRectVisible(show);
 }
 
 bool QListView_isSelectionRectVisible(void* listView) {
-    return QListViewBind::isSelectionRectVisible(static_cast<QListView*>(listView));
+    return static_cast<QListViewBind*>(listView)->isSelectionRectVisible();
 }
 
 void QListView_setItemAlignment(void* listView, int alignment) {
-    QListViewBind::setItemAlignment(static_cast<QListView*>(listView), alignment);
+    static_cast<QListViewBind*>(listView)->setItemAlignment(static_cast<Qt::Alignment>(alignment));
 }
 
 int QListView_itemAlignment(void* listView) {
-    return QListViewBind::itemAlignment(static_cast<QListView*>(listView));
+    return static_cast<int>(static_cast<QListViewBind*>(listView)->itemAlignment());
 }
 
 void QListView_setModelColumn(void* listView, int column) {
-    QListViewBind::setModelColumn(static_cast<QListView*>(listView), column);
+    static_cast<QListViewBind*>(listView)->setModelColumn(column);
 }
 
 int QListView_modelColumn(void* listView) {
-    return QListViewBind::modelColumn(static_cast<QListView*>(listView));
+    return static_cast<QListViewBind*>(listView)->modelColumn();
 }
 
-void QListView_setClickedCallback(void* listView, ListViewClickedCallback callback) {
-    QListViewBind::setClickedCallback(static_cast<QListView*>(listView), callback);
+typedef void (*ClickedCallback)(void*, int, int);
+typedef void (*DoubleClickedCallback)(void*, int, int);
+typedef void (*SelectionChangedCallback)(void*);
+
+void QListView_setClickedCallback(void* listView, ClickedCallback callback) {
+    static_cast<QListViewBind*>(listView)->setClickedCallback(callback);
 }
 
-void QListView_setDoubleClickedCallback(void* listView, ListViewDoubleClickedCallback callback) {
-    QListViewBind::setDoubleClickedCallback(static_cast<QListView*>(listView), callback);
+void QListView_setDoubleClickedCallback(void* listView, DoubleClickedCallback callback) {
+    static_cast<QListViewBind*>(listView)->setDoubleClickedCallback(callback);
 }
 
-void QListView_setSelectionChangedCallback(void* listView, ListViewSelectionChangedCallback callback) {
-    QListViewBind::setSelectionChangedCallback(static_cast<QListView*>(listView), callback);
+void QListView_setSelectionChangedCallback(void* listView, SelectionChangedCallback callback) {
+    static_cast<QListViewBind*>(listView)->setSelectionChangedCallback(callback);
 }
 
 }
