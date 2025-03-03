@@ -1,22 +1,26 @@
 #include "QComboBoxHandler.h"
 
-ComboBoxHandler::ComboBoxHandler(void (*indexCallback)(void*, int),
-                                 void (*textCallback)(void*, const char*))
-    : QObject(nullptr)
-    , indexCallback(indexCallback)
-    , textCallback(textCallback)
-{
+ComboBoxHandler::ComboBoxHandler(QObject* parent)
+    : QObject(parent)
+    , indexCallback(nullptr)
+    , textCallback(nullptr) {
 }
 
-void ComboBoxHandler::onCurrentIndexChanged(int index)
-{
+void ComboBoxHandler::setCurrentIndexCallback(CurrentIndexChangedCallback callback) {
+    indexCallback = callback;
+}
+
+void ComboBoxHandler::setCurrentTextCallback(CurrentTextChangedCallback callback) {
+    textCallback = callback;
+}
+
+void ComboBoxHandler::onCurrentIndexChanged(int index) const {
     if (indexCallback) {
         indexCallback(parent(), index);
     }
 }
 
-void ComboBoxHandler::onCurrentTextChanged(const QString& text)
-{
+void ComboBoxHandler::onCurrentTextChanged(const QString& text) const {
     if (textCallback) {
         textCallback(parent(), text.toUtf8().constData());
     }

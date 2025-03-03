@@ -54,15 +54,15 @@ bool QCheckBox_isEnabled(void* checkbox) {
     return static_cast<QCheckBoxBind*>(checkbox)->isEnabled();
 }
 
-void QCheckBox_setStateChangedCallback(void* checkbox, QCheckBoxStateChangedCallback callback) {
+void QCheckBox_setStateChangedCallback(void* checkbox, StateChangedCallback callback) {
     static_cast<QCheckBoxBind*>(checkbox)->setStateChangedCallback(callback);
 }
 
-void QCheckBox_setToggledCallback(void* checkbox, QCheckBoxToggledCallback callback) {
+void QCheckBox_setToggledCallback(void* checkbox, ToggledCallback callback) {
     static_cast<QCheckBoxBind*>(checkbox)->setToggledCallback(callback);
 }
 
-void QCheckBox_setClickedCallback(void* checkbox, ClickedCallback callback) {
+void QCheckBox_setClickedCallback(void* checkbox, Callback callback) {
     static_cast<QCheckBoxBind*>(checkbox)->setClickedCallback(callback);
 }
 

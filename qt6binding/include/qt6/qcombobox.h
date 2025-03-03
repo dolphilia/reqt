@@ -23,10 +23,10 @@ void QComboBox_setEditable(void* comboBox, bool editable);
 bool QComboBox_isEditable(void* comboBox);
 void QComboBox_setEnabled(void* comboBox, bool enabled);
 bool QComboBox_isEnabled(void* comboBox);
-typedef void (*QComboBoxCurrentIndexChangedCallback)(void* comboBox, int index);
-typedef void (*QComboBoxCurrentTextChangedCallback)(void* comboBox, const char* text);
-void QComboBox_setCurrentIndexChangedCallback(void* comboBox, QComboBoxCurrentIndexChangedCallback callback);
-void QComboBox_setCurrentTextChangedCallback(void* comboBox, QComboBoxCurrentTextChangedCallback callback);
+typedef void (*CurrentIndexChangedCallback)(void* comboBox, int index);
+typedef void (*CurrentTextChangedCallback)(void* comboBox, const char* text);
+void QComboBox_setCurrentIndexChangedCallback(void* comboBox, CurrentIndexChangedCallback callback);
+void QComboBox_setCurrentTextChangedCallback(void* comboBox, CurrentTextChangedCallback callback);
 
 #ifdef __cplusplus
 }
