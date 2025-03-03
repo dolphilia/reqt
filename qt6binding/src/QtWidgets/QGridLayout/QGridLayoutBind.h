@@ -1,14 +1,20 @@
-#ifndef BIND_Q_GRID_LAYOUT_H
-#define BIND_Q_GRID_LAYOUT_H
+#ifndef QGRIDLAYOUT_BIND_H
+#define QGRIDLAYOUT_BIND_H
 
+#include "QGridLayoutHandler.h"
 #include <QGridLayout>
 #include <QWidget>
 
-class BindQGridLayout : public QGridLayout {
+class QGridLayoutBind : public QGridLayout {
     Q_OBJECT
+    typedef void (*CellEmptyChangedCallback)(void*, int, int);
 public:
-    BindQGridLayout();
+    explicit QGridLayoutBind(QWidget* parent = nullptr);
+    ~QGridLayoutBind() override;
     void addWidgetToGrid(QWidget* widget, int row, int column);
+    void setCellEmptyChangedCallback(CellEmptyChangedCallback callback) const;
+private:
+    GridLayoutHandler* handler;
 };
 
-#endif // BIND_Q_GRID_LAYOUT_H
+#endif // QGRIDLAYOUT_BIND_H

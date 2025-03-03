@@ -1,7 +1,22 @@
 #include "QGridLayoutBind.h"
+#include "QGridLayoutHandler.h"
 
-BindQGridLayout::BindQGridLayout() : QGridLayout() {}
+QGridLayoutBind::QGridLayoutBind(QWidget* parent)
+    : QGridLayout(parent)
+    , handler(new GridLayoutHandler(this)) {
+    // QGridLayoutには標準でシグナルがないため、必要に応じてカスタムシグナルを実装できます
+    // 例: QComboBoxのように、以下のようにシグナルを接続します
+    // connect(this, &QGridLayout::customSignal, handler, &GridLayoutHandler::onCellEmptyChanged);
+}
 
-void BindQGridLayout::addWidgetToGrid(QWidget* widget, int row, int column) {
+QGridLayoutBind::~QGridLayoutBind() {
+    delete handler;
+}
+
+void QGridLayoutBind::addWidgetToGrid(QWidget* widget, int row, int column) {
     addWidget(widget, row, column);
+}
+
+void QGridLayoutBind::setCellEmptyChangedCallback(CellEmptyChangedCallback callback) const {
+    handler->setCellEmptyChangedCallback(callback);
 }
