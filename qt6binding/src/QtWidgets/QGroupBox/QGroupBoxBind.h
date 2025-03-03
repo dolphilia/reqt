@@ -1,24 +1,20 @@
-#ifndef BIND_Q_GROUP_BOX_H
-#define BIND_Q_GROUP_BOX_H
+#ifndef QGROUPBOX_BIND_H
+#define QGROUPBOX_BIND_H
 
+#include "QGroupBoxHandler.h"
 #include <QGroupBox>
 
-class BindQGroupBox : public QGroupBox {
+class QGroupBoxBind : public QGroupBox {
     Q_OBJECT
+    typedef void (*ToggledCallback)(void*, bool);
 public:
-    explicit BindQGroupBox(QWidget *parent = nullptr);
-    explicit BindQGroupBox(const QString &title, QWidget *parent = nullptr);
-    ~BindQGroupBox();
-
-    void setTitle(const QString &title);
-    QString title() const;
-    void setAlignment(int alignment);
-    void setFlat(bool flat);
-    bool isFlat() const;
-    void setCheckable(bool checkable);
-    bool isCheckable() const;
-    void setChecked(bool checked);
-    bool isChecked() const;
+    explicit QGroupBoxBind(QWidget* parent = nullptr);
+    explicit QGroupBoxBind(const QString& title, QWidget* parent = nullptr);
+    ~QGroupBoxBind() override;
+    
+    void setToggledCallback(ToggledCallback callback) const;
+private:
+    GroupBoxHandler* handler;
 };
 
-#endif // BIND_Q_GROUP_BOX_H
+#endif // QGROUPBOX_BIND_H

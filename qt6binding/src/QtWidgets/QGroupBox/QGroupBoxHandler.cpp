@@ -1,18 +1,16 @@
 #include "QGroupBoxHandler.h"
 
-HandlerGroupBox::HandlerGroupBox(QObject *parent)
+GroupBoxHandler::GroupBoxHandler(QObject* parent)
     : QObject(parent)
-    , toggleCallback(nullptr)
-    , widget(nullptr)
-{
+    , toggledCallback(nullptr) {
 }
 
-void HandlerGroupBox::setToggleCallback(void (*callback)(void*, bool)) {
-    toggleCallback = callback;
+void GroupBoxHandler::setToggledCallback(ToggledCallback callback) {
+    toggledCallback = callback;
 }
 
-void HandlerGroupBox::onToggled(bool checked) {
-    if (toggleCallback && widget) {
-        toggleCallback(widget, checked);
+void GroupBoxHandler::onToggled(bool checked) const {
+    if (toggledCallback) {
+        toggledCallback(parent(), checked);
     }
 }

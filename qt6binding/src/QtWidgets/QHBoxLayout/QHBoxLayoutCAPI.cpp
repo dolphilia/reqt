@@ -3,44 +3,46 @@
 
 extern "C" {
 
+typedef void (*VoidCallback)(void*);
+
 void* QHBoxLayout_create(void* parent) {
-    return QHBoxLayoutBind::create(static_cast<QWidget*>(parent));
+    return new QHBoxLayoutBind(static_cast<QWidget*>(parent));
 }
 
 void QHBoxLayout_delete(void* layout) {
-    QHBoxLayoutBind::destroy(static_cast<QHBoxLayout*>(layout));
+    delete static_cast<QHBoxLayoutBind*>(layout);
 }
 
 void QHBoxLayout_addWidget(void* layout, void* widget) {
-    QHBoxLayoutBind::addWidget(static_cast<QHBoxLayout*>(layout), static_cast<QWidget*>(widget));
+    static_cast<QHBoxLayoutBind*>(layout)->addWidget(static_cast<QWidget*>(widget));
 }
 
 void QHBoxLayout_addLayout(void* layout, void* other) {
-    QHBoxLayoutBind::addLayout(static_cast<QHBoxLayout*>(layout), static_cast<QLayout*>(other));
+    static_cast<QHBoxLayoutBind*>(layout)->addLayout(static_cast<QLayout*>(other));
 }
 
 void QHBoxLayout_addStretch(void* layout, int stretch) {
-    QHBoxLayoutBind::addStretch(static_cast<QHBoxLayout*>(layout), stretch);
+    static_cast<QHBoxLayoutBind*>(layout)->addStretch(stretch);
 }
 
 void QHBoxLayout_addSpacing(void* layout, int size) {
-    QHBoxLayoutBind::addSpacing(static_cast<QHBoxLayout*>(layout), size);
+    static_cast<QHBoxLayoutBind*>(layout)->addSpacing(size);
 }
 
 void QHBoxLayout_setSpacing(void* layout, int spacing) {
-    QHBoxLayoutBind::setSpacing(static_cast<QHBoxLayout*>(layout), spacing);
+    static_cast<QHBoxLayoutBind*>(layout)->setSpacing(spacing);
 }
 
 int QHBoxLayout_spacing(void* layout) {
-    return QHBoxLayoutBind::spacing(static_cast<QHBoxLayout*>(layout));
+    return static_cast<QHBoxLayoutBind*>(layout)->spacing();
 }
 
 void QHBoxLayout_setContentsMargins(void* layout, int left, int top, int right, int bottom) {
-    QHBoxLayoutBind::setContentsMargins(static_cast<QHBoxLayout*>(layout), left, top, right, bottom);
+    static_cast<QHBoxLayoutBind*>(layout)->setContentsMargins(left, top, right, bottom);
 }
 
 void QHBoxLayout_getContentsMargins(void* layout, int* left, int* top, int* right, int* bottom) {
-    QHBoxLayoutBind::getContentsMargins(static_cast<QHBoxLayout*>(layout), left, top, right, bottom);
+    static_cast<QHBoxLayoutBind*>(layout)->getContentsMargins(left, top, right, bottom);
 }
 
 }
