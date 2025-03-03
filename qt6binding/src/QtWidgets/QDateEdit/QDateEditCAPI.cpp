@@ -1,8 +1,11 @@
 #include "QDateEditBind.h"
-#include "qdateedit.h"
 #include <QDate>
 
+// Callback type definition
+typedef void (*QDateEditDateChangedCallback)(void*, int, int, int);
+
 extern "C" {
+// Creation/Destruction
 
 void* QDateEdit_create(void* parent) {
     return new QDateEditBind(static_cast<QWidget*>(parent));
@@ -16,6 +19,7 @@ void QDateEdit_delete(void* dateEdit) {
     delete static_cast<QDateEditBind*>(dateEdit);
 }
 
+// Properties
 void QDateEdit_setDate(void* dateEdit, int year, int month, int day) {
     static_cast<QDateEditBind*>(dateEdit)->setDate(QDate(year, month, day));
 }
@@ -49,6 +53,7 @@ void QDateEdit_getMaximumDate(void* dateEdit, int* year, int* month, int* day) {
     if (day) *day = date.day();
 }
 
+// Display
 void QDateEdit_setDisplayFormat(void* dateEdit, const char* format) {
     static_cast<QDateEditBind*>(dateEdit)->setDisplayFormat(QString::fromUtf8(format ? format : ""));
 }
@@ -67,6 +72,7 @@ bool QDateEdit_calendarPopup(void* dateEdit) {
     return static_cast<QDateEditBind*>(dateEdit)->calendarPopup();
 }
 
+// State
 void QDateEdit_setEnabled(void* dateEdit, bool enabled) {
     static_cast<QDateEditBind*>(dateEdit)->setEnabled(enabled);
 }
@@ -83,6 +89,7 @@ bool QDateEdit_isReadOnly(void* dateEdit) {
     return static_cast<QDateEditBind*>(dateEdit)->isReadOnly();
 }
 
+// Callbacks
 void QDateEdit_setDateChangedCallback(void* dateEdit, QDateEditDateChangedCallback callback) {
     static_cast<QDateEditBind*>(dateEdit)->setDateChangedCallback(callback);
 }

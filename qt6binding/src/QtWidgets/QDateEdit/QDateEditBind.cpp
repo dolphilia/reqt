@@ -1,27 +1,22 @@
 #include "QDateEditBind.h"
-#include "qdateedit.h"
-#include <QDate>
+#include "QDateEditHandler.h"
 
 QDateEditBind::QDateEditBind(QWidget* parent)
     : QDateEdit(parent)
-    , handler(new DateEditHandler(this))
-{
+    , handler(new DateEditHandler(this)) {
     connect(this, &QDateEdit::dateChanged, handler, &DateEditHandler::onDateChanged);
-    handler->setDateEdit(this);
 }
 
 QDateEditBind::QDateEditBind(const QDate& date, QWidget* parent)
     : QDateEdit(date, parent)
-    , handler(new DateEditHandler(this))
-{
+    , handler(new DateEditHandler(this)) {
     connect(this, &QDateEdit::dateChanged, handler, &DateEditHandler::onDateChanged);
-    handler->setDateEdit(this);
 }
 
 QDateEditBind::~QDateEditBind() {
     delete handler;
 }
 
-void QDateEditBind::setDateChangedCallback(void (*callback)(void*, int, int, int)) {
+void QDateEditBind::setDateChangedCallback(DateChangedCallback callback) const {
     handler->setDateChangedCallback(callback);
 }
