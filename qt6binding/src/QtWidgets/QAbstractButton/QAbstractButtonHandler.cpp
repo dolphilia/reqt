@@ -1,6 +1,6 @@
 #include "QAbstractButtonHandler.h"
 
-QAbstractButtonHandler::QAbstractButtonHandler(QAbstractButton* button, QObject* parent)
+QAbstractButtonHandler::QAbstractButtonHandler(QObject* parent)
     : QObject(parent)
     , clickedCallback(nullptr)
     , pressedCallback(nullptr)
@@ -9,19 +9,19 @@ QAbstractButtonHandler::QAbstractButtonHandler(QAbstractButton* button, QObject*
 {
 }
 
-void QAbstractButtonHandler::setClickedCallback(ClickedCallback callback) {
+void QAbstractButtonHandler::setClickedCallback(ClickCallback callback) {
     clickedCallback = callback;
 }
 
-void QAbstractButtonHandler::setPressedCallback(PressedCallback callback) {
+void QAbstractButtonHandler::setPressedCallback(PressCallback callback) {
     pressedCallback = callback;
 }
 
-void QAbstractButtonHandler::setReleasedCallback(ReleasedCallback callback) {
+void QAbstractButtonHandler::setReleasedCallback(ReleaseCallback callback) {
     releasedCallback = callback;
 }
 
-void QAbstractButtonHandler::setToggledCallback(ToggledCallback callback) {
+void QAbstractButtonHandler::setToggledCallback(ToggleCallback callback) {
     toggledCallback = callback;
 }
 

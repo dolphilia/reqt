@@ -56,8 +56,9 @@ void* QAbstractButton_shortcut(void* button) {
     return new QKeySequence(static_cast<QAbstractButtonBind*>(button)->shortcut());
 }
 
-void* QAbstractButton_text(void* button) {
-    return new QString(static_cast<QAbstractButtonBind*>(button)->text());
+const char * QAbstractButton_text(void* button) {
+    const QString qstr = static_cast<QAbstractButtonBind*>(button)->text();
+    return qstr.toUtf8().constData();
 }
 
 // プロパティ設定
@@ -118,20 +119,25 @@ void QAbstractButton_toggle(void* button) {
     static_cast<QAbstractButtonBind*>(button)->toggle();
 }
 
+typedef void (*ClickCallback)(void* data, bool checked);
+typedef void (*PressCallback)(void* data);
+typedef void (*ReleaseCallback)(void* data);
+typedef void (*ToggleCallback)(void* data, bool checked);
+
 // シグナルハンドラ設定
-void QAbstractButton_setClickedCallback(void* button, ClickedCallback callback) {
+void QAbstractButton_setClickedCallback(void* button, ClickCallback callback) {
     static_cast<QAbstractButtonBind*>(button)->setClickedCallback(callback);
 }
 
-void QAbstractButton_setPressedCallback(void* button,PressedCallback callback) {
+void QAbstractButton_setPressedCallback(void* button,PressCallback callback) {
     static_cast<QAbstractButtonBind*>(button)->setPressedCallback(callback);
 }
 
-void QAbstractButton_setReleasedCallback(void* button, ReleasedCallback callback) {
+void QAbstractButton_setReleasedCallback(void* button, ReleaseCallback callback) {
     static_cast<QAbstractButtonBind*>(button)->setReleasedCallback(callback);
 }
 
-void QAbstractButton_setToggledCallback(void* button, ToggledCallback callback) {
+void QAbstractButton_setToggledCallback(void* button, ToggleCallback callback) {
     static_cast<QAbstractButtonBind*>(button)->setToggledCallback(callback);
 }
 

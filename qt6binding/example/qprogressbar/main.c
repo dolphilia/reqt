@@ -41,7 +41,7 @@ int main(int argc, char *argv[]) {
     simulate_progress(progress_bar);
     
     // Run application
-    int result = QApplication_exec(app);
+    int result = QApplication_exec();
     
     // Cleanup
     QProgressBar_delete(progress_bar);

@@ -74,7 +74,7 @@ int main(int argc, char *argv[]) {
     QWidget_show(age3_radio);
     
     // Run application
-    int result = QApplication_exec(app);
+    int result = QApplication_exec();
     
     // Cleanup
     QRadioButton_delete(male_radio);

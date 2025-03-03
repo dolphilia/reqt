@@ -60,7 +60,7 @@ int main(int argc, char *argv[]) {
     QWidget_show(title);
     
     // Run application
-    int result = QApplication_exec(app);
+    int result = QApplication_exec();
     
     // Cleanup
     QWidget_delete(content);  // This will delete all child widgets

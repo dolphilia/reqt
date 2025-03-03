@@ -67,7 +67,7 @@ int main(int argc, char *argv[]) {
     QWidget_show(window);
     
     // イベントループの開始
-    int result = QApplication_exec(app);
+    int result = QApplication_exec();
     
     // クリーンアップ
     QWidget_delete(window);

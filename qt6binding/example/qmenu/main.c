@@ -82,7 +82,7 @@ int main(int argc, char *argv[]) {
     QPushButton_setClickCallback(button, on_button_clicked);
     
     // Run application
-    int result = QApplication_exec(app);
+    int result = QApplication_exec();
     
     // Cleanup
     QMenu_delete(recent_menu);

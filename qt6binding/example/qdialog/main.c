@@ -48,7 +48,7 @@ int main(int argc, char *argv[]) {
     QDialog_open(modelessDialog);
 
     // イベントループの実行
-    int exitCode = QApplication_exec(app);
+    int exitCode = QApplication_exec();
 
     // クリーンアップ
     QDialog_delete(modalDialog);

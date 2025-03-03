@@ -51,7 +51,7 @@ int main(int argc, char* argv[]) {
     QLCDNumber_displayInt(lcd4, 15);     // Will show 1111 in bin mode
 
     QWidget_show(window);
-    QApplication_exec(app);
+    QApplication_exec();
 
     // Cleanup
     QWidget_delete(window);

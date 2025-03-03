@@ -77,7 +77,7 @@ int main(int argc, char *argv[]) {
     QWidget_show(v_scroll);
     
     // Run application
-    int result = QApplication_exec(app);
+    int result = QApplication_exec();
     
     // Cleanup
     QScrollBar_delete(h_scroll);

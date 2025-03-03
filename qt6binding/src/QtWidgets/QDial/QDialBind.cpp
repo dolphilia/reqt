@@ -11,8 +11,7 @@ QDialBind::QDialBind(QWidget* parent)
     connect(this, &QDial::sliderReleased, handler, &DialHandler::onSliderReleased);
 }
 
-QDialBind::~QDialBind()
-{
+QDialBind::~QDialBind() {
     delete handler;
 }
 

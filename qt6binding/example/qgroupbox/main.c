@@ -52,7 +52,7 @@ int main(int argc, char* argv[]) {
     
     // ウィンドウの表示
     QWidget_show(window);
-    QApplication_exec(app);
+    QApplication_exec();
     
     // クリーンアップ
     QWidget_delete(window);

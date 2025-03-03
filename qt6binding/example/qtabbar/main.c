@@ -42,7 +42,7 @@ int main(int argc, char *argv[]) {
     QWidget_show(widget);
     
     // Run application
-    int result = QApplication_exec(app);
+    int result = QApplication_exec();
     
     // Cleanup
     QTabBar_delete(tab_bar);

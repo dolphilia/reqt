@@ -40,7 +40,7 @@ int main(int argc, char *argv[]) {
     QWidget_show(spinbox);
     
     // Run application
-    int result = QApplication_exec(app);
+    int result = QApplication_exec();
     
     // Cleanup
     QWidget_delete(spinbox);

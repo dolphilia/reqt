@@ -71,7 +71,7 @@ int main(int argc, char *argv[]) {
     QWidget_show(hex_spin);
     
     // Run application
-    int result = QApplication_exec(app);
+    int result = QApplication_exec();
     
     // Cleanup
     QSpinBox_delete(age_spin);

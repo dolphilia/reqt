@@ -86,7 +86,7 @@ int main(int argc, char *argv[]) {
     QWidget_show(window);
     
     // Run application
-    int result = QApplication_exec(app);
+    int result = QApplication_exec();
     
     // Cleanup
     QStandardItem_delete(header1);

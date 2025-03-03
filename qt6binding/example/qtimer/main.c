@@ -40,9 +40,9 @@ int main(int argc, char *argv[]) {
     printf("タイマーアクティブ: %s\n\n", QTimer_isActive(timer) ? "はい" : "いいえ");
     
     // 3秒間待機 (約6回のタイマーイベントが発生するはず)
-    QApplication_processEvents(app);
+    QApplication_processEvents();
     sleep(3);
-    QApplication_processEvents(app);
+    QApplication_processEvents();
     
     // タイマーの停止
     QTimer_stop(timer);
@@ -66,9 +66,9 @@ int main(int argc, char *argv[]) {
     printf("静的シングルショットタイマー開始...\n\n");
     
     // 3秒間待機 (両方のシングルショットタイマーが発火するはず)
-    QApplication_processEvents(app);
+    QApplication_processEvents();
     sleep(3);
-    QApplication_processEvents(app);
+    QApplication_processEvents();
     
     // クリーンアップ
     QTimer_delete(timer);

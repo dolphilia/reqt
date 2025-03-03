@@ -29,11 +29,12 @@ bool QCheckBox_isEnabled(void* checkbox);
 // コールバック関数の型定義
 typedef void (*QCheckBoxStateChangedCallback)(void* checkbox, int state);
 typedef void (*QCheckBoxToggledCallback)(void* checkbox, bool checked);
+typedef void (*ClickedCallback)(void* checkbox, bool checked);
 
 // コールバック設定関数
 void QCheckBox_setStateChangedCallback(void* checkbox, QCheckBoxStateChangedCallback callback);
 void QCheckBox_setToggledCallback(void* checkbox, QCheckBoxToggledCallback callback);
-void QCheckBox_setClickedCallback(void* checkbox, QCheckBoxToggledCallback callback);
+void QCheckBox_setClickedCallback(void* checkbox, ClickedCallback callback);
 
 #ifdef __cplusplus
 }

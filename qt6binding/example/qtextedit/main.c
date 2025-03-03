@@ -69,7 +69,7 @@ int main(int argc, char *argv[]) {
     QWidget_show(text_edit);
     
     // Run application
-    int result = QApplication_exec(app);
+    int result = QApplication_exec();
     
     // Cleanup
     QTextEdit_delete(text_edit);

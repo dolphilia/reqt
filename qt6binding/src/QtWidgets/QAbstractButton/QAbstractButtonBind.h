@@ -8,13 +8,17 @@ class QAbstractButtonHandler;
 
 class QAbstractButtonBind : public QAbstractButton {
     Q_OBJECT
+    typedef void (*ClickCallback)(void* data, bool checked);
+    typedef void (*PressCallback)(void* data);
+    typedef void (*ReleaseCallback)(void* data);
+    typedef void (*ToggleCallback)(void* data, bool checked);
 public:
     explicit QAbstractButtonBind(QWidget* parent = nullptr);
     ~QAbstractButtonBind() override;
-    void setClickedCallback(ClickedCallback callback) const;
-    void setPressedCallback(PressedCallback callback) const;
-    void setReleasedCallback(ReleasedCallback callback) const;
-    void setToggledCallback(ToggledCallback callback) const;
+    void setClickedCallback(ClickCallback callback) const;
+    void setPressedCallback(PressCallback callback) const;
+    void setReleasedCallback(ReleaseCallback callback) const;
+    void setToggledCallback(ToggleCallback callback) const;
 protected:
     bool hitButton(const QPoint &pos) const override;
     void paintEvent(QPaintEvent* event) override;

@@ -72,7 +72,7 @@ int main(int argc, char *argv[]) {
     QWidget_show(v_slider);
     
     // Run application
-    int result = QApplication_exec(app);
+    int result = QApplication_exec();
     
     // Cleanup
     QSlider_delete(h_slider);
