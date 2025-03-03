@@ -1,195 +1,43 @@
 #include "QInputDialogBind.h"
-#include <QInputDialog>
-#include <QLineEdit>
+#include "QInputDialogHandler.h"
 
-QInputDialog* QInputDialogBind::create(QWidget* parent, int flags) {
-    QInputDialog* dialog = new QInputDialog(parent);
-    if (flags != 0) {
-        dialog->setWindowFlags(static_cast<Qt::WindowFlags>(flags));
-    }
-    return dialog;
+QInputDialogBind::QInputDialogBind(QWidget* parent, Qt::WindowFlags flags)
+    : QInputDialog(parent, flags)
+    , handler(new QInputDialogHandler(this)) {
+    connect(this, &QInputDialog::doubleValueChanged, handler, &QInputDialogHandler::onDoubleValueChanged);
+    connect(this, &QInputDialog::doubleValueSelected, handler, &QInputDialogHandler::onDoubleValueSelected);
+    connect(this, &QInputDialog::intValueChanged, handler, &QInputDialogHandler::onIntValueChanged);
+    connect(this, &QInputDialog::intValueSelected, handler, &QInputDialogHandler::onIntValueSelected);
+    connect(this, &QInputDialog::textValueChanged, handler, &QInputDialogHandler::onTextValueChanged);
+    connect(this, &QInputDialog::textValueSelected, handler, &QInputDialogHandler::onTextValueSelected);
 }
 
-void QInputDialogBind::destroy(QInputDialog* dialog) {
-    if (!dialog) return;
-    // 関連するハンドラーを検索して削除
-    QInputDialogHandler* handler = dialog->findChild<QInputDialogHandler*>();
-    if (handler) {
-        delete handler;
-    }
-    delete dialog;
+QInputDialogBind::~QInputDialogBind() {
+    delete handler;
 }
 
-QString QInputDialogBind::cancelButtonText(QInputDialog* dialog) {
-    return dialog->cancelButtonText();
+void QInputDialogBind::setDoubleValueChangedCallback(DoubleValueChangedCallback callback) const {
+    handler->setDoubleValueChangedCallback(callback);
 }
 
-void QInputDialogBind::setCancelButtonText(QInputDialog* dialog, const char* text) {
-    dialog->setCancelButtonText(QString::fromUtf8(text));
+void QInputDialogBind::setDoubleValueSelectedCallback(DoubleValueSelectedCallback callback) const {
+    handler->setDoubleValueSelectedCallback(callback);
 }
 
-bool QInputDialogBind::isComboBoxEditable(QInputDialog* dialog) {
-    return dialog->isComboBoxEditable();
+void QInputDialogBind::setIntValueChangedCallback(IntValueChangedCallback callback) const {
+    handler->setIntValueChangedCallback(callback);
 }
 
-void QInputDialogBind::setComboBoxEditable(QInputDialog* dialog, bool editable) {
-    dialog->setComboBoxEditable(editable);
+void QInputDialogBind::setIntValueSelectedCallback(IntValueSelectedCallback callback) const {
+    handler->setIntValueSelectedCallback(callback);
 }
 
-void QInputDialogBind::setComboBoxItems(QInputDialog* dialog, const char** items, int count) {
-    QStringList itemList;
-    for (int i = 0; i < count; ++i) {
-        itemList << QString::fromUtf8(items[i]);
-    }
-    dialog->setComboBoxItems(itemList);
+void QInputDialogBind::setTextValueChangedCallback(TextValueChangedCallback callback) const {
+    handler->setTextValueChangedCallback(callback);
 }
 
-int QInputDialogBind::doubleDecimals(QInputDialog* dialog) {
-    return dialog->doubleDecimals();
-}
-
-void QInputDialogBind::setDoubleDecimals(QInputDialog* dialog, int decimals) {
-    dialog->setDoubleDecimals(decimals);
-}
-
-double QInputDialogBind::doubleMaximum(QInputDialog* dialog) {
-    return dialog->doubleMaximum();
-}
-
-void QInputDialogBind::setDoubleMaximum(QInputDialog* dialog, double max) {
-    dialog->setDoubleMaximum(max);
-}
-
-double QInputDialogBind::doubleMinimum(QInputDialog* dialog) {
-    return dialog->doubleMinimum();
-}
-
-void QInputDialogBind::setDoubleMinimum(QInputDialog* dialog, double min) {
-    dialog->setDoubleMinimum(min);
-}
-
-void QInputDialogBind::setDoubleRange(QInputDialog* dialog, double min, double max) {
-    dialog->setDoubleRange(min, max);
-}
-
-double QInputDialogBind::doubleStep(QInputDialog* dialog) {
-    return dialog->doubleStep();
-}
-
-void QInputDialogBind::setDoubleStep(QInputDialog* dialog, double step) {
-    dialog->setDoubleStep(step);
-}
-
-double QInputDialogBind::doubleValue(QInputDialog* dialog) {
-    return dialog->doubleValue();
-}
-
-void QInputDialogBind::setDoubleValue(QInputDialog* dialog, double value) {
-    dialog->setDoubleValue(value);
-}
-
-int QInputDialogBind::inputMode(QInputDialog* dialog) {
-    return static_cast<int>(dialog->inputMode());
-}
-
-void QInputDialogBind::setInputMode(QInputDialog* dialog, int mode) {
-    dialog->setInputMode(static_cast<QInputDialog::InputMode>(mode));
-}
-
-int QInputDialogBind::intMaximum(QInputDialog* dialog) {
-    return dialog->intMaximum();
-}
-
-void QInputDialogBind::setIntMaximum(QInputDialog* dialog, int max) {
-    dialog->setIntMaximum(max);
-}
-
-int QInputDialogBind::intMinimum(QInputDialog* dialog) {
-    return dialog->intMinimum();
-}
-
-void QInputDialogBind::setIntMinimum(QInputDialog* dialog, int min) {
-    dialog->setIntMinimum(min);
-}
-
-void QInputDialogBind::setIntRange(QInputDialog* dialog, int min, int max) {
-    dialog->setIntRange(min, max);
-}
-
-int QInputDialogBind::intStep(QInputDialog* dialog) {
-    return dialog->intStep();
-}
-
-void QInputDialogBind::setIntStep(QInputDialog* dialog, int step) {
-    dialog->setIntStep(step);
-}
-
-int QInputDialogBind::intValue(QInputDialog* dialog) {
-    return dialog->intValue();
-}
-
-void QInputDialogBind::setIntValue(QInputDialog* dialog, int value) {
-    dialog->setIntValue(value);
-}
-
-QString QInputDialogBind::labelText(QInputDialog* dialog) {
-    return dialog->labelText();
-}
-
-void QInputDialogBind::setLabelText(QInputDialog* dialog, const char* text) {
-    dialog->setLabelText(QString::fromUtf8(text));
-}
-
-QString QInputDialogBind::okButtonText(QInputDialog* dialog) {
-    return dialog->okButtonText();
-}
-
-void QInputDialogBind::setOkButtonText(QInputDialog* dialog, const char* text) {
-    dialog->setOkButtonText(QString::fromUtf8(text));
-}
-
-int QInputDialogBind::options(QInputDialog* dialog) {
-    return static_cast<int>(dialog->options());
-}
-
-void QInputDialogBind::setOption(QInputDialog* dialog, int option, bool on) {
-    dialog->setOption(static_cast<QInputDialog::InputDialogOption>(option), on);
-}
-
-void QInputDialogBind::setOptions(QInputDialog* dialog, int options) {
-    dialog->setOptions(static_cast<QInputDialog::InputDialogOptions>(options));
-}
-
-bool QInputDialogBind::testOption(QInputDialog* dialog, int option) {
-    return dialog->testOption(static_cast<QInputDialog::InputDialogOption>(option));
-}
-
-int QInputDialogBind::textEchoMode(QInputDialog* dialog) {
-    return static_cast<int>(dialog->textEchoMode());
-}
-
-void QInputDialogBind::setTextEchoMode(QInputDialog* dialog, int mode) {
-    dialog->setTextEchoMode(static_cast<QLineEdit::EchoMode>(mode));
-}
-
-QString QInputDialogBind::textValue(QInputDialog* dialog) {
-    return dialog->textValue();
-}
-
-void QInputDialogBind::setTextValue(QInputDialog* dialog, const char* text) {
-    dialog->setTextValue(QString::fromUtf8(text));
-}
-
-void QInputDialogBind::open(QInputDialog* dialog) {
-    dialog->open();
-}
-
-void QInputDialogBind::done(QInputDialog* dialog, int result) {
-    dialog->done(result);
-}
-
-void QInputDialogBind::setVisible(QInputDialog* dialog, bool visible) {
-    dialog->setVisible(visible);
+void QInputDialogBind::setTextValueSelectedCallback(TextValueSelectedCallback callback) const {
+    handler->setTextValueSelectedCallback(callback);
 }
 
 double QInputDialogBind::getDouble(QWidget* parent, const char* title, const char* label, double value, double min, double max, int decimals, bool* ok, int flags) {
@@ -282,70 +130,4 @@ const char* QInputDialogBind::getText(QWidget* parent, const char* title, const 
     if (ok) *ok = okValue;
     data = result.toUtf8();
     return data.constData();
-}
-
-void QInputDialogBind::setDoubleValueChangedCallback(QInputDialog* dialog, QInputDialogDoubleValueChangedCallback callback) {
-    if (!dialog) return;
-    QInputDialogHandler* handler = dialog->findChild<QInputDialogHandler*>();
-    if (!handler) {
-        handler = new QInputDialogHandler(dialog);
-        handler->setObjectName("QInputDialogHandler");  // ハンドラーに名前を設定
-        QObject::connect(dialog, &QInputDialog::doubleValueChanged, handler, &QInputDialogHandler::onDoubleValueChanged);
-    }
-    handler->setDoubleValueChangedCallback(callback);
-}
-
-void QInputDialogBind::setDoubleValueSelectedCallback(QInputDialog* dialog, QInputDialogDoubleValueSelectedCallback callback) {
-    if (!dialog) return;
-    QInputDialogHandler* handler = dialog->findChild<QInputDialogHandler*>();
-    if (!handler) {
-        handler = new QInputDialogHandler(dialog);
-        handler->setObjectName("QInputDialogHandler");
-        QObject::connect(dialog, &QInputDialog::doubleValueSelected, handler, &QInputDialogHandler::onDoubleValueSelected);
-    }
-    handler->setDoubleValueSelectedCallback(callback);
-}
-
-void QInputDialogBind::setIntValueChangedCallback(QInputDialog* dialog, QInputDialogIntValueChangedCallback callback) {
-    if (!dialog) return;
-    QInputDialogHandler* handler = dialog->findChild<QInputDialogHandler*>();
-    if (!handler) {
-        handler = new QInputDialogHandler(dialog);
-        handler->setObjectName("QInputDialogHandler");
-        QObject::connect(dialog, &QInputDialog::intValueChanged, handler, &QInputDialogHandler::onIntValueChanged);
-    }
-    handler->setIntValueChangedCallback(callback);
-}
-
-void QInputDialogBind::setIntValueSelectedCallback(QInputDialog* dialog, QInputDialogIntValueSelectedCallback callback) {
-    if (!dialog) return;
-    QInputDialogHandler* handler = dialog->findChild<QInputDialogHandler*>();
-    if (!handler) {
-        handler = new QInputDialogHandler(dialog);
-        handler->setObjectName("QInputDialogHandler");
-        QObject::connect(dialog, &QInputDialog::intValueSelected, handler, &QInputDialogHandler::onIntValueSelected);
-    }
-    handler->setIntValueSelectedCallback(callback);
-}
-
-void QInputDialogBind::setTextValueChangedCallback(QInputDialog* dialog, QInputDialogTextValueChangedCallback callback) {
-    if (!dialog) return;
-    QInputDialogHandler* handler = dialog->findChild<QInputDialogHandler*>();
-    if (!handler) {
-        handler = new QInputDialogHandler(dialog);
-        handler->setObjectName("QInputDialogHandler");
-        QObject::connect(dialog, &QInputDialog::textValueChanged, handler, &QInputDialogHandler::onTextValueChanged);
-    }
-    handler->setTextValueChangedCallback(callback);
-}
-
-void QInputDialogBind::setTextValueSelectedCallback(QInputDialog* dialog, QInputDialogTextValueSelectedCallback callback) {
-    if (!dialog) return;
-    QInputDialogHandler* handler = dialog->findChild<QInputDialogHandler*>();
-    if (!handler) {
-        handler = new QInputDialogHandler(dialog);
-        handler->setObjectName("QInputDialogHandler");
-        QObject::connect(dialog, &QInputDialog::textValueSelected, handler, &QInputDialogHandler::onTextValueSelected);
-    }
-    handler->setTextValueSelectedCallback(callback);
 }
