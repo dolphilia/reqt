@@ -2,28 +2,24 @@
 
 DateTimeEditHandler::DateTimeEditHandler(QObject* parent)
     : QObject(parent)
-    , dateTimeEdit(nullptr)
-    , callback(nullptr)
+    , dateCallback(nullptr)
+    , timeCallback(nullptr)
 {
 }
 
-void DateTimeEditHandler::setDateTimeEdit(QDateTimeEdit* dateTimeEdit) {
-    this->dateTimeEdit = dateTimeEdit;
-    connect(dateTimeEdit, &QDateTimeEdit::dateTimeChanged, this, &DateTimeEditHandler::onDateTimeChanged);
+void DateTimeEditHandler::setDateCallback(DateChangedCallback callback) {
+    dateCallback = callback;
 }
 
-void DateTimeEditHandler::setDateTimeChangedCallback(void (*callback)(void*, int, int, int, int, int, int)) {
-    this->callback = callback;
+void DateTimeEditHandler::setTimeCallback(TimeChangedCallback callback) {
+    timeCallback = callback;
 }
 
-void DateTimeEditHandler::onDateTimeChanged(const QDateTime& dateTime) {
-    if (callback && dateTimeEdit) {
-        callback(dateTimeEdit,
-            dateTime.date().year(),
-            dateTime.date().month(),
-            dateTime.date().day(),
-            dateTime.time().hour(),
-            dateTime.time().minute(),
-            dateTime.time().second());
+void DateTimeEditHandler::onDateTimeChanged(const QDateTime& datetime) const {
+    if (dateCallback) {
+        dateCallback(parent(), datetime.date().year(), datetime.date().month(), datetime.date().day());
+    }
+    if (timeCallback) {
+        timeCallback(parent(), datetime.time().hour(), datetime.time().minute(), datetime.time().second());
     }
 }

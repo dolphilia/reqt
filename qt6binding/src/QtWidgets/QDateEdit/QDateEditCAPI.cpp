@@ -1,11 +1,7 @@
 #include "QDateEditBind.h"
 #include <QDate>
 
-// Callback type definition
-typedef void (*QDateEditDateChangedCallback)(void*, int, int, int);
-
 extern "C" {
-// Creation/Destruction
 
 void* QDateEdit_create(void* parent) {
     return new QDateEditBind(static_cast<QWidget*>(parent));
@@ -19,16 +15,15 @@ void QDateEdit_delete(void* dateEdit) {
     delete static_cast<QDateEditBind*>(dateEdit);
 }
 
-// Properties
 void QDateEdit_setDate(void* dateEdit, int year, int month, int day) {
     static_cast<QDateEditBind*>(dateEdit)->setDate(QDate(year, month, day));
 }
 
 void QDateEdit_getDate(void* dateEdit, int* year, int* month, int* day) {
     QDate date = static_cast<QDateEditBind*>(dateEdit)->date();
-    if (year) *year = date.year();
-    if (month) *month = date.month();
-    if (day) *day = date.day();
+    *year = date.year();
+    *month = date.month();
+    *day = date.day();
 }
 
 void QDateEdit_setMinimumDate(void* dateEdit, int year, int month, int day) {
@@ -41,27 +36,24 @@ void QDateEdit_setMaximumDate(void* dateEdit, int year, int month, int day) {
 
 void QDateEdit_getMinimumDate(void* dateEdit, int* year, int* month, int* day) {
     QDate date = static_cast<QDateEditBind*>(dateEdit)->minimumDate();
-    if (year) *year = date.year();
-    if (month) *month = date.month();
-    if (day) *day = date.day();
+    *year = date.year();
+    *month = date.month();
+    *day = date.day();
 }
 
 void QDateEdit_getMaximumDate(void* dateEdit, int* year, int* month, int* day) {
     QDate date = static_cast<QDateEditBind*>(dateEdit)->maximumDate();
-    if (year) *year = date.year();
-    if (month) *month = date.month();
-    if (day) *day = date.day();
+    *year = date.year();
+    *month = date.month();
+    *day = date.day();
 }
 
-// Display
 void QDateEdit_setDisplayFormat(void* dateEdit, const char* format) {
-    static_cast<QDateEditBind*>(dateEdit)->setDisplayFormat(QString::fromUtf8(format ? format : ""));
+    static_cast<QDateEditBind*>(dateEdit)->setDisplayFormat(QString::fromUtf8(format));
 }
 
 const char* QDateEdit_displayFormat(void* dateEdit) {
-    static thread_local QByteArray format;
-    format = static_cast<QDateEditBind*>(dateEdit)->displayFormat().toUtf8();
-    return format.constData();
+    return static_cast<QDateEditBind*>(dateEdit)->displayFormat().toUtf8().constData();
 }
 
 void QDateEdit_setCalendarPopup(void* dateEdit, bool enable) {
@@ -72,7 +64,6 @@ bool QDateEdit_calendarPopup(void* dateEdit) {
     return static_cast<QDateEditBind*>(dateEdit)->calendarPopup();
 }
 
-// State
 void QDateEdit_setEnabled(void* dateEdit, bool enabled) {
     static_cast<QDateEditBind*>(dateEdit)->setEnabled(enabled);
 }
@@ -89,8 +80,7 @@ bool QDateEdit_isReadOnly(void* dateEdit) {
     return static_cast<QDateEditBind*>(dateEdit)->isReadOnly();
 }
 
-// Callbacks
-void QDateEdit_setDateChangedCallback(void* dateEdit, QDateEditDateChangedCallback callback) {
+void QDateEdit_setDateChangedCallback(void* dateEdit, void (*callback)(void*, int, int, int)) {
     static_cast<QDateEditBind*>(dateEdit)->setDateChangedCallback(callback);
 }
 

@@ -2,22 +2,21 @@
 #define DATETIMEEDIT_HANDLER_H
 
 #include <QObject>
-#include <QDateTimeEdit>
 #include <QDateTime>
 
 class DateTimeEditHandler : public QObject {
     Q_OBJECT
+    typedef void (*DateChangedCallback)(void*, int, int, int);
+    typedef void (*TimeChangedCallback)(void*, int, int, int);
 public:
     explicit DateTimeEditHandler(QObject* parent = nullptr);
-    void setDateTimeEdit(QDateTimeEdit* dateTimeEdit);
-    void setDateTimeChangedCallback(void (*callback)(void*, int, int, int, int, int, int));
-
+    void setDateCallback(DateChangedCallback callback);
+    void setTimeCallback(TimeChangedCallback callback);
 public slots:
-    void onDateTimeChanged(const QDateTime& dateTime);
-
+    void onDateTimeChanged(const QDateTime& datetime) const;
 private:
-    QDateTimeEdit* dateTimeEdit;
-    void (*callback)(void*, int, int, int, int, int, int);
+    DateChangedCallback dateCallback;
+    TimeChangedCallback timeCallback;
 };
 
 #endif // DATETIMEEDIT_HANDLER_H
