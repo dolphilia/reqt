@@ -1,20 +1,22 @@
-#ifndef BIND_Q_TAB_BAR_H
-#define BIND_Q_TAB_BAR_H
+#ifndef QTABBAR_BIND_H
+#define QTABBAR_BIND_H
 
 #include <QTabBar>
 #include "QTabBarHandler.h"
 
-class BindQTabBar : public QTabBar {
+class QTabBarHandler;
+
+class QTabBarBind : public QTabBar {
     Q_OBJECT
+    typedef void (*QTabBar_CurrentChangedCallback)(void*, int);
+    typedef void (*QTabBar_TabCloseRequestedCallback)(void*, int);
 public:
-    explicit BindQTabBar(QWidget *parent = nullptr);
-    ~BindQTabBar();
-
-    void setTabBarHandler(TabBarHandler *handler);
-    TabBarHandler *handler() const;
-
+    explicit QTabBarBind(QWidget *parent = nullptr);
+    ~QTabBarBind() override;
+    void setCurrentChangedCallback(QTabBar_CurrentChangedCallback callback) const;
+    void setTabCloseRequestedCallback(QTabBar_TabCloseRequestedCallback callback) const;
 private:
-    TabBarHandler *m_handler;
+    QTabBarHandler* handler;
 };
 
-#endif // BIND_Q_TAB_BAR_H
+#endif // QTABBAR_BIND_H

@@ -1,36 +1,30 @@
 #include "QTabBarHandler.h"
 
-TabBarHandler::TabBarHandler(QObject *parent)
+QTabBarHandler::QTabBarHandler(QObject *parent)
     : QObject(parent)
-    , m_currentChangedCallback(nullptr)
-    , m_tabCloseRequestedCallback(nullptr)
-{
+    , currentChangedCallback(nullptr)
+    , tabCloseRequestedCallback(nullptr) {
 }
 
-TabBarHandler::~TabBarHandler()
-{
+QTabBarHandler::~QTabBarHandler() {
 }
 
-void TabBarHandler::setCurrentChangedCallback(void (*callback)(int))
-{
-    m_currentChangedCallback = callback;
+void QTabBarHandler::setCurrentChangedCallback(QTabBar_CurrentChangedCallback callback) {
+    currentChangedCallback = callback;
 }
 
-void TabBarHandler::setTabCloseRequestedCallback(void (*callback)(int))
-{
-    m_tabCloseRequestedCallback = callback;
+void QTabBarHandler::setTabCloseRequestedCallback(QTabBar_TabCloseRequestedCallback callback) {
+    tabCloseRequestedCallback = callback;
 }
 
-void TabBarHandler::onCurrentChanged(int index)
-{
-    if (m_currentChangedCallback) {
-        m_currentChangedCallback(index);
+void QTabBarHandler::onCurrentChanged(int index) const {
+    if (currentChangedCallback) {
+        currentChangedCallback(parent(), index);
     }
 }
 
-void TabBarHandler::onTabCloseRequested(int index)
-{
-    if (m_tabCloseRequestedCallback) {
-        m_tabCloseRequestedCallback(index);
+void QTabBarHandler::onTabCloseRequested(int index) const {
+    if (tabCloseRequestedCallback) {
+        tabCloseRequestedCallback(parent(), index);
     }
 }

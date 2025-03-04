@@ -1,33 +1,21 @@
 #include "QTabBarBind.h"
+#include "QTabBarHandler.h"
 
-BindQTabBar::BindQTabBar(QWidget *parent)
+QTabBarBind::QTabBarBind(QWidget *parent)
     : QTabBar(parent)
-    , m_handler(nullptr)
-{
+    , handler(new QTabBarHandler(this)) {
+    connect(this, &QTabBar::currentChanged, handler, &QTabBarHandler::onCurrentChanged);
+    connect(this, &QTabBar::tabCloseRequested, handler, &QTabBarHandler::onTabCloseRequested);
 }
 
-BindQTabBar::~BindQTabBar()
-{
-    delete m_handler;
+QTabBarBind::~QTabBarBind() {
+    delete handler;
 }
 
-void BindQTabBar::setTabBarHandler(TabBarHandler *handler)
-{
-    if (m_handler) {
-        disconnect(this, &QTabBar::currentChanged, m_handler, &TabBarHandler::onCurrentChanged);
-        disconnect(this, &QTabBar::tabCloseRequested, m_handler, &TabBarHandler::onTabCloseRequested);
-        delete m_handler;
-    }
-
-    m_handler = handler;
-
-    if (m_handler) {
-        connect(this, &QTabBar::currentChanged, m_handler, &TabBarHandler::onCurrentChanged);
-        connect(this, &QTabBar::tabCloseRequested, m_handler, &TabBarHandler::onTabCloseRequested);
-    }
+void QTabBarBind::setCurrentChangedCallback(QTabBar_CurrentChangedCallback callback) const {
+    handler->setCurrentChangedCallback(callback);
 }
 
-TabBarHandler *BindQTabBar::handler() const
-{
-    return m_handler;
+void QTabBarBind::setTabCloseRequestedCallback(QTabBar_TabCloseRequestedCallback callback) const {
+    handler->setTabCloseRequestedCallback(callback);
 }

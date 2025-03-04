@@ -1,24 +1,25 @@
-#ifndef HANDLER_TAB_BAR_H
-#define HANDLER_TAB_BAR_H
+#ifndef QTABBAR_HANDLER_H
+#define QTABBAR_HANDLER_H
 
 #include <QObject>
 
-class TabBarHandler : public QObject {
+class QTabBarHandler : public QObject {
     Q_OBJECT
+    typedef void (*QTabBar_CurrentChangedCallback)(void*, int);
+    typedef void (*QTabBar_TabCloseRequestedCallback)(void*, int);
 public:
-    explicit TabBarHandler(QObject *parent = nullptr);
-    ~TabBarHandler();
-
-    void setCurrentChangedCallback(void (*callback)(int));
-    void setTabCloseRequestedCallback(void (*callback)(int));
+    explicit QTabBarHandler(QObject *parent = nullptr);
+    ~QTabBarHandler() override;
+    void setCurrentChangedCallback(QTabBar_CurrentChangedCallback callback);
+    void setTabCloseRequestedCallback(QTabBar_TabCloseRequestedCallback callback);
 
 public slots:
-    void onCurrentChanged(int index);
-    void onTabCloseRequested(int index);
+    void onCurrentChanged(int index) const;
+    void onTabCloseRequested(int index) const;
 
 private:
-    void (*m_currentChangedCallback)(int);
-    void (*m_tabCloseRequestedCallback)(int);
+    QTabBar_CurrentChangedCallback currentChangedCallback;
+    QTabBar_TabCloseRequestedCallback tabCloseRequestedCallback;
 };
 
-#endif // HANDLER_TAB_BAR_H
+#endif // QTABBAR_HANDLER_H
