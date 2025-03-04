@@ -2,27 +2,35 @@
 #define QSPLITTERHANDLE_BIND_H
 
 #include <QSplitterHandle>
+
 #include "QSplitterHandleHandler.h"
+
+class QSplitterHandleHandler;
 
 class QSplitterHandleBind : public QSplitterHandle {
     Q_OBJECT
-
+    typedef void (*QSplitterHandle_MovedCallback)(void*);
+    typedef void (*QSplitterHandle_PressedCallback)(void*);
+    typedef void (*QSplitterHandle_ReleasedCallback)(void*);
 public:
-    explicit QSplitterHandleBind(Qt::Orientation orientation, QSplitter* parent);
+    explicit QSplitterHandleBind(Qt::Orientation orientation, QSplitter* parent = nullptr);
     ~QSplitterHandleBind() override;
-
-    void setDoubleClickedCallback(void (*callback)(void*));
-    void setMovedCallback(void (*callback)(void*, int));
     
-    // Make protected methods public
-    using QSplitterHandle::moveSplitter;
-    using QSplitterHandle::closestLegalPosition;
+    // コールバック設定メソッド
+    void setMovedCallback(QSplitterHandle_MovedCallback callback) const;
+    void setPressedCallback(QSplitterHandle_PressedCallback callback) const;
+    void setReleasedCallback(QSplitterHandle_ReleasedCallback callback) const;
     
-    // Add missing method
-    void setOpaqueResize(bool opaque) {
-        splitter()->setOpaqueResize(opaque);
-    }
-
+    // QSplitterHandleの標準メソッド
+    bool opaqueResize() const;
+    void setOpaqueResize(bool opaque);
+    
+protected:
+    // マウスイベントをオーバーライド
+    void mouseMoveEvent(QMouseEvent *e) override;
+    void mousePressEvent(QMouseEvent *e) override;
+    void mouseReleaseEvent(QMouseEvent *e) override;
+    
 private:
     QSplitterHandleHandler* handler;
 };

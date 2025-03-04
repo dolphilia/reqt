@@ -2,30 +2,27 @@
 #define QSPLITTERHANDLE_HANDLER_H
 
 #include <QObject>
-#include <QSplitterHandle>
-#include <QEvent>
-
-typedef void (*SplitterHandleDoubleClickedCallback)(void*);
-typedef void (*SplitterHandleMovedCallback)(void*, int);
 
 class QSplitterHandleHandler : public QObject {
     Q_OBJECT
+    typedef void (*QSplitterHandle_MovedCallback)(void*);
+    typedef void (*QSplitterHandle_PressedCallback)(void*);
+    typedef void (*QSplitterHandle_ReleasedCallback)(void*);
 public:
     explicit QSplitterHandleHandler(QObject* parent = nullptr);
-    QSplitterHandleHandler(const QSplitterHandleHandler&) = delete;
-    QSplitterHandleHandler& operator=(const QSplitterHandleHandler&) = delete;
+    void setMovedCallback(QSplitterHandle_MovedCallback callback);
+    void setPressedCallback(QSplitterHandle_PressedCallback callback);
+    void setReleasedCallback(QSplitterHandle_ReleasedCallback callback);
 
-    void setSplitterHandle(QSplitterHandle* handle);
-    void setDoubleClickedCallback(SplitterHandleDoubleClickedCallback callback);
-    void setMovedCallback(SplitterHandleMovedCallback callback);
-
-protected:
-    bool eventFilter(QObject* watched, QEvent* event) override;
+public slots:
+    void onMoved() const;
+    void onPressed() const;
+    void onReleased() const;
 
 private:
-    QSplitterHandle* handle;
-    SplitterHandleDoubleClickedCallback doubleClickedCallback;
-    SplitterHandleMovedCallback movedCallback;
+    QSplitterHandle_MovedCallback movedCallback;
+    QSplitterHandle_PressedCallback pressedCallback;
+    QSplitterHandle_ReleasedCallback releasedCallback;
 };
 
 #endif // QSPLITTERHANDLE_HANDLER_H

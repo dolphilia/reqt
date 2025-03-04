@@ -1,49 +1,38 @@
 #include "QSplitterHandleHandler.h"
-#include <QMouseEvent>
 
 QSplitterHandleHandler::QSplitterHandleHandler(QObject* parent)
     : QObject(parent)
-    , handle(nullptr)
-    , doubleClickedCallback(nullptr)
     , movedCallback(nullptr)
-{
+    , pressedCallback(nullptr)
+    , releasedCallback(nullptr) {
 }
 
-void QSplitterHandleHandler::setSplitterHandle(QSplitterHandle* handle) {
-    if (this->handle) {
-        this->handle->removeEventFilter(this);
-    }
-    
-    this->handle = handle;
-    
-    if (handle) {
-        handle->installEventFilter(this);
-    }
-}
-
-void QSplitterHandleHandler::setDoubleClickedCallback(SplitterHandleDoubleClickedCallback callback) {
-    doubleClickedCallback = callback;
-}
-
-void QSplitterHandleHandler::setMovedCallback(SplitterHandleMovedCallback callback) {
+void QSplitterHandleHandler::setMovedCallback(QSplitterHandle_MovedCallback callback) {
     movedCallback = callback;
 }
 
-bool QSplitterHandleHandler::eventFilter(QObject* watched, QEvent* event) {
-    if (watched == handle) {
-        if (event->type() == QEvent::MouseButtonDblClick) {
-            if (doubleClickedCallback) {
-                doubleClickedCallback(handle);
-            }
-            return true;
-        } else if (event->type() == QEvent::MouseMove) {
-            QMouseEvent* mouseEvent = static_cast<QMouseEvent*>(event);
-            if (movedCallback && (mouseEvent->buttons() & Qt::LeftButton)) {
-                int pos = handle->orientation() == Qt::Horizontal ? 
-                          mouseEvent->position().x() : mouseEvent->position().y();
-                movedCallback(handle, pos);
-            }
-        }
+void QSplitterHandleHandler::setPressedCallback(QSplitterHandle_PressedCallback callback) {
+    pressedCallback = callback;
+}
+
+void QSplitterHandleHandler::setReleasedCallback(QSplitterHandle_ReleasedCallback callback) {
+    releasedCallback = callback;
+}
+
+void QSplitterHandleHandler::onMoved() const {
+    if (movedCallback) {
+        movedCallback(parent());
     }
-    return QObject::eventFilter(watched, event);
+}
+
+void QSplitterHandleHandler::onPressed() const {
+    if (pressedCallback) {
+        pressedCallback(parent());
+    }
+}
+
+void QSplitterHandleHandler::onReleased() const {
+    if (releasedCallback) {
+        releasedCallback(parent());
+    }
 }

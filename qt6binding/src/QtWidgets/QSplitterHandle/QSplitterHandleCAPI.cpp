@@ -1,5 +1,4 @@
 #include "QSplitterHandleBind.h"
-#include <QSplitter>
 
 extern "C" {
 
@@ -7,40 +6,44 @@ void* QSplitterHandle_create(int orientation, void* parent) {
     return new QSplitterHandleBind(static_cast<Qt::Orientation>(orientation), static_cast<QSplitter*>(parent));
 }
 
-void QSplitterHandle_delete(void* handle) {
-    delete static_cast<QSplitterHandleBind*>(handle);
+void QSplitterHandle_delete(void* splitterHandle) {
+    delete static_cast<QSplitterHandleBind*>(splitterHandle);
 }
 
-int QSplitterHandle_orientation(void* handle) {
-    return static_cast<int>(static_cast<QSplitterHandleBind*>(handle)->orientation());
+int QSplitterHandle_opaqueResize(void* splitterHandle) {
+    return static_cast<QSplitterHandleBind*>(splitterHandle)->opaqueResize();
 }
 
-void* QSplitterHandle_splitter(void* handle) {
-    return static_cast<QSplitterHandleBind*>(handle)->splitter();
+void QSplitterHandle_setOpaqueResize(void* splitterHandle, bool opaque) {
+    static_cast<QSplitterHandleBind*>(splitterHandle)->setOpaqueResize(opaque);
 }
 
-void QSplitterHandle_setDoubleClickedCallback(void* handle, void (*callback)(void*)) {
-    static_cast<QSplitterHandleBind*>(handle)->setDoubleClickedCallback(callback);
+int QSplitterHandle_orientation(void* splitterHandle) {
+    return static_cast<int>(static_cast<QSplitterHandleBind*>(splitterHandle)->orientation());
 }
 
-void QSplitterHandle_setMovedCallback(void* handle, void (*callback)(void*, int)) {
-    static_cast<QSplitterHandleBind*>(handle)->setMovedCallback(callback);
+void QSplitterHandle_setOrientation(void* splitterHandle, int orientation) {
+    static_cast<QSplitterHandleBind*>(splitterHandle)->setOrientation(static_cast<Qt::Orientation>(orientation));
 }
 
-int QSplitterHandle_opaqueResize(void* handle) {
-    return static_cast<QSplitterHandleBind*>(handle)->opaqueResize();
+void* QSplitterHandle_splitter(void* splitterHandle) {
+    return static_cast<QSplitterHandleBind*>(splitterHandle)->splitter();
 }
 
-void QSplitterHandle_setOpaqueResize(void* handle, bool opaque) {
-    static_cast<QSplitterHandleBind*>(handle)->setOpaqueResize(opaque);
+typedef void (*QSplitterHandle_MovedCallback)(void*);
+typedef void (*QSplitterHandle_PressedCallback)(void*);
+typedef void (*QSplitterHandle_ReleasedCallback)(void*);
+
+void QSplitterHandle_setMovedCallback(void* splitterHandle, QSplitterHandle_MovedCallback callback) {
+    static_cast<QSplitterHandleBind*>(splitterHandle)->setMovedCallback(callback);
 }
 
-void QSplitterHandle_moveSplitter(void* handle, int pos) {
-    static_cast<QSplitterHandleBind*>(handle)->moveSplitter(pos);
+void QSplitterHandle_setPressedCallback(void* splitterHandle, QSplitterHandle_PressedCallback callback) {
+    static_cast<QSplitterHandleBind*>(splitterHandle)->setPressedCallback(callback);
 }
 
-int QSplitterHandle_closestLegalPosition(void* handle, int pos) {
-    return static_cast<QSplitterHandleBind*>(handle)->closestLegalPosition(pos);
+void QSplitterHandle_setReleasedCallback(void* splitterHandle, QSplitterHandle_ReleasedCallback callback) {
+    static_cast<QSplitterHandleBind*>(splitterHandle)->setReleasedCallback(callback);
 }
 
 }
