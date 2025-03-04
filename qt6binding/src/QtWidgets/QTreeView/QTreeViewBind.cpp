@@ -1,63 +1,51 @@
 #include "QTreeViewBind.h"
+#include "QTreeViewHandler.h"
 
-BindQTreeView::BindQTreeView(QWidget *parent)
+QTreeViewBind::QTreeViewBind(QWidget *parent)
     : QTreeView(parent)
-    , m_handler(nullptr)
-{
+    , handler(new QTreeViewHandler(this)) {
+    connect(this, &QTreeView::clicked, handler, &QTreeViewHandler::onClicked);
+    connect(this, &QTreeView::doubleClicked, handler, &QTreeViewHandler::onDoubleClicked);
+    connect(this, &QTreeView::expanded, handler, &QTreeViewHandler::onExpanded);
+    connect(this, &QTreeView::collapsed, handler, &QTreeViewHandler::onCollapsed);
+    connect(this, &QTreeView::activated, handler, &QTreeViewHandler::onActivated);
+    connect(this, &QTreeView::entered, handler, &QTreeViewHandler::onEntered);
+    connect(this, &QTreeView::pressed, handler, &QTreeViewHandler::onPressed);
+    connect(selectionModel(), &QItemSelectionModel::selectionChanged, handler, &QTreeViewHandler::onSelectionChanged);
 }
 
-BindQTreeView::~BindQTreeView()
-{
-    delete m_handler;
+QTreeViewBind::~QTreeViewBind() {
+    delete handler;
 }
 
-void BindQTreeView::setTreeViewHandler(TreeViewHandler *handler)
-{
-    if (m_handler) {
-        disconnect(this, &QTreeView::clicked,
-                  m_handler, &TreeViewHandler::onClicked);
-        disconnect(this, &QTreeView::doubleClicked,
-                  m_handler, &TreeViewHandler::onDoubleClicked);
-        disconnect(this, &QTreeView::expanded,
-                  m_handler, &TreeViewHandler::onExpanded);
-        disconnect(this, &QTreeView::collapsed,
-                  m_handler, &TreeViewHandler::onCollapsed);
-        disconnect(this, &QTreeView::activated,
-                  m_handler, &TreeViewHandler::onActivated);
-        disconnect(this, &QTreeView::entered,
-                  m_handler, &TreeViewHandler::onEntered);
-        disconnect(this, &QTreeView::pressed,
-                  m_handler, &TreeViewHandler::onPressed);
-        disconnect(selectionModel(), &QItemSelectionModel::selectionChanged,
-                  m_handler, &TreeViewHandler::onSelectionChanged);
-        delete m_handler;
-    }
-
-    m_handler = handler;
-
-    if (m_handler) {
-        connect(this, &QTreeView::clicked,
-                m_handler, &TreeViewHandler::onClicked);
-        connect(this, &QTreeView::doubleClicked,
-                m_handler, &TreeViewHandler::onDoubleClicked);
-        connect(this, &QTreeView::expanded,
-                m_handler, &TreeViewHandler::onExpanded);
-        connect(this, &QTreeView::collapsed,
-                m_handler, &TreeViewHandler::onCollapsed);
-        connect(this, &QTreeView::activated,
-                m_handler, &TreeViewHandler::onActivated);
-        connect(this, &QTreeView::entered,
-                m_handler, &TreeViewHandler::onEntered);
-        connect(this, &QTreeView::pressed,
-                m_handler, &TreeViewHandler::onPressed);
-        if (selectionModel()) {
-            connect(selectionModel(), &QItemSelectionModel::selectionChanged,
-                    m_handler, &TreeViewHandler::onSelectionChanged);
-        }
-    }
+void QTreeViewBind::setClickedCallback(QTreeView_ClickedCallback callback) const {
+    handler->setClickedCallback(callback);
 }
 
-TreeViewHandler *BindQTreeView::handler() const
-{
-    return m_handler;
+void QTreeViewBind::setDoubleClickedCallback(QTreeView_DoubleClickedCallback callback) const {
+    handler->setDoubleClickedCallback(callback);
+}
+
+void QTreeViewBind::setExpandedCallback(QTreeView_ExpandedCallback callback) const {
+    handler->setExpandedCallback(callback);
+}
+
+void QTreeViewBind::setCollapsedCallback(QTreeView_CollapsedCallback callback) const {
+    handler->setCollapsedCallback(callback);
+}
+
+void QTreeViewBind::setActivatedCallback(QTreeView_ActivatedCallback callback) const {
+    handler->setActivatedCallback(callback);
+}
+
+void QTreeViewBind::setEnteredCallback(QTreeView_EnteredCallback callback) const {
+    handler->setEnteredCallback(callback);
+}
+
+void QTreeViewBind::setPressedCallback(QTreeView_PressedCallback callback) const {
+    handler->setPressedCallback(callback);
+}
+
+void QTreeViewBind::setSelectionChangedCallback(QTreeView_SelectionChangedCallback callback) const {
+    handler->setSelectionChangedCallback(callback);
 }

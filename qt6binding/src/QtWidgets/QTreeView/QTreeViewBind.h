@@ -1,20 +1,36 @@
-#ifndef BIND_Q_TREE_VIEW_H
-#define BIND_Q_TREE_VIEW_H
+#ifndef QTREEVIEW_BIND_H
+#define QTREEVIEW_BIND_H
 
 #include <QTreeView>
 #include "QTreeViewHandler.h"
 
-class BindQTreeView : public QTreeView {
-    Q_OBJECT
-public:
-    explicit BindQTreeView(QWidget *parent = nullptr);
-    ~BindQTreeView();
+class QTreeViewHandler;
 
-    void setTreeViewHandler(TreeViewHandler *handler);
-    TreeViewHandler *handler() const;
+class QTreeViewBind : public QTreeView {
+    Q_OBJECT
+    typedef void (*QTreeView_ClickedCallback)(void*, void*);
+    typedef void (*QTreeView_DoubleClickedCallback)(void*, void*);
+    typedef void (*QTreeView_ExpandedCallback)(void*, void*);
+    typedef void (*QTreeView_CollapsedCallback)(void*, void*);
+    typedef void (*QTreeView_ActivatedCallback)(void*, void*);
+    typedef void (*QTreeView_EnteredCallback)(void*, void*);
+    typedef void (*QTreeView_PressedCallback)(void*, void*);
+    typedef void (*QTreeView_SelectionChangedCallback)(void*);
+public:
+    explicit QTreeViewBind(QWidget *parent = nullptr);
+    ~QTreeViewBind() override;
+    
+    void setClickedCallback(QTreeView_ClickedCallback callback) const;
+    void setDoubleClickedCallback(QTreeView_DoubleClickedCallback callback) const;
+    void setExpandedCallback(QTreeView_ExpandedCallback callback) const;
+    void setCollapsedCallback(QTreeView_CollapsedCallback callback) const;
+    void setActivatedCallback(QTreeView_ActivatedCallback callback) const;
+    void setEnteredCallback(QTreeView_EnteredCallback callback) const;
+    void setPressedCallback(QTreeView_PressedCallback callback) const;
+    void setSelectionChangedCallback(QTreeView_SelectionChangedCallback callback) const;
 
 private:
-    TreeViewHandler *m_handler;
+    QTreeViewHandler* handler;
 };
 
-#endif // BIND_Q_TREE_VIEW_H
+#endif // QTREEVIEW_BIND_H

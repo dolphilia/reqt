@@ -1,114 +1,96 @@
 #include "QTreeViewHandler.h"
 
-TreeViewHandler::TreeViewHandler(QObject *parent)
+QTreeViewHandler::QTreeViewHandler(QObject *parent)
     : QObject(parent)
-    , m_clickedCallback(nullptr)
-    , m_doubleClickedCallback(nullptr)
-    , m_expandedCallback(nullptr)
-    , m_collapsedCallback(nullptr)
-    , m_activatedCallback(nullptr)
-    , m_enteredCallback(nullptr)
-    , m_pressedCallback(nullptr)
-    , m_selectionChangedCallback(nullptr)
-{
+    , clickedCallback(nullptr)
+    , doubleClickedCallback(nullptr)
+    , expandedCallback(nullptr)
+    , collapsedCallback(nullptr)
+    , activatedCallback(nullptr)
+    , enteredCallback(nullptr)
+    , pressedCallback(nullptr)
+    , selectionChangedCallback(nullptr) {
 }
 
-TreeViewHandler::~TreeViewHandler()
-{
+QTreeViewHandler::~QTreeViewHandler() {
 }
 
-void TreeViewHandler::setClickedCallback(void (*callback)(void* index))
-{
-    m_clickedCallback = callback;
+void QTreeViewHandler::setClickedCallback(QTreeView_ClickedCallback callback) {
+    clickedCallback = callback;
 }
 
-void TreeViewHandler::setDoubleClickedCallback(void (*callback)(void* index))
-{
-    m_doubleClickedCallback = callback;
+void QTreeViewHandler::setDoubleClickedCallback(QTreeView_DoubleClickedCallback callback) {
+    doubleClickedCallback = callback;
 }
 
-void TreeViewHandler::setExpandedCallback(void (*callback)(void* index))
-{
-    m_expandedCallback = callback;
+void QTreeViewHandler::setExpandedCallback(QTreeView_ExpandedCallback callback) {
+    expandedCallback = callback;
 }
 
-void TreeViewHandler::setCollapsedCallback(void (*callback)(void* index))
-{
-    m_collapsedCallback = callback;
+void QTreeViewHandler::setCollapsedCallback(QTreeView_CollapsedCallback callback) {
+    collapsedCallback = callback;
 }
 
-void TreeViewHandler::setActivatedCallback(void (*callback)(void* index))
-{
-    m_activatedCallback = callback;
+void QTreeViewHandler::setActivatedCallback(QTreeView_ActivatedCallback callback) {
+    activatedCallback = callback;
 }
 
-void TreeViewHandler::setEnteredCallback(void (*callback)(void* index))
-{
-    m_enteredCallback = callback;
+void QTreeViewHandler::setEnteredCallback(QTreeView_EnteredCallback callback) {
+    enteredCallback = callback;
 }
 
-void TreeViewHandler::setPressedCallback(void (*callback)(void* index))
-{
-    m_pressedCallback = callback;
+void QTreeViewHandler::setPressedCallback(QTreeView_PressedCallback callback) {
+    pressedCallback = callback;
 }
 
-void TreeViewHandler::setSelectionChangedCallback(void (*callback)())
-{
-    m_selectionChangedCallback = callback;
+void QTreeViewHandler::setSelectionChangedCallback(QTreeView_SelectionChangedCallback callback) {
+    selectionChangedCallback = callback;
 }
 
-void TreeViewHandler::onClicked(const QModelIndex &index)
-{
-    if (m_clickedCallback) {
-        m_clickedCallback((void*)&index);
+void QTreeViewHandler::onClicked(const QModelIndex &index) const {
+    if (clickedCallback) {
+        clickedCallback(parent(), (void*)&index);
     }
 }
 
-void TreeViewHandler::onDoubleClicked(const QModelIndex &index)
-{
-    if (m_doubleClickedCallback) {
-        m_doubleClickedCallback((void*)&index);
+void QTreeViewHandler::onDoubleClicked(const QModelIndex &index) const {
+    if (doubleClickedCallback) {
+        doubleClickedCallback(parent(), (void*)&index);
     }
 }
 
-void TreeViewHandler::onExpanded(const QModelIndex &index)
-{
-    if (m_expandedCallback) {
-        m_expandedCallback((void*)&index);
+void QTreeViewHandler::onExpanded(const QModelIndex &index) const {
+    if (expandedCallback) {
+        expandedCallback(parent(), (void*)&index);
     }
 }
 
-void TreeViewHandler::onCollapsed(const QModelIndex &index)
-{
-    if (m_collapsedCallback) {
-        m_collapsedCallback((void*)&index);
+void QTreeViewHandler::onCollapsed(const QModelIndex &index) const {
+    if (collapsedCallback) {
+        collapsedCallback(parent(), (void*)&index);
     }
 }
 
-void TreeViewHandler::onActivated(const QModelIndex &index)
-{
-    if (m_activatedCallback) {
-        m_activatedCallback((void*)&index);
+void QTreeViewHandler::onActivated(const QModelIndex &index) const {
+    if (activatedCallback) {
+        activatedCallback(parent(), (void*)&index);
     }
 }
 
-void TreeViewHandler::onEntered(const QModelIndex &index)
-{
-    if (m_enteredCallback) {
-        m_enteredCallback((void*)&index);
+void QTreeViewHandler::onEntered(const QModelIndex &index) const {
+    if (enteredCallback) {
+        enteredCallback(parent(), (void*)&index);
     }
 }
 
-void TreeViewHandler::onPressed(const QModelIndex &index)
-{
-    if (m_pressedCallback) {
-        m_pressedCallback((void*)&index);
+void QTreeViewHandler::onPressed(const QModelIndex &index) const {
+    if (pressedCallback) {
+        pressedCallback(parent(), (void*)&index);
     }
 }
 
-void TreeViewHandler::onSelectionChanged()
-{
-    if (m_selectionChangedCallback) {
-        m_selectionChangedCallback();
+void QTreeViewHandler::onSelectionChanged() const {
+    if (selectionChangedCallback) {
+        selectionChangedCallback(parent());
     }
 }
