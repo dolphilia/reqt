@@ -11,8 +11,6 @@ class QMessageBoxHandler : public QObject {
 
 public:
     explicit QMessageBoxHandler(QObject* parent = nullptr);
-    ~QMessageBoxHandler();
-
     void setButtonClickedCallback(QMessageBox_ButtonClickedCallback callback);
 
 public slots:

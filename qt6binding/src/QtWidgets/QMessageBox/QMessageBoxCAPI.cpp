@@ -208,12 +208,12 @@ int QMessageBox_warning(void* parent, const char* title, const char* text, int b
     ));
 }
 
+// Callback
+
 typedef void (*QMessageBox_ButtonClickedCallback)(void*, void*);
 
-void QMessageBox_setButtonClickedCallback(void* messageBox, QMessageBox_ButtonClickedCallback callback, void* data) {
-    static_cast<QMessageBoxBind*>(messageBox)->setButtonClickedCallback(
-        reinterpret_cast<void (*)(void*, void*)>(callback)
-    );
+void QMessageBox_setButtonClickedCallback(void* messageBox, QMessageBox_ButtonClickedCallback callback) {
+    static_cast<QMessageBoxBind*>(messageBox)->setButtonClickedCallback(callback);
 }
 
 }
