@@ -3,14 +3,20 @@
 
 #include <QStatusBar>
 
-class QStatusBarBind {
+#include "QStatusBarHandler.h"
+
+class QStatusBarHandler;
+
+class QStatusBarBind : public QStatusBar {
+    Q_OBJECT
+    typedef void (*QStatusBar_MessageChangedCallback)(void*, const char*);
 public:
-    static QStatusBar* create(QWidget* parent = nullptr);
-    static void destroy(QStatusBar* statusBar);
-    static void showMessage(QStatusBar* statusBar, const char* message);
-    static void clearMessage(QStatusBar* statusBar);
-    static void setEnabled(QStatusBar* statusBar, bool enabled);
-    static bool isEnabled(QStatusBar* statusBar);
+    explicit QStatusBarBind(QWidget* parent = nullptr);
+    ~QStatusBarBind() override;
+    void setMessageChangedCallback(QStatusBar_MessageChangedCallback callback) const;
+
+private:
+    QStatusBarHandler* handler;
 };
 
 #endif // QSTATUSBAR_BIND_H

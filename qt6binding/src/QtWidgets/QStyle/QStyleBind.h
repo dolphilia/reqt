@@ -3,14 +3,18 @@
 
 #include <QStyle>
 #include <QApplication>
-#include <QStyleFactory>
+#include "QStyleHandler.h"
 
-class QStyleBind {
+class QStyleHandler;
+
+class QStyleBind : public QObject {
+    Q_OBJECT
 public:
-    static QStyle* getStyle(const char* styleName);
-    static void getAvailableStyles(const char*** styles, int* count);
-    static void freeStyleList(const char** styles, int count);
-    static void setStyle(QStyle* style);
+    explicit QStyleBind(QObject* parent = nullptr);
+    ~QStyleBind() override;
+
+private:
+    QStyleHandler* handler;
 };
 
 #endif // QSTYLE_BIND_H
