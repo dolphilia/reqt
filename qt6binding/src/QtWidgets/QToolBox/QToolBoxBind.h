@@ -1,20 +1,20 @@
-#ifndef BIND_Q_TOOL_BOX_H
-#define BIND_Q_TOOL_BOX_H
+#ifndef QTOOLBOX_BIND_H
+#define QTOOLBOX_BIND_H
 
 #include <QToolBox>
 #include "QToolBoxHandler.h"
 
-class BindQToolBox : public QToolBox {
+class QToolBoxHandler;
+
+class QToolBoxBind : public QToolBox {
     Q_OBJECT
+    typedef void (*QToolBox_CurrentChangedCallback)(void*, int);
 public:
-    explicit BindQToolBox(QWidget *parent = nullptr);
-    ~BindQToolBox();
-
-    void setToolBoxHandler(ToolBoxHandler *handler);
-    ToolBoxHandler *handler() const;
-
+    explicit QToolBoxBind(QWidget* parent = nullptr);
+    ~QToolBoxBind() override;
+    void setCurrentChangedCallback(QToolBox_CurrentChangedCallback callback) const;
 private:
-    ToolBoxHandler *m_handler;
+    QToolBoxHandler* handler;
 };
 
-#endif // BIND_Q_TOOL_BOX_H
+#endif // QTOOLBOX_BIND_H

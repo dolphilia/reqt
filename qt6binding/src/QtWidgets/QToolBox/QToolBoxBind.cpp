@@ -1,33 +1,16 @@
 #include "QToolBoxBind.h"
+#include "QToolBoxHandler.h"
 
-BindQToolBox::BindQToolBox(QWidget *parent)
+QToolBoxBind::QToolBoxBind(QWidget* parent)
     : QToolBox(parent)
-    , m_handler(nullptr)
-{
+    , handler(new QToolBoxHandler(this)) {
+    connect(this, &QToolBox::currentChanged, handler, &QToolBoxHandler::onCurrentChanged);
 }
 
-BindQToolBox::~BindQToolBox()
-{
-    delete m_handler;
+QToolBoxBind::~QToolBoxBind() {
+    delete handler;
 }
 
-void BindQToolBox::setToolBoxHandler(ToolBoxHandler *handler)
-{
-    if (m_handler) {
-        disconnect(this, &QToolBox::currentChanged,
-                  m_handler, &ToolBoxHandler::onCurrentChanged);
-        delete m_handler;
-    }
-
-    m_handler = handler;
-
-    if (m_handler) {
-        connect(this, &QToolBox::currentChanged,
-                m_handler, &ToolBoxHandler::onCurrentChanged);
-    }
-}
-
-ToolBoxHandler *BindQToolBox::handler() const
-{
-    return m_handler;
+void QToolBoxBind::setCurrentChangedCallback(QToolBox_CurrentChangedCallback callback) const {
+    handler->setCurrentChangedCallback(callback);
 }

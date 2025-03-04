@@ -1,23 +1,19 @@
 #include "QToolBoxHandler.h"
 
-ToolBoxHandler::ToolBoxHandler(QObject *parent)
+QToolBoxHandler::QToolBoxHandler(QObject* parent)
     : QObject(parent)
-    , m_currentChangedCallback(nullptr)
-{
+    , currentChangedCallback(nullptr) {
 }
 
-ToolBoxHandler::~ToolBoxHandler()
-{
+QToolBoxHandler::~QToolBoxHandler() {
 }
 
-void ToolBoxHandler::setCurrentChangedCallback(void (*callback)(int index))
-{
-    m_currentChangedCallback = callback;
+void QToolBoxHandler::setCurrentChangedCallback(QToolBox_CurrentChangedCallback callback) {
+    currentChangedCallback = callback;
 }
 
-void ToolBoxHandler::onCurrentChanged(int index)
-{
-    if (m_currentChangedCallback) {
-        m_currentChangedCallback(index);
+void QToolBoxHandler::onCurrentChanged(int index) const {
+    if (currentChangedCallback) {
+        currentChangedCallback(parent(), index);
     }
 }

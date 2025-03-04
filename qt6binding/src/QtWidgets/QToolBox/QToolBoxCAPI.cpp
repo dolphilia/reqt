@@ -1,116 +1,87 @@
-#include "qtoolbox.h"
 #include "QToolBoxBind.h"
-#include "QToolBoxHandler.h"
-#include <QString>
 
 extern "C" {
 
-void* QToolBox_create(void* parent)
-{
-    return new BindQToolBox(reinterpret_cast<QWidget*>(parent));
+void* QToolBox_create(void* parent) {
+    return new QToolBoxBind(static_cast<QWidget*>(parent));
 }
 
-void QToolBox_delete(void* tool_box)
-{
-    delete static_cast<BindQToolBox*>(tool_box);
+void QToolBox_delete(void* toolbox) {
+    delete static_cast<QToolBoxBind*>(toolbox);
 }
 
-int QToolBox_addItem(void* tool_box, void* widget, const char* text)
-{
-    return static_cast<BindQToolBox*>(tool_box)->addItem(
-        static_cast<QWidget*>(widget),
-        QString::fromUtf8(text)
-    );
+int QToolBox_addItem(void* toolbox, void* widget, const char* text) {
+    const QString qstr = QString::fromUtf8(text);
+    return static_cast<QToolBoxBind*>(toolbox)->addItem(static_cast<QWidget*>(widget), qstr);
 }
 
-int QToolBox_insertItem(void* tool_box, int index, void* widget, const char* text)
-{
-    return static_cast<BindQToolBox*>(tool_box)->insertItem(
-        index,
-        static_cast<QWidget*>(widget),
-        QString::fromUtf8(text)
-    );
+int QToolBox_insertItem(void* toolbox, int index, void* widget, const char* text) {
+    const QString qstr = QString::fromUtf8(text);
+    return static_cast<QToolBoxBind*>(toolbox)->insertItem(index, static_cast<QWidget*>(widget), qstr);
 }
 
-void QToolBox_removeItem(void* tool_box, int index)
-{
-    static_cast<BindQToolBox*>(tool_box)->removeItem(index);
+void QToolBox_removeItem(void* toolbox, int index) {
+    static_cast<QToolBoxBind*>(toolbox)->removeItem(index);
 }
 
-int QToolBox_currentIndex(void* tool_box)
-{
-    return static_cast<BindQToolBox*>(tool_box)->currentIndex();
+int QToolBox_currentIndex(void* toolbox) {
+    return static_cast<QToolBoxBind*>(toolbox)->currentIndex();
 }
 
-void QToolBox_setCurrentIndex(void* tool_box, int index)
-{
-    static_cast<BindQToolBox*>(tool_box)->setCurrentIndex(index);
+void QToolBox_setCurrentIndex(void* toolbox, int index) {
+    static_cast<QToolBoxBind*>(toolbox)->setCurrentIndex(index);
 }
 
-void* QToolBox_currentWidget(void* tool_box)
-{
-    return static_cast<BindQToolBox*>(tool_box)->currentWidget();
+void* QToolBox_currentWidget(void* toolbox) {
+    return static_cast<QToolBoxBind*>(toolbox)->currentWidget();
 }
 
-void QToolBox_setCurrentWidget(void* tool_box, void* widget)
-{
-    static_cast<BindQToolBox*>(tool_box)->setCurrentWidget(static_cast<QWidget*>(widget));
+void QToolBox_setCurrentWidget(void* toolbox, void* widget) {
+    static_cast<QToolBoxBind*>(toolbox)->setCurrentWidget(static_cast<QWidget*>(widget));
 }
 
-const char* QToolBox_itemText(void* tool_box, int index)
-{
-    return static_cast<BindQToolBox*>(tool_box)->itemText(index).toUtf8().constData();
+const char* QToolBox_itemText(void* toolbox, int index) {
+    return static_cast<QToolBoxBind*>(toolbox)->itemText(index).toUtf8().constData();
 }
 
-void QToolBox_setItemText(void* tool_box, int index, const char* text)
-{
-    static_cast<BindQToolBox*>(tool_box)->setItemText(index, QString::fromUtf8(text));
+void QToolBox_setItemText(void* toolbox, int index, const char* text) {
+    const QString qstr = QString::fromUtf8(text);
+    static_cast<QToolBoxBind*>(toolbox)->setItemText(index, qstr);
 }
 
-const char* QToolBox_itemToolTip(void* tool_box, int index)
-{
-    return static_cast<BindQToolBox*>(tool_box)->itemToolTip(index).toUtf8().constData();
+const char* QToolBox_itemToolTip(void* toolbox, int index) {
+    return static_cast<QToolBoxBind*>(toolbox)->itemToolTip(index).toUtf8().constData();
 }
 
-void QToolBox_setItemToolTip(void* tool_box, int index, const char* toolTip)
-{
-    static_cast<BindQToolBox*>(tool_box)->setItemToolTip(index, QString::fromUtf8(toolTip));
+void QToolBox_setItemToolTip(void* toolbox, int index, const char* toolTip) {
+    const QString qstr = QString::fromUtf8(toolTip);
+    static_cast<QToolBoxBind*>(toolbox)->setItemToolTip(index, qstr);
 }
 
-bool QToolBox_isItemEnabled(void* tool_box, int index)
-{
-    return static_cast<BindQToolBox*>(tool_box)->isItemEnabled(index);
+bool QToolBox_isItemEnabled(void* toolbox, int index) {
+    return static_cast<QToolBoxBind*>(toolbox)->isItemEnabled(index);
 }
 
-void QToolBox_setItemEnabled(void* tool_box, int index, bool enabled)
-{
-    static_cast<BindQToolBox*>(tool_box)->setItemEnabled(index, enabled);
+void QToolBox_setItemEnabled(void* toolbox, int index, bool enabled) {
+    static_cast<QToolBoxBind*>(toolbox)->setItemEnabled(index, enabled);
 }
 
-int QToolBox_count(void* tool_box)
-{
-    return static_cast<BindQToolBox*>(tool_box)->count();
+int QToolBox_count(void* toolbox) {
+    return static_cast<QToolBoxBind*>(toolbox)->count();
 }
 
-void* QToolBox_widget(void* tool_box, int index)
-{
-    return static_cast<BindQToolBox*>(tool_box)->widget(index);
+void* QToolBox_widget(void* toolbox, int index) {
+    return static_cast<QToolBoxBind*>(toolbox)->widget(index);
 }
 
-int QToolBox_indexOf(void* tool_box, void* widget)
-{
-    return static_cast<BindQToolBox*>(tool_box)->indexOf(static_cast<QWidget*>(widget));
+int QToolBox_indexOf(void* toolbox, void* widget) {
+    return static_cast<QToolBoxBind*>(toolbox)->indexOf(static_cast<QWidget*>(widget));
 }
 
-void QToolBox_setCurrentChangedCallback(void* tool_box, QToolBoxCurrentChangedCallback callback)
-{
-    BindQToolBox* toolBox = static_cast<BindQToolBox*>(tool_box);
-    ToolBoxHandler* handler = toolBox->handler();
-    if (!handler) {
-        handler = new ToolBoxHandler(toolBox);
-        toolBox->setToolBoxHandler(handler);
-    }
-    handler->setCurrentChangedCallback(callback);
+typedef void (*QToolBox_CurrentChangedCallback)(void*, int);
+
+void QToolBox_setCurrentChangedCallback(void* toolbox, QToolBox_CurrentChangedCallback callback) {
+    static_cast<QToolBoxBind*>(toolbox)->setCurrentChangedCallback(callback);
 }
 
 }

@@ -1,21 +1,22 @@
-#ifndef HANDLER_TOOL_BOX_H
-#define HANDLER_TOOL_BOX_H
+#ifndef QTOOLBOX_HANDLER_H
+#define QTOOLBOX_HANDLER_H
 
 #include <QObject>
 
-class ToolBoxHandler : public QObject {
+class QToolBoxHandler : public QObject {
     Q_OBJECT
+    typedef void (*QToolBox_CurrentChangedCallback)(void*, int);
 public:
-    explicit ToolBoxHandler(QObject *parent = nullptr);
-    ~ToolBoxHandler();
+    explicit QToolBoxHandler(QObject* parent = nullptr);
+    ~QToolBoxHandler();
 
-    void setCurrentChangedCallback(void (*callback)(int index));
+    void setCurrentChangedCallback(QToolBox_CurrentChangedCallback callback);
 
 public slots:
-    void onCurrentChanged(int index);
+    void onCurrentChanged(int index) const;
 
 private:
-    void (*m_currentChangedCallback)(int index);
+    QToolBox_CurrentChangedCallback currentChangedCallback;
 };
 
-#endif // HANDLER_TOOL_BOX_H
+#endif // QTOOLBOX_HANDLER_H
