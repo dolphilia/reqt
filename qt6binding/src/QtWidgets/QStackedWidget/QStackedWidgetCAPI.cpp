@@ -50,11 +50,14 @@ void QStackedWidget_setCurrentWidget(void* stackedWidget, void* widget) {
     static_cast<QStackedWidgetBind*>(stackedWidget)->setCurrentWidget(static_cast<QWidget*>(widget));
 }
 
-void QStackedWidget_setCurrentChangedCallback(void* stackedWidget, void (*callback)(void*, int)) {
+typedef void (*QStackedWidget_CurrentChangedCallback)(void*, int);
+typedef void (*QStackedWidget_WidgetRemovedCallback)(void*, int);
+
+void QStackedWidget_setCurrentChangedCallback(void* stackedWidget, QStackedWidget_CurrentChangedCallback callback) {
     static_cast<QStackedWidgetBind*>(stackedWidget)->setCurrentChangedCallback(callback);
 }
 
-void QStackedWidget_setWidgetRemovedCallback(void* stackedWidget, void (*callback)(void*, int)) {
+void QStackedWidget_setWidgetRemovedCallback(void* stackedWidget, QStackedWidget_WidgetRemovedCallback callback) {
     static_cast<QStackedWidgetBind*>(stackedWidget)->setWidgetRemovedCallback(callback);
 }
 

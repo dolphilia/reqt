@@ -2,42 +2,26 @@
 
 QStackedWidgetHandler::QStackedWidgetHandler(QObject* parent)
     : QObject(parent)
-    , stackedWidget(nullptr)
     , currentChangedCallback(nullptr)
-    , widgetRemovedCallback(nullptr)
-{
+    , widgetRemovedCallback(nullptr) {
 }
 
-void QStackedWidgetHandler::setStackedWidget(QStackedWidget* stackedWidget) {
-    if (this->stackedWidget) {
-        disconnect(this->stackedWidget, &QStackedWidget::currentChanged, this, &QStackedWidgetHandler::onCurrentChanged);
-        disconnect(this->stackedWidget, &QStackedWidget::widgetRemoved, this, &QStackedWidgetHandler::onWidgetRemoved);
-    }
-    
-    this->stackedWidget = stackedWidget;
-    
-    if (stackedWidget) {
-        connect(stackedWidget, &QStackedWidget::currentChanged, this, &QStackedWidgetHandler::onCurrentChanged);
-        connect(stackedWidget, &QStackedWidget::widgetRemoved, this, &QStackedWidgetHandler::onWidgetRemoved);
-    }
-}
-
-void QStackedWidgetHandler::setCurrentChangedCallback(StackedWidgetCurrentChangedCallback callback) {
+void QStackedWidgetHandler::setCurrentChangedCallback(QStackedWidget_CurrentChangedCallback callback) {
     currentChangedCallback = callback;
 }
 
-void QStackedWidgetHandler::setWidgetRemovedCallback(StackedWidgetWidgetRemovedCallback callback) {
+void QStackedWidgetHandler::setWidgetRemovedCallback(QStackedWidget_WidgetRemovedCallback callback) {
     widgetRemovedCallback = callback;
 }
 
-void QStackedWidgetHandler::onCurrentChanged(int index) {
-    if (currentChangedCallback && stackedWidget) {
-        currentChangedCallback(stackedWidget, index);
+void QStackedWidgetHandler::onCurrentChanged(int index) const {
+    if (currentChangedCallback) {
+        currentChangedCallback(parent(), index);
     }
 }
 
-void QStackedWidgetHandler::onWidgetRemoved(int index) {
-    if (widgetRemovedCallback && stackedWidget) {
-        widgetRemovedCallback(stackedWidget, index);
+void QStackedWidgetHandler::onWidgetRemoved(int index) const {
+    if (widgetRemovedCallback) {
+        widgetRemovedCallback(parent(), index);
     }
 }

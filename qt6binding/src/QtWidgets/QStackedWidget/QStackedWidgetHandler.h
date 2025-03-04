@@ -4,28 +4,22 @@
 #include <QObject>
 #include <QStackedWidget>
 
-typedef void (*StackedWidgetCurrentChangedCallback)(void*, int);
-typedef void (*StackedWidgetWidgetRemovedCallback)(void*, int);
-
 class QStackedWidgetHandler : public QObject {
     Q_OBJECT
+    typedef void (*QStackedWidget_CurrentChangedCallback)(void*, int);
+    typedef void (*QStackedWidget_WidgetRemovedCallback)(void*, int);
 public:
     explicit QStackedWidgetHandler(QObject* parent = nullptr);
-    QStackedWidgetHandler(const QStackedWidgetHandler&) = delete;
-    QStackedWidgetHandler& operator=(const QStackedWidgetHandler&) = delete;
-
-    void setStackedWidget(QStackedWidget* stackedWidget);
-    void setCurrentChangedCallback(StackedWidgetCurrentChangedCallback callback);
-    void setWidgetRemovedCallback(StackedWidgetWidgetRemovedCallback callback);
+    void setCurrentChangedCallback(QStackedWidget_CurrentChangedCallback callback);
+    void setWidgetRemovedCallback(QStackedWidget_WidgetRemovedCallback callback);
 
 public slots:
-    void onCurrentChanged(int index);
-    void onWidgetRemoved(int index);
+    void onCurrentChanged(int index) const;
+    void onWidgetRemoved(int index) const;
 
 private:
-    QStackedWidget* stackedWidget;
-    StackedWidgetCurrentChangedCallback currentChangedCallback;
-    StackedWidgetWidgetRemovedCallback widgetRemovedCallback;
+    QStackedWidget_CurrentChangedCallback currentChangedCallback;
+    QStackedWidget_WidgetRemovedCallback widgetRemovedCallback;
 };
 
 #endif // QSTACKEDWIDGET_HANDLER_H
