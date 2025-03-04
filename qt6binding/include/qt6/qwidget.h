@@ -286,6 +286,7 @@ void QWidget_showNormal(void* widget);
 void QWidget_update(void* widget);
 
 // Signals
+
 void QWidget_setCustomContextMenuRequestedCallback(void* widget, void (*callback)(void*, const void*));
 void QWidget_setWindowIconChangedCallback(void* widget, void (*callback)(void*, const void*));
 void QWidget_setWindowTitleChangedCallback(void* widget, void (*callback)(void*, const void*));

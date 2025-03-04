@@ -1,46 +1,45 @@
 #include "QVBoxLayoutBind.h"
-#include "qvboxlayout.h"
 
 extern "C" {
 
 void* QVBoxLayout_create(void* parent) {
-    return QVBoxLayoutBind::create(static_cast<QWidget*>(parent));
+    return new QVBoxLayoutBind(static_cast<QWidget*>(parent));
 }
 
 void QVBoxLayout_delete(void* layout) {
-    QVBoxLayoutBind::destroy(static_cast<QVBoxLayout*>(layout));
+    delete static_cast<QVBoxLayoutBind*>(layout);
 }
 
 void QVBoxLayout_addWidget(void* layout, void* widget) {
-    QVBoxLayoutBind::addWidget(static_cast<QVBoxLayout*>(layout), static_cast<QWidget*>(widget));
+    static_cast<QVBoxLayoutBind*>(layout)->addWidget(static_cast<QWidget*>(widget));
 }
 
 void QVBoxLayout_addLayout(void* layout, void* other) {
-    QVBoxLayoutBind::addLayout(static_cast<QVBoxLayout*>(layout), static_cast<QLayout*>(other));
+    static_cast<QVBoxLayoutBind*>(layout)->addLayout(static_cast<QLayout*>(other));
 }
 
 void QVBoxLayout_addStretch(void* layout, int stretch) {
-    QVBoxLayoutBind::addStretch(static_cast<QVBoxLayout*>(layout), stretch);
+    static_cast<QVBoxLayoutBind*>(layout)->addStretch(stretch);
 }
 
 void QVBoxLayout_addSpacing(void* layout, int size) {
-    QVBoxLayoutBind::addSpacing(static_cast<QVBoxLayout*>(layout), size);
+    static_cast<QVBoxLayoutBind*>(layout)->addSpacing(size);
 }
 
 void QVBoxLayout_setSpacing(void* layout, int spacing) {
-    QVBoxLayoutBind::setSpacing(static_cast<QVBoxLayout*>(layout), spacing);
+    static_cast<QVBoxLayoutBind*>(layout)->setSpacing(spacing);
 }
 
 int QVBoxLayout_spacing(void* layout) {
-    return QVBoxLayoutBind::spacing(static_cast<QVBoxLayout*>(layout));
+    return static_cast<QVBoxLayoutBind*>(layout)->spacing();
 }
 
 void QVBoxLayout_setContentsMargins(void* layout, int left, int top, int right, int bottom) {
-    QVBoxLayoutBind::setContentsMargins(static_cast<QVBoxLayout*>(layout), left, top, right, bottom);
+    static_cast<QVBoxLayoutBind*>(layout)->setContentsMargins(left, top, right, bottom);
 }
 
 void QVBoxLayout_getContentsMargins(void* layout, int* left, int* top, int* right, int* bottom) {
-    QVBoxLayoutBind::getContentsMargins(static_cast<QVBoxLayout*>(layout), left, top, right, bottom);
+    static_cast<QVBoxLayoutBind*>(layout)->getContentsMargins(left, top, right, bottom);
 }
 
 }
