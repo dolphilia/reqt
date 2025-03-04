@@ -4,20 +4,20 @@
 #include <QObject>
 #include <QGraphicsWidget>
 
-class GraphicsWidgetHandler : public QObject {
+class QGraphicsWidgetHandler : public QObject {
     Q_OBJECT
-    typedef void (*GeometryChangedCallback)(void*, double, double, double, double);
-    typedef void (*LayoutChangedCallback)(void*);
+    typedef void (*QGraphicsWidget_GeometryChangedCallback)(void*, double, double, double, double);
+    typedef void (*QGraphicsWidget_LayoutChangedCallback)(void*);
 public:
-    explicit GraphicsWidgetHandler(QObject* parent = nullptr);
-    void setGeometryChangedCallback(GeometryChangedCallback callback);
-    void setLayoutChangedCallback(LayoutChangedCallback callback);
+    explicit QGraphicsWidgetHandler(QObject* parent = nullptr);
+    void setGeometryChangedCallback(QGraphicsWidget_GeometryChangedCallback callback);
+    void setLayoutChangedCallback(QGraphicsWidget_LayoutChangedCallback callback);
 public slots:
     void onGeometryChanged();
     void onLayoutChanged();
 private:
-    GeometryChangedCallback geometryChangedCallback;
-    LayoutChangedCallback layoutChangedCallback;
+    QGraphicsWidget_GeometryChangedCallback geometryChangedCallback;
+    QGraphicsWidget_LayoutChangedCallback layoutChangedCallback;
 };
 
 #endif // GRAPHICSWIDGET_HANDLER_H

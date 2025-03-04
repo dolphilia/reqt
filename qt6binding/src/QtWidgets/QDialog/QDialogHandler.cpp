@@ -4,19 +4,18 @@ QDialogHandler::QDialogHandler(QObject* parent)
     : QObject(parent)
     , acceptedCallback(nullptr)
     , finishedCallback(nullptr)
-    , rejectedCallback(nullptr)
-{
+    , rejectedCallback(nullptr) {
 }
 
-void QDialogHandler::setDialogAcceptedCallback(DialogAcceptedCallback callback) {
+void QDialogHandler::setDialogAcceptedCallback(QDialog_DialogAcceptedCallback callback) {
     acceptedCallback = callback;
 }
 
-void QDialogHandler::setDialogFinishedCallback(DialogFinishedCallback callback) {
+void QDialogHandler::setDialogFinishedCallback(QDialog_DialogFinishedCallback callback) {
     finishedCallback = callback;
 }
 
-void QDialogHandler::setDialogRejectedCallback(DialogRejectedCallback callback) {
+void QDialogHandler::setDialogRejectedCallback(QDialog_DialogRejectedCallback callback) {
     rejectedCallback = callback;
 }
 

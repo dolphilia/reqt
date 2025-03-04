@@ -8,7 +8,7 @@ QMessageBoxHandler::QMessageBoxHandler(QObject* parent)
 QMessageBoxHandler::~QMessageBoxHandler() {
 }
 
-void QMessageBoxHandler::setButtonClickedCallback(ButtonClickedCallback callback) {
+void QMessageBoxHandler::setButtonClickedCallback(QMessageBox_ButtonClickedCallback callback) {
     buttonClickedCallback = callback;
 }
 

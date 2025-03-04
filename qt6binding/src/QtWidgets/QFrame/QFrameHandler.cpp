@@ -1,5 +1,5 @@
 #include "QFrameHandler.h"
 
-FrameHandler::FrameHandler(QObject* parent)
+QFrameHandler::QFrameHandler(QObject* parent)
     : QObject(parent) {
 }

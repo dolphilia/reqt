@@ -6,15 +6,15 @@
 
 class QDoubleSpinBoxBind : public QDoubleSpinBox {
     Q_OBJECT
-    typedef void (*ValueChangedCallback)(void*, double);
-    typedef void (*EditingFinishedCallback)(void*);
+    typedef void (*QDoubleSpinBox_ValueChangedCallback)(void*, double);
+    typedef void (*QDoubleSpinBox_EditingFinishedCallback)(void*);
 public:
     explicit QDoubleSpinBoxBind(QWidget* parent = nullptr);
     ~QDoubleSpinBoxBind() override;
-    void setValueChangedCallback(ValueChangedCallback callback) const;
-    void setEditingFinishedCallback(EditingFinishedCallback callback) const;
+    void setValueChangedCallback(QDoubleSpinBox_ValueChangedCallback callback) const;
+    void setEditingFinishedCallback(QDoubleSpinBox_EditingFinishedCallback callback) const;
 private:
-    DoubleSpinBoxHandler* handler;
+    QDoubleSpinBoxHandler* handler;
 };
 
 #endif // QDOUBLESPINBOX_BIND_H

@@ -1,37 +1,41 @@
 #include "QPlainTextEditBind.h"
+#include "QPlainTextEditHandler.h"
 
-BindQPlainTextEdit::BindQPlainTextEdit(QWidget* parent)
-    : QPlainTextEdit(parent), m_handler(nullptr) {
+QPlainTextEditBind::QPlainTextEditBind(QWidget* parent)
+    : QPlainTextEdit(parent)
+    , handler(new QPlainTextEditHandler(this)) {
+    connect(this, &QPlainTextEdit::textChanged, handler, &QPlainTextEditHandler::onTextChanged);
+    connect(this, &QPlainTextEdit::cursorPositionChanged, handler, &QPlainTextEditHandler::onCursorPositionChanged);
+    connect(this, &QPlainTextEdit::copyAvailable, handler, &QPlainTextEditHandler::onCopyAvailable);
+    connect(this, &QPlainTextEdit::undoAvailable, handler, &QPlainTextEditHandler::onUndoAvailable);
+    connect(this, &QPlainTextEdit::redoAvailable, handler, &QPlainTextEditHandler::onRedoAvailable);
+    connect(this, &QPlainTextEdit::selectionChanged, handler, &QPlainTextEditHandler::onSelectionChanged);
 }
 
-BindQPlainTextEdit::~BindQPlainTextEdit() {
-    if (m_handler) {
-        delete m_handler;
-    }
+QPlainTextEditBind::~QPlainTextEditBind() {
+    delete handler;
 }
 
-void BindQPlainTextEdit::setPlainTextEditHandler(QPlainTextEditHandler* handler) {
-    if (m_handler) {
-        delete m_handler;
-    }
-    m_handler = handler;
-
-    if (m_handler) {
-        connect(this, &QPlainTextEdit::textChanged,
-                m_handler, &QPlainTextEditHandler::onTextChanged);
-        connect(this, &QPlainTextEdit::cursorPositionChanged,
-                m_handler, &QPlainTextEditHandler::onCursorPositionChanged);
-        connect(this, &QPlainTextEdit::copyAvailable,
-                m_handler, &QPlainTextEditHandler::onCopyAvailable);
-        connect(this, &QPlainTextEdit::undoAvailable,
-                m_handler, &QPlainTextEditHandler::onUndoAvailable);
-        connect(this, &QPlainTextEdit::redoAvailable,
-                m_handler, &QPlainTextEditHandler::onRedoAvailable);
-        connect(this, &QPlainTextEdit::selectionChanged,
-                m_handler, &QPlainTextEditHandler::onSelectionChanged);
-    }
+void QPlainTextEditBind::setTextChangedCallback(QPlainTextEdit_TextChangedCallback callback) const {
+    handler->setTextChangedCallback(callback);
 }
 
-QPlainTextEditHandler* BindQPlainTextEdit::handler() const {
-    return m_handler;
+void QPlainTextEditBind::setCursorPositionChangedCallback(QPlainTextEdit_CursorPositionChangedCallback callback) const {
+    handler->setCursorPositionChangedCallback(callback);
+}
+
+void QPlainTextEditBind::setCopyAvailableCallback(QPlainTextEdit_CopyAvailableCallback callback) const {
+    handler->setCopyAvailableCallback(callback);
+}
+
+void QPlainTextEditBind::setUndoAvailableCallback(QPlainTextEdit_UndoAvailableCallback callback) const {
+    handler->setUndoAvailableCallback(callback);
+}
+
+void QPlainTextEditBind::setRedoAvailableCallback(QPlainTextEdit_RedoAvailableCallback callback) const {
+    handler->setRedoAvailableCallback(callback);
+}
+
+void QPlainTextEditBind::setSelectionChangedCallback(QPlainTextEdit_SelectionChangedCallback callback) const {
+    handler->setSelectionChangedCallback(callback);
 }

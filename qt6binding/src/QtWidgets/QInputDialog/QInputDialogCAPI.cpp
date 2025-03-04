@@ -1,5 +1,4 @@
 #include "QInputDialogBind.h"
-#include "qinputdialog.h"
 
 extern "C" {
 
@@ -211,27 +210,34 @@ const char* QInputDialog_getText(void* parent, const char* title, const char* la
     return QInputDialogBind::getText(static_cast<QWidget*>(parent), title, label, mode, text, ok, flags);
 }
 
-void QInputDialog_setDoubleValueChangedCallback(void* dialog, void (*callback)(void*, double)) {
+typedef void (*QInputDialog_DoubleValueChangedCallback)(void*, double);
+typedef void (*QInputDialog_DoubleValueSelectedCallback)(void*, double);
+typedef void (*QInputDialog_IntValueChangedCallback)(void*, int);
+typedef void (*QInputDialog_IntValueSelectedCallback)(void*, int);
+typedef void (*QInputDialog_TextValueChangedCallback)(void*, const char*);
+typedef void (*QInputDialog_TextValueSelectedCallback)(void*, const char*);
+
+void QInputDialog_setDoubleValueChangedCallback(void* dialog, QInputDialog_DoubleValueChangedCallback callback) {
     static_cast<QInputDialogBind*>(dialog)->setDoubleValueChangedCallback(callback);
 }
 
-void QInputDialog_setDoubleValueSelectedCallback(void* dialog, void (*callback)(void*, double)) {
+void QInputDialog_setDoubleValueSelectedCallback(void* dialog, QInputDialog_DoubleValueSelectedCallback callback) {
     static_cast<QInputDialogBind*>(dialog)->setDoubleValueSelectedCallback(callback);
 }
 
-void QInputDialog_setIntValueChangedCallback(void* dialog, void (*callback)(void*, int)) {
+void QInputDialog_setIntValueChangedCallback(void* dialog, QInputDialog_IntValueChangedCallback callback) {
     static_cast<QInputDialogBind*>(dialog)->setIntValueChangedCallback(callback);
 }
 
-void QInputDialog_setIntValueSelectedCallback(void* dialog, void (*callback)(void*, int)) {
+void QInputDialog_setIntValueSelectedCallback(void* dialog, QInputDialog_IntValueSelectedCallback callback) {
     static_cast<QInputDialogBind*>(dialog)->setIntValueSelectedCallback(callback);
 }
 
-void QInputDialog_setTextValueChangedCallback(void* dialog, void (*callback)(void*, const char*)) {
+void QInputDialog_setTextValueChangedCallback(void* dialog, QInputDialog_TextValueChangedCallback callback) {
     static_cast<QInputDialogBind*>(dialog)->setTextValueChangedCallback(callback);
 }
 
-void QInputDialog_setTextValueSelectedCallback(void* dialog, void (*callback)(void*, const char*)) {
+void QInputDialog_setTextValueSelectedCallback(void* dialog, QInputDialog_TextValueSelectedCallback callback) {
     static_cast<QInputDialogBind*>(dialog)->setTextValueSelectedCallback(callback);
 }
 

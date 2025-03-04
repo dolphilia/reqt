@@ -9,7 +9,7 @@
 
 class QMessageBoxBind : public QMessageBox {
     Q_OBJECT
-    typedef void (*ButtonClickedCallback)(void*, QAbstractButton*);
+    typedef void (*QMessageBox_ButtonClickedCallback)(void*, void*);
 public:
     explicit QMessageBoxBind(QWidget* parent = nullptr);
     QMessageBoxBind(QMessageBox::Icon icon, const QString& title, const QString& text, 
@@ -17,7 +17,7 @@ public:
                    QWidget* parent = nullptr, 
                    Qt::WindowFlags f = Qt::Dialog | Qt::MSWindowsFixedSizeDialogHint);
     ~QMessageBoxBind() override;
-    void setButtonClickedCallback(ButtonClickedCallback callback) const;
+    void setButtonClickedCallback(QMessageBox_ButtonClickedCallback callback) const;
 
     // スタティック関数
     static void about(QWidget* parent, const QString& title, const QString& text);

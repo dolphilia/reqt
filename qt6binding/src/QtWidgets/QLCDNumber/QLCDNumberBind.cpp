@@ -14,12 +14,10 @@ QLCDNumberBind::QLCDNumberBind(uint numDigits, QWidget* parent)
     connect(this, &QLCDNumber::overflow, handler, &QLCDNumberHandler::onOverflow);
 }
 
-QLCDNumberBind::~QLCDNumberBind()
-{
+QLCDNumberBind::~QLCDNumberBind() {
     delete handler;
 }
 
-void QLCDNumberBind::setOverflowCallback(OverflowCallback callback) const
-{
+void QLCDNumberBind::setOverflowCallback(QLCDNumber_OverflowCallback callback) const {
     handler->setOverflowCallback(callback);
 }

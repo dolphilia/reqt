@@ -1,31 +1,16 @@
 #include "QProgressBarBind.h"
+#include "QProgressBarHandler.h"
 
-BindQProgressBar::BindQProgressBar(QWidget *parent)
+QProgressBarBind::QProgressBarBind(QWidget* parent)
     : QProgressBar(parent)
-    , m_handler(nullptr)
-{
+    , handler(new QProgressBarHandler(this)) {
+    connect(this, &QProgressBar::valueChanged, handler, &QProgressBarHandler::onValueChanged);
 }
 
-BindQProgressBar::~BindQProgressBar()
-{
-    delete m_handler;
+QProgressBarBind::~QProgressBarBind() {
+    delete handler;
 }
 
-void BindQProgressBar::setProgressBarHandler(ProgressBarHandler *handler)
-{
-    if (m_handler) {
-        disconnect(this, &QProgressBar::valueChanged, m_handler, &ProgressBarHandler::onValueChanged);
-        delete m_handler;
-    }
-
-    m_handler = handler;
-
-    if (m_handler) {
-        connect(this, &QProgressBar::valueChanged, m_handler, &ProgressBarHandler::onValueChanged);
-    }
-}
-
-ProgressBarHandler *BindQProgressBar::handler() const
-{
-    return m_handler;
+void QProgressBarBind::setValueChangedCallback(QProgressBar_ValueChangedCallback callback) const {
+    handler->setValueChangedCallback(callback);
 }

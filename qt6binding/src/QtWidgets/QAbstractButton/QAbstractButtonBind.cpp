@@ -16,19 +16,19 @@ QAbstractButtonBind::~QAbstractButtonBind() {
     delete handler;
 }
 
-void QAbstractButtonBind::setClickedCallback(ClickCallback callback) const {
+void QAbstractButtonBind::setClickedCallback(QAbstractButton_ClickedCallback callback) const {
     handler->setClickedCallback(callback);
 }
 
-void QAbstractButtonBind::setPressedCallback(PressCallback callback) const {
+void QAbstractButtonBind::setPressedCallback(QAbstractButton_PressedCallback callback) const {
     handler->setPressedCallback(callback);
 }
 
-void QAbstractButtonBind::setReleasedCallback(ReleaseCallback callback) const {
+void QAbstractButtonBind::setReleasedCallback(QAbstractButton_ReleasedCallback callback) const {
     handler->setReleasedCallback(callback);
 }
 
-void QAbstractButtonBind::setToggledCallback(ToggleCallback callback) const {
+void QAbstractButtonBind::setToggledCallback(QAbstractButton_ToggledCallback callback) const {
     handler->setToggledCallback(callback);
 }
 

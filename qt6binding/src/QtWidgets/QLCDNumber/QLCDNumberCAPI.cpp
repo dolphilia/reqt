@@ -1,15 +1,13 @@
-#include "qlcdnumber.h"
 #include "QLCDNumberBind.h"
-#include "QLCDNumberHandler.h"
 
 extern "C" {
 
 void* QLCDNumber_create(void* parent) {
-    return new QLCDNumberBind(reinterpret_cast<QWidget*>(parent));
+    return new QLCDNumberBind(static_cast<QWidget*>(parent));
 }
 
 void* QLCDNumber_createWithDigits(int numDigits, void* parent) {
-    return new QLCDNumberBind(numDigits, reinterpret_cast<QWidget*>(parent));
+    return new QLCDNumberBind(numDigits, static_cast<QWidget*>(parent));
 }
 
 void QLCDNumber_delete(void* lcd) {
@@ -84,9 +82,9 @@ bool QLCDNumber_checkOverflowInt(void* lcd, int num) {
     return static_cast<QLCDNumberBind*>(lcd)->checkOverflow(num);
 }
 
-typedef void (*OverflowCallback)(void*);
+typedef void (*QLCDNumber_OverflowCallback)(void*);
 
-void QLCDNumber_setOverflowCallback(void* lcd,OverflowCallback callback) {
+void QLCDNumber_setOverflowCallback(void* lcd, QLCDNumber_OverflowCallback callback) {
     static_cast<QLCDNumberBind*>(lcd)->setOverflowCallback(callback);
 }
 

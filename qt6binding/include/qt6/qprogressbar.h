@@ -37,8 +37,8 @@ void QProgressBar_setTextDirection(void* progress_bar, int direction);
 int QProgressBar_textDirection(void* progress_bar);
 
 // Signal handlers
-typedef void (*QProgressBarValueChangedCallback)(int value);
-void QProgressBar_setValueChangedCallback(void* progress_bar, QProgressBarValueChangedCallback callback);
+typedef void (*QProgressBar_ValueChangedCallback)(void*, int);
+void QProgressBar_setValueChangedCallback(void* progress_bar, QProgressBar_ValueChangedCallback callback);
 
 // Constants
 #define QPROGRESSBAR_HORIZONTAL 0

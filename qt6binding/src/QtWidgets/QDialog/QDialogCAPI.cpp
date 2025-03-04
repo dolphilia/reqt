@@ -62,15 +62,19 @@ void QDialog_reject(void* dialog) {
     static_cast<QDialogBind*>(dialog)->reject();
 }
 
-void QDialog_setAcceptedCallback(void* dialog, void (*callback)(void*)) {
+typedef void (*QDialog_DialogAcceptedCallback)(void* dialog);
+typedef void (*QDialog_DialogFinishedCallback)(void* dialog, int result);
+typedef void (*QDialog_DialogRejectedCallback)(void* dialog);
+
+void QDialog_setAcceptedCallback(void* dialog, QDialog_DialogAcceptedCallback callback) {
     static_cast<QDialogBind*>(dialog)->setDialogAcceptedCallback(callback);
 }
 
-void QDialog_setFinishedCallback(void* dialog, void (*callback)(void*, int)) {
+void QDialog_setFinishedCallback(void* dialog, QDialog_DialogFinishedCallback callback) {
     static_cast<QDialogBind*>(dialog)->setDialogFinishedCallback(callback);
 }
 
-void QDialog_setRejectedCallback(void* dialog, void (*callback)(void*)) {
+void QDialog_setRejectedCallback(void* dialog, QDialog_DialogRejectedCallback callback) {
     static_cast<QDialogBind*>(dialog)->setDialogRejectedCallback(callback);
 }
 

@@ -10,27 +10,27 @@ QInputDialogHandler::QInputDialogHandler(QObject* parent)
     , textValueSelectedCallback(nullptr) {
 }
 
-void QInputDialogHandler::setDoubleValueChangedCallback(DoubleValueChangedCallback callback) {
+void QInputDialogHandler::setDoubleValueChangedCallback(QInputDialog_DoubleValueChangedCallback callback) {
     doubleValueChangedCallback = callback;
 }
 
-void QInputDialogHandler::setDoubleValueSelectedCallback(DoubleValueSelectedCallback callback) {
+void QInputDialogHandler::setDoubleValueSelectedCallback(QInputDialog_DoubleValueSelectedCallback callback) {
     doubleValueSelectedCallback = callback;
 }
 
-void QInputDialogHandler::setIntValueChangedCallback(IntValueChangedCallback callback) {
+void QInputDialogHandler::setIntValueChangedCallback(QInputDialog_IntValueChangedCallback callback) {
     intValueChangedCallback = callback;
 }
 
-void QInputDialogHandler::setIntValueSelectedCallback(IntValueSelectedCallback callback) {
+void QInputDialogHandler::setIntValueSelectedCallback(QInputDialog_IntValueSelectedCallback callback) {
     intValueSelectedCallback = callback;
 }
 
-void QInputDialogHandler::setTextValueChangedCallback(TextValueChangedCallback callback) {
+void QInputDialogHandler::setTextValueChangedCallback(QInputDialog_TextValueChangedCallback callback) {
     textValueChangedCallback = callback;
 }
 
-void QInputDialogHandler::setTextValueSelectedCallback(TextValueSelectedCallback callback) {
+void QInputDialogHandler::setTextValueSelectedCallback(QInputDialog_TextValueSelectedCallback callback) {
     textValueSelectedCallback = callback;
 }
 

@@ -22,13 +22,20 @@ void QPlainTextEdit_paste(void* text_edit);
 void QPlainTextEdit_undo(void* text_edit);
 void QPlainTextEdit_redo(void* text_edit);
 
+typedef void (*TextChangedCallback)(void*);
+typedef void (*CursorPositionChangedCallback)(void*);
+typedef void (*CopyAvailableCallback)(void*, bool);
+typedef void (*UndoAvailableCallback)(void*, bool);
+typedef void (*RedoAvailableCallback)(void*, bool);
+typedef void (*SelectionChangedCallback)(void*);
+
 // コールバック設定
-void QPlainTextEdit_setTextChangedCallback(void* text_edit, void (*callback)());
-void QPlainTextEdit_setCursorPositionChangedCallback(void* text_edit, void (*callback)());
-void QPlainTextEdit_setCopyAvailableCallback(void* text_edit, void (*callback)(bool));
-void QPlainTextEdit_setUndoAvailableCallback(void* text_edit, void (*callback)(bool));
-void QPlainTextEdit_setRedoAvailableCallback(void* text_edit, void (*callback)(bool));
-void QPlainTextEdit_setSelectionChangedCallback(void* text_edit, void (*callback)());
+void QPlainTextEdit_setTextChangedCallback(void* text_edit, TextChangedCallback callback);
+void QPlainTextEdit_setCursorPositionChangedCallback(void* text_edit, CursorPositionChangedCallback callback);
+void QPlainTextEdit_setCopyAvailableCallback(void* text_edit, CopyAvailableCallback callback);
+void QPlainTextEdit_setUndoAvailableCallback(void* text_edit, UndoAvailableCallback callback);
+void QPlainTextEdit_setRedoAvailableCallback(void* text_edit, RedoAvailableCallback callback);
+void QPlainTextEdit_setSelectionChangedCallback(void* text_edit, SelectionChangedCallback callback);
 
 #ifdef __cplusplus
 }

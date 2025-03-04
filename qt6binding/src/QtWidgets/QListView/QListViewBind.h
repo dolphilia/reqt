@@ -6,17 +6,17 @@
 
 class QListViewBind : public QListView {
     Q_OBJECT
-    typedef void (*ClickedCallback)(void*, int, int);
-    typedef void (*DoubleClickedCallback)(void*, int, int);
-    typedef void (*SelectionChangedCallback)(void*);
+    typedef void (*QListView_ClickedCallback)(void*, int, int);
+    typedef void (*QListView_DoubleClickedCallback)(void*, int, int);
+    typedef void (*QListView_SelectionChangedCallback)(void*);
 public:
     explicit QListViewBind(QWidget* parent = nullptr);
     ~QListViewBind() override;
-    void setClickedCallback(ClickedCallback callback) const;
-    void setDoubleClickedCallback(DoubleClickedCallback callback) const;
-    void setSelectionChangedCallback(SelectionChangedCallback callback) const;
+    void setClickedCallback(QListView_ClickedCallback callback) const;
+    void setDoubleClickedCallback(QListView_DoubleClickedCallback callback) const;
+    void setSelectionChangedCallback(QListView_SelectionChangedCallback callback) const;
 private:
-    ListViewHandler* handler;
+    QListViewHandler* handler;
 };
 
 #endif // QLISTVIEW_BIND_H

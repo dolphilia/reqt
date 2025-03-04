@@ -16,27 +16,27 @@ QInputDialogBind::~QInputDialogBind() {
     delete handler;
 }
 
-void QInputDialogBind::setDoubleValueChangedCallback(DoubleValueChangedCallback callback) const {
+void QInputDialogBind::setDoubleValueChangedCallback(QInputDialog_DoubleValueChangedCallback callback) const {
     handler->setDoubleValueChangedCallback(callback);
 }
 
-void QInputDialogBind::setDoubleValueSelectedCallback(DoubleValueSelectedCallback callback) const {
+void QInputDialogBind::setDoubleValueSelectedCallback(QInputDialog_DoubleValueSelectedCallback callback) const {
     handler->setDoubleValueSelectedCallback(callback);
 }
 
-void QInputDialogBind::setIntValueChangedCallback(IntValueChangedCallback callback) const {
+void QInputDialogBind::setIntValueChangedCallback(QInputDialog_IntValueChangedCallback callback) const {
     handler->setIntValueChangedCallback(callback);
 }
 
-void QInputDialogBind::setIntValueSelectedCallback(IntValueSelectedCallback callback) const {
+void QInputDialogBind::setIntValueSelectedCallback(QInputDialog_IntValueSelectedCallback callback) const {
     handler->setIntValueSelectedCallback(callback);
 }
 
-void QInputDialogBind::setTextValueChangedCallback(TextValueChangedCallback callback) const {
+void QInputDialogBind::setTextValueChangedCallback(QInputDialog_TextValueChangedCallback callback) const {
     handler->setTextValueChangedCallback(callback);
 }
 
-void QInputDialogBind::setTextValueSelectedCallback(TextValueSelectedCallback callback) const {
+void QInputDialogBind::setTextValueSelectedCallback(QInputDialog_TextValueSelectedCallback callback) const {
     handler->setTextValueSelectedCallback(callback);
 }
 

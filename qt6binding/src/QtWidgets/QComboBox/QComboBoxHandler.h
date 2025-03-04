@@ -3,20 +3,20 @@
 
 #include <QObject>
 
-class ComboBoxHandler : public QObject {
+class QComboBoxHandler : public QObject {
     Q_OBJECT
-    typedef void (*CurrentIndexChangedCallback)(void*, int);
-    typedef void (*CurrentTextChangedCallback)(void*, const char*);
+    typedef void (*QComboBox_CurrentIndexChangedCallback)(void*, int);
+    typedef void (*QComboBox_CurrentTextChangedCallback)(void*, const char*);
 public:
-    explicit ComboBoxHandler(QObject* parent = nullptr);
-    void setCurrentIndexCallback(CurrentIndexChangedCallback callback);
-    void setCurrentTextCallback(CurrentTextChangedCallback callback);
+    explicit QComboBoxHandler(QObject* parent = nullptr);
+    void setCurrentIndexCallback(QComboBox_CurrentIndexChangedCallback callback);
+    void setCurrentTextCallback(QComboBox_CurrentTextChangedCallback callback);
 public slots:
     void onCurrentIndexChanged(int index) const;
     void onCurrentTextChanged(const QString& text) const;
 private:
-    CurrentIndexChangedCallback indexCallback;
-    CurrentTextChangedCallback textCallback;
+    QComboBox_CurrentIndexChangedCallback indexCallback;
+    QComboBox_CurrentTextChangedCallback textCallback;
 };
 
 #endif // COMBOBOX_HANDLER_H

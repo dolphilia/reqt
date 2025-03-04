@@ -6,15 +6,15 @@
 
 class QDateTimeEditBind : public QDateTimeEdit {
     Q_OBJECT
-    typedef void (*DateChangedCallback)(void*, int, int, int);
-    typedef void (*TimeChangedCallback)(void*, int, int, int);
+    typedef void (*QDateTimeEdit_DateChangedCallback)(void*, int, int, int);
+    typedef void (*QDateTimeEdit_TimeChangedCallback)(void*, int, int, int);
 public:
     explicit QDateTimeEditBind(QWidget* parent = nullptr);
     ~QDateTimeEditBind() override;
-    void setDateChangedCallback(DateChangedCallback callback) const;
-    void setTimeChangedCallback(TimeChangedCallback callback) const;
+    void setDateChangedCallback(QDateTimeEdit_DateChangedCallback callback) const;
+    void setTimeChangedCallback(QDateTimeEdit_TimeChangedCallback callback) const;
 private:
-    DateTimeEditHandler* handler;
+    QDateTimeEditHandler* handler;
 };
 
 #endif // QDATETIMEEDIT_BIND_H

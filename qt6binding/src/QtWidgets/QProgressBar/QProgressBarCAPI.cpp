@@ -1,115 +1,88 @@
-#include "qprogressbar.h"
 #include "QProgressBarBind.h"
-#include "QProgressBarHandler.h"
-#include <QString>
 
 extern "C" {
 
-void* QProgressBar_create(void* parent)
-{
-    return new BindQProgressBar(reinterpret_cast<QWidget*>(parent));
+void* QProgressBar_create(void* parent) {
+    return new QProgressBarBind(static_cast<QWidget*>(parent));
 }
 
-void QProgressBar_delete(void* progress_bar)
-{
-    delete static_cast<BindQProgressBar*>(progress_bar);
+void QProgressBar_delete(void* progressBar) {
+    delete static_cast<QProgressBarBind*>(progressBar);
 }
 
-void QProgressBar_setValue(void* progress_bar, int value)
-{
-    static_cast<BindQProgressBar*>(progress_bar)->setValue(value);
+void QProgressBar_setValue(void* progressBar, int value) {
+    static_cast<QProgressBarBind*>(progressBar)->setValue(value);
 }
 
-int QProgressBar_value(void* progress_bar)
-{
-    return static_cast<BindQProgressBar*>(progress_bar)->value();
+int QProgressBar_value(void* progressBar) {
+    return static_cast<QProgressBarBind*>(progressBar)->value();
 }
 
-void QProgressBar_setRange(void* progress_bar, int minimum, int maximum)
-{
-    static_cast<BindQProgressBar*>(progress_bar)->setRange(minimum, maximum);
+void QProgressBar_setRange(void* progressBar, int minimum, int maximum) {
+    static_cast<QProgressBarBind*>(progressBar)->setRange(minimum, maximum);
 }
 
-int QProgressBar_minimum(void* progress_bar)
-{
-    return static_cast<BindQProgressBar*>(progress_bar)->minimum();
+int QProgressBar_minimum(void* progressBar) {
+    return static_cast<QProgressBarBind*>(progressBar)->minimum();
 }
 
-int QProgressBar_maximum(void* progress_bar)
-{
-    return static_cast<BindQProgressBar*>(progress_bar)->maximum();
+int QProgressBar_maximum(void* progressBar) {
+    return static_cast<QProgressBarBind*>(progressBar)->maximum();
 }
 
-void QProgressBar_reset(void* progress_bar)
-{
-    static_cast<BindQProgressBar*>(progress_bar)->reset();
+void QProgressBar_reset(void* progressBar) {
+    static_cast<QProgressBarBind*>(progressBar)->reset();
 }
 
-void QProgressBar_setFormat(void* progress_bar, const char* format)
-{
-    static_cast<BindQProgressBar*>(progress_bar)->setFormat(QString::fromUtf8(format));
+void QProgressBar_setFormat(void* progressBar, const char* format) {
+    static_cast<QProgressBarBind*>(progressBar)->setFormat(QString::fromUtf8(format));
 }
 
-const char* QProgressBar_format(void* progress_bar)
-{
-    QString format = static_cast<BindQProgressBar*>(progress_bar)->format();
+const char* QProgressBar_format(void* progressBar) {
+    QString format = static_cast<QProgressBarBind*>(progressBar)->format();
     return qstrdup(format.toUtf8().constData());
 }
 
-void QProgressBar_resetFormat(void* progress_bar)
-{
-    static_cast<BindQProgressBar*>(progress_bar)->resetFormat();
+void QProgressBar_resetFormat(void* progressBar) {
+    static_cast<QProgressBarBind*>(progressBar)->resetFormat();
 }
 
-void QProgressBar_setTextVisible(void* progress_bar, bool visible)
-{
-    static_cast<BindQProgressBar*>(progress_bar)->setTextVisible(visible);
+void QProgressBar_setTextVisible(void* progressBar, bool visible) {
+    static_cast<QProgressBarBind*>(progressBar)->setTextVisible(visible);
 }
 
-bool QProgressBar_isTextVisible(void* progress_bar)
-{
-    return static_cast<BindQProgressBar*>(progress_bar)->isTextVisible();
+bool QProgressBar_isTextVisible(void* progressBar) {
+    return static_cast<QProgressBarBind*>(progressBar)->isTextVisible();
 }
 
-void QProgressBar_setOrientation(void* progress_bar, int orientation)
-{
-    static_cast<BindQProgressBar*>(progress_bar)->setOrientation(static_cast<Qt::Orientation>(orientation));
+void QProgressBar_setOrientation(void* progressBar, int orientation) {
+    static_cast<QProgressBarBind*>(progressBar)->setOrientation(static_cast<Qt::Orientation>(orientation));
 }
 
-int QProgressBar_orientation(void* progress_bar)
-{
-    return static_cast<int>(static_cast<BindQProgressBar*>(progress_bar)->orientation());
+int QProgressBar_orientation(void* progressBar) {
+    return static_cast<int>(static_cast<QProgressBarBind*>(progressBar)->orientation());
 }
 
-void QProgressBar_setInvertedAppearance(void* progress_bar, bool invert)
-{
-    static_cast<BindQProgressBar*>(progress_bar)->setInvertedAppearance(invert);
+void QProgressBar_setInvertedAppearance(void* progressBar, bool invert) {
+    static_cast<QProgressBarBind*>(progressBar)->setInvertedAppearance(invert);
 }
 
-bool QProgressBar_invertedAppearance(void* progress_bar)
-{
-    return static_cast<BindQProgressBar*>(progress_bar)->invertedAppearance();
+bool QProgressBar_invertedAppearance(void* progressBar) {
+    return static_cast<QProgressBarBind*>(progressBar)->invertedAppearance();
 }
 
-void QProgressBar_setTextDirection(void* progress_bar, int direction)
-{
-    static_cast<BindQProgressBar*>(progress_bar)->setTextDirection(static_cast<QProgressBar::Direction>(direction));
+void QProgressBar_setTextDirection(void* progressBar, int direction) {
+    static_cast<QProgressBarBind*>(progressBar)->setTextDirection(static_cast<QProgressBar::Direction>(direction));
 }
 
-int QProgressBar_textDirection(void* progress_bar)
-{
-    return static_cast<int>(static_cast<BindQProgressBar*>(progress_bar)->textDirection());
+int QProgressBar_textDirection(void* progressBar) {
+    return static_cast<int>(static_cast<QProgressBarBind*>(progressBar)->textDirection());
 }
 
-void QProgressBar_setValueChangedCallback(void* progress_bar, QProgressBarValueChangedCallback callback)
-{
-    BindQProgressBar* qprogress_bar = static_cast<BindQProgressBar*>(progress_bar);
-    ProgressBarHandler* handler = qprogress_bar->handler();
-    if (!handler) {
-        handler = new ProgressBarHandler(qprogress_bar);
-        qprogress_bar->setProgressBarHandler(handler);
-    }
-    handler->setValueChangedCallback(callback);
+typedef void (*QProgressBar_ValueChangedCallback)(void*, int);
+
+void QProgressBar_setValueChangedCallback(void* progressBar, QProgressBar_ValueChangedCallback callback) {
+    static_cast<QProgressBarBind*>(progressBar)->setValueChangedCallback(callback);
 }
 
 }

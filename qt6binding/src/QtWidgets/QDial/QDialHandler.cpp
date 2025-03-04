@@ -1,6 +1,6 @@
 #include "QDialHandler.h"
 
-DialHandler::DialHandler(QObject* parent)
+QDialHandler::QDialHandler(QObject* parent)
     : QObject(parent)
     , valueChangedCallback(nullptr)
     , sliderMovedCallback(nullptr)
@@ -8,41 +8,41 @@ DialHandler::DialHandler(QObject* parent)
     , sliderReleasedCallback(nullptr) {
 }
 
-void DialHandler::setValueChangedCallback(ValueChangedCallback callback) {
+void QDialHandler::setValueChangedCallback(QDial_ValueChangedCallback callback) {
     valueChangedCallback = callback;
 }
 
-void DialHandler::setSliderMovedCallback(SliderMovedCallback callback) {
+void QDialHandler::setSliderMovedCallback(QDial_SliderMovedCallback callback) {
     sliderMovedCallback = callback;
 }
 
-void DialHandler::setSliderPressedCallback(SliderPressedCallback callback) {
+void QDialHandler::setSliderPressedCallback(QDial_SliderPressedCallback callback) {
     sliderPressedCallback = callback;
 }
 
-void DialHandler::setSliderReleasedCallback(SliderReleasedCallback callback) {
+void QDialHandler::setSliderReleasedCallback(QDial_SliderReleasedCallback callback) {
     sliderReleasedCallback = callback;
 }
 
-void DialHandler::onValueChanged(int value) const {
+void QDialHandler::onValueChanged(int value) const {
     if (valueChangedCallback) {
         valueChangedCallback(parent(), value);
     }
 }
 
-void DialHandler::onSliderMoved(int position) const {
+void QDialHandler::onSliderMoved(int position) const {
     if (sliderMovedCallback) {
         sliderMovedCallback(parent(), position);
     }
 }
 
-void DialHandler::onSliderPressed() const {
+void QDialHandler::onSliderPressed() const {
     if (sliderPressedCallback) {
         sliderPressedCallback(parent());
     }
 }
 
-void DialHandler::onSliderReleased() const {
+void QDialHandler::onSliderReleased() const {
     if (sliderReleasedCallback) {
         sliderReleasedCallback(parent());
     }

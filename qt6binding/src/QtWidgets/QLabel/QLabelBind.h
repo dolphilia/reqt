@@ -6,14 +6,14 @@
 
 class QLabelBind : public QLabel {
     Q_OBJECT
-    typedef void (*LinkActivatedCallback)(void*, const char*);
-    typedef void (*LinkHoveredCallback)(void*, const char*);
+    typedef void (*QLabel_LinkActivatedCallback)(void*, const char*);
+    typedef void (*QLabel_LinkHoveredCallback)(void*, const char*);
 public:
     explicit QLabelBind(QWidget* parent = nullptr);
     explicit QLabelBind(const QString& text, QWidget* parent = nullptr);
     ~QLabelBind() override;
-    void setLinkActivatedCallback(LinkActivatedCallback callback) const;
-    void setLinkHoveredCallback(LinkHoveredCallback callback) const;
+    void setLinkActivatedCallback(QLabel_LinkActivatedCallback callback) const;
+    void setLinkHoveredCallback(QLabel_LinkHoveredCallback callback) const;
 private:
     QLabelHandler* handler;
 };

@@ -29,15 +29,15 @@ void QRadioButton_setAutoExclusive(void* radio_button, bool auto_exclusive);
 bool QRadioButton_autoExclusive(void* radio_button);
 
 // Signal handlers
-typedef void (*QRadioButtonToggledCallback)(bool checked);
-typedef void (*QRadioButtonClickedCallback)(bool checked);
-typedef void (*QRadioButtonPressedCallback)();
-typedef void (*QRadioButtonReleasedCallback)();
+typedef void (*ToggledCallback)(void*, bool);
+typedef void (*ClickedCallback)(void*, bool);
+typedef void (*PressedCallback)(void*);
+typedef void (*ReleasedCallback)(void*);
 
-void QRadioButton_setToggledCallback(void* radio_button, QRadioButtonToggledCallback callback);
-void QRadioButton_setClickedCallback(void* radio_button, QRadioButtonClickedCallback callback);
-void QRadioButton_setPressedCallback(void* radio_button, QRadioButtonPressedCallback callback);
-void QRadioButton_setReleasedCallback(void* radio_button, QRadioButtonReleasedCallback callback);
+void QRadioButton_setToggledCallback(void* radio_button, ToggledCallback callback);
+void QRadioButton_setClickedCallback(void* radio_button, ClickedCallback callback);
+void QRadioButton_setPressedCallback(void* radio_button, PressedCallback callback);
+void QRadioButton_setReleasedCallback(void* radio_button, ReleasedCallback callback);
 
 #ifdef __cplusplus
 }

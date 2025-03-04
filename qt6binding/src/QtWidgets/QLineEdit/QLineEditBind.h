@@ -6,16 +6,16 @@
 
 class QLineEditBind : public QLineEdit {
     Q_OBJECT
-    typedef void (*TextChangedCallback)(void*, const char*);
-    typedef void (*TextEditedCallback)(void*, const char*);
-    typedef void (*ReturnPressedCallback)(void*, const char*);
+    typedef void (*QLineEdit_TextChangedCallback)(void*, const char*);
+    typedef void (*QLineEdit_TextEditedCallback)(void*, const char*);
+    typedef void (*QLineEdit_ReturnPressedCallback)(void*, const char*);
 public:
     explicit QLineEditBind(QWidget* parent = nullptr);
     explicit QLineEditBind(const QString& text, QWidget* parent = nullptr);
     ~QLineEditBind() override;
-    void setTextChangedCallback(TextChangedCallback callback) const;
-    void setTextEditedCallback(TextEditedCallback callback) const;
-    void setReturnPressedCallback(ReturnPressedCallback callback) const;
+    void setTextChangedCallback(QLineEdit_TextChangedCallback callback) const;
+    void setTextEditedCallback(QLineEdit_TextEditedCallback callback) const;
+    void setReturnPressedCallback(QLineEdit_ReturnPressedCallback callback) const;
 private:
     QLineEditHandler* handler;
 };

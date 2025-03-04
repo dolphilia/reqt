@@ -2,17 +2,14 @@
 
 QLCDNumberHandler::QLCDNumberHandler(QObject* parent)
     : QObject(parent)
-    , overflowCallback(nullptr)
-{
+    , overflowCallback(nullptr) {
 }
 
-void QLCDNumberHandler::setOverflowCallback(OverflowCallback callback)
-{
+void QLCDNumberHandler::setOverflowCallback(QLCDNumber_OverflowCallback callback) {
     overflowCallback = callback;
 }
 
-void QLCDNumberHandler::onOverflow() const
-{
+void QLCDNumberHandler::onOverflow() const {
     if (overflowCallback) {
         overflowCallback(nullptr);
     }

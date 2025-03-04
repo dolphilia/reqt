@@ -3,24 +3,24 @@
 
 QListViewBind::QListViewBind(QWidget* parent)
     : QListView(parent)
-    , handler(new ListViewHandler(this)) {
-    connect(this, &QListView::clicked, handler, &ListViewHandler::onClicked);
-    connect(this, &QListView::doubleClicked, handler, &ListViewHandler::onDoubleClicked);
-    connect(this->selectionModel(), &QItemSelectionModel::selectionChanged, handler, &ListViewHandler::onSelectionChanged);
+    , handler(new QListViewHandler(this)) {
+    connect(this, &QListView::clicked, handler, &QListViewHandler::onClicked);
+    connect(this, &QListView::doubleClicked, handler, &QListViewHandler::onDoubleClicked);
+    connect(this->selectionModel(), &QItemSelectionModel::selectionChanged, handler, &QListViewHandler::onSelectionChanged);
 }
 
 QListViewBind::~QListViewBind() {
     delete handler;
 }
 
-void QListViewBind::setClickedCallback(ClickedCallback callback) const {
+void QListViewBind::setClickedCallback(QListView_ClickedCallback callback) const {
     handler->setClickedCallback(callback);
 }
 
-void QListViewBind::setDoubleClickedCallback(DoubleClickedCallback callback) const {
+void QListViewBind::setDoubleClickedCallback(QListView_DoubleClickedCallback callback) const {
     handler->setDoubleClickedCallback(callback);
 }
 
-void QListViewBind::setSelectionChangedCallback(SelectionChangedCallback callback) const {
+void QListViewBind::setSelectionChangedCallback(QListView_SelectionChangedCallback callback) const {
     handler->setSelectionChangedCallback(callback);
 }

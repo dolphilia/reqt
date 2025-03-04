@@ -20,7 +20,7 @@ QMessageBoxBind::~QMessageBoxBind() {
     delete handler;
 }
 
-void QMessageBoxBind::setButtonClickedCallback(ButtonClickedCallback callback) const {
+void QMessageBoxBind::setButtonClickedCallback(QMessageBox_ButtonClickedCallback callback) const {
     handler->setButtonClickedCallback(callback);
 }
 

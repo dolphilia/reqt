@@ -6,15 +6,15 @@
 
 class QComboBoxBind : public QComboBox {
     Q_OBJECT
-    typedef void (*CurrentIndexChangedCallback)(void*, int);
-    typedef void (*CurrentTextChangedCallback)(void*, const char*);
+    typedef void (*QComboBox_CurrentIndexChangedCallback)(void*, int);
+    typedef void (*QComboBox_CurrentTextChangedCallback)(void*, const char*);
 public:
     explicit QComboBoxBind(QWidget* parent = nullptr);
     ~QComboBoxBind() override;
-    void setCurrentIndexChangedCallback(CurrentIndexChangedCallback callback) const;
-    void setCurrentTextChangedCallback(CurrentTextChangedCallback callback) const;
+    void setCurrentIndexChangedCallback(QComboBox_CurrentIndexChangedCallback callback) const;
+    void setCurrentTextChangedCallback(QComboBox_CurrentTextChangedCallback callback) const;
 private:
-    ComboBoxHandler* handler;
+    QComboBoxHandler* handler;
 };
 
 #endif // QCOMBOBOX_BIND_H

@@ -1,38 +1,22 @@
 #include "QScrollAreaBind.h"
+#include "QScrollAreaHandler.h"
 #include <QScrollBar>
 
-BindQScrollArea::BindQScrollArea(QWidget *parent)
+QScrollAreaBind::QScrollAreaBind(QWidget* parent)
     : QScrollArea(parent)
-    , m_handler(nullptr)
-{
+    , handler(new QScrollAreaHandler(this)) {
+    connect(verticalScrollBar(), &QScrollBar::valueChanged, handler, &QScrollAreaHandler::onVerticalScrollBarValueChanged);
+    connect(horizontalScrollBar(), &QScrollBar::valueChanged, handler, &QScrollAreaHandler::onHorizontalScrollBarValueChanged);
 }
 
-BindQScrollArea::~BindQScrollArea()
-{
-    delete m_handler;
+QScrollAreaBind::~QScrollAreaBind() {
+    delete handler;
 }
 
-void BindQScrollArea::setScrollAreaHandler(ScrollAreaHandler *handler)
-{
-    if (m_handler) {
-        disconnect(verticalScrollBar(), &QScrollBar::valueChanged,
-                  m_handler, &ScrollAreaHandler::onVerticalScrollBarValueChanged);
-        disconnect(horizontalScrollBar(), &QScrollBar::valueChanged,
-                  m_handler, &ScrollAreaHandler::onHorizontalScrollBarValueChanged);
-        delete m_handler;
-    }
-
-    m_handler = handler;
-
-    if (m_handler) {
-        connect(verticalScrollBar(), &QScrollBar::valueChanged,
-                m_handler, &ScrollAreaHandler::onVerticalScrollBarValueChanged);
-        connect(horizontalScrollBar(), &QScrollBar::valueChanged,
-                m_handler, &ScrollAreaHandler::onHorizontalScrollBarValueChanged);
-    }
+void QScrollAreaBind::setVerticalScrollBarValueChangedCallback(QScrollArea_VerticalScrollBarValueChangedCallback callback) const {
+    handler->setVerticalScrollCallback(callback);
 }
 
-ScrollAreaHandler *BindQScrollArea::handler() const
-{
-    return m_handler;
+void QScrollAreaBind::setHorizontalScrollBarValueChangedCallback(QScrollArea_HorizontalScrollBarValueChangedCallback callback) const {
+    handler->setHorizontalScrollCallback(callback);
 }

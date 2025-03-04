@@ -3,10 +3,10 @@
 
 #include <QObject>
 
-class HBoxLayoutHandler : public QObject {
+class QHBoxLayoutHandler : public QObject {
     Q_OBJECT
 public:
-    explicit HBoxLayoutHandler(QObject* parent = nullptr);
+    explicit QHBoxLayoutHandler(QObject* parent = nullptr);
 };
 
 #endif // HBOXLAYOUT_HANDLER_H

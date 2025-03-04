@@ -7,14 +7,14 @@
 
 class QGridLayoutBind : public QGridLayout {
     Q_OBJECT
-    typedef void (*CellEmptyChangedCallback)(void*, int, int);
+    typedef void (*QGridLayout_CellEmptyChangedCallback)(void*, int, int);
 public:
     explicit QGridLayoutBind(QWidget* parent = nullptr);
     ~QGridLayoutBind() override;
     void addWidgetToGrid(QWidget* widget, int row, int column);
-    void setCellEmptyChangedCallback(CellEmptyChangedCallback callback) const;
+    void setCellEmptyChangedCallback(QGridLayout_CellEmptyChangedCallback callback) const;
 private:
-    GridLayoutHandler* handler;
+    QGridLayoutHandler* handler;
 };
 
 #endif // QGRIDLAYOUT_BIND_H

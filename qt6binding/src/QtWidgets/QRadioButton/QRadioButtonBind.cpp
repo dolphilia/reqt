@@ -1,43 +1,40 @@
 #include "QRadioButtonBind.h"
+#include "QRadioButtonHandler.h"
 
-BindQRadioButton::BindQRadioButton(QWidget *parent)
+QRadioButtonBind::QRadioButtonBind(QWidget* parent)
     : QRadioButton(parent)
-    , m_handler(nullptr)
-{
+    , handler(new QRadioButtonHandler(this)) {
+    connect(this, &QRadioButton::toggled, handler, &QRadioButtonHandler::onToggled);
+    connect(this, &QRadioButton::clicked, handler, &QRadioButtonHandler::onClicked);
+    connect(this, &QRadioButton::pressed, handler, &QRadioButtonHandler::onPressed);
+    connect(this, &QRadioButton::released, handler, &QRadioButtonHandler::onReleased);
 }
 
-BindQRadioButton::BindQRadioButton(const QString &text, QWidget *parent)
+QRadioButtonBind::QRadioButtonBind(const QString& text, QWidget* parent)
     : QRadioButton(text, parent)
-    , m_handler(nullptr)
-{
+    , handler(new QRadioButtonHandler(this)) {
+    connect(this, &QRadioButton::toggled, handler, &QRadioButtonHandler::onToggled);
+    connect(this, &QRadioButton::clicked, handler, &QRadioButtonHandler::onClicked);
+    connect(this, &QRadioButton::pressed, handler, &QRadioButtonHandler::onPressed);
+    connect(this, &QRadioButton::released, handler, &QRadioButtonHandler::onReleased);
 }
 
-BindQRadioButton::~BindQRadioButton()
-{
-    delete m_handler;
+QRadioButtonBind::~QRadioButtonBind() {
+    delete handler;
 }
 
-void BindQRadioButton::setRadioButtonHandler(RadioButtonHandler *handler)
-{
-    if (m_handler) {
-        disconnect(this, &QRadioButton::toggled, m_handler, &RadioButtonHandler::onToggled);
-        disconnect(this, &QRadioButton::clicked, m_handler, &RadioButtonHandler::onClicked);
-        disconnect(this, &QRadioButton::pressed, m_handler, &RadioButtonHandler::onPressed);
-        disconnect(this, &QRadioButton::released, m_handler, &RadioButtonHandler::onReleased);
-        delete m_handler;
-    }
-
-    m_handler = handler;
-
-    if (m_handler) {
-        connect(this, &QRadioButton::toggled, m_handler, &RadioButtonHandler::onToggled);
-        connect(this, &QRadioButton::clicked, m_handler, &RadioButtonHandler::onClicked);
-        connect(this, &QRadioButton::pressed, m_handler, &RadioButtonHandler::onPressed);
-        connect(this, &QRadioButton::released, m_handler, &RadioButtonHandler::onReleased);
-    }
+void QRadioButtonBind::setToggledCallback(QRadioButton_ToggledCallback callback) const {
+    handler->setToggledCallback(callback);
 }
 
-RadioButtonHandler *BindQRadioButton::handler() const
-{
-    return m_handler;
+void QRadioButtonBind::setClickedCallback(QRadioButton_ClickedCallback callback) const {
+    handler->setClickedCallback(callback);
+}
+
+void QRadioButtonBind::setPressedCallback(QRadioButton_PressedCallback callback) const {
+    handler->setPressedCallback(callback);
+}
+
+void QRadioButtonBind::setReleasedCallback(QRadioButton_ReleasedCallback callback) const {
+    handler->setReleasedCallback(callback);
 }

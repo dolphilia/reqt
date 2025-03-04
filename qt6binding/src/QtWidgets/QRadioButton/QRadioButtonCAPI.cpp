@@ -1,120 +1,79 @@
-#include "qradiobutton.h"
 #include "QRadioButtonBind.h"
-#include "QRadioButtonHandler.h"
-#include <QString>
-#include <QIcon>
-#include <QKeySequence>
 
 extern "C" {
 
-void* QRadioButton_create(void* parent)
-{
-    return new BindQRadioButton(reinterpret_cast<QWidget*>(parent));
+void* QRadioButton_create(void* parent) {
+    return new QRadioButtonBind(static_cast<QWidget*>(parent));
 }
 
-void* QRadioButton_createWithText(const char* text, void* parent)
-{
-    return new BindQRadioButton(QString::fromUtf8(text), reinterpret_cast<QWidget*>(parent));
+void* QRadioButton_createWithText(const char* text, void* parent) {
+    return new QRadioButtonBind(QString::fromUtf8(text), static_cast<QWidget*>(parent));
 }
 
-void QRadioButton_delete(void* radio_button)
-{
-    delete static_cast<BindQRadioButton*>(radio_button);
+void QRadioButton_delete(void* radioButton) {
+    delete static_cast<QRadioButtonBind*>(radioButton);
 }
 
-void QRadioButton_setText(void* radio_button, const char* text)
-{
-    static_cast<BindQRadioButton*>(radio_button)->setText(QString::fromUtf8(text));
+void QRadioButton_setText(void* radioButton, const char* text) {
+    static_cast<QRadioButtonBind*>(radioButton)->setText(QString::fromUtf8(text));
 }
 
-const char* QRadioButton_text(void* radio_button)
-{
-    QString text = static_cast<BindQRadioButton*>(radio_button)->text();
-    return qstrdup(text.toUtf8().constData());
+const char* QRadioButton_text(void* radioButton) {
+    const QString qstr = static_cast<QRadioButtonBind*>(radioButton)->text();
+    return qstr.toUtf8().constData();
 }
 
-void QRadioButton_setChecked(void* radio_button, bool checked)
-{
-    static_cast<BindQRadioButton*>(radio_button)->setChecked(checked);
+void QRadioButton_setChecked(void* radioButton, bool checked) {
+    static_cast<QRadioButtonBind*>(radioButton)->setChecked(checked);
 }
 
-bool QRadioButton_isChecked(void* radio_button)
-{
-    return static_cast<BindQRadioButton*>(radio_button)->isChecked();
+bool QRadioButton_isChecked(void* radioButton) {
+    return static_cast<QRadioButtonBind*>(radioButton)->isChecked();
 }
 
-void QRadioButton_setEnabled(void* radio_button, bool enabled)
-{
-    static_cast<BindQRadioButton*>(radio_button)->setEnabled(enabled);
+void QRadioButton_setEnabled(void* radioButton, bool enabled) {
+    static_cast<QRadioButtonBind*>(radioButton)->setEnabled(enabled);
 }
 
-bool QRadioButton_isEnabled(void* radio_button)
-{
-    return static_cast<BindQRadioButton*>(radio_button)->isEnabled();
+bool QRadioButton_isEnabled(void* radioButton) {
+    return static_cast<QRadioButtonBind*>(radioButton)->isEnabled();
 }
 
-void QRadioButton_setIcon(void* radio_button, const char* icon_path)
-{
-    static_cast<BindQRadioButton*>(radio_button)->setIcon(QIcon(QString::fromUtf8(icon_path)));
+void QRadioButton_setIcon(void* radioButton, const char* iconPath) {
+    static_cast<QRadioButtonBind*>(radioButton)->setIcon(QIcon(QString::fromUtf8(iconPath)));
 }
 
-void QRadioButton_setShortcut(void* radio_button, const char* shortcut)
-{
-    static_cast<BindQRadioButton*>(radio_button)->setShortcut(QKeySequence(QString::fromUtf8(shortcut)));
+void QRadioButton_setShortcut(void* radioButton, const char* shortcut) {
+    static_cast<QRadioButtonBind*>(radioButton)->setShortcut(QKeySequence(QString::fromUtf8(shortcut)));
 }
 
-void QRadioButton_setAutoExclusive(void* radio_button, bool auto_exclusive)
-{
-    static_cast<BindQRadioButton*>(radio_button)->setAutoExclusive(auto_exclusive);
+void QRadioButton_setAutoExclusive(void* radioButton, bool autoExclusive) {
+    static_cast<QRadioButtonBind*>(radioButton)->setAutoExclusive(autoExclusive);
 }
 
-bool QRadioButton_autoExclusive(void* radio_button)
-{
-    return static_cast<BindQRadioButton*>(radio_button)->autoExclusive();
+bool QRadioButton_autoExclusive(void* radioButton) {
+    return static_cast<QRadioButtonBind*>(radioButton)->autoExclusive();
 }
 
-void QRadioButton_setToggledCallback(void* radio_button, QRadioButtonToggledCallback callback)
-{
-    BindQRadioButton* qradio_button = static_cast<BindQRadioButton*>(radio_button);
-    RadioButtonHandler* handler = qradio_button->handler();
-    if (!handler) {
-        handler = new RadioButtonHandler(qradio_button);
-        qradio_button->setRadioButtonHandler(handler);
-    }
-    handler->setToggledCallback(callback);
+typedef void (*QRadioButton_ToggledCallback)(void*, bool);
+typedef void (*QRadioButton_ClickedCallback)(void*, bool);
+typedef void (*QRadioButton_PressedCallback)(void*);
+typedef void (*QRadioButton_ReleasedCallback)(void*);
+
+void QRadioButton_setToggledCallback(void* radioButton, QRadioButton_ToggledCallback callback) {
+    static_cast<QRadioButtonBind*>(radioButton)->setToggledCallback(callback);
 }
 
-void QRadioButton_setClickedCallback(void* radio_button, QRadioButtonClickedCallback callback)
-{
-    BindQRadioButton* qradio_button = static_cast<BindQRadioButton*>(radio_button);
-    RadioButtonHandler* handler = qradio_button->handler();
-    if (!handler) {
-        handler = new RadioButtonHandler(qradio_button);
-        qradio_button->setRadioButtonHandler(handler);
-    }
-    handler->setClickedCallback(callback);
+void QRadioButton_setClickedCallback(void* radioButton, QRadioButton_ClickedCallback callback) {
+    static_cast<QRadioButtonBind*>(radioButton)->setClickedCallback(callback);
 }
 
-void QRadioButton_setPressedCallback(void* radio_button, QRadioButtonPressedCallback callback)
-{
-    BindQRadioButton* qradio_button = static_cast<BindQRadioButton*>(radio_button);
-    RadioButtonHandler* handler = qradio_button->handler();
-    if (!handler) {
-        handler = new RadioButtonHandler(qradio_button);
-        qradio_button->setRadioButtonHandler(handler);
-    }
-    handler->setPressedCallback(callback);
+void QRadioButton_setPressedCallback(void* radioButton, QRadioButton_PressedCallback callback) {
+    static_cast<QRadioButtonBind*>(radioButton)->setPressedCallback(callback);
 }
 
-void QRadioButton_setReleasedCallback(void* radio_button, QRadioButtonReleasedCallback callback)
-{
-    BindQRadioButton* qradio_button = static_cast<BindQRadioButton*>(radio_button);
-    RadioButtonHandler* handler = qradio_button->handler();
-    if (!handler) {
-        handler = new RadioButtonHandler(qradio_button);
-        qradio_button->setRadioButtonHandler(handler);
-    }
-    handler->setReleasedCallback(callback);
+void QRadioButton_setReleasedCallback(void* radioButton, QRadioButton_ReleasedCallback callback) {
+    static_cast<QRadioButtonBind*>(radioButton)->setReleasedCallback(callback);
 }
 
 }

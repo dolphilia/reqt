@@ -1,6 +1,6 @@
 #include "QDockWidgetHandler.h"
 
-DockWidgetHandler::DockWidgetHandler(QObject* parent)
+QDockWidgetHandler::QDockWidgetHandler(QObject* parent)
     : QObject(parent)
     , allowedAreasChangedCallback(nullptr)
     , dockLocationChangedCallback(nullptr)
@@ -9,51 +9,51 @@ DockWidgetHandler::DockWidgetHandler(QObject* parent)
     , visibilityChangedCallback(nullptr) {
 }
 
-void DockWidgetHandler::setAllowedAreasChangedCallback(AllowedAreasChangedCallback callback) {
+void QDockWidgetHandler::setAllowedAreasChangedCallback(QDockWidget_AllowedAreasChangedCallback callback) {
     allowedAreasChangedCallback = callback;
 }
 
-void DockWidgetHandler::setDockLocationChangedCallback(DockLocationChangedCallback callback) {
+void QDockWidgetHandler::setDockLocationChangedCallback(QDockWidget_DockLocationChangedCallback callback) {
     dockLocationChangedCallback = callback;
 }
 
-void DockWidgetHandler::setFeaturesChangedCallback(FeaturesChangedCallback callback) {
+void QDockWidgetHandler::setFeaturesChangedCallback(QDockWidget_FeaturesChangedCallback callback) {
     featuresChangedCallback = callback;
 }
 
-void DockWidgetHandler::setTopLevelChangedCallback(TopLevelChangedCallback callback) {
+void QDockWidgetHandler::setTopLevelChangedCallback(QDockWidget_TopLevelChangedCallback callback) {
     topLevelChangedCallback = callback;
 }
 
-void DockWidgetHandler::setVisibilityChangedCallback(VisibilityChangedCallback callback) {
+void QDockWidgetHandler::setVisibilityChangedCallback(QDockWidget_VisibilityChangedCallback callback) {
     visibilityChangedCallback = callback;
 }
 
-void DockWidgetHandler::onAllowedAreasChanged(Qt::DockWidgetAreas allowedAreas) const {
+void QDockWidgetHandler::onAllowedAreasChanged(Qt::DockWidgetAreas allowedAreas) const {
     if (allowedAreasChangedCallback) {
         allowedAreasChangedCallback(parent(), static_cast<int>(allowedAreas));
     }
 }
 
-void DockWidgetHandler::onDockLocationChanged(Qt::DockWidgetArea area) const {
+void QDockWidgetHandler::onDockLocationChanged(Qt::DockWidgetArea area) const {
     if (dockLocationChangedCallback) {
         dockLocationChangedCallback(parent(), static_cast<int>(area));
     }
 }
 
-void DockWidgetHandler::onFeaturesChanged(QDockWidget::DockWidgetFeatures features) const {
+void QDockWidgetHandler::onFeaturesChanged(QDockWidget::DockWidgetFeatures features) const {
     if (featuresChangedCallback) {
         featuresChangedCallback(parent(), static_cast<int>(features));
     }
 }
 
-void DockWidgetHandler::onTopLevelChanged(bool topLevel) const {
+void QDockWidgetHandler::onTopLevelChanged(bool topLevel) const {
     if (topLevelChangedCallback) {
         topLevelChangedCallback(parent(), topLevel);
     }
 }
 
-void DockWidgetHandler::onVisibilityChanged(bool visible) const {
+void QDockWidgetHandler::onVisibilityChanged(bool visible) const {
     if (visibilityChangedCallback) {
         visibilityChangedCallback(parent(), visible);
     }

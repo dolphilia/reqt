@@ -1,21 +1,21 @@
 #include "QGraphicsWidgetHandler.h"
 #include <QRectF>
 
-GraphicsWidgetHandler::GraphicsWidgetHandler(QObject* parent)
+QGraphicsWidgetHandler::QGraphicsWidgetHandler(QObject* parent)
     : QObject(parent)
     , geometryChangedCallback(nullptr)
     , layoutChangedCallback(nullptr) {
 }
 
-void GraphicsWidgetHandler::setGeometryChangedCallback(GeometryChangedCallback callback) {
+void QGraphicsWidgetHandler::setGeometryChangedCallback(QGraphicsWidget_GeometryChangedCallback callback) {
     geometryChangedCallback = callback;
 }
 
-void GraphicsWidgetHandler::setLayoutChangedCallback(LayoutChangedCallback callback) {
+void QGraphicsWidgetHandler::setLayoutChangedCallback(QGraphicsWidget_LayoutChangedCallback callback) {
     layoutChangedCallback = callback;
 }
 
-void GraphicsWidgetHandler::onGeometryChanged() {
+void QGraphicsWidgetHandler::onGeometryChanged() {
     if (geometryChangedCallback) {
         QGraphicsWidget* widget = qobject_cast<QGraphicsWidget*>(parent());
         if (widget) {
@@ -25,7 +25,7 @@ void GraphicsWidgetHandler::onGeometryChanged() {
     }
 }
 
-void GraphicsWidgetHandler::onLayoutChanged() {
+void QGraphicsWidgetHandler::onLayoutChanged() {
     if (layoutChangedCallback) {
         layoutChangedCallback(parent());
     }

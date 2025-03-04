@@ -1,19 +1,19 @@
-#ifndef CHECKBOX_HANDLER_H
-#define CHECKBOX_HANDLER_H
+#ifndef QCHECKBOX_HANDLER_H
+#define QCHECKBOX_HANDLER_H
 
 #include "QAbstractButton/QAbstractButtonHandler.h"
 #include <QObject>
 
-class CheckBoxHandler : public QObject {
+class QCheckBoxHandler : public QObject {
     Q_OBJECT
-    typedef void (*StateCallback)(void*, int);
-    typedef void (*ToggleCallback)(void*, bool);
-    typedef void (*ClickCallback)(void*, bool);
+    typedef void (*QCheckBox_StateChangedCallback)(void*, int);
+    typedef void (*QCheckBox_ToggledCallback)(void*, bool);
+    typedef void (*QCheckBox_ClickedCallback)(void*, bool);
 public:
-    explicit CheckBoxHandler(QObject* parent = nullptr);
-    void setStateChangedCallback(StateCallback callback);
-    void setToggledCallback(ToggleCallback callback);
-    void setClickedCallback(ClickCallback callback);
+    explicit QCheckBoxHandler(QObject* parent = nullptr);
+    void setStateChangedCallback(QCheckBox_StateChangedCallback callback);
+    void setToggledCallback(QCheckBox_ToggledCallback callback);
+    void setClickedCallback(QCheckBox_ClickedCallback callback);
 
 public slots:
     void onStateChanged(int state) const;
@@ -21,9 +21,9 @@ public slots:
     void onClicked(bool checked) const;
 
 private:
-    StateCallback stateCallback;
-    ToggleCallback toggleCallback;
-    ClickCallback clickedCallback;
+    QCheckBox_StateChangedCallback stateCallback;
+    QCheckBox_ToggledCallback toggleCallback;
+    QCheckBox_ClickedCallback clickedCallback;
 };
 
-#endif // CHECKBOX_HANDLER_H
+#endif // QCHECKBOX_HANDLER_H

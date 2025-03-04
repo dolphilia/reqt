@@ -6,16 +6,16 @@
 
 class QDialogBind : public QDialog {
     Q_OBJECT
-    typedef void (*DialogAcceptedCallback)(void* dialog);
-    typedef void (*DialogFinishedCallback)(void* dialog, int result);
-    typedef void (*DialogRejectedCallback)(void* dialog);
+    typedef void (*QDialog_DialogAcceptedCallback)(void* dialog);
+    typedef void (*QDialog_DialogFinishedCallback)(void* dialog, int result);
+    typedef void (*QDialog_DialogRejectedCallback)(void* dialog);
 public:
     explicit QDialogBind(QWidget* parent = nullptr, Qt::WindowFlags f = Qt::WindowFlags());
     ~QDialogBind() override;
 
-    void setDialogAcceptedCallback(DialogAcceptedCallback callback) const;
-    void setDialogFinishedCallback(DialogFinishedCallback callback) const;
-    void setDialogRejectedCallback(DialogRejectedCallback callback) const;
+    void setDialogAcceptedCallback(QDialog_DialogAcceptedCallback callback) const;
+    void setDialogFinishedCallback(QDialog_DialogFinishedCallback callback) const;
+    void setDialogRejectedCallback(QDialog_DialogRejectedCallback callback) const;
 
 private:
     QDialogHandler* handler;

@@ -8,15 +8,15 @@ QLineEditHandler::QLineEditHandler(QObject* parent)
     , returnPressedCallback(nullptr) {
 }
 
-void QLineEditHandler::setTextChangedCallback(TextChangedCallback callback) {
+void QLineEditHandler::setTextChangedCallback(QLineEdit_TextChangedCallback callback) {
     textChangedCallback = callback;
 }
 
-void QLineEditHandler::setTextEditedCallback(TextEditedCallback callback) {
+void QLineEditHandler::setTextEditedCallback(QLineEdit_TextEditedCallback callback) {
     textEditedCallback = callback;
 }
 
-void QLineEditHandler::setReturnPressedCallback(ReturnPressedCallback callback) {
+void QLineEditHandler::setReturnPressedCallback(QLineEdit_ReturnPressedCallback callback) {
     returnPressedCallback = callback;
 }
 

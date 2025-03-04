@@ -7,22 +7,22 @@
 
 class QInputDialogBind : public QInputDialog {
     Q_OBJECT
-    typedef void (*DoubleValueChangedCallback)(void*, double);
-    typedef void (*DoubleValueSelectedCallback)(void*, double);
-    typedef void (*IntValueChangedCallback)(void*, int);
-    typedef void (*IntValueSelectedCallback)(void*, int);
-    typedef void (*TextValueChangedCallback)(void*, const char*);
-    typedef void (*TextValueSelectedCallback)(void*, const char*);
+    typedef void (*QInputDialog_DoubleValueChangedCallback)(void*, double);
+    typedef void (*QInputDialog_DoubleValueSelectedCallback)(void*, double);
+    typedef void (*QInputDialog_IntValueChangedCallback)(void*, int);
+    typedef void (*QInputDialog_IntValueSelectedCallback)(void*, int);
+    typedef void (*QInputDialog_TextValueChangedCallback)(void*, const char*);
+    typedef void (*QInputDialog_TextValueSelectedCallback)(void*, const char*);
 public:
     explicit QInputDialogBind(QWidget* parent = nullptr, Qt::WindowFlags flags = Qt::WindowFlags());
     ~QInputDialogBind() override;
     
-    void setDoubleValueChangedCallback(DoubleValueChangedCallback callback) const;
-    void setDoubleValueSelectedCallback(DoubleValueSelectedCallback callback) const;
-    void setIntValueChangedCallback(IntValueChangedCallback callback) const;
-    void setIntValueSelectedCallback(IntValueSelectedCallback callback) const;
-    void setTextValueChangedCallback(TextValueChangedCallback callback) const;
-    void setTextValueSelectedCallback(TextValueSelectedCallback callback) const;
+    void setDoubleValueChangedCallback(QInputDialog_DoubleValueChangedCallback callback) const;
+    void setDoubleValueSelectedCallback(QInputDialog_DoubleValueSelectedCallback callback) const;
+    void setIntValueChangedCallback(QInputDialog_IntValueChangedCallback callback) const;
+    void setIntValueSelectedCallback(QInputDialog_IntValueSelectedCallback callback) const;
+    void setTextValueChangedCallback(QInputDialog_TextValueChangedCallback callback) const;
+    void setTextValueSelectedCallback(QInputDialog_TextValueSelectedCallback callback) const;
     
     // スタティック関数
     static double getDouble(QWidget* parent, const char* title, const char* label, double value, double min, double max, int decimals, bool* ok, int flags);

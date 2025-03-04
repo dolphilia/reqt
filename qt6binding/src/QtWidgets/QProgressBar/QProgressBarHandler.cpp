@@ -1,23 +1,16 @@
 #include "QProgressBarHandler.h"
 
-ProgressBarHandler::ProgressBarHandler(QObject *parent)
+QProgressBarHandler::QProgressBarHandler(QObject* parent)
     : QObject(parent)
-    , m_valueChangedCallback(nullptr)
-{
+    , valueChangedCallback(nullptr) {
 }
 
-ProgressBarHandler::~ProgressBarHandler()
-{
+void QProgressBarHandler::setValueChangedCallback(QProgressBar_ValueChangedCallback callback) {
+    valueChangedCallback = callback;
 }
 
-void ProgressBarHandler::setValueChangedCallback(void (*callback)(int))
-{
-    m_valueChangedCallback = callback;
-}
-
-void ProgressBarHandler::onValueChanged(int value)
-{
-    if (m_valueChangedCallback) {
-        m_valueChangedCallback(value);
+void QProgressBarHandler::onValueChanged(int value) const {
+    if (valueChangedCallback) {
+        valueChangedCallback(parent(), value);
     }
 }

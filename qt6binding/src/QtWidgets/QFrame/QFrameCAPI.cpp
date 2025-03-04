@@ -1,5 +1,4 @@
 #include "QFrameBind.h"
-#include "qframe.h"
 
 extern "C" {
 

@@ -1,5 +1,4 @@
 #include "QListViewBind.h"
-#include "qlistview.h"
 
 extern "C" {
 
@@ -125,19 +124,19 @@ int QListView_modelColumn(void* listView) {
     return static_cast<QListViewBind*>(listView)->modelColumn();
 }
 
-typedef void (*ClickedCallback)(void*, int, int);
-typedef void (*DoubleClickedCallback)(void*, int, int);
-typedef void (*SelectionChangedCallback)(void*);
+typedef void (*QListView_ClickedCallback)(void*, int, int);
+typedef void (*QListView_DoubleClickedCallback)(void*, int, int);
+typedef void (*QListView_SelectionChangedCallback)(void*);
 
-void QListView_setClickedCallback(void* listView, ClickedCallback callback) {
+void QListView_setClickedCallback(void* listView, QListView_ClickedCallback callback) {
     static_cast<QListViewBind*>(listView)->setClickedCallback(callback);
 }
 
-void QListView_setDoubleClickedCallback(void* listView, DoubleClickedCallback callback) {
+void QListView_setDoubleClickedCallback(void* listView, QListView_DoubleClickedCallback callback) {
     static_cast<QListViewBind*>(listView)->setDoubleClickedCallback(callback);
 }
 
-void QListView_setSelectionChangedCallback(void* listView, SelectionChangedCallback callback) {
+void QListView_setSelectionChangedCallback(void* listView, QListView_SelectionChangedCallback callback) {
     static_cast<QListViewBind*>(listView)->setSelectionChangedCallback(callback);
 }
 

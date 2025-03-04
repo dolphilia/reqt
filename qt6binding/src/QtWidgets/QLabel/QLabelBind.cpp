@@ -19,10 +19,10 @@ QLabelBind::~QLabelBind() {
     delete handler;
 }
 
-void QLabelBind::setLinkActivatedCallback(LinkActivatedCallback callback) const {
+void QLabelBind::setLinkActivatedCallback(QLabel_LinkActivatedCallback callback) const {
     handler->setLinkActivatedCallback(callback);
 }
 
-void QLabelBind::setLinkHoveredCallback(LinkHoveredCallback callback) const {
+void QLabelBind::setLinkHoveredCallback(QLabel_LinkHoveredCallback callback) const {
     handler->setLinkHoveredCallback(callback);
 }

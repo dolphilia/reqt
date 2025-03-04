@@ -1,33 +1,21 @@
 #include "QMenuBarBind.h"
+#include "QMenuBarHandler.h"
 
-BindQMenuBar::BindQMenuBar(QWidget *parent)
+QMenuBarBind::QMenuBarBind(QWidget* parent)
     : QMenuBar(parent)
-    , m_handler(nullptr)
-{
+    , handler(new QMenuBarHandler(this)) {
+    connect(this, &QMenuBar::triggered, handler, &QMenuBarHandler::onTriggered);
+    connect(this, &QMenuBar::hovered, handler, &QMenuBarHandler::onHovered);
 }
 
-BindQMenuBar::~BindQMenuBar()
-{
-    delete m_handler;
+QMenuBarBind::~QMenuBarBind() {
+    delete handler;
 }
 
-void BindQMenuBar::setMenuBarHandler(MenuBarHandler *handler)
-{
-    if (m_handler) {
-        disconnect(this, &QMenuBar::triggered, m_handler, &MenuBarHandler::onTriggered);
-        disconnect(this, &QMenuBar::hovered, m_handler, &MenuBarHandler::onHovered);
-        delete m_handler;
-    }
-
-    m_handler = handler;
-
-    if (m_handler) {
-        connect(this, &QMenuBar::triggered, m_handler, &MenuBarHandler::onTriggered);
-        connect(this, &QMenuBar::hovered, m_handler, &MenuBarHandler::onHovered);
-    }
+void QMenuBarBind::setTriggeredCallback(QMenuBar_TriggeredCallback callback) const {
+    handler->setTriggeredCallback(callback);
 }
 
-MenuBarHandler *BindQMenuBar::handler() const
-{
-    return m_handler;
+void QMenuBarBind::setHoveredCallback(QMenuBar_HoveredCallback callback) const {
+    handler->setHoveredCallback(callback);
 }

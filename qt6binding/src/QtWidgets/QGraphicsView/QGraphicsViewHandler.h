@@ -4,19 +4,19 @@
 #include <QObject>
 #include <QGraphicsView>
 
-class GraphicsViewHandler : public QObject {
+class QGraphicsViewHandler : public QObject {
     Q_OBJECT
-    typedef void (*SceneRectChangedCallback)(void*, double, double, double, double);
-    typedef void (*ScaleChangedCallback)(void*, double, double);
-    typedef void (*TransformChangedCallback)(void*);
+    typedef void (*QGraphicsView_SceneRectChangedCallback)(void*, double, double, double, double);
+    typedef void (*QGraphicsView_ScaleChangedCallback)(void*, double, double);
+    typedef void (*QGraphicsView_TransformChangedCallback)(void*);
 public:
-    explicit GraphicsViewHandler(QObject* parent = nullptr);
-    GraphicsViewHandler(const GraphicsViewHandler&) = delete;
-    GraphicsViewHandler& operator=(const GraphicsViewHandler&) = delete;
+    explicit QGraphicsViewHandler(QObject* parent = nullptr);
+    QGraphicsViewHandler(const QGraphicsViewHandler&) = delete;
+    QGraphicsViewHandler& operator=(const QGraphicsViewHandler&) = delete;
 
-    void setSceneRectChangedCallback(SceneRectChangedCallback callback);
-    void setScaleChangedCallback(ScaleChangedCallback callback);
-    void setTransformChangedCallback(TransformChangedCallback callback);
+    void setSceneRectChangedCallback(QGraphicsView_SceneRectChangedCallback callback);
+    void setScaleChangedCallback(QGraphicsView_ScaleChangedCallback callback);
+    void setTransformChangedCallback(QGraphicsView_TransformChangedCallback callback);
 
 public slots:
     void onSceneRectChanged(const QRectF& rect) const;
@@ -24,9 +24,9 @@ public slots:
     void onTransformChanged() const;
 
 private:
-    SceneRectChangedCallback sceneRectChangedCallback;
-    ScaleChangedCallback scaleChangedCallback;
-    TransformChangedCallback transformChangedCallback;
+    QGraphicsView_SceneRectChangedCallback sceneRectChangedCallback;
+    QGraphicsView_ScaleChangedCallback scaleChangedCallback;
+    QGraphicsView_TransformChangedCallback transformChangedCallback;
 };
 
 #endif // GRAPHICSVIEW_HANDLER_H

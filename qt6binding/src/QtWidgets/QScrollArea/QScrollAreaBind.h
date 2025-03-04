@@ -1,20 +1,20 @@
-#ifndef BIND_Q_SCROLL_AREA_H
-#define BIND_Q_SCROLL_AREA_H
+#ifndef QSCROLLAREA_BIND_H
+#define QSCROLLAREA_BIND_H
 
-#include <QScrollArea>
 #include "QScrollAreaHandler.h"
+#include <QScrollArea>
 
-class BindQScrollArea : public QScrollArea {
+class QScrollAreaBind : public QScrollArea {
     Q_OBJECT
+    typedef void (*QScrollArea_VerticalScrollBarValueChangedCallback)(void*, int);
+    typedef void (*QScrollArea_HorizontalScrollBarValueChangedCallback)(void*, int);
 public:
-    explicit BindQScrollArea(QWidget *parent = nullptr);
-    ~BindQScrollArea();
-
-    void setScrollAreaHandler(ScrollAreaHandler *handler);
-    ScrollAreaHandler *handler() const;
-
+    explicit QScrollAreaBind(QWidget* parent = nullptr);
+    ~QScrollAreaBind() override;
+    void setVerticalScrollBarValueChangedCallback(QScrollArea_VerticalScrollBarValueChangedCallback callback) const;
+    void setHorizontalScrollBarValueChangedCallback(QScrollArea_HorizontalScrollBarValueChangedCallback callback) const;
 private:
-    ScrollAreaHandler *m_handler;
+    QScrollAreaHandler* handler;
 };
 
-#endif // BIND_Q_SCROLL_AREA_H
+#endif // QSCROLLAREA_BIND_H

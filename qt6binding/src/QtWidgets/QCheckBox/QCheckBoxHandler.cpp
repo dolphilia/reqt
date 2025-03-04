@@ -1,37 +1,37 @@
 #include "QCheckBoxHandler.h"
 
-CheckBoxHandler::CheckBoxHandler(QObject* parent)
+QCheckBoxHandler::QCheckBoxHandler(QObject* parent)
     : QObject(parent)
     , stateCallback(nullptr)
     , toggleCallback(nullptr)
     , clickedCallback(nullptr) {
 }
 
-void CheckBoxHandler::setStateChangedCallback(StateCallback callback) {
+void QCheckBoxHandler::setStateChangedCallback(QCheckBox_StateChangedCallback callback) {
     stateCallback = callback;
 }
 
-void CheckBoxHandler::setToggledCallback(ToggleCallback callback) {
+void QCheckBoxHandler::setToggledCallback(QCheckBox_ToggledCallback callback) {
     toggleCallback = callback;
 }
 
-void CheckBoxHandler::setClickedCallback(ClickCallback callback) {
+void QCheckBoxHandler::setClickedCallback(QCheckBox_ClickedCallback callback) {
     clickedCallback = callback;
 }
 
-void CheckBoxHandler::onStateChanged(int state) const {
+void QCheckBoxHandler::onStateChanged(int state) const {
     if (stateCallback) {
         stateCallback(parent(), state);
     }
 }
 
-void CheckBoxHandler::onToggled(bool checked) const {
+void QCheckBoxHandler::onToggled(bool checked) const {
     if (toggleCallback) {
         toggleCallback(parent(), checked);
     }
 }
 
-void CheckBoxHandler::onClicked(bool checked) const {
+void QCheckBoxHandler::onClicked(bool checked) const {
     if (clickedCallback) {
         clickedCallback(parent(), checked);
     }

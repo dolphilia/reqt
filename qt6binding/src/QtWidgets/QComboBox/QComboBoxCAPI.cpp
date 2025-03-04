@@ -1,5 +1,4 @@
 #include "QComboBoxBind.h"
-#include "qcombobox.h"
 
 extern "C" {
 
@@ -72,11 +71,14 @@ bool QComboBox_isEnabled(void* comboBox) {
     return static_cast<QComboBoxBind*>(comboBox)->isEnabled();
 }
 
-void QComboBox_setCurrentIndexChangedCallback(void* comboBox, CurrentIndexChangedCallback callback) {
+typedef void (*QComboBox_CurrentIndexChangedCallback)(void*, int);
+typedef void (*QComboBox_CurrentTextChangedCallback)(void*, const char*);
+
+void QComboBox_setCurrentIndexChangedCallback(void* comboBox, QComboBox_CurrentIndexChangedCallback callback) {
     static_cast<QComboBoxBind*>(comboBox)->setCurrentIndexChangedCallback(callback);
 }
 
-void QComboBox_setCurrentTextChangedCallback(void* comboBox, CurrentTextChangedCallback callback) {
+void QComboBox_setCurrentTextChangedCallback(void* comboBox, QComboBox_CurrentTextChangedCallback callback) {
     static_cast<QComboBoxBind*>(comboBox)->setCurrentTextChangedCallback(callback);
 }
 

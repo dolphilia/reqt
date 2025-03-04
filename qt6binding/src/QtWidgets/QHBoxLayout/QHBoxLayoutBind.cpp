@@ -3,7 +3,7 @@
 
 QHBoxLayoutBind::QHBoxLayoutBind(QWidget* parent)
     : QHBoxLayout(parent)
-    , handler(new HBoxLayoutHandler(this)) {
+    , handler(new QHBoxLayoutHandler(this)) {
 }
 
 QHBoxLayoutBind::~QHBoxLayoutBind() {

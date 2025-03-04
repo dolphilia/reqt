@@ -5,14 +5,14 @@
 
 class QDialogHandler : public QObject {
     Q_OBJECT
-    typedef void (*DialogAcceptedCallback)(void* dialog);
-    typedef void (*DialogFinishedCallback)(void* dialog, int result);
-    typedef void (*DialogRejectedCallback)(void* dialog);
+    typedef void (*QDialog_DialogAcceptedCallback)(void* dialog);
+    typedef void (*QDialog_DialogFinishedCallback)(void* dialog, int result);
+    typedef void (*QDialog_DialogRejectedCallback)(void* dialog);
 public:
     explicit QDialogHandler(QObject* parent = nullptr);
-    void setDialogAcceptedCallback(DialogAcceptedCallback callback);
-    void setDialogFinishedCallback(DialogFinishedCallback callback);
-    void setDialogRejectedCallback(DialogRejectedCallback callback);
+    void setDialogAcceptedCallback(QDialog_DialogAcceptedCallback callback);
+    void setDialogFinishedCallback(QDialog_DialogFinishedCallback callback);
+    void setDialogRejectedCallback(QDialog_DialogRejectedCallback callback);
 
 public slots:
     void onDialogAccepted() const;
@@ -20,9 +20,9 @@ public slots:
     void onDialogRejected() const;
 
 private:
-    DialogAcceptedCallback acceptedCallback;
-    DialogFinishedCallback finishedCallback;
-    DialogRejectedCallback rejectedCallback;
+    QDialog_DialogAcceptedCallback acceptedCallback;
+    QDialog_DialogFinishedCallback finishedCallback;
+    QDialog_DialogRejectedCallback rejectedCallback;
 };
 
 #endif // QDIALOG_HANDLER_H

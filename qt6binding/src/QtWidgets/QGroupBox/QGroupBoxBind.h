@@ -6,15 +6,15 @@
 
 class QGroupBoxBind : public QGroupBox {
     Q_OBJECT
-    typedef void (*ToggledCallback)(void*, bool);
+    typedef void (*QGroupBox_ToggledCallback)(void*, bool);
 public:
     explicit QGroupBoxBind(QWidget* parent = nullptr);
     explicit QGroupBoxBind(const QString& title, QWidget* parent = nullptr);
     ~QGroupBoxBind() override;
     
-    void setToggledCallback(ToggledCallback callback) const;
+    void setToggledCallback(QGroupBox_ToggledCallback callback) const;
 private:
-    GroupBoxHandler* handler;
+    QGroupBoxHandler* handler;
 };
 
 #endif // QGROUPBOX_BIND_H

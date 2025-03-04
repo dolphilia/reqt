@@ -3,16 +3,16 @@
 
 #include <QObject>
 
-class GroupBoxHandler : public QObject {
+class QGroupBoxHandler : public QObject {
     Q_OBJECT
-    typedef void (*ToggledCallback)(void*, bool);
+    typedef void (*QGroupBox_ToggledCallback)(void*, bool);
 public:
-    explicit GroupBoxHandler(QObject* parent = nullptr);
-    void setToggledCallback(ToggledCallback callback);
+    explicit QGroupBoxHandler(QObject* parent = nullptr);
+    void setToggledCallback(QGroupBox_ToggledCallback callback);
 public slots:
     void onToggled(bool checked) const;
 private:
-    ToggledCallback toggledCallback;
+    QGroupBox_ToggledCallback toggledCallback;
 };
 
 #endif // GROUPBOX_HANDLER_H

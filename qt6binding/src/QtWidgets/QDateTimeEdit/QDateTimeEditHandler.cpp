@@ -1,21 +1,20 @@
 #include "QDateTimeEditHandler.h"
 
-DateTimeEditHandler::DateTimeEditHandler(QObject* parent)
+QDateTimeEditHandler::QDateTimeEditHandler(QObject* parent)
     : QObject(parent)
     , dateCallback(nullptr)
-    , timeCallback(nullptr)
-{
+    , timeCallback(nullptr) {
 }
 
-void DateTimeEditHandler::setDateCallback(DateChangedCallback callback) {
+void QDateTimeEditHandler::setDateCallback(QDateTimeEdit_DateChangedCallback callback) {
     dateCallback = callback;
 }
 
-void DateTimeEditHandler::setTimeCallback(TimeChangedCallback callback) {
+void QDateTimeEditHandler::setTimeCallback(QDateTimeEdit_TimeChangedCallback callback) {
     timeCallback = callback;
 }
 
-void DateTimeEditHandler::onDateTimeChanged(const QDateTime& datetime) const {
+void QDateTimeEditHandler::onDateTimeChanged(const QDateTime& datetime) const {
     if (dateCallback) {
         dateCallback(parent(), datetime.date().year(), datetime.date().month(), datetime.date().day());
     }

@@ -1,36 +1,27 @@
 #include "QScrollAreaHandler.h"
 
-ScrollAreaHandler::ScrollAreaHandler(QObject *parent)
+QScrollAreaHandler::QScrollAreaHandler(QObject* parent)
     : QObject(parent)
-    , m_verticalScrollBarValueChangedCallback(nullptr)
-    , m_horizontalScrollBarValueChangedCallback(nullptr)
-{
+    , verticalCallback(nullptr)
+    , horizontalCallback(nullptr) {
 }
 
-ScrollAreaHandler::~ScrollAreaHandler()
-{
+void QScrollAreaHandler::setVerticalScrollCallback(QScrollArea_VerticalScrollBarValueChangedCallback callback) {
+    verticalCallback = callback;
 }
 
-void ScrollAreaHandler::setVerticalScrollBarValueChangedCallback(void (*callback)(int))
-{
-    m_verticalScrollBarValueChangedCallback = callback;
+void QScrollAreaHandler::setHorizontalScrollCallback(QScrollArea_HorizontalScrollBarValueChangedCallback callback) {
+    horizontalCallback = callback;
 }
 
-void ScrollAreaHandler::setHorizontalScrollBarValueChangedCallback(void (*callback)(int))
-{
-    m_horizontalScrollBarValueChangedCallback = callback;
-}
-
-void ScrollAreaHandler::onVerticalScrollBarValueChanged(int value)
-{
-    if (m_verticalScrollBarValueChangedCallback) {
-        m_verticalScrollBarValueChangedCallback(value);
+void QScrollAreaHandler::onVerticalScrollBarValueChanged(int value) const {
+    if (verticalCallback) {
+        verticalCallback(parent(), value);
     }
 }
 
-void ScrollAreaHandler::onHorizontalScrollBarValueChanged(int value)
-{
-    if (m_horizontalScrollBarValueChangedCallback) {
-        m_horizontalScrollBarValueChangedCallback(value);
+void QScrollAreaHandler::onHorizontalScrollBarValueChanged(int value) const {
+    if (horizontalCallback) {
+        horizontalCallback(parent(), value);
     }
 }

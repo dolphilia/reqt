@@ -4,16 +4,16 @@
 #include <QObject>
 #include <QDate>
 
-class DateEditHandler : public QObject {
+class QDateEditHandler : public QObject {
     Q_OBJECT
-    typedef void (*DateChangedCallback)(void*, int, int, int);
+    typedef void (*QDateEdit_DateChangedCallback)(void*, int, int, int);
 public:
-    explicit DateEditHandler(QObject* parent = nullptr);
-    void setDateChangedCallback(DateChangedCallback callback);
+    explicit QDateEditHandler(QObject* parent = nullptr);
+    void setDateChangedCallback(QDateEdit_DateChangedCallback callback);
 public slots:
     void onDateChanged(const QDate& date) const;
 private:
-    DateChangedCallback dateCallback;
+    QDateEdit_DateChangedCallback dateCallback;
 };
 
 #endif // DATEEDIT_HANDLER_H

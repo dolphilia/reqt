@@ -14,12 +14,6 @@ void QMainWindow_delete(void* mainWindow) {
     delete static_cast<QMainWindowBind*>(mainWindow);
 }
 
-typedef void (*WindowTitleChangedCallback)(void*, const char*);
-
-void QMainWindow_setWindowTitleChangedCallback(void* mainWindow, WindowTitleChangedCallback callback) {
-    static_cast<QMainWindowBind*>(mainWindow)->setWindowTitleChangedCallback(callback);
-}
-
 void QMainWindow_setCentralWidget(void* mainWindow, void* widget) {
     static_cast<QMainWindowBind*>(mainWindow)->setCentralWidget(static_cast<QWidget*>(widget));
 }
@@ -126,6 +120,12 @@ void QMainWindow_setUnifiedTitleAndToolBarOnMac(void* mainWindow, bool set) {
 
 bool QMainWindow_unifiedTitleAndToolBarOnMac(void* mainWindow) {
     return static_cast<QMainWindowBind*>(mainWindow)->unifiedTitleAndToolBarOnMac();
+}
+
+typedef void (*QMainWindow_WindowTitleChangedCallback)(void*, const char*);
+
+void QMainWindow_setWindowTitleChangedCallback(void* mainWindow, QMainWindow_WindowTitleChangedCallback callback) {
+    static_cast<QMainWindowBind*>(mainWindow)->setWindowTitleChangedCallback(callback);
 }
 
 }

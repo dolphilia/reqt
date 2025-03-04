@@ -45,11 +45,11 @@ void QMenuBar_setActionText(void* menu_bar, void* action, const char* text);
 const char* QMenuBar_actionText(void* menu_bar, void* action);
 
 // Signal handlers
-typedef void (*QMenuBarTriggeredCallback)(void* action);
-typedef void (*QMenuBarHoveredCallback)(void* action);
+typedef void (*TriggeredCallback)(void*, void*);
+typedef void (*HoveredCallback)(void*, void*);
 
-void QMenuBar_setTriggeredCallback(void* menu_bar, QMenuBarTriggeredCallback callback);
-void QMenuBar_setHoveredCallback(void* menu_bar, QMenuBarHoveredCallback callback);
+void QMenuBar_setTriggeredCallback(void* menu_bar, TriggeredCallback callback);
+void QMenuBar_setHoveredCallback(void* menu_bar, HoveredCallback callback);
 
 // Corner constants
 #define QMENUBAR_CORNER_TOPLEFT 0

@@ -9,19 +9,19 @@ QAbstractButtonHandler::QAbstractButtonHandler(QObject* parent)
 {
 }
 
-void QAbstractButtonHandler::setClickedCallback(ClickCallback callback) {
+void QAbstractButtonHandler::setClickedCallback(QAbstractButton_ClickedCallback callback) {
     clickedCallback = callback;
 }
 
-void QAbstractButtonHandler::setPressedCallback(PressCallback callback) {
+void QAbstractButtonHandler::setPressedCallback(QAbstractButton_PressedCallback callback) {
     pressedCallback = callback;
 }
 
-void QAbstractButtonHandler::setReleasedCallback(ReleaseCallback callback) {
+void QAbstractButtonHandler::setReleasedCallback(QAbstractButton_ReleasedCallback callback) {
     releasedCallback = callback;
 }
 
-void QAbstractButtonHandler::setToggledCallback(ToggleCallback callback) {
+void QAbstractButtonHandler::setToggledCallback(QAbstractButton_ToggledCallback callback) {
     toggledCallback = callback;
 }
 

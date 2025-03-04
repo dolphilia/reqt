@@ -1,20 +1,20 @@
-#ifndef BIND_Q_MENU_BAR_H
-#define BIND_Q_MENU_BAR_H
+#ifndef QMENUBAR_BIND_H
+#define QMENUBAR_BIND_H
 
-#include <QMenuBar>
 #include "QMenuBarHandler.h"
+#include <QMenuBar>
 
-class BindQMenuBar : public QMenuBar {
+class QMenuBarBind : public QMenuBar {
     Q_OBJECT
+    typedef void (*QMenuBar_TriggeredCallback)(void*, void*);
+    typedef void (*QMenuBar_HoveredCallback)(void*, void*);
 public:
-    explicit BindQMenuBar(QWidget *parent = nullptr);
-    ~BindQMenuBar();
-
-    void setMenuBarHandler(MenuBarHandler *handler);
-    MenuBarHandler *handler() const;
-
+    explicit QMenuBarBind(QWidget* parent = nullptr);
+    ~QMenuBarBind() override;
+    void setTriggeredCallback(QMenuBar_TriggeredCallback callback) const;
+    void setHoveredCallback(QMenuBar_HoveredCallback callback) const;
 private:
-    MenuBarHandler *m_handler;
+    QMenuBarHandler* handler;
 };
 
-#endif // BIND_Q_MENU_BAR_H
+#endif // QMENUBAR_BIND_H

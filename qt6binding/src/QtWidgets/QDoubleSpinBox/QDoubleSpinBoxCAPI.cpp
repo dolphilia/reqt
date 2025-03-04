@@ -1,5 +1,4 @@
 #include "QDoubleSpinBoxBind.h"
-#include "qdoublespinbox.h"
 
 extern "C" {
 
@@ -91,11 +90,14 @@ const char* QDoubleSpinBox_text(void* doubleSpinBox) {
     return static_cast<QDoubleSpinBoxBind*>(doubleSpinBox)->text().toUtf8().constData();
 }
 
-void QDoubleSpinBox_setValueChangedCallback(void* doubleSpinBox, ValueChangedCallback callback) {
+typedef void (*QDoubleSpinBox_ValueChangedCallback)(void*, double);
+typedef void (*QDoubleSpinBox_EditingFinishedCallback)(void*);
+
+void QDoubleSpinBox_setValueChangedCallback(void* doubleSpinBox, QDoubleSpinBox_ValueChangedCallback callback) {
     static_cast<QDoubleSpinBoxBind*>(doubleSpinBox)->setValueChangedCallback(callback);
 }
 
-void QDoubleSpinBox_setEditingFinishedCallback(void* doubleSpinBox, EditingFinishedCallback callback) {
+void QDoubleSpinBox_setEditingFinishedCallback(void* doubleSpinBox, QDoubleSpinBox_EditingFinishedCallback callback) {
     static_cast<QDoubleSpinBoxBind*>(doubleSpinBox)->setEditingFinishedCallback(callback);
 }
 

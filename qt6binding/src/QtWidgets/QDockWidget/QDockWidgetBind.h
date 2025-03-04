@@ -6,21 +6,21 @@
 
 class QDockWidgetBind : public QDockWidget {
     Q_OBJECT
-    typedef void (*AllowedAreasChangedCallback)(void*, int);
-    typedef void (*DockLocationChangedCallback)(void*, int);
-    typedef void (*FeaturesChangedCallback)(void*, int);
-    typedef void (*TopLevelChangedCallback)(void*, bool);
-    typedef void (*VisibilityChangedCallback)(void*, bool);
+    typedef void (*QDockWidget_AllowedAreasChangedCallback)(void*, int);
+    typedef void (*QDockWidget_DockLocationChangedCallback)(void*, int);
+    typedef void (*QDockWidget_FeaturesChangedCallback)(void*, int);
+    typedef void (*QDockWidget_TopLevelChangedCallback)(void*, bool);
+    typedef void (*QDockWidget_VisibilityChangedCallback)(void*, bool);
 public:
     explicit QDockWidgetBind(const QString& title, QWidget* parent = nullptr);
     ~QDockWidgetBind() override;
-    void setAllowedAreasChangedCallback(AllowedAreasChangedCallback callback) const;
-    void setDockLocationChangedCallback(DockLocationChangedCallback callback) const;
-    void setFeaturesChangedCallback(FeaturesChangedCallback callback) const;
-    void setTopLevelChangedCallback(TopLevelChangedCallback callback) const;
-    void setVisibilityChangedCallback(VisibilityChangedCallback callback) const;
+    void setAllowedAreasChangedCallback(QDockWidget_AllowedAreasChangedCallback callback) const;
+    void setDockLocationChangedCallback(QDockWidget_DockLocationChangedCallback callback) const;
+    void setFeaturesChangedCallback(QDockWidget_FeaturesChangedCallback callback) const;
+    void setTopLevelChangedCallback(QDockWidget_TopLevelChangedCallback callback) const;
+    void setVisibilityChangedCallback(QDockWidget_VisibilityChangedCallback callback) const;
 private:
-    DockWidgetHandler* handler;
+    QDockWidgetHandler* handler;
 };
 
 #endif // QDOCKWIDGET_BIND_H

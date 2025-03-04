@@ -1,37 +1,37 @@
 #include "QListViewHandler.h"
 
-ListViewHandler::ListViewHandler(QObject* parent)
+QListViewHandler::QListViewHandler(QObject* parent)
     : QObject(parent)
     , clickedCallback(nullptr)
     , doubleClickedCallback(nullptr)
     , selectionChangedCallback(nullptr) {
 }
 
-void ListViewHandler::setClickedCallback(ClickedCallback callback) {
+void QListViewHandler::setClickedCallback(QListView_ClickedCallback callback) {
     clickedCallback = callback;
 }
 
-void ListViewHandler::setDoubleClickedCallback(DoubleClickedCallback callback) {
+void QListViewHandler::setDoubleClickedCallback(QListView_DoubleClickedCallback callback) {
     doubleClickedCallback = callback;
 }
 
-void ListViewHandler::setSelectionChangedCallback(SelectionChangedCallback callback) {
+void QListViewHandler::setSelectionChangedCallback(QListView_SelectionChangedCallback callback) {
     selectionChangedCallback = callback;
 }
 
-void ListViewHandler::onClicked(const QModelIndex& index) const {
+void QListViewHandler::onClicked(const QModelIndex& index) const {
     if (clickedCallback) {
         clickedCallback(parent(), index.row(), index.column());
     }
 }
 
-void ListViewHandler::onDoubleClicked(const QModelIndex& index) const {
+void QListViewHandler::onDoubleClicked(const QModelIndex& index) const {
     if (doubleClickedCallback) {
         doubleClickedCallback(parent(), index.row(), index.column());
     }
 }
 
-void ListViewHandler::onSelectionChanged() const {
+void QListViewHandler::onSelectionChanged() const {
     if (selectionChangedCallback) {
         selectionChangedCallback(parent());
     }

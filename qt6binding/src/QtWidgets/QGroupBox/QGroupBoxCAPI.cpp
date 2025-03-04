@@ -1,5 +1,4 @@
 #include "QGroupBoxBind.h"
-#include "qgroupbox.h"
 
 extern "C" {
 typedef void (*ToggledCallback)(void*, bool);
@@ -52,7 +51,9 @@ bool QGroupBox_isChecked(void* groupBox) {
     return static_cast<QGroupBoxBind*>(groupBox)->isChecked();
 }
 
-void QGroupBox_setToggledCallback(void* groupBox, ToggledCallback callback) {
+typedef void (*QGroupBox_ToggledCallback)(void*, bool);
+
+void QGroupBox_setToggledCallback(void* groupBox, QGroupBox_ToggledCallback callback) {
     static_cast<QGroupBoxBind*>(groupBox)->setToggledCallback(callback);
 }
 

@@ -1,15 +1,15 @@
 #include "QMainWindowHandler.h"
 
-MainWindowHandler::MainWindowHandler(QObject* parent)
+QMainWindowHandler::QMainWindowHandler(QObject* parent)
     : QObject(parent)
     , titleCallback(nullptr) {
 }
 
-void MainWindowHandler::setWindowTitleCallback(WindowTitleChangedCallback callback) {
+void QMainWindowHandler::setWindowTitleCallback(QMainWindow_WindowTitleChangedCallback callback) {
     titleCallback = callback;
 }
 
-void MainWindowHandler::onWindowTitleChanged(const QString& title) const {
+void QMainWindowHandler::onWindowTitleChanged(const QString& title) const {
     if (titleCallback) {
         titleCallback(parent(), title.toUtf8().constData());
     }

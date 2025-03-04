@@ -1,37 +1,27 @@
 #include "QMenuBarHandler.h"
-#include <QAction>
 
-MenuBarHandler::MenuBarHandler(QObject *parent)
+QMenuBarHandler::QMenuBarHandler(QObject* parent)
     : QObject(parent)
-    , m_triggeredCallback(nullptr)
-    , m_hoveredCallback(nullptr)
-{
+    , triggeredCallback(nullptr)
+    , hoveredCallback(nullptr) {
 }
 
-MenuBarHandler::~MenuBarHandler()
-{
+void QMenuBarHandler::setTriggeredCallback(QMenuBar_TriggeredCallback callback) {
+    triggeredCallback = callback;
 }
 
-void MenuBarHandler::setTriggeredCallback(void (*callback)(void* action))
-{
-    m_triggeredCallback = callback;
+void QMenuBarHandler::setHoveredCallback(QMenuBar_HoveredCallback callback) {
+    hoveredCallback = callback;
 }
 
-void MenuBarHandler::setHoveredCallback(void (*callback)(void* action))
-{
-    m_hoveredCallback = callback;
-}
-
-void MenuBarHandler::onTriggered(QAction* action)
-{
-    if (m_triggeredCallback) {
-        m_triggeredCallback(action);
+void QMenuBarHandler::onTriggered(QAction* action) const {
+    if (triggeredCallback) {
+        triggeredCallback(parent(), action);
     }
 }
 
-void MenuBarHandler::onHovered(QAction* action)
-{
-    if (m_hoveredCallback) {
-        m_hoveredCallback(action);
+void QMenuBarHandler::onHovered(QAction* action) const {
+    if (hoveredCallback) {
+        hoveredCallback(parent(), action);
     }
 }

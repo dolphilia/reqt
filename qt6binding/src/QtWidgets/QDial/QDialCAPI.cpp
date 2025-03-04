@@ -81,20 +81,24 @@ bool QDial_wrapping(void* dial) {
     return static_cast<QDialBind*>(dial)->wrapping();
 }
 
-// イベントコールバック
-void QDial_setValueChangedCallback(void* dial, ValueChangedCallback callback) {
+typedef void (*QDial_ValueChangedCallback)(void*, int);
+typedef void (*QDial_SliderMovedCallback)(void*, int);
+typedef void (*QDial_SliderPressedCallback)(void*);
+typedef void (*QDial_SliderReleasedCallback)(void*);
+
+void QDial_setValueChangedCallback(void* dial, QDial_ValueChangedCallback callback) {
     static_cast<QDialBind*>(dial)->setValueChangedCallback(callback);
 }
 
-void QDial_setSliderMovedCallback(void* dial, SliderMovedCallback callback) {
+void QDial_setSliderMovedCallback(void* dial, QDial_SliderMovedCallback callback) {
     static_cast<QDialBind*>(dial)->setSliderMovedCallback(callback);
 }
 
-void QDial_setSliderPressedCallback(void* dial, SliderPressedCallback callback) {
+void QDial_setSliderPressedCallback(void* dial, QDial_SliderPressedCallback callback) {
     static_cast<QDialBind*>(dial)->setSliderPressedCallback(callback);
 }
 
-void QDial_setSliderReleasedCallback(void* dial, SliderReleasedCallback callback) {
+void QDial_setSliderReleasedCallback(void* dial, QDial_SliderReleasedCallback callback) {
     static_cast<QDialBind*>(dial)->setSliderReleasedCallback(callback);
 }
 

@@ -1,21 +1,28 @@
-#ifndef BIND_Q_PLAIN_TEXT_EDIT_H
-#define BIND_Q_PLAIN_TEXT_EDIT_H
+#ifndef QPLAINTEXTEDIT_BIND_H
+#define QPLAINTEXTEDIT_BIND_H
 
-#include <QPlainTextEdit>
 #include "QPlainTextEditHandler.h"
+#include <QPlainTextEdit>
 
-class BindQPlainTextEdit : public QPlainTextEdit {
+class QPlainTextEditBind : public QPlainTextEdit {
     Q_OBJECT
-
+    typedef void (*QPlainTextEdit_TextChangedCallback)(void*);
+    typedef void (*QPlainTextEdit_CursorPositionChangedCallback)(void*);
+    typedef void (*QPlainTextEdit_CopyAvailableCallback)(void*, bool);
+    typedef void (*QPlainTextEdit_UndoAvailableCallback)(void*, bool);
+    typedef void (*QPlainTextEdit_RedoAvailableCallback)(void*, bool);
+    typedef void (*QPlainTextEdit_SelectionChangedCallback)(void*);
 public:
-    explicit BindQPlainTextEdit(QWidget* parent = nullptr);
-    ~BindQPlainTextEdit();
-
-    void setPlainTextEditHandler(QPlainTextEditHandler* handler);
-    QPlainTextEditHandler* handler() const;
-
+    explicit QPlainTextEditBind(QWidget* parent = nullptr);
+    ~QPlainTextEditBind() override;
+    void setTextChangedCallback(QPlainTextEdit_TextChangedCallback callback) const;
+    void setCursorPositionChangedCallback(QPlainTextEdit_CursorPositionChangedCallback callback) const;
+    void setCopyAvailableCallback(QPlainTextEdit_CopyAvailableCallback callback) const;
+    void setUndoAvailableCallback(QPlainTextEdit_UndoAvailableCallback callback) const;
+    void setRedoAvailableCallback(QPlainTextEdit_RedoAvailableCallback callback) const;
+    void setSelectionChangedCallback(QPlainTextEdit_SelectionChangedCallback callback) const;
 private:
-    QPlainTextEditHandler* m_handler;
+    QPlainTextEditHandler* handler;
 };
 
 #endif // QPLAINTEXTEDIT_BIND_H

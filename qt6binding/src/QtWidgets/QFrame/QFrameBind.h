@@ -11,7 +11,7 @@ public:
     ~QFrameBind() override;
 
 private:
-    FrameHandler* handler;
+    QFrameHandler* handler;
 };
 
 #endif // QFRAME_BIND_H

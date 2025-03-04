@@ -1,4 +1,3 @@
-#include "qcheckbox.h"
 #include "QCheckBoxBind.h"
 
 extern "C" {
@@ -54,15 +53,19 @@ bool QCheckBox_isEnabled(void* checkbox) {
     return static_cast<QCheckBoxBind*>(checkbox)->isEnabled();
 }
 
-void QCheckBox_setStateChangedCallback(void* checkbox, StateChangedCallback callback) {
+typedef void (*QCheckBox_StateChangedCallback)(void*, int);
+typedef void (*QCheckBox_ToggledCallback)(void*, bool);
+typedef void (*QCheckBox_ClickedCallback)(void*, bool);
+
+void QCheckBox_setStateChangedCallback(void* checkbox, QCheckBox_StateChangedCallback callback) {
     static_cast<QCheckBoxBind*>(checkbox)->setStateChangedCallback(callback);
 }
 
-void QCheckBox_setToggledCallback(void* checkbox, ToggledCallback callback) {
+void QCheckBox_setToggledCallback(void* checkbox, QCheckBox_ToggledCallback callback) {
     static_cast<QCheckBoxBind*>(checkbox)->setToggledCallback(callback);
 }
 
-void QCheckBox_setClickedCallback(void* checkbox, Callback callback) {
+void QCheckBox_setClickedCallback(void* checkbox, QCheckBox_ClickedCallback callback) {
     static_cast<QCheckBoxBind*>(checkbox)->setClickedCallback(callback);
 }
 

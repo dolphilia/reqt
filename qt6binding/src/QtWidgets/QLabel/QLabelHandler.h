@@ -5,18 +5,18 @@
 
 class QLabelHandler : public QObject {
     Q_OBJECT
-    typedef void (*LinkActivatedCallback)(void*, const char*);
-    typedef void (*LinkHoveredCallback)(void*, const char*);
+    typedef void (*QLabel_LinkActivatedCallback)(void*, const char*);
+    typedef void (*QLabel_LinkHoveredCallback)(void*, const char*);
 public:
     explicit QLabelHandler(QObject* parent = nullptr);
-    void setLinkActivatedCallback(LinkActivatedCallback callback);
-    void setLinkHoveredCallback(LinkHoveredCallback callback);
+    void setLinkActivatedCallback(QLabel_LinkActivatedCallback callback);
+    void setLinkHoveredCallback(QLabel_LinkHoveredCallback callback);
 public slots:
     void onLinkActivated(const QString& link) const;
     void onLinkHovered(const QString& link) const;
 private:
-    LinkActivatedCallback linkActivatedCallback;
-    LinkHoveredCallback linkHoveredCallback;
+    QLabel_LinkActivatedCallback linkActivatedCallback;
+    QLabel_LinkHoveredCallback linkHoveredCallback;
 };
 
 #endif // QLABEL_HANDLER_H

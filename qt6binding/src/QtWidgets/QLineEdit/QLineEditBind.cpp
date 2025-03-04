@@ -21,14 +21,14 @@ QLineEditBind::~QLineEditBind() {
     delete handler;
 }
 
-void QLineEditBind::setTextChangedCallback(TextChangedCallback callback) const {
+void QLineEditBind::setTextChangedCallback(QLineEdit_TextChangedCallback callback) const {
     handler->setTextChangedCallback(callback);
 }
 
-void QLineEditBind::setTextEditedCallback(TextEditedCallback callback) const {
+void QLineEditBind::setTextEditedCallback(QLineEdit_TextEditedCallback callback) const {
     handler->setTextEditedCallback(callback);
 }
 
-void QLineEditBind::setReturnPressedCallback(ReturnPressedCallback callback) const {
+void QLineEditBind::setReturnPressedCallback(QLineEdit_ReturnPressedCallback callback) const {
     handler->setReturnPressedCallback(callback);
 }

@@ -1,24 +1,22 @@
-#ifndef HANDLER_SCROLL_AREA_H
-#define HANDLER_SCROLL_AREA_H
+#ifndef SCROLLAREA_HANDLER_H
+#define SCROLLAREA_HANDLER_H
 
 #include <QObject>
 
-class ScrollAreaHandler : public QObject {
+class QScrollAreaHandler : public QObject {
     Q_OBJECT
+    typedef void (*QScrollArea_VerticalScrollBarValueChangedCallback)(void*, int);
+    typedef void (*QScrollArea_HorizontalScrollBarValueChangedCallback)(void*, int);
 public:
-    explicit ScrollAreaHandler(QObject *parent = nullptr);
-    ~ScrollAreaHandler();
-
-    void setVerticalScrollBarValueChangedCallback(void (*callback)(int value));
-    void setHorizontalScrollBarValueChangedCallback(void (*callback)(int value));
-
+    explicit QScrollAreaHandler(QObject* parent = nullptr);
+    void setVerticalScrollCallback(QScrollArea_VerticalScrollBarValueChangedCallback callback);
+    void setHorizontalScrollCallback(QScrollArea_HorizontalScrollBarValueChangedCallback callback);
 public slots:
-    void onVerticalScrollBarValueChanged(int value);
-    void onHorizontalScrollBarValueChanged(int value);
-
+    void onVerticalScrollBarValueChanged(int value) const;
+    void onHorizontalScrollBarValueChanged(int value) const;
 private:
-    void (*m_verticalScrollBarValueChangedCallback)(int value);
-    void (*m_horizontalScrollBarValueChangedCallback)(int value);
+    QScrollArea_VerticalScrollBarValueChangedCallback verticalCallback;
+    QScrollArea_HorizontalScrollBarValueChangedCallback horizontalCallback;
 };
 
-#endif // HANDLER_SCROLL_AREA_H
+#endif // SCROLLAREA_HANDLER_H

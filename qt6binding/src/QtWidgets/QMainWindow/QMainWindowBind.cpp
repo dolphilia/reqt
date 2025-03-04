@@ -3,14 +3,14 @@
 
 QMainWindowBind::QMainWindowBind(QWidget* parent)
     : QMainWindow(parent)
-    , handler(new MainWindowHandler(this)) {
-    connect(this, &QMainWindow::windowTitleChanged, handler, &MainWindowHandler::onWindowTitleChanged);
+    , handler(new QMainWindowHandler(this)) {
+    connect(this, &QMainWindow::windowTitleChanged, handler, &QMainWindowHandler::onWindowTitleChanged);
 }
 
 QMainWindowBind::~QMainWindowBind() {
     delete handler;
 }
 
-void QMainWindowBind::setWindowTitleChangedCallback(WindowTitleChangedCallback callback) const {
+void QMainWindowBind::setWindowTitleChangedCallback(QMainWindow_WindowTitleChangedCallback callback) const {
     handler->setWindowTitleCallback(callback);
 }

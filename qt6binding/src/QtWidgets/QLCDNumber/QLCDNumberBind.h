@@ -6,13 +6,13 @@
 
 class QLCDNumberBind : public QLCDNumber {
     Q_OBJECT
-    typedef void (*OverflowCallback)(void*);
+    typedef void (*QLCDNumber_OverflowCallback)(void*);
 public:
     explicit QLCDNumberBind(QWidget *parent = nullptr);
     explicit QLCDNumberBind(uint numDigits, QWidget *parent = nullptr);
     ~QLCDNumberBind() override;
 
-    void setOverflowCallback(OverflowCallback callback) const;
+    void setOverflowCallback(QLCDNumber_OverflowCallback callback) const;
 
 private:
     QLCDNumberHandler* handler;

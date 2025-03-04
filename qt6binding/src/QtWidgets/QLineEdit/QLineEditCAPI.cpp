@@ -1,11 +1,6 @@
 #include "QLineEditBind.h"
-#include <QString>
 
 extern "C" {
-
-typedef void (*TextChangedCallback)(void*, const char*);
-typedef void (*TextEditedCallback)(void*, const char*);
-typedef void (*ReturnPressedCallback)(void*, const char*);
 
 void* QLineEdit_create(void* parent) {
     return new QLineEditBind(static_cast<QWidget*>(parent));
@@ -87,15 +82,19 @@ int QLineEdit_echoMode(void* lineEdit) {
     return static_cast<int>(static_cast<QLineEditBind*>(lineEdit)->echoMode());
 }
 
-void QLineEdit_setTextChangedCallback(void* lineEdit, TextChangedCallback callback) {
+typedef void (*QLineEdit_TextChangedCallback)(void*, const char*);
+typedef void (*QLineEdit_TextEditedCallback)(void*, const char*);
+typedef void (*QLineEdit_ReturnPressedCallback)(void*, const char*);
+
+void QLineEdit_setTextChangedCallback(void* lineEdit, QLineEdit_TextChangedCallback callback) {
     static_cast<QLineEditBind*>(lineEdit)->setTextChangedCallback(callback);
 }
 
-void QLineEdit_setTextEditedCallback(void* lineEdit, TextEditedCallback callback) {
+void QLineEdit_setTextEditedCallback(void* lineEdit, QLineEdit_TextEditedCallback callback) {
     static_cast<QLineEditBind*>(lineEdit)->setTextEditedCallback(callback);
 }
 
-void QLineEdit_setReturnPressedCallback(void* lineEdit, ReturnPressedCallback callback) {
+void QLineEdit_setReturnPressedCallback(void* lineEdit, QLineEdit_ReturnPressedCallback callback) {
     static_cast<QLineEditBind*>(lineEdit)->setReturnPressedCallback(callback);
 }
 

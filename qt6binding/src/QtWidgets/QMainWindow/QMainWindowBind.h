@@ -6,13 +6,13 @@
 
 class QMainWindowBind : public QMainWindow {
     Q_OBJECT
-    typedef void (*WindowTitleChangedCallback)(void*, const char*);
+    typedef void (*QMainWindow_WindowTitleChangedCallback)(void*, const char*);
 public:
     explicit QMainWindowBind(QWidget* parent = nullptr);
     ~QMainWindowBind() override;
-    void setWindowTitleChangedCallback(WindowTitleChangedCallback callback) const;
+    void setWindowTitleChangedCallback(QMainWindow_WindowTitleChangedCallback callback) const;
 private:
-    MainWindowHandler* handler;
+    QMainWindowHandler* handler;
 };
 
 #endif // QMAINWINDOW_BIND_H

@@ -119,25 +119,25 @@ void QAbstractButton_toggle(void* button) {
     static_cast<QAbstractButtonBind*>(button)->toggle();
 }
 
-typedef void (*ClickCallback)(void* data, bool checked);
-typedef void (*PressCallback)(void* data);
-typedef void (*ReleaseCallback)(void* data);
-typedef void (*ToggleCallback)(void* data, bool checked);
+typedef void (*QAbstractButton_ClickCallback)(void* data, bool checked);
+typedef void (*QAbstractButton_PressCallback)(void* data);
+typedef void (*QAbstractButton_ReleaseCallback)(void* data);
+typedef void (*QAbstractButton_ToggleCallback)(void* data, bool checked);
 
 // シグナルハンドラ設定
-void QAbstractButton_setClickedCallback(void* button, ClickCallback callback) {
+void QAbstractButton_setClickedCallback(void* button, QAbstractButton_ClickCallback callback) {
     static_cast<QAbstractButtonBind*>(button)->setClickedCallback(callback);
 }
 
-void QAbstractButton_setPressedCallback(void* button,PressCallback callback) {
+void QAbstractButton_setPressedCallback(void* button,QAbstractButton_PressCallback callback) {
     static_cast<QAbstractButtonBind*>(button)->setPressedCallback(callback);
 }
 
-void QAbstractButton_setReleasedCallback(void* button, ReleaseCallback callback) {
+void QAbstractButton_setReleasedCallback(void* button, QAbstractButton_ReleaseCallback callback) {
     static_cast<QAbstractButtonBind*>(button)->setReleasedCallback(callback);
 }
 
-void QAbstractButton_setToggledCallback(void* button, ToggleCallback callback) {
+void QAbstractButton_setToggledCallback(void* button, QAbstractButton_ToggleCallback callback) {
     static_cast<QAbstractButtonBind*>(button)->setToggledCallback(callback);
 }
 

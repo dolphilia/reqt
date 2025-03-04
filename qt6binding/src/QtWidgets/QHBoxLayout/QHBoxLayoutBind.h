@@ -10,7 +10,7 @@ public:
     explicit QHBoxLayoutBind(QWidget* parent = nullptr);
     ~QHBoxLayoutBind() override;
 private:
-    HBoxLayoutHandler* handler;
+    QHBoxLayoutHandler* handler;
 };
 
 #endif // QHBOXLAYOUT_BIND_H

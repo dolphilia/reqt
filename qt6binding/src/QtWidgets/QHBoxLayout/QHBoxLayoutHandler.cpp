@@ -1,5 +1,5 @@
 #include "QHBoxLayoutHandler.h"
 
-HBoxLayoutHandler::HBoxLayoutHandler(QObject* parent)
+QHBoxLayoutHandler::QHBoxLayoutHandler(QObject* parent)
     : QObject(parent) {
 }

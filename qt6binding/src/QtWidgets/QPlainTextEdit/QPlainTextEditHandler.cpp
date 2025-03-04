@@ -1,74 +1,71 @@
 #include "QPlainTextEditHandler.h"
 
 QPlainTextEditHandler::QPlainTextEditHandler(QObject* parent)
-    : QObject(parent),
-      m_textChangedCallback(nullptr),
-      m_cursorPositionChangedCallback(nullptr),
-      m_copyAvailableCallback(nullptr),
-      m_undoAvailableCallback(nullptr),
-      m_redoAvailableCallback(nullptr),
-      m_selectionChangedCallback(nullptr) {
+    : QObject(parent)
+    , textChangedCallback(nullptr)
+    , cursorPositionChangedCallback(nullptr)
+    , copyAvailableCallback(nullptr)
+    , undoAvailableCallback(nullptr)
+    , redoAvailableCallback(nullptr)
+    , selectionChangedCallback(nullptr) {
 }
 
-QPlainTextEditHandler::~QPlainTextEditHandler() {
+void QPlainTextEditHandler::setTextChangedCallback(QPlainTextEdit_TextChangedCallback callback) {
+    textChangedCallback = callback;
 }
 
-void QPlainTextEditHandler::setTextChangedCallback(void (*callback)()) {
-    m_textChangedCallback = callback;
+void QPlainTextEditHandler::setCursorPositionChangedCallback(QPlainTextEdit_CursorPositionChangedCallback callback) {
+    cursorPositionChangedCallback = callback;
 }
 
-void QPlainTextEditHandler::setCursorPositionChangedCallback(void (*callback)()) {
-    m_cursorPositionChangedCallback = callback;
+void QPlainTextEditHandler::setCopyAvailableCallback(QPlainTextEdit_CopyAvailableCallback callback) {
+    copyAvailableCallback = callback;
 }
 
-void QPlainTextEditHandler::setCopyAvailableCallback(void (*callback)(bool)) {
-    m_copyAvailableCallback = callback;
+void QPlainTextEditHandler::setUndoAvailableCallback(QPlainTextEdit_UndoAvailableCallback callback) {
+    undoAvailableCallback = callback;
 }
 
-void QPlainTextEditHandler::setUndoAvailableCallback(void (*callback)(bool)) {
-    m_undoAvailableCallback = callback;
+void QPlainTextEditHandler::setRedoAvailableCallback(QPlainTextEdit_RedoAvailableCallback callback) {
+    redoAvailableCallback = callback;
 }
 
-void QPlainTextEditHandler::setRedoAvailableCallback(void (*callback)(bool)) {
-    m_redoAvailableCallback = callback;
+void QPlainTextEditHandler::setSelectionChangedCallback(QPlainTextEdit_SelectionChangedCallback callback) {
+    selectionChangedCallback = callback;
 }
 
-void QPlainTextEditHandler::setSelectionChangedCallback(void (*callback)()) {
-    m_selectionChangedCallback = callback;
-}
-
-void QPlainTextEditHandler::onTextChanged() {
-    if (m_textChangedCallback) {
-        m_textChangedCallback();
+void QPlainTextEditHandler::onTextChanged() const {
+    if (textChangedCallback) {
+        textChangedCallback(parent());
     }
 }
 
-void QPlainTextEditHandler::onCursorPositionChanged() {
-    if (m_cursorPositionChangedCallback) {
-        m_cursorPositionChangedCallback();
+void QPlainTextEditHandler::onCursorPositionChanged() const {
+    if (cursorPositionChangedCallback) {
+        cursorPositionChangedCallback(parent());
     }
 }
 
-void QPlainTextEditHandler::onCopyAvailable(bool available) {
-    if (m_copyAvailableCallback) {
-        m_copyAvailableCallback(available);
+void QPlainTextEditHandler::onCopyAvailable(bool available) const {
+    if (copyAvailableCallback) {
+        copyAvailableCallback(parent(), available);
     }
 }
 
-void QPlainTextEditHandler::onUndoAvailable(bool available) {
-    if (m_undoAvailableCallback) {
-        m_undoAvailableCallback(available);
+void QPlainTextEditHandler::onUndoAvailable(bool available) const {
+    if (undoAvailableCallback) {
+        undoAvailableCallback(parent(), available);
     }
 }
 
-void QPlainTextEditHandler::onRedoAvailable(bool available) {
-    if (m_redoAvailableCallback) {
-        m_redoAvailableCallback(available);
+void QPlainTextEditHandler::onRedoAvailable(bool available) const {
+    if (redoAvailableCallback) {
+        redoAvailableCallback(parent(), available);
     }
 }
 
-void QPlainTextEditHandler::onSelectionChanged() {
-    if (m_selectionChangedCallback) {
-        m_selectionChangedCallback();
+void QPlainTextEditHandler::onSelectionChanged() const {
+    if (selectionChangedCallback) {
+        selectionChangedCallback(parent());
     }
 }

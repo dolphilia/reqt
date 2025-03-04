@@ -44,11 +44,11 @@ void QScrollArea_ensureVisible(void* scroll_area, int x, int y, int xmargin, int
 void QScrollArea_ensureWidgetVisible(void* scroll_area, void* child_widget, int xmargin, int ymargin);
 
 // Signal handlers
-typedef void (*QScrollAreaVerticalScrollBarValueChangedCallback)(int value);
-typedef void (*QScrollAreaHorizontalScrollBarValueChangedCallback)(int value);
+    typedef void (*VerticalScrollBarValueChangedCallback)(void*, int);
+    typedef void (*HorizontalScrollBarValueChangedCallback)(void*, int);
 
-void QScrollArea_setVerticalScrollBarValueChangedCallback(void* scroll_area, QScrollAreaVerticalScrollBarValueChangedCallback callback);
-void QScrollArea_setHorizontalScrollBarValueChangedCallback(void* scroll_area, QScrollAreaHorizontalScrollBarValueChangedCallback callback);
+void QScrollArea_setVerticalScrollBarValueChangedCallback(void* scroll_area, VerticalScrollBarValueChangedCallback callback);
+void QScrollArea_setHorizontalScrollBarValueChangedCallback(void* scroll_area, HorizontalScrollBarValueChangedCallback callback);
 
 // Constants
 #define QSCROLLAREA_SCROLLBARPOLICY_ASNEEDED 0

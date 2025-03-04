@@ -1,149 +1,114 @@
-#include "qmenubar.h"
 #include "QMenuBarBind.h"
-#include "QMenuBarHandler.h"
-#include <QString>
 
 extern "C" {
 
-void* QMenuBar_create(void* parent)
-{
-    return new BindQMenuBar(reinterpret_cast<QWidget*>(parent));
+void* QMenuBar_create(void* parent) {
+    return new QMenuBarBind(static_cast<QWidget*>(parent));
 }
 
-void QMenuBar_delete(void* menu_bar)
-{
-    delete static_cast<BindQMenuBar*>(menu_bar);
+void QMenuBar_delete(void* menuBar) {
+    delete static_cast<QMenuBarBind*>(menuBar);
 }
 
-void* QMenuBar_addMenu(void* menu_bar, const char* title)
-{
-    return static_cast<BindQMenuBar*>(menu_bar)->addMenu(QString::fromUtf8(title));
+void* QMenuBar_addMenu(void* menuBar, const char* title) {
+    const QString qstr = QString::fromUtf8(title);
+    return static_cast<QMenuBarBind*>(menuBar)->addMenu(qstr);
 }
 
-void* QMenuBar_addMenu2(void* menu_bar, void* menu)
-{
-    return static_cast<BindQMenuBar*>(menu_bar)->addMenu(static_cast<QMenu*>(menu));
+void* QMenuBar_addMenu2(void* menuBar, void* menu) {
+    return static_cast<QMenuBarBind*>(menuBar)->addMenu(static_cast<QMenu*>(menu));
 }
 
-void QMenuBar_clear(void* menu_bar)
-{
-    static_cast<BindQMenuBar*>(menu_bar)->clear();
+void QMenuBar_clear(void* menuBar) {
+    static_cast<QMenuBarBind*>(menuBar)->clear();
 }
 
-void* QMenuBar_addAction(void* menu_bar, const char* text)
-{
-    return static_cast<BindQMenuBar*>(menu_bar)->addAction(QString::fromUtf8(text));
+void* QMenuBar_addAction(void* menuBar, const char* text) {
+    const QString qstr = QString::fromUtf8(text);
+    return static_cast<QMenuBarBind*>(menuBar)->addAction(qstr);
 }
 
-void QMenuBar_removeAction(void* menu_bar, void* action)
-{
-    static_cast<BindQMenuBar*>(menu_bar)->removeAction(static_cast<QAction*>(action));
+void QMenuBar_removeAction(void* menuBar, void* action) {
+    static_cast<QMenuBarBind*>(menuBar)->removeAction(static_cast<QAction*>(action));
 }
 
-void* QMenuBar_addSeparator(void* menu_bar)
-{
-    return static_cast<BindQMenuBar*>(menu_bar)->addSeparator();
+void* QMenuBar_addSeparator(void* menuBar) {
+    return static_cast<QMenuBarBind*>(menuBar)->addSeparator();
 }
 
-void QMenuBar_setVisible(void* menu_bar, bool visible)
-{
-    static_cast<BindQMenuBar*>(menu_bar)->setVisible(visible);
+void QMenuBar_setVisible(void* menuBar, bool visible) {
+    static_cast<QMenuBarBind*>(menuBar)->setVisible(visible);
 }
 
-bool QMenuBar_isVisible(void* menu_bar)
-{
-    return static_cast<BindQMenuBar*>(menu_bar)->isVisible();
+bool QMenuBar_isVisible(void* menuBar) {
+    return static_cast<QMenuBarBind*>(menuBar)->isVisible();
 }
 
-void QMenuBar_setEnabled(void* menu_bar, bool enabled)
-{
-    static_cast<BindQMenuBar*>(menu_bar)->setEnabled(enabled);
+void QMenuBar_setEnabled(void* menuBar, bool enabled) {
+    static_cast<QMenuBarBind*>(menuBar)->setEnabled(enabled);
 }
 
-bool QMenuBar_isEnabled(void* menu_bar)
-{
-    return static_cast<BindQMenuBar*>(menu_bar)->isEnabled();
+bool QMenuBar_isEnabled(void* menuBar) {
+    return static_cast<QMenuBarBind*>(menuBar)->isEnabled();
 }
 
-int QMenuBar_height(void* menu_bar)
-{
-    return static_cast<BindQMenuBar*>(menu_bar)->height();
+int QMenuBar_height(void* menuBar) {
+    return static_cast<QMenuBarBind*>(menuBar)->height();
 }
 
-void QMenuBar_setNativeMenuBar(void* menu_bar, bool native)
-{
-    static_cast<BindQMenuBar*>(menu_bar)->setNativeMenuBar(native);
+void QMenuBar_setNativeMenuBar(void* menuBar, bool native) {
+    static_cast<QMenuBarBind*>(menuBar)->setNativeMenuBar(native);
 }
 
-bool QMenuBar_isNativeMenuBar(void* menu_bar)
-{
-    return static_cast<BindQMenuBar*>(menu_bar)->isNativeMenuBar();
+bool QMenuBar_isNativeMenuBar(void* menuBar) {
+    return static_cast<QMenuBarBind*>(menuBar)->isNativeMenuBar();
 }
 
-void QMenuBar_setCornerWidget(void* menu_bar, void* widget, int corner)
-{
-    static_cast<BindQMenuBar*>(menu_bar)->setCornerWidget(
+void QMenuBar_setCornerWidget(void* menuBar, void* widget, int corner) {
+    static_cast<QMenuBarBind*>(menuBar)->setCornerWidget(
         static_cast<QWidget*>(widget),
         static_cast<Qt::Corner>(corner)
     );
 }
 
-void* QMenuBar_cornerWidget(void* menu_bar, int corner)
-{
-    return static_cast<BindQMenuBar*>(menu_bar)->cornerWidget(static_cast<Qt::Corner>(corner));
+void* QMenuBar_cornerWidget(void* menuBar, int corner) {
+    return static_cast<QMenuBarBind*>(menuBar)->cornerWidget(static_cast<Qt::Corner>(corner));
 }
 
-void QMenuBar_setActionEnabled(void* menu_bar, void* action, bool enabled)
-{
+void QMenuBar_setActionEnabled(void* menuBar, void* action, bool enabled) {
     static_cast<QAction*>(action)->setEnabled(enabled);
 }
 
-bool QMenuBar_isActionEnabled(void* menu_bar, void* action)
-{
+bool QMenuBar_isActionEnabled(void* menuBar, void* action) {
     return static_cast<QAction*>(action)->isEnabled();
 }
 
-void QMenuBar_setActionVisible(void* menu_bar, void* action, bool visible)
-{
+void QMenuBar_setActionVisible(void* menuBar, void* action, bool visible) {
     static_cast<QAction*>(action)->setVisible(visible);
 }
 
-bool QMenuBar_isActionVisible(void* menu_bar, void* action)
-{
+bool QMenuBar_isActionVisible(void* menuBar, void* action) {
     return static_cast<QAction*>(action)->isVisible();
 }
 
-void QMenuBar_setActionText(void* menu_bar, void* action, const char* text)
-{
+void QMenuBar_setActionText(void* menuBar, void* action, const char* text) {
     static_cast<QAction*>(action)->setText(QString::fromUtf8(text));
 }
 
-const char* QMenuBar_actionText(void* menu_bar, void* action)
-{
+const char* QMenuBar_actionText(void* menuBar, void* action) {
     QString text = static_cast<QAction*>(action)->text();
     return qstrdup(text.toUtf8().constData());
 }
 
-void QMenuBar_setTriggeredCallback(void* menu_bar, QMenuBarTriggeredCallback callback)
-{
-    BindQMenuBar* qmenubar = static_cast<BindQMenuBar*>(menu_bar);
-    MenuBarHandler* handler = qmenubar->handler();
-    if (!handler) {
-        handler = new MenuBarHandler(qmenubar);
-        qmenubar->setMenuBarHandler(handler);
-    }
-    handler->setTriggeredCallback(callback);
+typedef void (*QMenuBar_TriggeredCallback)(void*, void*);
+typedef void (*QMenuBar_HoveredCallback)(void*, void*);
+
+void QMenuBar_setTriggeredCallback(void* menuBar, QMenuBar_TriggeredCallback callback) {
+    static_cast<QMenuBarBind*>(menuBar)->setTriggeredCallback(callback);
 }
 
-void QMenuBar_setHoveredCallback(void* menu_bar, QMenuBarHoveredCallback callback)
-{
-    BindQMenuBar* qmenubar = static_cast<BindQMenuBar*>(menu_bar);
-    MenuBarHandler* handler = qmenubar->handler();
-    if (!handler) {
-        handler = new MenuBarHandler(qmenubar);
-        qmenubar->setMenuBarHandler(handler);
-    }
-    handler->setHoveredCallback(callback);
+void QMenuBar_setHoveredCallback(void* menuBar, QMenuBar_HoveredCallback callback) {
+    static_cast<QMenuBarBind*>(menuBar)->setHoveredCallback(callback);
 }
 
 }

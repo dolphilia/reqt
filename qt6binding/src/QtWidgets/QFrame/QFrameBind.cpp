@@ -3,7 +3,7 @@
 
 QFrameBind::QFrameBind(QWidget* parent, Qt::WindowFlags f)
     : QFrame(parent, f)
-    , handler(new FrameHandler(this)) {
+    , handler(new QFrameHandler(this)) {
 }
 
 QFrameBind::~QFrameBind() {

@@ -1,9 +1,6 @@
 #include "QHBoxLayoutBind.h"
-#include "qhboxlayout.h"
 
 extern "C" {
-
-typedef void (*VoidCallback)(void*);
 
 void* QHBoxLayout_create(void* parent) {
     return new QHBoxLayoutBind(static_cast<QWidget*>(parent));

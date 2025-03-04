@@ -1,21 +1,18 @@
-#ifndef HANDLER_PROGRESS_BAR_H
-#define HANDLER_PROGRESS_BAR_H
+#ifndef PROGRESSBAR_HANDLER_H
+#define PROGRESSBAR_HANDLER_H
 
 #include <QObject>
 
-class ProgressBarHandler : public QObject {
+class QProgressBarHandler : public QObject {
     Q_OBJECT
+    typedef void (*QProgressBar_ValueChangedCallback)(void*, int);
 public:
-    explicit ProgressBarHandler(QObject *parent = nullptr);
-    ~ProgressBarHandler();
-
-    void setValueChangedCallback(void (*callback)(int value));
-
+    explicit QProgressBarHandler(QObject* parent = nullptr);
+    void setValueChangedCallback(QProgressBar_ValueChangedCallback callback);
 public slots:
-    void onValueChanged(int value);
-
+    void onValueChanged(int value) const;
 private:
-    void (*m_valueChangedCallback)(int value);
+    QProgressBar_ValueChangedCallback valueChangedCallback;
 };
 
-#endif // HANDLER_PROGRESS_BAR_H
+#endif // PROGRESSBAR_HANDLER_H

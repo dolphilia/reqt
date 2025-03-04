@@ -4,19 +4,19 @@
 #include <QObject>
 #include <QDateTime>
 
-class DateTimeEditHandler : public QObject {
+class QDateTimeEditHandler : public QObject {
     Q_OBJECT
-    typedef void (*DateChangedCallback)(void*, int, int, int);
-    typedef void (*TimeChangedCallback)(void*, int, int, int);
+    typedef void (*QDateTimeEdit_DateChangedCallback)(void*, int, int, int);
+    typedef void (*QDateTimeEdit_TimeChangedCallback)(void*, int, int, int);
 public:
-    explicit DateTimeEditHandler(QObject* parent = nullptr);
-    void setDateCallback(DateChangedCallback callback);
-    void setTimeCallback(TimeChangedCallback callback);
+    explicit QDateTimeEditHandler(QObject* parent = nullptr);
+    void setDateCallback(QDateTimeEdit_DateChangedCallback callback);
+    void setTimeCallback(QDateTimeEdit_TimeChangedCallback callback);
 public slots:
     void onDateTimeChanged(const QDateTime& datetime) const;
 private:
-    DateChangedCallback dateCallback;
-    TimeChangedCallback timeCallback;
+    QDateTimeEdit_DateChangedCallback dateCallback;
+    QDateTimeEdit_TimeChangedCallback timeCallback;
 };
 
 #endif // DATETIMEEDIT_HANDLER_H

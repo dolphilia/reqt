@@ -1,20 +1,18 @@
-#ifndef BIND_Q_PROGRESS_BAR_H
-#define BIND_Q_PROGRESS_BAR_H
+#ifndef QPROGRESSBAR_BIND_H
+#define QPROGRESSBAR_BIND_H
 
-#include <QProgressBar>
 #include "QProgressBarHandler.h"
+#include <QProgressBar>
 
-class BindQProgressBar : public QProgressBar {
+class QProgressBarBind : public QProgressBar {
     Q_OBJECT
+    typedef void (*QProgressBar_ValueChangedCallback)(void*, int);
 public:
-    explicit BindQProgressBar(QWidget *parent = nullptr);
-    ~BindQProgressBar();
-
-    void setProgressBarHandler(ProgressBarHandler *handler);
-    ProgressBarHandler *handler() const;
-
+    explicit QProgressBarBind(QWidget* parent = nullptr);
+    ~QProgressBarBind() override;
+    void setValueChangedCallback(QProgressBar_ValueChangedCallback callback) const;
 private:
-    ProgressBarHandler *m_handler;
+    QProgressBarHandler* handler;
 };
 
-#endif // BIND_Q_PROGRESS_BAR_H
+#endif // QPROGRESSBAR_BIND_H

@@ -6,19 +6,22 @@
 
 class QDialBind : public QDial {
     Q_OBJECT
-
+    typedef void (*QDial_ValueChangedCallback)(void*, int);
+    typedef void (*QDial_SliderMovedCallback)(void*, int);
+    typedef void (*QDial_SliderPressedCallback)(void*);
+    typedef void (*QDial_SliderReleasedCallback)(void*);
 public:
     explicit QDialBind(QWidget* parent = nullptr);
     ~QDialBind() override;
 
     // コールバック設定
-    void setValueChangedCallback(ValueChangedCallback callback) const;
-    void setSliderMovedCallback(SliderMovedCallback callback) const;
-    void setSliderPressedCallback(SliderPressedCallback callback) const;
-    void setSliderReleasedCallback(SliderReleasedCallback callback) const;
+    void setValueChangedCallback(QDial_ValueChangedCallback callback) const;
+    void setSliderMovedCallback(QDial_SliderMovedCallback callback) const;
+    void setSliderPressedCallback(QDial_SliderPressedCallback callback) const;
+    void setSliderReleasedCallback(QDial_SliderReleasedCallback callback) const;
 
 private:
-    DialHandler* handler;
+    QDialHandler* handler;
 };
 
 #endif // QDIAL_BIND_H

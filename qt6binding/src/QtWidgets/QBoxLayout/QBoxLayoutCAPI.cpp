@@ -1,15 +1,7 @@
 #include "QBoxLayoutBind.h"
-#include "QBoxLayoutHandler.h"
 #include <QBoxLayout>
 
 extern "C" {
-// Direction enum
-enum QBoxLayoutDirection {
-    LeftToRight = QBoxLayout::LeftToRight,
-    RightToLeft = QBoxLayout::RightToLeft,
-    TopToBottom = QBoxLayout::TopToBottom,
-    BottomToTop = QBoxLayout::BottomToTop
-};
 
 // Creation/Deletion
 void* QBoxLayout_create(int direction, void* parent) {

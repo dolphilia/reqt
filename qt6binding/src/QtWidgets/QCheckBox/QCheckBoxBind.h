@@ -6,21 +6,21 @@
 #include "QCheckBoxHandler.h"
 #include "QAbstractButton/QAbstractButtonBind.h"
 
-class CheckBoxHandler;
+class QCheckBoxHandler;
 
 class QCheckBoxBind : public QCheckBox {
     Q_OBJECT
-    typedef void (*StateCallback)(void*, int);
-    typedef void (*ToggleCallback)(void*, bool);
-    typedef void (*ClickCallback)(void*, bool);
+    typedef void (*QCheckBox_StateChangedCallback)(void*, int);
+    typedef void (*QCheckBox_ToggledCallback)(void*, bool);
+    typedef void (*QCheckBox_ClickedCallback)(void*, bool);
 public:
     explicit QCheckBoxBind(QString qstr, QWidget* parent = nullptr);
     ~QCheckBoxBind() override;
-    void setStateChangedCallback(StateCallback callback) const;
-    void setToggledCallback(ToggleCallback callback) const;
-    void setClickedCallback(ClickCallback callback) const;
+    void setStateChangedCallback(QCheckBox_StateChangedCallback callback) const;
+    void setToggledCallback(QCheckBox_ToggledCallback callback) const;
+    void setClickedCallback(QCheckBox_ClickedCallback callback) const;
 private:
-    CheckBoxHandler* handler;
+    QCheckBoxHandler* handler;
 };
 
 #endif // QCHECKBOX_BIND_H

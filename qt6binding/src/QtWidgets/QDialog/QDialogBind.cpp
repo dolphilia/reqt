@@ -13,14 +13,14 @@ QDialogBind::~QDialogBind() {
     delete handler;
 }
 
-void QDialogBind::setDialogAcceptedCallback(DialogAcceptedCallback callback) const {
+void QDialogBind::setDialogAcceptedCallback(QDialog_DialogAcceptedCallback callback) const {
     handler->setDialogAcceptedCallback(callback);
 }
 
-void QDialogBind::setDialogFinishedCallback(DialogFinishedCallback callback) const {
+void QDialogBind::setDialogFinishedCallback(QDialog_DialogFinishedCallback callback) const {
     handler->setDialogFinishedCallback(callback);
 }
 
-void QDialogBind::setDialogRejectedCallback(DialogRejectedCallback callback) const {
+void QDialogBind::setDialogRejectedCallback(QDialog_DialogRejectedCallback callback) const {
     handler->setDialogRejectedCallback(callback);
 }

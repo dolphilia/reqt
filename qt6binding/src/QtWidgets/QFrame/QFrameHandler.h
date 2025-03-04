@@ -3,10 +3,10 @@
 
 #include <QObject>
 
-class FrameHandler : public QObject {
+class QFrameHandler : public QObject {
     Q_OBJECT
 public:
-    explicit FrameHandler(QObject* parent = nullptr);
+    explicit QFrameHandler(QObject* parent = nullptr);
 };
 
 #endif // FRAME_HANDLER_H

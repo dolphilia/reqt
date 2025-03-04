@@ -1,5 +1,4 @@
 #include "QPushButtonBind.h"
-#include "qpushbutton.h"
 
 extern "C" {
 
@@ -81,15 +80,19 @@ bool QPushButton_isDefault(void* pushButton) {
     return static_cast<QPushButtonBind*>(pushButton)->isDefault();
 }
 
-void QPushButton_setClickedCallback(void* pushButton, ClickedCallback callback) {
+typedef void (*QPushButton_ClickedCallback)(void*);
+typedef void (*QPushButton_PressedCallback)(void*);
+typedef void (*QPushButton_ReleasedCallback)(void*);
+
+void QPushButton_setClickedCallback(void* pushButton, QPushButton_ClickedCallback callback) {
     static_cast<QPushButtonBind*>(pushButton)->setClickedCallback(callback);
 }
 
-void QPushButton_setPressedCallback(void* pushButton, PressedCallback callback) {
+void QPushButton_setPressedCallback(void* pushButton, QPushButton_PressedCallback callback) {
     static_cast<QPushButtonBind*>(pushButton)->setPressedCallback(callback);
 }
 
-void QPushButton_setReleasedCallback(void* pushButton, ReleasedCallback callback) {
+void QPushButton_setReleasedCallback(void* pushButton, QPushButton_ReleasedCallback callback) {
     static_cast<QPushButtonBind*>(pushButton)->setReleasedCallback(callback);
 }
 

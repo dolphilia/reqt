@@ -1,8 +1,4 @@
 #include "QGraphicsViewBind.h"
-#include "qgraphicsview.h"
-#include <QGraphicsScene>
-#include <QRectF>
-#include <QTransform>
 
 extern "C" {
 
@@ -82,19 +78,19 @@ void QGraphicsView_setDragMode(void* view, int mode) {
     static_cast<QGraphicsViewBind*>(view)->setDragMode(static_cast<QGraphicsView::DragMode>(mode));
 }
 
-typedef void (*SceneRectChangedCallback)(void*, double, double, double, double);
-typedef void (*ScaleChangedCallback)(void*, double, double);
-typedef void (*TransformChangedCallback)(void*);
+typedef void (*QGraphicsView_SceneRectChangedCallback)(void*, double, double, double, double);
+typedef void (*QGraphicsView_ScaleChangedCallback)(void*, double, double);
+typedef void (*QGraphicsView_TransformChangedCallback)(void*);
 
-void QGraphicsView_setSceneRectChangedCallback(void* view, SceneRectChangedCallback callback) {
+void QGraphicsView_setSceneRectChangedCallback(void* view, QGraphicsView_SceneRectChangedCallback callback) {
     static_cast<QGraphicsViewBind*>(view)->setSceneRectChangedCallback(callback);
 }
 
-void QGraphicsView_setScaleChangedCallback(void* view, ScaleChangedCallback callback) {
+void QGraphicsView_setScaleChangedCallback(void* view, QGraphicsView_ScaleChangedCallback callback) {
     static_cast<QGraphicsViewBind*>(view)->setScaleChangedCallback(callback);
 }
 
-void QGraphicsView_setTransformChangedCallback(void* view, TransformChangedCallback callback) {
+void QGraphicsView_setTransformChangedCallback(void* view, QGraphicsView_TransformChangedCallback callback) {
     static_cast<QGraphicsViewBind*>(view)->setTransformChangedCallback(callback);
 }
 

@@ -3,20 +3,20 @@
 
 #include <QObject>
 
-class DoubleSpinBoxHandler : public QObject {
+class QDoubleSpinBoxHandler : public QObject {
     Q_OBJECT
-    typedef void (*ValueChangedCallback)(void*, double);
-    typedef void (*EditingFinishedCallback)(void*);
+    typedef void (*QDoubleSpinBox_ValueChangedCallback)(void*, double);
+    typedef void (*QDoubleSpinBox_EditingFinishedCallback)(void*);
 public:
-    explicit DoubleSpinBoxHandler(QObject* parent = nullptr);
-    void setValueChangedCallback(ValueChangedCallback callback);
-    void setEditingFinishedCallback(EditingFinishedCallback callback);
+    explicit QDoubleSpinBoxHandler(QObject* parent = nullptr);
+    void setValueChangedCallback(QDoubleSpinBox_ValueChangedCallback callback);
+    void setEditingFinishedCallback(QDoubleSpinBox_EditingFinishedCallback callback);
 public slots:
     void onValueChanged(double value) const;
     void onEditingFinished() const;
 private:
-    ValueChangedCallback valueCallback;
-    EditingFinishedCallback editingCallback;
+    QDoubleSpinBox_ValueChangedCallback valueCallback;
+    QDoubleSpinBox_EditingFinishedCallback editingCallback;
 };
 
 #endif // DOUBLESPINBOX_HANDLER_H

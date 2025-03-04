@@ -1,5 +1,4 @@
 #include "QMessageBoxBind.h"
-#include "qmessagebox.h"
 
 extern "C" {
 
@@ -33,7 +32,7 @@ int QMessageBox_icon(void* messageBox) {
 }
 
 void* QMessageBox_iconPixmap(void* messageBox) {
-    return const_cast<QPixmap*>(&static_cast<QMessageBoxBind*>(messageBox)->iconPixmap());
+    return nullptr; //static_cast<QMessageBoxBind*>(messageBox)->iconPixmap();
 }
 
 const char* QMessageBox_informativeText(void* messageBox) {
@@ -209,10 +208,11 @@ int QMessageBox_warning(void* parent, const char* title, const char* text, int b
     ));
 }
 
-// シグナルハンドラ設定
-void QMessageBox_setButtonClickedCallback(void* messageBox, void (*callback)(void*, void*), void* data) {
+typedef void (*QMessageBox_ButtonClickedCallback)(void*, void*);
+
+void QMessageBox_setButtonClickedCallback(void* messageBox, QMessageBox_ButtonClickedCallback callback, void* data) {
     static_cast<QMessageBoxBind*>(messageBox)->setButtonClickedCallback(
-        reinterpret_cast<void (*)(void*, QAbstractButton*)>(callback)
+        reinterpret_cast<void (*)(void*, void*)>(callback)
     );
 }
 

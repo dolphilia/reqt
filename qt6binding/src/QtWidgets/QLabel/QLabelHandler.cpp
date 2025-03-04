@@ -6,11 +6,11 @@ QLabelHandler::QLabelHandler(QObject* parent)
     , linkHoveredCallback(nullptr) {
 }
 
-void QLabelHandler::setLinkActivatedCallback(LinkActivatedCallback callback) {
+void QLabelHandler::setLinkActivatedCallback(QLabel_LinkActivatedCallback callback) {
     linkActivatedCallback = callback;
 }
 
-void QLabelHandler::setLinkHoveredCallback(LinkHoveredCallback callback) {
+void QLabelHandler::setLinkHoveredCallback(QLabel_LinkHoveredCallback callback) {
     linkHoveredCallback = callback;
 }
 

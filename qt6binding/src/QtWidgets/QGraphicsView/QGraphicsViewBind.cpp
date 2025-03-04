@@ -2,17 +2,17 @@
 
 QGraphicsViewBind::QGraphicsViewBind(QWidget* parent)
     : QGraphicsView(parent)
-    , handler(new GraphicsViewHandler(this)) {
+    , handler(new QGraphicsViewHandler(this)) {
     if (scene()) {
-        connect(scene(), &QGraphicsScene::sceneRectChanged, handler, &GraphicsViewHandler::onSceneRectChanged);
+        connect(scene(), &QGraphicsScene::sceneRectChanged, handler, &QGraphicsViewHandler::onSceneRectChanged);
     }
 }
 
 QGraphicsViewBind::QGraphicsViewBind(QGraphicsScene* scene, QWidget* parent)
     : QGraphicsView(scene, parent)
-    , handler(new GraphicsViewHandler(this)) {
+    , handler(new QGraphicsViewHandler(this)) {
     if (scene) {
-        connect(scene, &QGraphicsScene::sceneRectChanged, handler, &GraphicsViewHandler::onSceneRectChanged);
+        connect(scene, &QGraphicsScene::sceneRectChanged, handler, &QGraphicsViewHandler::onSceneRectChanged);
     }
 }
 
@@ -20,14 +20,14 @@ QGraphicsViewBind::~QGraphicsViewBind() {
     delete handler;
 }
 
-void QGraphicsViewBind::setSceneRectChangedCallback(SceneRectChangedCallback callback) const {
+void QGraphicsViewBind::setSceneRectChangedCallback(QGraphicsView_SceneRectChangedCallback callback) const {
     handler->setSceneRectChangedCallback(callback);
 }
 
-void QGraphicsViewBind::setScaleChangedCallback(ScaleChangedCallback callback) const {
+void QGraphicsViewBind::setScaleChangedCallback(QGraphicsView_ScaleChangedCallback callback) const {
     handler->setScaleChangedCallback(callback);
 }
 
-void QGraphicsViewBind::setTransformChangedCallback(TransformChangedCallback callback) const {
+void QGraphicsViewBind::setTransformChangedCallback(QGraphicsView_TransformChangedCallback callback) const {
     handler->setTransformChangedCallback(callback);
 }

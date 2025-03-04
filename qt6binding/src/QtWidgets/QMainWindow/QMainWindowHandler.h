@@ -3,16 +3,16 @@
 
 #include <QObject>
 
-class MainWindowHandler : public QObject {
+class QMainWindowHandler : public QObject {
     Q_OBJECT
-    typedef void (*WindowTitleChangedCallback)(void*, const char*);
+    typedef void (*QMainWindow_WindowTitleChangedCallback)(void*, const char*);
 public:
-    explicit MainWindowHandler(QObject* parent = nullptr);
-    void setWindowTitleCallback(WindowTitleChangedCallback callback);
+    explicit QMainWindowHandler(QObject* parent = nullptr);
+    void setWindowTitleCallback(QMainWindow_WindowTitleChangedCallback callback);
 public slots:
     void onWindowTitleChanged(const QString& title) const;
 private:
-    WindowTitleChangedCallback titleCallback;
+    QMainWindow_WindowTitleChangedCallback titleCallback;
 };
 
 #endif // MAINWINDOW_HANDLER_H

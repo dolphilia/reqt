@@ -5,20 +5,20 @@
 #include <QDial>
 
 // コールバック関数の型定義
-typedef void (*ValueChangedCallback)(void*, int);
-typedef void (*SliderMovedCallback)(void*, int);
-typedef void (*SliderPressedCallback)(void*);
-typedef void (*SliderReleasedCallback)(void*);
 
-class DialHandler : public QObject {
+class QDialHandler : public QObject {
     Q_OBJECT
+    typedef void (*QDial_ValueChangedCallback)(void*, int);
+    typedef void (*QDial_SliderMovedCallback)(void*, int);
+    typedef void (*QDial_SliderPressedCallback)(void*);
+    typedef void (*QDial_SliderReleasedCallback)(void*);
 public:
-    explicit DialHandler(QObject* parent = nullptr);
+    explicit QDialHandler(QObject* parent = nullptr);
 
-    void setValueChangedCallback(ValueChangedCallback callback);
-    void setSliderMovedCallback(SliderMovedCallback callback);
-    void setSliderPressedCallback(SliderPressedCallback callback);
-    void setSliderReleasedCallback(SliderReleasedCallback callback);
+    void setValueChangedCallback(QDial_ValueChangedCallback callback);
+    void setSliderMovedCallback(QDial_SliderMovedCallback callback);
+    void setSliderPressedCallback(QDial_SliderPressedCallback callback);
+    void setSliderReleasedCallback(QDial_SliderReleasedCallback callback);
 
 public slots:
     void onValueChanged(int value) const;
@@ -27,10 +27,10 @@ public slots:
     void onSliderReleased() const;
 
 private:
-    ValueChangedCallback valueChangedCallback;
-    SliderMovedCallback sliderMovedCallback;
-    SliderPressedCallback sliderPressedCallback;
-    SliderReleasedCallback sliderReleasedCallback;
+    QDial_ValueChangedCallback valueChangedCallback;
+    QDial_SliderMovedCallback sliderMovedCallback;
+    QDial_SliderPressedCallback sliderPressedCallback;
+    QDial_SliderReleasedCallback sliderReleasedCallback;
 };
 
 #endif // DIAL_HANDLER_H

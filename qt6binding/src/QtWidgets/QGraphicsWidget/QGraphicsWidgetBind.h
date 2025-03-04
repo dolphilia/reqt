@@ -6,15 +6,15 @@
 
 class QGraphicsWidgetBind : public QGraphicsWidget {
     Q_OBJECT
-    typedef void (*GeometryChangedCallback)(void*, double, double, double, double);
-    typedef void (*LayoutChangedCallback)(void*);
+    typedef void (*QGraphicsWidget_GeometryChangedCallback)(void*, double, double, double, double);
+    typedef void (*QGraphicsWidget_LayoutChangedCallback)(void*);
 public:
     explicit QGraphicsWidgetBind(QGraphicsItem* parent = nullptr);
     ~QGraphicsWidgetBind() override;
-    void setGeometryChangedCallback(GeometryChangedCallback callback) const;
-    void setLayoutChangedCallback(LayoutChangedCallback callback) const;
+    void setGeometryChangedCallback(QGraphicsWidget_GeometryChangedCallback callback) const;
+    void setLayoutChangedCallback(QGraphicsWidget_LayoutChangedCallback callback) const;
 private:
-    GraphicsWidgetHandler* handler;
+    QGraphicsWidgetHandler* handler;
 };
 
 #endif // QGRAPHICSWIDGET_BIND_H

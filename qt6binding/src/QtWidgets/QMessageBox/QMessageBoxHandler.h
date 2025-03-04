@@ -7,19 +7,19 @@
 
 class QMessageBoxHandler : public QObject {
     Q_OBJECT
-    typedef void (*ButtonClickedCallback)(void*, QAbstractButton*);
+    typedef void (*QMessageBox_ButtonClickedCallback)(void*, void*);
 
 public:
     explicit QMessageBoxHandler(QObject* parent = nullptr);
     ~QMessageBoxHandler();
 
-    void setButtonClickedCallback(ButtonClickedCallback callback);
+    void setButtonClickedCallback(QMessageBox_ButtonClickedCallback callback);
 
 public slots:
     void onButtonClicked(QAbstractButton* button) const;
 
 private:
-    ButtonClickedCallback buttonClickedCallback;
+    QMessageBox_ButtonClickedCallback buttonClickedCallback;
 };
 
 #endif // QMESSAGEBOX_HANDLER_H

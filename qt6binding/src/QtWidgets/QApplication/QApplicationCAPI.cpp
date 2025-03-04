@@ -1,4 +1,3 @@
-#include "qapplication.h"
 #include <QFont>
 #include <QPalette>
 #include <QApplication>

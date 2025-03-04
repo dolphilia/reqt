@@ -1,7 +1,5 @@
 #include "QGraphicsWidgetBind.h"
-#include <QSizePolicy>
 #include <QGraphicsLayout>
-#include "qgraphicswidget.h"
 
 extern "C" {
 
@@ -68,14 +66,14 @@ void QGraphicsWidget_setWindowTitle(void* widget, const char* title) {
     static_cast<QGraphicsWidgetBind*>(widget)->setWindowTitle(QString::fromUtf8(title));
 }
 
-typedef void (*GeometryChangedCallback)(void*, double, double, double, double);
-typedef void (*LayoutChangedCallback)(void*);
+typedef void (*QGraphicsWidget_GeometryChangedCallback)(void*, double, double, double, double);
+typedef void (*QGraphicsWidget_LayoutChangedCallback)(void*);
 
-void QGraphicsWidget_setGeometryChangedCallback(void* widget, GeometryChangedCallback callback) {
+void QGraphicsWidget_setGeometryChangedCallback(void* widget, QGraphicsWidget_GeometryChangedCallback callback) {
     static_cast<QGraphicsWidgetBind*>(widget)->setGeometryChangedCallback(callback);
 }
 
-void QGraphicsWidget_setLayoutChangedCallback(void* widget, LayoutChangedCallback callback) {
+void QGraphicsWidget_setLayoutChangedCallback(void* widget, QGraphicsWidget_LayoutChangedCallback callback) {
     static_cast<QGraphicsWidgetBind*>(widget)->setLayoutChangedCallback(callback);
 }
 

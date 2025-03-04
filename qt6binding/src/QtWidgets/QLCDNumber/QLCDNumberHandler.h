@@ -5,16 +5,16 @@
 
 class QLCDNumberHandler : public QObject {
     Q_OBJECT
-    typedef void (*OverflowCallback)(void*);
+    typedef void (*QLCDNumber_OverflowCallback)(void*);
 public:
     explicit QLCDNumberHandler(QObject* parent = nullptr);
-    void setOverflowCallback(OverflowCallback callback);
+    void setOverflowCallback(QLCDNumber_OverflowCallback callback);
 
 public slots:
     void onOverflow() const;
 
 private:
-    OverflowCallback overflowCallback;
+    QLCDNumber_OverflowCallback overflowCallback;
 };
 
 #endif // QLCDNUMBER_HANDLER_H

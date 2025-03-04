@@ -80,7 +80,9 @@ bool QDateEdit_isReadOnly(void* dateEdit) {
     return static_cast<QDateEditBind*>(dateEdit)->isReadOnly();
 }
 
-void QDateEdit_setDateChangedCallback(void* dateEdit, void (*callback)(void*, int, int, int)) {
+typedef void (*QDateEdit_DateChangedCallback)(void*, int, int, int);
+
+void QDateEdit_setDateChangedCallback(void* dateEdit, QDateEdit_DateChangedCallback callback) {
     static_cast<QDateEditBind*>(dateEdit)->setDateChangedCallback(callback);
 }
 

@@ -1,5 +1,4 @@
 #include "QGridLayoutBind.h"
-#include "qgridlayout.h"
 
 extern "C" {
 
@@ -75,9 +74,9 @@ int QGridLayout_spacing(void* gridLayout) {
     return static_cast<QGridLayoutBind*>(gridLayout)->spacing();
 }
 
-typedef void (*CellEmptyChangedCallback)(void*, int, int);
+typedef void (*QGridLayout_CellEmptyChangedCallback)(void*, int, int);
 
-void QGridLayout_setCellEmptyChangedCallback(void* gridLayout, CellEmptyChangedCallback callback) {
+void QGridLayout_setCellEmptyChangedCallback(void* gridLayout, QGridLayout_CellEmptyChangedCallback callback) {
     static_cast<QGridLayoutBind*>(gridLayout)->setCellEmptyChangedCallback(callback);
 }
 

@@ -4,24 +4,24 @@
 #include <QObject>
 #include <QModelIndex>
 
-class ListViewHandler : public QObject {
+class QListViewHandler : public QObject {
     Q_OBJECT
-    typedef void (*ClickedCallback)(void*, int, int);
-    typedef void (*DoubleClickedCallback)(void*, int, int);
-    typedef void (*SelectionChangedCallback)(void*);
+    typedef void (*QListView_ClickedCallback)(void*, int, int);
+    typedef void (*QListView_DoubleClickedCallback)(void*, int, int);
+    typedef void (*QListView_SelectionChangedCallback)(void*);
 public:
-    explicit ListViewHandler(QObject* parent = nullptr);
-    void setClickedCallback(ClickedCallback callback);
-    void setDoubleClickedCallback(DoubleClickedCallback callback);
-    void setSelectionChangedCallback(SelectionChangedCallback callback);
+    explicit QListViewHandler(QObject* parent = nullptr);
+    void setClickedCallback(QListView_ClickedCallback callback);
+    void setDoubleClickedCallback(QListView_DoubleClickedCallback callback);
+    void setSelectionChangedCallback(QListView_SelectionChangedCallback callback);
 public slots:
     void onClicked(const QModelIndex& index) const;
     void onDoubleClicked(const QModelIndex& index) const;
     void onSelectionChanged() const;
 private:
-    ClickedCallback clickedCallback;
-    DoubleClickedCallback doubleClickedCallback;
-    SelectionChangedCallback selectionChangedCallback;
+    QListView_ClickedCallback clickedCallback;
+    QListView_DoubleClickedCallback doubleClickedCallback;
+    QListView_SelectionChangedCallback selectionChangedCallback;
 };
 
 #endif // QLISTVIEW_HANDLER_H

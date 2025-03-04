@@ -1,62 +1,49 @@
 #include "QRadioButtonHandler.h"
 
-RadioButtonHandler::RadioButtonHandler(QObject *parent)
+QRadioButtonHandler::QRadioButtonHandler(QObject* parent)
     : QObject(parent)
-    , m_toggledCallback(nullptr)
-    , m_clickedCallback(nullptr)
-    , m_pressedCallback(nullptr)
-    , m_releasedCallback(nullptr)
-{
+    , toggledCallback(nullptr)
+    , clickedCallback(nullptr)
+    , pressedCallback(nullptr)
+    , releasedCallback(nullptr) {
 }
 
-RadioButtonHandler::~RadioButtonHandler()
-{
+void QRadioButtonHandler::setToggledCallback(QRadioButton_ToggledCallback callback) {
+    toggledCallback = callback;
 }
 
-void RadioButtonHandler::setToggledCallback(void (*callback)(bool))
-{
-    m_toggledCallback = callback;
+void QRadioButtonHandler::setClickedCallback(QRadioButton_ClickedCallback callback) {
+    clickedCallback = callback;
 }
 
-void RadioButtonHandler::setClickedCallback(void (*callback)(bool))
-{
-    m_clickedCallback = callback;
+void QRadioButtonHandler::setPressedCallback(QRadioButton_PressedCallback callback) {
+    pressedCallback = callback;
 }
 
-void RadioButtonHandler::setPressedCallback(void (*callback)())
-{
-    m_pressedCallback = callback;
+void QRadioButtonHandler::setReleasedCallback(QRadioButton_ReleasedCallback callback) {
+    releasedCallback = callback;
 }
 
-void RadioButtonHandler::setReleasedCallback(void (*callback)())
-{
-    m_releasedCallback = callback;
-}
-
-void RadioButtonHandler::onToggled(bool checked)
-{
-    if (m_toggledCallback) {
-        m_toggledCallback(checked);
+void QRadioButtonHandler::onToggled(bool checked) const {
+    if (toggledCallback) {
+        toggledCallback(parent(), checked);
     }
 }
 
-void RadioButtonHandler::onClicked(bool checked)
-{
-    if (m_clickedCallback) {
-        m_clickedCallback(checked);
+void QRadioButtonHandler::onClicked(bool checked) const {
+    if (clickedCallback) {
+        clickedCallback(parent(), checked);
     }
 }
 
-void RadioButtonHandler::onPressed()
-{
-    if (m_pressedCallback) {
-        m_pressedCallback();
+void QRadioButtonHandler::onPressed() const {
+    if (pressedCallback) {
+        pressedCallback(parent());
     }
 }
 
-void RadioButtonHandler::onReleased()
-{
-    if (m_releasedCallback) {
-        m_releasedCallback();
+void QRadioButtonHandler::onReleased() const {
+    if (releasedCallback) {
+        releasedCallback(parent());
     }
 }

@@ -1,37 +1,37 @@
 #include "QGraphicsViewHandler.h"
 
-GraphicsViewHandler::GraphicsViewHandler(QObject* parent)
+QGraphicsViewHandler::QGraphicsViewHandler(QObject* parent)
     : QObject(parent)
     , sceneRectChangedCallback(nullptr)
     , scaleChangedCallback(nullptr)
     , transformChangedCallback(nullptr) {
 }
 
-void GraphicsViewHandler::setSceneRectChangedCallback(SceneRectChangedCallback callback) {
+void QGraphicsViewHandler::setSceneRectChangedCallback(QGraphicsView_SceneRectChangedCallback callback) {
     sceneRectChangedCallback = callback;
 }
 
-void GraphicsViewHandler::setScaleChangedCallback(ScaleChangedCallback callback) {
+void QGraphicsViewHandler::setScaleChangedCallback(QGraphicsView_ScaleChangedCallback callback) {
     scaleChangedCallback = callback;
 }
 
-void GraphicsViewHandler::setTransformChangedCallback(TransformChangedCallback callback) {
+void QGraphicsViewHandler::setTransformChangedCallback(QGraphicsView_TransformChangedCallback callback) {
     transformChangedCallback = callback;
 }
 
-void GraphicsViewHandler::onSceneRectChanged(const QRectF& rect) const {
+void QGraphicsViewHandler::onSceneRectChanged(const QRectF& rect) const {
     if (sceneRectChangedCallback) {
         sceneRectChangedCallback(parent(), rect.x(), rect.y(), rect.width(), rect.height());
     }
 }
 
-void GraphicsViewHandler::onScaleChanged(qreal sx, qreal sy) const {
+void QGraphicsViewHandler::onScaleChanged(qreal sx, qreal sy) const {
     if (scaleChangedCallback) {
         scaleChangedCallback(parent(), sx, sy);
     }
 }
 
-void GraphicsViewHandler::onTransformChanged() const {
+void QGraphicsViewHandler::onTransformChanged() const {
     if (transformChangedCallback) {
         transformChangedCallback(parent());
     }
