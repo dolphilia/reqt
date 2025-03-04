@@ -1,250 +1,188 @@
-#include "qtextedit.h"
 #include "QTextEditBind.h"
-#include "QTextEditHandler.h"
 
 extern "C" {
 
-void* QTextEdit_create(void* parent)
-{
-    return new BindQTextEdit(reinterpret_cast<QWidget*>(parent));
+typedef void (*QTextEdit_TextChangedCallback)(void*);
+typedef void (*QTextEdit_CopyAvailableCallback)(void*, bool);
+typedef void (*QTextEdit_UndoAvailableCallback)(void*, bool);
+typedef void (*QTextEdit_RedoAvailableCallback)(void*, bool);
+typedef void (*QTextEdit_SelectionChangedCallback)(void*);
+typedef void (*QTextEdit_CursorPositionChangedCallback)(void*);
+
+void* QTextEdit_create(void* parent) {
+    return new QTextEditBind(static_cast<QWidget*>(parent));
 }
 
-void QTextEdit_delete(void* text_edit)
-{
-    delete static_cast<BindQTextEdit*>(text_edit);
+void QTextEdit_delete(void* textEdit) {
+    delete static_cast<QTextEditBind*>(textEdit);
 }
 
-void QTextEdit_setText(void* text_edit, const char* text)
-{
-    static_cast<BindQTextEdit*>(text_edit)->setText(QString::fromUtf8(text));
+void QTextEdit_setText(void* textEdit, const char* text) {
+    const QString qstr = QString::fromUtf8(text);
+    static_cast<QTextEditBind*>(textEdit)->setText(qstr);
 }
 
-const char* QTextEdit_text(void* text_edit)
-{
-    return static_cast<BindQTextEdit*>(text_edit)->toPlainText().toUtf8().constData();
+const char* QTextEdit_text(void* textEdit) {
+    const QString qstr = static_cast<QTextEditBind*>(textEdit)->toPlainText();
+    return qstr.toUtf8().constData();
 }
 
-void QTextEdit_setPlainText(void* text_edit, const char* text)
-{
-    static_cast<BindQTextEdit*>(text_edit)->setPlainText(QString::fromUtf8(text));
+void QTextEdit_setPlainText(void* textEdit, const char* text) {
+    const QString qstr = QString::fromUtf8(text);
+    static_cast<QTextEditBind*>(textEdit)->setPlainText(qstr);
 }
 
-const char* QTextEdit_toPlainText(void* text_edit)
-{
-    return static_cast<BindQTextEdit*>(text_edit)->toPlainText().toUtf8().constData();
+const char* QTextEdit_toPlainText(void* textEdit) {
+    const QString qstr = static_cast<QTextEditBind*>(textEdit)->toPlainText();
+    return qstr.toUtf8().constData();
 }
 
-void QTextEdit_setHtml(void* text_edit, const char* text)
-{
-    static_cast<BindQTextEdit*>(text_edit)->setHtml(QString::fromUtf8(text));
+void QTextEdit_setHtml(void* textEdit, const char* text) {
+    const QString qstr = QString::fromUtf8(text);
+    static_cast<QTextEditBind*>(textEdit)->setHtml(qstr);
 }
 
-const char* QTextEdit_toHtml(void* text_edit)
-{
-    return static_cast<BindQTextEdit*>(text_edit)->toHtml().toUtf8().constData();
+const char* QTextEdit_toHtml(void* textEdit) {
+    const QString qstr = static_cast<QTextEditBind*>(textEdit)->toHtml();
+    return qstr.toUtf8().constData();
 }
 
-void QTextEdit_append(void* text_edit, const char* text)
-{
-    static_cast<BindQTextEdit*>(text_edit)->append(QString::fromUtf8(text));
+void QTextEdit_append(void* textEdit, const char* text) {
+    const QString qstr = QString::fromUtf8(text);
+    static_cast<QTextEditBind*>(textEdit)->append(qstr);
 }
 
-void QTextEdit_clear(void* text_edit)
-{
-    static_cast<BindQTextEdit*>(text_edit)->clear();
+void QTextEdit_clear(void* textEdit) {
+    static_cast<QTextEditBind*>(textEdit)->clear();
 }
 
-void QTextEdit_selectAll(void* text_edit)
-{
-    static_cast<BindQTextEdit*>(text_edit)->selectAll();
+void QTextEdit_selectAll(void* textEdit) {
+    static_cast<QTextEditBind*>(textEdit)->selectAll();
 }
 
-void QTextEdit_copy(void* text_edit)
-{
-    static_cast<BindQTextEdit*>(text_edit)->copy();
+void QTextEdit_copy(void* textEdit) {
+    static_cast<QTextEditBind*>(textEdit)->copy();
 }
 
-void QTextEdit_cut(void* text_edit)
-{
-    static_cast<BindQTextEdit*>(text_edit)->cut();
+void QTextEdit_cut(void* textEdit) {
+    static_cast<QTextEditBind*>(textEdit)->cut();
 }
 
-void QTextEdit_paste(void* text_edit)
-{
-    static_cast<BindQTextEdit*>(text_edit)->paste();
+void QTextEdit_paste(void* textEdit) {
+    static_cast<QTextEditBind*>(textEdit)->paste();
 }
 
-void QTextEdit_undo(void* text_edit)
-{
-    static_cast<BindQTextEdit*>(text_edit)->undo();
+void QTextEdit_undo(void* textEdit) {
+    static_cast<QTextEditBind*>(textEdit)->undo();
 }
 
-void QTextEdit_redo(void* text_edit)
-{
-    static_cast<BindQTextEdit*>(text_edit)->redo();
+void QTextEdit_redo(void* textEdit) {
+    static_cast<QTextEditBind*>(textEdit)->redo();
 }
 
-void QTextEdit_setReadOnly(void* text_edit, bool read_only)
-{
-    static_cast<BindQTextEdit*>(text_edit)->setReadOnly(read_only);
+void QTextEdit_setReadOnly(void* textEdit, bool readOnly) {
+    static_cast<QTextEditBind*>(textEdit)->setReadOnly(readOnly);
 }
 
-bool QTextEdit_isReadOnly(void* text_edit)
-{
-    return static_cast<BindQTextEdit*>(text_edit)->isReadOnly();
+bool QTextEdit_isReadOnly(void* textEdit) {
+    return static_cast<QTextEditBind*>(textEdit)->isReadOnly();
 }
 
-void QTextEdit_setPlaceholderText(void* text_edit, const char* text)
-{
-    static_cast<BindQTextEdit*>(text_edit)->setPlaceholderText(QString::fromUtf8(text));
+void QTextEdit_setPlaceholderText(void* textEdit, const char* text) {
+    const QString qstr = QString::fromUtf8(text);
+    static_cast<QTextEditBind*>(textEdit)->setPlaceholderText(qstr);
 }
 
-const char* QTextEdit_placeholderText(void* text_edit)
-{
-    return static_cast<BindQTextEdit*>(text_edit)->placeholderText().toUtf8().constData();
+const char* QTextEdit_placeholderText(void* textEdit) {
+    const QString qstr = static_cast<QTextEditBind*>(textEdit)->placeholderText();
+    return qstr.toUtf8().constData();
 }
 
-void QTextEdit_setOverwriteMode(void* text_edit, bool overwrite)
-{
-    static_cast<BindQTextEdit*>(text_edit)->setOverwriteMode(overwrite);
+void QTextEdit_setOverwriteMode(void* textEdit, bool overwrite) {
+    static_cast<QTextEditBind*>(textEdit)->setOverwriteMode(overwrite);
 }
 
-bool QTextEdit_overwriteMode(void* text_edit)
-{
-    return static_cast<BindQTextEdit*>(text_edit)->overwriteMode();
+bool QTextEdit_overwriteMode(void* textEdit) {
+    return static_cast<QTextEditBind*>(textEdit)->overwriteMode();
 }
 
-void QTextEdit_setTabChangesFocus(void* text_edit, bool changes)
-{
-    static_cast<BindQTextEdit*>(text_edit)->setTabChangesFocus(changes);
+void QTextEdit_setTabChangesFocus(void* textEdit, bool changes) {
+    static_cast<QTextEditBind*>(textEdit)->setTabChangesFocus(changes);
 }
 
-bool QTextEdit_tabChangesFocus(void* text_edit)
-{
-    return static_cast<BindQTextEdit*>(text_edit)->tabChangesFocus();
+bool QTextEdit_tabChangesFocus(void* textEdit) {
+    return static_cast<QTextEditBind*>(textEdit)->tabChangesFocus();
 }
 
-void QTextEdit_setAcceptRichText(void* text_edit, bool accept)
-{
-    static_cast<BindQTextEdit*>(text_edit)->setAcceptRichText(accept);
+void QTextEdit_setAcceptRichText(void* textEdit, bool accept) {
+    static_cast<QTextEditBind*>(textEdit)->setAcceptRichText(accept);
 }
 
-bool QTextEdit_acceptRichText(void* text_edit)
-{
-    return static_cast<BindQTextEdit*>(text_edit)->acceptRichText();
+bool QTextEdit_acceptRichText(void* textEdit) {
+    return static_cast<QTextEditBind*>(textEdit)->acceptRichText();
 }
 
-void QTextEdit_setTextCursor(void* text_edit, int position)
-{
-    QTextCursor cursor = static_cast<BindQTextEdit*>(text_edit)->textCursor();
+void QTextEdit_setTextCursor(void* textEdit, int position) {
+    QTextCursor cursor = static_cast<QTextEditBind*>(textEdit)->textCursor();
     cursor.setPosition(position);
-    static_cast<BindQTextEdit*>(text_edit)->setTextCursor(cursor);
+    static_cast<QTextEditBind*>(textEdit)->setTextCursor(cursor);
 }
 
-int QTextEdit_textCursor(void* text_edit)
-{
-    return static_cast<BindQTextEdit*>(text_edit)->textCursor().position();
+int QTextEdit_textCursor(void* textEdit) {
+    return static_cast<QTextEditBind*>(textEdit)->textCursor().position();
 }
 
-void QTextEdit_setCursorWidth(void* text_edit, int width)
-{
-    static_cast<BindQTextEdit*>(text_edit)->setCursorWidth(width);
+void QTextEdit_setCursorWidth(void* textEdit, int width) {
+    static_cast<QTextEditBind*>(textEdit)->setCursorWidth(width);
 }
 
-int QTextEdit_cursorWidth(void* text_edit)
-{
-    return static_cast<BindQTextEdit*>(text_edit)->cursorWidth();
+int QTextEdit_cursorWidth(void* textEdit) {
+    return static_cast<QTextEditBind*>(textEdit)->cursorWidth();
 }
 
-bool QTextEdit_find(void* text_edit, const char* text, int options)
-{
-    return static_cast<BindQTextEdit*>(text_edit)->find(QString::fromUtf8(text), static_cast<QTextDocument::FindFlags>(options));
+bool QTextEdit_find(void* textEdit, const char* text, int options) {
+    const QString qstr = QString::fromUtf8(text);
+    return static_cast<QTextEditBind*>(textEdit)->find(qstr, static_cast<QTextDocument::FindFlags>(options));
 }
 
-void QTextEdit_setWordWrapMode(void* text_edit, int mode)
-{
-    static_cast<BindQTextEdit*>(text_edit)->setWordWrapMode(static_cast<QTextOption::WrapMode>(mode));
+void QTextEdit_setWordWrapMode(void* textEdit, int mode) {
+    static_cast<QTextEditBind*>(textEdit)->setWordWrapMode(static_cast<QTextOption::WrapMode>(mode));
 }
 
-int QTextEdit_wordWrapMode(void* text_edit)
-{
-    return static_cast<int>(static_cast<BindQTextEdit*>(text_edit)->wordWrapMode());
+int QTextEdit_wordWrapMode(void* textEdit) {
+    return static_cast<int>(static_cast<QTextEditBind*>(textEdit)->wordWrapMode());
 }
 
-void QTextEdit_setLineWrapMode(void* text_edit, int mode)
-{
-    static_cast<BindQTextEdit*>(text_edit)->setLineWrapMode(static_cast<QTextEdit::LineWrapMode>(mode));
+void QTextEdit_setLineWrapMode(void* textEdit, int mode) {
+    static_cast<QTextEditBind*>(textEdit)->setLineWrapMode(static_cast<QTextEdit::LineWrapMode>(mode));
 }
 
-int QTextEdit_lineWrapMode(void* text_edit)
-{
-    return static_cast<int>(static_cast<BindQTextEdit*>(text_edit)->lineWrapMode());
+int QTextEdit_lineWrapMode(void* textEdit) {
+    return static_cast<int>(static_cast<QTextEditBind*>(textEdit)->lineWrapMode());
 }
 
-void QTextEdit_setTextChangedCallback(void* text_edit, QTextEditTextChangedCallback callback)
-{
-    BindQTextEdit* qtext_edit = static_cast<BindQTextEdit*>(text_edit);
-    TextEditHandler* handler = qtext_edit->handler();
-    if (!handler) {
-        handler = new TextEditHandler(qtext_edit);
-        qtext_edit->setTextEditHandler(handler);
-    }
-    handler->setTextChangedCallback(callback);
+void QTextEdit_setTextChangedCallback(void* textEdit, QTextEdit_TextChangedCallback callback) {
+    static_cast<QTextEditBind*>(textEdit)->setTextChangedCallback(callback);
 }
 
-void QTextEdit_setCopyAvailableCallback(void* text_edit, QTextEditCopyAvailableCallback callback)
-{
-    BindQTextEdit* qtext_edit = static_cast<BindQTextEdit*>(text_edit);
-    TextEditHandler* handler = qtext_edit->handler();
-    if (!handler) {
-        handler = new TextEditHandler(qtext_edit);
-        qtext_edit->setTextEditHandler(handler);
-    }
-    handler->setCopyAvailableCallback(callback);
+void QTextEdit_setCopyAvailableCallback(void* textEdit, QTextEdit_CopyAvailableCallback callback) {
+    static_cast<QTextEditBind*>(textEdit)->setCopyAvailableCallback(callback);
 }
 
-void QTextEdit_setUndoAvailableCallback(void* text_edit, QTextEditUndoAvailableCallback callback)
-{
-    BindQTextEdit* qtext_edit = static_cast<BindQTextEdit*>(text_edit);
-    TextEditHandler* handler = qtext_edit->handler();
-    if (!handler) {
-        handler = new TextEditHandler(qtext_edit);
-        qtext_edit->setTextEditHandler(handler);
-    }
-    handler->setUndoAvailableCallback(callback);
+void QTextEdit_setUndoAvailableCallback(void* textEdit, QTextEdit_UndoAvailableCallback callback) {
+    static_cast<QTextEditBind*>(textEdit)->setUndoAvailableCallback(callback);
 }
 
-void QTextEdit_setRedoAvailableCallback(void* text_edit, QTextEditRedoAvailableCallback callback)
-{
-    BindQTextEdit* qtext_edit = static_cast<BindQTextEdit*>(text_edit);
-    TextEditHandler* handler = qtext_edit->handler();
-    if (!handler) {
-        handler = new TextEditHandler(qtext_edit);
-        qtext_edit->setTextEditHandler(handler);
-    }
-    handler->setRedoAvailableCallback(callback);
+void QTextEdit_setRedoAvailableCallback(void* textEdit, QTextEdit_RedoAvailableCallback callback) {
+    static_cast<QTextEditBind*>(textEdit)->setRedoAvailableCallback(callback);
 }
 
-void QTextEdit_setSelectionChangedCallback(void* text_edit, QTextEditSelectionChangedCallback callback)
-{
-    BindQTextEdit* qtext_edit = static_cast<BindQTextEdit*>(text_edit);
-    TextEditHandler* handler = qtext_edit->handler();
-    if (!handler) {
-        handler = new TextEditHandler(qtext_edit);
-        qtext_edit->setTextEditHandler(handler);
-    }
-    handler->setSelectionChangedCallback(callback);
+void QTextEdit_setSelectionChangedCallback(void* textEdit, QTextEdit_SelectionChangedCallback callback) {
+    static_cast<QTextEditBind*>(textEdit)->setSelectionChangedCallback(callback);
 }
 
-void QTextEdit_setCursorPositionChangedCallback(void* text_edit, QTextEditCursorPositionChangedCallback callback)
-{
-    BindQTextEdit* qtext_edit = static_cast<BindQTextEdit*>(text_edit);
-    TextEditHandler* handler = qtext_edit->handler();
-    if (!handler) {
-        handler = new TextEditHandler(qtext_edit);
-        qtext_edit->setTextEditHandler(handler);
-    }
-    handler->setCursorPositionChangedCallback(callback);
+void QTextEdit_setCursorPositionChangedCallback(void* textEdit, QTextEdit_CursorPositionChangedCallback callback) {
+    static_cast<QTextEditBind*>(textEdit)->setCursorPositionChangedCallback(callback);
 }
 
 }

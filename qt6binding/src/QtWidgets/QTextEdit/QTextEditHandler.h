@@ -1,36 +1,40 @@
-#ifndef HANDLER_TEXT_EDIT_H
-#define HANDLER_TEXT_EDIT_H
+#ifndef QTEXTEDIT_HANDLER_H
+#define QTEXTEDIT_HANDLER_H
 
 #include <QObject>
 
-class TextEditHandler : public QObject {
+class QTextEditHandler : public QObject {
     Q_OBJECT
+    typedef void (*QTextEdit_TextChangedCallback)(void*);
+    typedef void (*QTextEdit_CopyAvailableCallback)(void*, bool);
+    typedef void (*QTextEdit_UndoAvailableCallback)(void*, bool);
+    typedef void (*QTextEdit_RedoAvailableCallback)(void*, bool);
+    typedef void (*QTextEdit_SelectionChangedCallback)(void*);
+    typedef void (*QTextEdit_CursorPositionChangedCallback)(void*);
 public:
-    explicit TextEditHandler(QObject *parent = nullptr);
-    ~TextEditHandler();
-
-    void setTextChangedCallback(void (*callback)());
-    void setCopyAvailableCallback(void (*callback)(bool available));
-    void setUndoAvailableCallback(void (*callback)(bool available));
-    void setRedoAvailableCallback(void (*callback)(bool available));
-    void setSelectionChangedCallback(void (*callback)());
-    void setCursorPositionChangedCallback(void (*callback)());
+    explicit QTextEditHandler(QObject* parent = nullptr);
+    void setTextChangedCallback(QTextEdit_TextChangedCallback callback);
+    void setCopyAvailableCallback(QTextEdit_CopyAvailableCallback callback);
+    void setUndoAvailableCallback(QTextEdit_UndoAvailableCallback callback);
+    void setRedoAvailableCallback(QTextEdit_RedoAvailableCallback callback);
+    void setSelectionChangedCallback(QTextEdit_SelectionChangedCallback callback);
+    void setCursorPositionChangedCallback(QTextEdit_CursorPositionChangedCallback callback);
 
 public slots:
-    void onTextChanged();
-    void onCopyAvailable(bool available);
-    void onUndoAvailable(bool available);
-    void onRedoAvailable(bool available);
-    void onSelectionChanged();
-    void onCursorPositionChanged();
+    void onTextChanged() const;
+    void onCopyAvailable(bool available) const;
+    void onUndoAvailable(bool available) const;
+    void onRedoAvailable(bool available) const;
+    void onSelectionChanged() const;
+    void onCursorPositionChanged() const;
 
 private:
-    void (*m_textChangedCallback)();
-    void (*m_copyAvailableCallback)(bool available);
-    void (*m_undoAvailableCallback)(bool available);
-    void (*m_redoAvailableCallback)(bool available);
-    void (*m_selectionChangedCallback)();
-    void (*m_cursorPositionChangedCallback)();
+    QTextEdit_TextChangedCallback textChangedCallback;
+    QTextEdit_CopyAvailableCallback copyAvailableCallback;
+    QTextEdit_UndoAvailableCallback undoAvailableCallback;
+    QTextEdit_RedoAvailableCallback redoAvailableCallback;
+    QTextEdit_SelectionChangedCallback selectionChangedCallback;
+    QTextEdit_CursorPositionChangedCallback cursorPositionChangedCallback;
 };
 
-#endif // HANDLER_TEXT_EDIT_H
+#endif // QTEXTEDIT_HANDLER_H

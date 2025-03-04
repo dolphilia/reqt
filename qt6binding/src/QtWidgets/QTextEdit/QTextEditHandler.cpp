@@ -1,88 +1,71 @@
 #include "QTextEditHandler.h"
 
-TextEditHandler::TextEditHandler(QObject *parent)
+QTextEditHandler::QTextEditHandler(QObject* parent)
     : QObject(parent)
-    , m_textChangedCallback(nullptr)
-    , m_copyAvailableCallback(nullptr)
-    , m_undoAvailableCallback(nullptr)
-    , m_redoAvailableCallback(nullptr)
-    , m_selectionChangedCallback(nullptr)
-    , m_cursorPositionChangedCallback(nullptr)
-{
+    , textChangedCallback(nullptr)
+    , copyAvailableCallback(nullptr)
+    , undoAvailableCallback(nullptr)
+    , redoAvailableCallback(nullptr)
+    , selectionChangedCallback(nullptr)
+    , cursorPositionChangedCallback(nullptr) {
 }
 
-TextEditHandler::~TextEditHandler()
-{
+void QTextEditHandler::setTextChangedCallback(QTextEdit_TextChangedCallback callback) {
+    textChangedCallback = callback;
 }
 
-void TextEditHandler::setTextChangedCallback(void (*callback)())
-{
-    m_textChangedCallback = callback;
+void QTextEditHandler::setCopyAvailableCallback(QTextEdit_CopyAvailableCallback callback) {
+    copyAvailableCallback = callback;
 }
 
-void TextEditHandler::setCopyAvailableCallback(void (*callback)(bool))
-{
-    m_copyAvailableCallback = callback;
+void QTextEditHandler::setUndoAvailableCallback(QTextEdit_UndoAvailableCallback callback) {
+    undoAvailableCallback = callback;
 }
 
-void TextEditHandler::setUndoAvailableCallback(void (*callback)(bool))
-{
-    m_undoAvailableCallback = callback;
+void QTextEditHandler::setRedoAvailableCallback(QTextEdit_RedoAvailableCallback callback) {
+    redoAvailableCallback = callback;
 }
 
-void TextEditHandler::setRedoAvailableCallback(void (*callback)(bool))
-{
-    m_redoAvailableCallback = callback;
+void QTextEditHandler::setSelectionChangedCallback(QTextEdit_SelectionChangedCallback callback) {
+    selectionChangedCallback = callback;
 }
 
-void TextEditHandler::setSelectionChangedCallback(void (*callback)())
-{
-    m_selectionChangedCallback = callback;
+void QTextEditHandler::setCursorPositionChangedCallback(QTextEdit_CursorPositionChangedCallback callback) {
+    cursorPositionChangedCallback = callback;
 }
 
-void TextEditHandler::setCursorPositionChangedCallback(void (*callback)())
-{
-    m_cursorPositionChangedCallback = callback;
-}
-
-void TextEditHandler::onTextChanged()
-{
-    if (m_textChangedCallback) {
-        m_textChangedCallback();
+void QTextEditHandler::onTextChanged() const {
+    if (textChangedCallback) {
+        textChangedCallback(parent());
     }
 }
 
-void TextEditHandler::onCopyAvailable(bool available)
-{
-    if (m_copyAvailableCallback) {
-        m_copyAvailableCallback(available);
+void QTextEditHandler::onCopyAvailable(bool available) const {
+    if (copyAvailableCallback) {
+        copyAvailableCallback(parent(), available);
     }
 }
 
-void TextEditHandler::onUndoAvailable(bool available)
-{
-    if (m_undoAvailableCallback) {
-        m_undoAvailableCallback(available);
+void QTextEditHandler::onUndoAvailable(bool available) const {
+    if (undoAvailableCallback) {
+        undoAvailableCallback(parent(), available);
     }
 }
 
-void TextEditHandler::onRedoAvailable(bool available)
-{
-    if (m_redoAvailableCallback) {
-        m_redoAvailableCallback(available);
+void QTextEditHandler::onRedoAvailable(bool available) const {
+    if (redoAvailableCallback) {
+        redoAvailableCallback(parent(), available);
     }
 }
 
-void TextEditHandler::onSelectionChanged()
-{
-    if (m_selectionChangedCallback) {
-        m_selectionChangedCallback();
+void QTextEditHandler::onSelectionChanged() const {
+    if (selectionChangedCallback) {
+        selectionChangedCallback(parent());
     }
 }
 
-void TextEditHandler::onCursorPositionChanged()
-{
-    if (m_cursorPositionChangedCallback) {
-        m_cursorPositionChangedCallback();
+void QTextEditHandler::onCursorPositionChanged() const {
+    if (cursorPositionChangedCallback) {
+        cursorPositionChangedCallback(parent());
     }
 }

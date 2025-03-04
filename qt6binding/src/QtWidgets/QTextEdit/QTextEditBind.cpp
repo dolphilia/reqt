@@ -1,53 +1,41 @@
 #include "QTextEditBind.h"
+#include "QTextEditHandler.h"
 
-BindQTextEdit::BindQTextEdit(QWidget *parent)
+QTextEditBind::QTextEditBind(QWidget* parent)
     : QTextEdit(parent)
-    , m_handler(nullptr)
-{
+    , handler(new QTextEditHandler(this)) {
+    connect(this, &QTextEdit::textChanged, handler, &QTextEditHandler::onTextChanged);
+    connect(this, &QTextEdit::copyAvailable, handler, &QTextEditHandler::onCopyAvailable);
+    connect(this, &QTextEdit::undoAvailable, handler, &QTextEditHandler::onUndoAvailable);
+    connect(this, &QTextEdit::redoAvailable, handler, &QTextEditHandler::onRedoAvailable);
+    connect(this, &QTextEdit::selectionChanged, handler, &QTextEditHandler::onSelectionChanged);
+    connect(this, &QTextEdit::cursorPositionChanged, handler, &QTextEditHandler::onCursorPositionChanged);
 }
 
-BindQTextEdit::~BindQTextEdit()
-{
-    delete m_handler;
+QTextEditBind::~QTextEditBind() {
+    delete handler;
 }
 
-void BindQTextEdit::setTextEditHandler(TextEditHandler *handler)
-{
-    if (m_handler) {
-        disconnect(this, &QTextEdit::textChanged,
-                  m_handler, &TextEditHandler::onTextChanged);
-        disconnect(this, &QTextEdit::copyAvailable,
-                  m_handler, &TextEditHandler::onCopyAvailable);
-        disconnect(this, &QTextEdit::undoAvailable,
-                  m_handler, &TextEditHandler::onUndoAvailable);
-        disconnect(this, &QTextEdit::redoAvailable,
-                  m_handler, &TextEditHandler::onRedoAvailable);
-        disconnect(this, &QTextEdit::selectionChanged,
-                  m_handler, &TextEditHandler::onSelectionChanged);
-        disconnect(this, &QTextEdit::cursorPositionChanged,
-                  m_handler, &TextEditHandler::onCursorPositionChanged);
-        delete m_handler;
-    }
-
-    m_handler = handler;
-
-    if (m_handler) {
-        connect(this, &QTextEdit::textChanged,
-                m_handler, &TextEditHandler::onTextChanged);
-        connect(this, &QTextEdit::copyAvailable,
-                m_handler, &TextEditHandler::onCopyAvailable);
-        connect(this, &QTextEdit::undoAvailable,
-                m_handler, &TextEditHandler::onUndoAvailable);
-        connect(this, &QTextEdit::redoAvailable,
-                m_handler, &TextEditHandler::onRedoAvailable);
-        connect(this, &QTextEdit::selectionChanged,
-                m_handler, &TextEditHandler::onSelectionChanged);
-        connect(this, &QTextEdit::cursorPositionChanged,
-                m_handler, &TextEditHandler::onCursorPositionChanged);
-    }
+void QTextEditBind::setTextChangedCallback(QTextEdit_TextChangedCallback callback) const {
+    handler->setTextChangedCallback(callback);
 }
 
-TextEditHandler *BindQTextEdit::handler() const
-{
-    return m_handler;
+void QTextEditBind::setCopyAvailableCallback(QTextEdit_CopyAvailableCallback callback) const {
+    handler->setCopyAvailableCallback(callback);
+}
+
+void QTextEditBind::setUndoAvailableCallback(QTextEdit_UndoAvailableCallback callback) const {
+    handler->setUndoAvailableCallback(callback);
+}
+
+void QTextEditBind::setRedoAvailableCallback(QTextEdit_RedoAvailableCallback callback) const {
+    handler->setRedoAvailableCallback(callback);
+}
+
+void QTextEditBind::setSelectionChangedCallback(QTextEdit_SelectionChangedCallback callback) const {
+    handler->setSelectionChangedCallback(callback);
+}
+
+void QTextEditBind::setCursorPositionChangedCallback(QTextEdit_CursorPositionChangedCallback callback) const {
+    handler->setCursorPositionChangedCallback(callback);
 }
