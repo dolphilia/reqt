@@ -1,47 +1,52 @@
 #include "QSliderBind.h"
+#include "QSliderHandler.h"
 
-BindQSlider::BindQSlider(QWidget *parent)
+QSliderBind::QSliderBind(QWidget* parent)
     : QSlider(parent)
-    , m_handler(nullptr)
-{
+    , handler(new QSliderHandler(this)) {
+    connect(this, &QSlider::valueChanged, handler, &QSliderHandler::onValueChanged);
+    connect(this, &QSlider::sliderMoved, handler, &QSliderHandler::onSliderMoved);
+    connect(this, &QSlider::sliderPressed, handler, &QSliderHandler::onSliderPressed);
+    connect(this, &QSlider::sliderReleased, handler, &QSliderHandler::onSliderReleased);
+    connect(this, &QSlider::rangeChanged, handler, &QSliderHandler::onRangeChanged);
+    connect(this, &QSlider::actionTriggered, handler, &QSliderHandler::onActionTriggered);
 }
 
-BindQSlider::BindQSlider(Qt::Orientation orientation, QWidget *parent)
+QSliderBind::QSliderBind(Qt::Orientation orientation, QWidget* parent)
     : QSlider(orientation, parent)
-    , m_handler(nullptr)
-{
+    , handler(new QSliderHandler(this)) {
+    connect(this, &QSlider::valueChanged, handler, &QSliderHandler::onValueChanged);
+    connect(this, &QSlider::sliderMoved, handler, &QSliderHandler::onSliderMoved);
+    connect(this, &QSlider::sliderPressed, handler, &QSliderHandler::onSliderPressed);
+    connect(this, &QSlider::sliderReleased, handler, &QSliderHandler::onSliderReleased);
+    connect(this, &QSlider::rangeChanged, handler, &QSliderHandler::onRangeChanged);
+    connect(this, &QSlider::actionTriggered, handler, &QSliderHandler::onActionTriggered);
 }
 
-BindQSlider::~BindQSlider()
-{
-    delete m_handler;
+QSliderBind::~QSliderBind() {
+    delete handler;
 }
 
-void BindQSlider::setSliderHandler(SliderHandler *handler)
-{
-    if (m_handler) {
-        disconnect(this, &QSlider::valueChanged, m_handler, &SliderHandler::onValueChanged);
-        disconnect(this, &QSlider::sliderMoved, m_handler, &SliderHandler::onSliderMoved);
-        disconnect(this, &QSlider::sliderPressed, m_handler, &SliderHandler::onSliderPressed);
-        disconnect(this, &QSlider::sliderReleased, m_handler, &SliderHandler::onSliderReleased);
-        disconnect(this, &QSlider::rangeChanged, m_handler, &SliderHandler::onRangeChanged);
-        disconnect(this, &QSlider::actionTriggered, m_handler, &SliderHandler::onActionTriggered);
-        delete m_handler;
-    }
-
-    m_handler = handler;
-
-    if (m_handler) {
-        connect(this, &QSlider::valueChanged, m_handler, &SliderHandler::onValueChanged);
-        connect(this, &QSlider::sliderMoved, m_handler, &SliderHandler::onSliderMoved);
-        connect(this, &QSlider::sliderPressed, m_handler, &SliderHandler::onSliderPressed);
-        connect(this, &QSlider::sliderReleased, m_handler, &SliderHandler::onSliderReleased);
-        connect(this, &QSlider::rangeChanged, m_handler, &SliderHandler::onRangeChanged);
-        connect(this, &QSlider::actionTriggered, m_handler, &SliderHandler::onActionTriggered);
-    }
+void QSliderBind::setValueChangedCallback(QSlider_ValueChangedCallback callback) const {
+    handler->setValueChangedCallback(callback);
 }
 
-SliderHandler *BindQSlider::handler() const
-{
-    return m_handler;
+void QSliderBind::setSliderMovedCallback(QSlider_SliderMovedCallback callback) const {
+    handler->setSliderMovedCallback(callback);
+}
+
+void QSliderBind::setSliderPressedCallback(QSlider_SliderPressedCallback callback) const {
+    handler->setSliderPressedCallback(callback);
+}
+
+void QSliderBind::setSliderReleasedCallback(QSlider_SliderReleasedCallback callback) const {
+    handler->setSliderReleasedCallback(callback);
+}
+
+void QSliderBind::setRangeChangedCallback(QSlider_RangeChangedCallback callback) const {
+    handler->setRangeChangedCallback(callback);
+}
+
+void QSliderBind::setActionTriggeredCallback(QSlider_ActionTriggeredCallback callback) const {
+    handler->setActionTriggeredCallback(callback);
 }

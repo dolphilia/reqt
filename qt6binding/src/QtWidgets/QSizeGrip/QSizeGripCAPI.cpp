@@ -26,4 +26,14 @@ bool QSizeGrip_isEnabled(void* sizeGrip) {
     return static_cast<QSizeGripBind*>(sizeGrip)->isEnabled();
 }
 
+// QSizeGripには特定のシグナルがないため、コールバック関数は追加していません
+// 必要に応じて、以下のようなコールバック関数を追加できます
+/*
+typedef void (*QSizeGrip_SomeSignalCallback)(void*, SomeType);
+
+void QSizeGrip_setSomeSignalCallback(void* sizeGrip, QSizeGrip_SomeSignalCallback callback) {
+    static_cast<QSizeGripBind*>(sizeGrip)->setSomeSignalCallback(callback);
+}
+*/
+
 }

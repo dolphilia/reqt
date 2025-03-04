@@ -1,88 +1,71 @@
 #include "QSliderHandler.h"
 
-SliderHandler::SliderHandler(QObject *parent)
+QSliderHandler::QSliderHandler(QObject* parent)
     : QObject(parent)
-    , m_valueChangedCallback(nullptr)
-    , m_sliderMovedCallback(nullptr)
-    , m_sliderPressedCallback(nullptr)
-    , m_sliderReleasedCallback(nullptr)
-    , m_rangeChangedCallback(nullptr)
-    , m_actionTriggeredCallback(nullptr)
-{
+    , valueChangedCallback(nullptr)
+    , sliderMovedCallback(nullptr)
+    , sliderPressedCallback(nullptr)
+    , sliderReleasedCallback(nullptr)
+    , rangeChangedCallback(nullptr)
+    , actionTriggeredCallback(nullptr) {
 }
 
-SliderHandler::~SliderHandler()
-{
+void QSliderHandler::setValueChangedCallback(QSlider_ValueChangedCallback callback) {
+    valueChangedCallback = callback;
 }
 
-void SliderHandler::setValueChangedCallback(void (*callback)(int))
-{
-    m_valueChangedCallback = callback;
+void QSliderHandler::setSliderMovedCallback(QSlider_SliderMovedCallback callback) {
+    sliderMovedCallback = callback;
 }
 
-void SliderHandler::setSliderMovedCallback(void (*callback)(int))
-{
-    m_sliderMovedCallback = callback;
+void QSliderHandler::setSliderPressedCallback(QSlider_SliderPressedCallback callback) {
+    sliderPressedCallback = callback;
 }
 
-void SliderHandler::setSliderPressedCallback(void (*callback)())
-{
-    m_sliderPressedCallback = callback;
+void QSliderHandler::setSliderReleasedCallback(QSlider_SliderReleasedCallback callback) {
+    sliderReleasedCallback = callback;
 }
 
-void SliderHandler::setSliderReleasedCallback(void (*callback)())
-{
-    m_sliderReleasedCallback = callback;
+void QSliderHandler::setRangeChangedCallback(QSlider_RangeChangedCallback callback) {
+    rangeChangedCallback = callback;
 }
 
-void SliderHandler::setRangeChangedCallback(void (*callback)(int, int))
-{
-    m_rangeChangedCallback = callback;
+void QSliderHandler::setActionTriggeredCallback(QSlider_ActionTriggeredCallback callback) {
+    actionTriggeredCallback = callback;
 }
 
-void SliderHandler::setActionTriggeredCallback(void (*callback)(int))
-{
-    m_actionTriggeredCallback = callback;
-}
-
-void SliderHandler::onValueChanged(int value)
-{
-    if (m_valueChangedCallback) {
-        m_valueChangedCallback(value);
+void QSliderHandler::onValueChanged(int value) const {
+    if (valueChangedCallback) {
+        valueChangedCallback(parent(), value);
     }
 }
 
-void SliderHandler::onSliderMoved(int position)
-{
-    if (m_sliderMovedCallback) {
-        m_sliderMovedCallback(position);
+void QSliderHandler::onSliderMoved(int position) const {
+    if (sliderMovedCallback) {
+        sliderMovedCallback(parent(), position);
     }
 }
 
-void SliderHandler::onSliderPressed()
-{
-    if (m_sliderPressedCallback) {
-        m_sliderPressedCallback();
+void QSliderHandler::onSliderPressed() const {
+    if (sliderPressedCallback) {
+        sliderPressedCallback(parent());
     }
 }
 
-void SliderHandler::onSliderReleased()
-{
-    if (m_sliderReleasedCallback) {
-        m_sliderReleasedCallback();
+void QSliderHandler::onSliderReleased() const {
+    if (sliderReleasedCallback) {
+        sliderReleasedCallback(parent());
     }
 }
 
-void SliderHandler::onRangeChanged(int min, int max)
-{
-    if (m_rangeChangedCallback) {
-        m_rangeChangedCallback(min, max);
+void QSliderHandler::onRangeChanged(int min, int max) const {
+    if (rangeChangedCallback) {
+        rangeChangedCallback(parent(), min, max);
     }
 }
 
-void SliderHandler::onActionTriggered(int action)
-{
-    if (m_actionTriggeredCallback) {
-        m_actionTriggeredCallback(action);
+void QSliderHandler::onActionTriggered(int action) const {
+    if (actionTriggeredCallback) {
+        actionTriggeredCallback(parent(), action);
     }
 }
