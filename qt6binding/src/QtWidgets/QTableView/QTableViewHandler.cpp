@@ -1,114 +1,93 @@
 #include "QTableViewHandler.h"
 
-TableViewHandler::TableViewHandler(QObject *parent)
+QTableViewHandler::QTableViewHandler(QObject* parent)
     : QObject(parent)
-    , m_clickedCallback(nullptr)
-    , m_doubleClickedCallback(nullptr)
-    , m_activatedCallback(nullptr)
-    , m_enteredCallback(nullptr)
-    , m_pressedCallback(nullptr)
-    , m_selectionChangedCallback(nullptr)
-    , m_horizontalHeaderClickedCallback(nullptr)
-    , m_verticalHeaderClickedCallback(nullptr)
-{
+    , clickedCallback(nullptr)
+    , doubleClickedCallback(nullptr)
+    , activatedCallback(nullptr)
+    , enteredCallback(nullptr)
+    , pressedCallback(nullptr)
+    , selectionChangedCallback(nullptr)
+    , horizontalHeaderClickedCallback(nullptr)
+    , verticalHeaderClickedCallback(nullptr) {
 }
 
-TableViewHandler::~TableViewHandler()
-{
+void QTableViewHandler::setClickedCallback(QTableView_ClickedCallback callback) {
+    clickedCallback = callback;
 }
 
-void TableViewHandler::setClickedCallback(void (*callback)(void* index))
-{
-    m_clickedCallback = callback;
+void QTableViewHandler::setDoubleClickedCallback(QTableView_DoubleClickedCallback callback) {
+    doubleClickedCallback = callback;
 }
 
-void TableViewHandler::setDoubleClickedCallback(void (*callback)(void* index))
-{
-    m_doubleClickedCallback = callback;
+void QTableViewHandler::setActivatedCallback(QTableView_ActivatedCallback callback) {
+    activatedCallback = callback;
 }
 
-void TableViewHandler::setActivatedCallback(void (*callback)(void* index))
-{
-    m_activatedCallback = callback;
+void QTableViewHandler::setEnteredCallback(QTableView_EnteredCallback callback) {
+    enteredCallback = callback;
 }
 
-void TableViewHandler::setEnteredCallback(void (*callback)(void* index))
-{
-    m_enteredCallback = callback;
+void QTableViewHandler::setPressedCallback(QTableView_PressedCallback callback) {
+    pressedCallback = callback;
 }
 
-void TableViewHandler::setPressedCallback(void (*callback)(void* index))
-{
-    m_pressedCallback = callback;
+void QTableViewHandler::setSelectionChangedCallback(QTableView_SelectionChangedCallback callback) {
+    selectionChangedCallback = callback;
 }
 
-void TableViewHandler::setSelectionChangedCallback(void (*callback)())
-{
-    m_selectionChangedCallback = callback;
+void QTableViewHandler::setHorizontalHeaderClickedCallback(QTableView_HorizontalHeaderClickedCallback callback) {
+    horizontalHeaderClickedCallback = callback;
 }
 
-void TableViewHandler::setHorizontalHeaderClickedCallback(void (*callback)(int section))
-{
-    m_horizontalHeaderClickedCallback = callback;
+void QTableViewHandler::setVerticalHeaderClickedCallback(QTableView_VerticalHeaderClickedCallback callback) {
+    verticalHeaderClickedCallback = callback;
 }
 
-void TableViewHandler::setVerticalHeaderClickedCallback(void (*callback)(int section))
-{
-    m_verticalHeaderClickedCallback = callback;
-}
-
-void TableViewHandler::onClicked(const QModelIndex &index)
-{
-    if (m_clickedCallback) {
-        m_clickedCallback((void*)&index);
+void QTableViewHandler::onClicked(const QModelIndex &index) const {
+    if (clickedCallback) {
+        clickedCallback(parent(), (void*)&index);
     }
 }
 
-void TableViewHandler::onDoubleClicked(const QModelIndex &index)
-{
-    if (m_doubleClickedCallback) {
-        m_doubleClickedCallback((void*)&index);
+void QTableViewHandler::onDoubleClicked(const QModelIndex &index) const {
+    if (doubleClickedCallback) {
+        doubleClickedCallback(parent(), (void*)&index);
     }
 }
 
-void TableViewHandler::onActivated(const QModelIndex &index)
-{
-    if (m_activatedCallback) {
-        m_activatedCallback((void*)&index);
+void QTableViewHandler::onActivated(const QModelIndex &index) const {
+    if (activatedCallback) {
+        activatedCallback(parent(), (void*)&index);
     }
 }
 
-void TableViewHandler::onEntered(const QModelIndex &index)
-{
-    if (m_enteredCallback) {
-        m_enteredCallback((void*)&index);
+void QTableViewHandler::onEntered(const QModelIndex &index) const {
+    if (enteredCallback) {
+        enteredCallback(parent(), (void*)&index);
     }
 }
 
-void TableViewHandler::onPressed(const QModelIndex &index)
-{
-    if (m_pressedCallback) {
-        m_pressedCallback((void*)&index);
+void QTableViewHandler::onPressed(const QModelIndex &index) const {
+    if (pressedCallback) {
+        pressedCallback(parent(), (void*)&index);
     }
 }
 
-void TableViewHandler::onSelectionChanged()
-{
-    if (m_selectionChangedCallback) {
-        m_selectionChangedCallback();
+void QTableViewHandler::onSelectionChanged() const {
+    if (selectionChangedCallback) {
+        selectionChangedCallback(parent());
     }
 }
 
-void TableViewHandler::onHorizontalHeaderClicked(int section)
-{
-    if (m_horizontalHeaderClickedCallback) {
-        m_horizontalHeaderClickedCallback(section);
+void QTableViewHandler::onHorizontalHeaderClicked(int section) const {
+    if (horizontalHeaderClickedCallback) {
+        horizontalHeaderClickedCallback(parent(), section);
     }
 }
 
-void TableViewHandler::onVerticalHeaderClicked(int section)
-{
-    if (m_verticalHeaderClickedCallback) {
-        m_verticalHeaderClickedCallback(section);
+void QTableViewHandler::onVerticalHeaderClicked(int section) const {
+    if (verticalHeaderClickedCallback) {
+        verticalHeaderClickedCallback(parent(), section);
     }
 }

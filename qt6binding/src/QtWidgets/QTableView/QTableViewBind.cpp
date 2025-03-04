@@ -1,64 +1,54 @@
 #include "QTableViewBind.h"
+#include "QTableViewHandler.h"
 #include <QHeaderView>
 
-BindQTableView::BindQTableView(QWidget *parent)
+QTableViewBind::QTableViewBind(QWidget* parent)
     : QTableView(parent)
-    , m_handler(nullptr)
-{
-}
-
-BindQTableView::~BindQTableView()
-{
-    delete m_handler;
-}
-
-void BindQTableView::setTableViewHandler(TableViewHandler *handler)
-{
-    if (m_handler) {
-        disconnect(this, &QTableView::clicked,
-                  m_handler, &TableViewHandler::onClicked);
-        disconnect(this, &QTableView::doubleClicked,
-                  m_handler, &TableViewHandler::onDoubleClicked);
-        disconnect(this, &QTableView::activated,
-                  m_handler, &TableViewHandler::onActivated);
-        disconnect(this, &QTableView::entered,
-                  m_handler, &TableViewHandler::onEntered);
-        disconnect(this, &QTableView::pressed,
-                  m_handler, &TableViewHandler::onPressed);
-        disconnect(selectionModel(), &QItemSelectionModel::selectionChanged,
-                  m_handler, &TableViewHandler::onSelectionChanged);
-        disconnect(horizontalHeader(), &QHeaderView::sectionClicked,
-                  m_handler, &TableViewHandler::onHorizontalHeaderClicked);
-        disconnect(verticalHeader(), &QHeaderView::sectionClicked,
-                  m_handler, &TableViewHandler::onVerticalHeaderClicked);
-        delete m_handler;
+    , handler(new QTableViewHandler(this)) {
+    connect(this, &QTableView::clicked, handler, &QTableViewHandler::onClicked);
+    connect(this, &QTableView::doubleClicked, handler, &QTableViewHandler::onDoubleClicked);
+    connect(this, &QTableView::activated, handler, &QTableViewHandler::onActivated);
+    connect(this, &QTableView::entered, handler, &QTableViewHandler::onEntered);
+    connect(this, &QTableView::pressed, handler, &QTableViewHandler::onPressed);
+    if (selectionModel()) {
+        connect(selectionModel(), &QItemSelectionModel::selectionChanged, handler, &QTableViewHandler::onSelectionChanged);
     }
-
-    m_handler = handler;
-
-    if (m_handler) {
-        connect(this, &QTableView::clicked,
-                m_handler, &TableViewHandler::onClicked);
-        connect(this, &QTableView::doubleClicked,
-                m_handler, &TableViewHandler::onDoubleClicked);
-        connect(this, &QTableView::activated,
-                m_handler, &TableViewHandler::onActivated);
-        connect(this, &QTableView::entered,
-                m_handler, &TableViewHandler::onEntered);
-        connect(this, &QTableView::pressed,
-                m_handler, &TableViewHandler::onPressed);
-        if (selectionModel()) {
-            connect(selectionModel(), &QItemSelectionModel::selectionChanged,
-                    m_handler, &TableViewHandler::onSelectionChanged);
-        }
-        connect(horizontalHeader(), &QHeaderView::sectionClicked,
-                m_handler, &TableViewHandler::onHorizontalHeaderClicked);
-        connect(verticalHeader(), &QHeaderView::sectionClicked,
-                m_handler, &TableViewHandler::onVerticalHeaderClicked);
-    }
+    connect(horizontalHeader(), &QHeaderView::sectionClicked, handler, &QTableViewHandler::onHorizontalHeaderClicked);
+    connect(verticalHeader(), &QHeaderView::sectionClicked, handler, &QTableViewHandler::onVerticalHeaderClicked);
 }
 
-TableViewHandler *BindQTableView::handler() const
-{
-    return m_handler;
+QTableViewBind::~QTableViewBind() {
+    delete handler;
+}
+
+void QTableViewBind::setClickedCallback(QTableView_ClickedCallback callback) const {
+    handler->setClickedCallback(callback);
+}
+
+void QTableViewBind::setDoubleClickedCallback(QTableView_DoubleClickedCallback callback) const {
+    handler->setDoubleClickedCallback(callback);
+}
+
+void QTableViewBind::setActivatedCallback(QTableView_ActivatedCallback callback) const {
+    handler->setActivatedCallback(callback);
+}
+
+void QTableViewBind::setEnteredCallback(QTableView_EnteredCallback callback) const {
+    handler->setEnteredCallback(callback);
+}
+
+void QTableViewBind::setPressedCallback(QTableView_PressedCallback callback) const {
+    handler->setPressedCallback(callback);
+}
+
+void QTableViewBind::setSelectionChangedCallback(QTableView_SelectionChangedCallback callback) const {
+    handler->setSelectionChangedCallback(callback);
+}
+
+void QTableViewBind::setHorizontalHeaderClickedCallback(QTableView_HorizontalHeaderClickedCallback callback) const {
+    handler->setHorizontalHeaderClickedCallback(callback);
+}
+
+void QTableViewBind::setVerticalHeaderClickedCallback(QTableView_VerticalHeaderClickedCallback callback) const {
+    handler->setVerticalHeaderClickedCallback(callback);
 }
