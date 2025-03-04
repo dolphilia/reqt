@@ -1,49 +1,38 @@
 #include "QToolButtonHandler.h"
 
-ToolButtonHandler::ToolButtonHandler(QObject *parent)
+QToolButtonHandler::QToolButtonHandler(QObject* parent)
     : QObject(parent)
-    , m_clickedCallback(nullptr)
-    , m_toggledCallback(nullptr)
-    , m_triggeredCallback(nullptr)
-{
+    , clickedCallback(nullptr)
+    , toggledCallback(nullptr)
+    , triggeredCallback(nullptr) {
 }
 
-ToolButtonHandler::~ToolButtonHandler()
-{
+void QToolButtonHandler::setClickedCallback(QToolButton_ClickedCallback callback) {
+    clickedCallback = callback;
 }
 
-void ToolButtonHandler::setClickedCallback(void (*callback)())
-{
-    m_clickedCallback = callback;
+void QToolButtonHandler::setToggledCallback(QToolButton_ToggledCallback callback) {
+    toggledCallback = callback;
 }
 
-void ToolButtonHandler::setToggledCallback(void (*callback)(bool checked))
-{
-    m_toggledCallback = callback;
+void QToolButtonHandler::setTriggeredCallback(QToolButton_TriggeredCallback callback) {
+    triggeredCallback = callback;
 }
 
-void ToolButtonHandler::setTriggeredCallback(void (*callback)())
-{
-    m_triggeredCallback = callback;
-}
-
-void ToolButtonHandler::onClicked()
-{
-    if (m_clickedCallback) {
-        m_clickedCallback();
+void QToolButtonHandler::onClicked() const {
+    if (clickedCallback) {
+        clickedCallback(parent());
     }
 }
 
-void ToolButtonHandler::onToggled(bool checked)
-{
-    if (m_toggledCallback) {
-        m_toggledCallback(checked);
+void QToolButtonHandler::onToggled(bool checked) const {
+    if (toggledCallback) {
+        toggledCallback(parent(), checked);
     }
 }
 
-void ToolButtonHandler::onTriggered()
-{
-    if (m_triggeredCallback) {
-        m_triggeredCallback();
+void QToolButtonHandler::onTriggered() const {
+    if (triggeredCallback) {
+        triggeredCallback(parent());
     }
 }

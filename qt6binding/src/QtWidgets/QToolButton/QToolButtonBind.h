@@ -1,20 +1,26 @@
-#ifndef BIND_Q_TOOL_BUTTON_H
-#define BIND_Q_TOOL_BUTTON_H
+#ifndef QTOOLBUTTON_BIND_H
+#define QTOOLBUTTON_BIND_H
 
 #include <QToolButton>
+
 #include "QToolButtonHandler.h"
+#include "QAbstractButton/QAbstractButtonBind.h"
 
-class BindQToolButton : public QToolButton {
+class QToolButtonHandler;
+
+class QToolButtonBind : public QToolButton {
     Q_OBJECT
+    typedef void (*QToolButton_ClickedCallback)(void*);
+    typedef void (*QToolButton_ToggledCallback)(void*, bool);
+    typedef void (*QToolButton_TriggeredCallback)(void*);
 public:
-    explicit BindQToolButton(QWidget *parent = nullptr);
-    ~BindQToolButton();
-
-    void setToolButtonHandler(ToolButtonHandler *handler);
-    ToolButtonHandler *handler() const;
-
+    explicit QToolButtonBind(QWidget* parent = nullptr);
+    ~QToolButtonBind() override;
+    void setClickedCallback(QToolButton_ClickedCallback callback) const;
+    void setToggledCallback(QToolButton_ToggledCallback callback) const;
+    void setTriggeredCallback(QToolButton_TriggeredCallback callback) const;
 private:
-    ToolButtonHandler *m_handler;
+    QToolButtonHandler* handler;
 };
 
-#endif // BIND_Q_TOOL_BUTTON_H
+#endif // QTOOLBUTTON_BIND_H

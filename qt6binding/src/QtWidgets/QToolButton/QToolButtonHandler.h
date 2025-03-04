@@ -1,27 +1,29 @@
-#ifndef HANDLER_TOOL_BUTTON_H
-#define HANDLER_TOOL_BUTTON_H
+#ifndef QTOOLBUTTON_HANDLER_H
+#define QTOOLBUTTON_HANDLER_H
 
+#include "QAbstractButton/QAbstractButtonHandler.h"
 #include <QObject>
 
-class ToolButtonHandler : public QObject {
+class QToolButtonHandler : public QObject {
     Q_OBJECT
+    typedef void (*QToolButton_ClickedCallback)(void*);
+    typedef void (*QToolButton_ToggledCallback)(void*, bool);
+    typedef void (*QToolButton_TriggeredCallback)(void*);
 public:
-    explicit ToolButtonHandler(QObject *parent = nullptr);
-    ~ToolButtonHandler();
-
-    void setClickedCallback(void (*callback)());
-    void setToggledCallback(void (*callback)(bool checked));
-    void setTriggeredCallback(void (*callback)());
+    explicit QToolButtonHandler(QObject* parent = nullptr);
+    void setClickedCallback(QToolButton_ClickedCallback callback);
+    void setToggledCallback(QToolButton_ToggledCallback callback);
+    void setTriggeredCallback(QToolButton_TriggeredCallback callback);
 
 public slots:
-    void onClicked();
-    void onToggled(bool checked);
-    void onTriggered();
+    void onClicked() const;
+    void onToggled(bool checked) const;
+    void onTriggered() const;
 
 private:
-    void (*m_clickedCallback)();
-    void (*m_toggledCallback)(bool checked);
-    void (*m_triggeredCallback)();
+    QToolButton_ClickedCallback clickedCallback;
+    QToolButton_ToggledCallback toggledCallback;
+    QToolButton_TriggeredCallback triggeredCallback;
 };
 
-#endif // HANDLER_TOOL_BUTTON_H
+#endif // QTOOLBUTTON_HANDLER_H

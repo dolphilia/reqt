@@ -1,41 +1,26 @@
 #include "QToolButtonBind.h"
+#include "QToolButtonHandler.h"
 
-BindQToolButton::BindQToolButton(QWidget *parent)
+QToolButtonBind::QToolButtonBind(QWidget* parent)
     : QToolButton(parent)
-    , m_handler(nullptr)
-{
+    , handler(new QToolButtonHandler(this)) {
+    connect(this, &QToolButton::clicked, handler, &QToolButtonHandler::onClicked);
+    connect(this, &QToolButton::toggled, handler, &QToolButtonHandler::onToggled);
+    connect(this, &QToolButton::triggered, handler, &QToolButtonHandler::onTriggered);
 }
 
-BindQToolButton::~BindQToolButton()
-{
-    delete m_handler;
+QToolButtonBind::~QToolButtonBind() {
+    delete handler;
 }
 
-void BindQToolButton::setToolButtonHandler(ToolButtonHandler *handler)
-{
-    if (m_handler) {
-        disconnect(this, &QToolButton::clicked,
-                  m_handler, &ToolButtonHandler::onClicked);
-        disconnect(this, &QToolButton::toggled,
-                  m_handler, &ToolButtonHandler::onToggled);
-        disconnect(this, &QToolButton::triggered,
-                  m_handler, &ToolButtonHandler::onTriggered);
-        delete m_handler;
-    }
-
-    m_handler = handler;
-
-    if (m_handler) {
-        connect(this, &QToolButton::clicked,
-                m_handler, &ToolButtonHandler::onClicked);
-        connect(this, &QToolButton::toggled,
-                m_handler, &ToolButtonHandler::onToggled);
-        connect(this, &QToolButton::triggered,
-                m_handler, &ToolButtonHandler::onTriggered);
-    }
+void QToolButtonBind::setClickedCallback(QToolButton_ClickedCallback callback) const {
+    handler->setClickedCallback(callback);
 }
 
-ToolButtonHandler *BindQToolButton::handler() const
-{
-    return m_handler;
+void QToolButtonBind::setToggledCallback(QToolButton_ToggledCallback callback) const {
+    handler->setToggledCallback(callback);
+}
+
+void QToolButtonBind::setTriggeredCallback(QToolButton_TriggeredCallback callback) const {
+    handler->setTriggeredCallback(callback);
 }
