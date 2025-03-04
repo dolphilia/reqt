@@ -1,23 +1,21 @@
 #include "QMdiSubWindowBind.h"
-#include "qmdisubwindow.h"
+#include "QMdiSubWindowHandler.h"
 
 QMdiSubWindowBind::QMdiSubWindowBind(QWidget* parent)
     : QMdiSubWindow(parent)
-    , handler(new MdiSubWindowHandler(this))
-{
-    connect(this, &QMdiSubWindow::windowStateChanged, handler, &MdiSubWindowHandler::onWindowStateChanged);
-    connect(this, &QMdiSubWindow::aboutToActivate, handler, &MdiSubWindowHandler::onAboutToActivate);
-    handler->setSubWindow(this);
+    , handler(new QMdiSubWindowHandler(this)) {
+    connect(this, &QMdiSubWindow::windowStateChanged, handler, &QMdiSubWindowHandler::onWindowStateChanged);
+    connect(this, &QMdiSubWindow::aboutToActivate, handler, &QMdiSubWindowHandler::onAboutToActivate);
 }
 
 QMdiSubWindowBind::~QMdiSubWindowBind() {
     delete handler;
 }
 
-void QMdiSubWindowBind::setWindowStateChangedCallback(void (*callback)(void*, int, int)) {
+void QMdiSubWindowBind::setWindowStateChangedCallback(QMdiSubWindow_WindowStateChangedCallback callback) const {
     handler->setWindowStateChangedCallback(callback);
 }
 
-void QMdiSubWindowBind::setAboutToActivateCallback(void (*callback)(void*)) {
+void QMdiSubWindowBind::setAboutToActivateCallback(QMdiSubWindow_AboutToActivateCallback callback) const {
     handler->setAboutToActivateCallback(callback);
 }

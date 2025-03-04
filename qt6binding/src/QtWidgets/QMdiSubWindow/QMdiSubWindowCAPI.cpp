@@ -71,11 +71,14 @@ void QMdiSubWindow_setBaseSize(void* subWindow, int width, int height) {
     static_cast<QMdiSubWindowBind*>(subWindow)->setBaseSize(width, height);
 }
 
-void QMdiSubWindow_setWindowStateChangedCallback(void* subWindow, WindowStateChangedCallback callback) {
+typedef void (*QMdiSubWindow_WindowStateChangedCallback)(void*, int, int);
+typedef void (*QMdiSubWindow_AboutToActivateCallback)(void*);
+
+void QMdiSubWindow_setWindowStateChangedCallback(void* subWindow, QMdiSubWindow_WindowStateChangedCallback callback) {
     static_cast<QMdiSubWindowBind*>(subWindow)->setWindowStateChangedCallback(callback);
 }
 
-void QMdiSubWindow_setAboutToActivateCallback(void* subWindow, AboutToActivateCallback callback) {
+void QMdiSubWindow_setAboutToActivateCallback(void* subWindow, QMdiSubWindow_AboutToActivateCallback callback) {
     static_cast<QMdiSubWindowBind*>(subWindow)->setAboutToActivateCallback(callback);
 }
 

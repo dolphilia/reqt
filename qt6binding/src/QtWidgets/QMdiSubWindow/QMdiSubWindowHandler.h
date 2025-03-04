@@ -1,31 +1,25 @@
-#ifndef MDISUBWINDOW_HANDLER_H
-#define MDISUBWINDOW_HANDLER_H
+#ifndef QMDISUBWINDOW_HANDLER_H
+#define QMDISUBWINDOW_HANDLER_H
 
 #include <QObject>
 #include <QMdiSubWindow>
 
-typedef void (*WindowStateChangedCallback)(void*, int, int);
-typedef void (*AboutToActivateCallback)(void*);
-
-class MdiSubWindowHandler : public QObject {
+class QMdiSubWindowHandler : public QObject {
     Q_OBJECT
+    typedef void (*QMdiSubWindow_WindowStateChangedCallback)(void*, int, int);
+    typedef void (*QMdiSubWindow_AboutToActivateCallback)(void*);
 public:
-    explicit MdiSubWindowHandler(QObject* parent = nullptr);
-    MdiSubWindowHandler(const MdiSubWindowHandler&) = delete;
-    MdiSubWindowHandler& operator=(const MdiSubWindowHandler&) = delete;
-
-    void setSubWindow(QMdiSubWindow* subWindow);
-    void setWindowStateChangedCallback(WindowStateChangedCallback callback);
-    void setAboutToActivateCallback(AboutToActivateCallback callback);
+    explicit QMdiSubWindowHandler(QObject* parent = nullptr);
+    void setWindowStateChangedCallback(QMdiSubWindow_WindowStateChangedCallback callback);
+    void setAboutToActivateCallback(QMdiSubWindow_AboutToActivateCallback callback);
 
 public slots:
-    void onWindowStateChanged(Qt::WindowStates oldState, Qt::WindowStates newState);
-    void onAboutToActivate();
+    void onWindowStateChanged(Qt::WindowStates oldState, Qt::WindowStates newState) const;
+    void onAboutToActivate() const;
 
 private:
-    QMdiSubWindow* subWindow;
-    WindowStateChangedCallback windowStateChangedCallback;
-    AboutToActivateCallback aboutToActivateCallback;
+    QMdiSubWindow_WindowStateChangedCallback windowStateChangedCallback;
+    QMdiSubWindow_AboutToActivateCallback aboutToActivateCallback;
 };
 
-#endif // MDISUBWINDOW_HANDLER_H
+#endif // QMDISUBWINDOW_HANDLER_H
