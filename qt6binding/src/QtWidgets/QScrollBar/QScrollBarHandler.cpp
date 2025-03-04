@@ -1,88 +1,71 @@
 #include "QScrollBarHandler.h"
 
-ScrollBarHandler::ScrollBarHandler(QObject *parent)
+QScrollBarHandler::QScrollBarHandler(QObject* parent)
     : QObject(parent)
-    , m_valueChangedCallback(nullptr)
-    , m_sliderMovedCallback(nullptr)
-    , m_sliderPressedCallback(nullptr)
-    , m_sliderReleasedCallback(nullptr)
-    , m_rangeChangedCallback(nullptr)
-    , m_actionTriggeredCallback(nullptr)
-{
+    , valueChangedCallback(nullptr)
+    , sliderMovedCallback(nullptr)
+    , sliderPressedCallback(nullptr)
+    , sliderReleasedCallback(nullptr)
+    , rangeChangedCallback(nullptr)
+    , actionTriggeredCallback(nullptr) {
 }
 
-ScrollBarHandler::~ScrollBarHandler()
-{
+void QScrollBarHandler::setValueChangedCallback(QScrollBar_ValueChangedCallback callback) {
+    valueChangedCallback = callback;
 }
 
-void ScrollBarHandler::setValueChangedCallback(void (*callback)(int))
-{
-    m_valueChangedCallback = callback;
+void QScrollBarHandler::setSliderMovedCallback(QScrollBar_SliderMovedCallback callback) {
+    sliderMovedCallback = callback;
 }
 
-void ScrollBarHandler::setSliderMovedCallback(void (*callback)(int))
-{
-    m_sliderMovedCallback = callback;
+void QScrollBarHandler::setSliderPressedCallback(QScrollBar_SliderPressedCallback callback) {
+    sliderPressedCallback = callback;
 }
 
-void ScrollBarHandler::setSliderPressedCallback(void (*callback)())
-{
-    m_sliderPressedCallback = callback;
+void QScrollBarHandler::setSliderReleasedCallback(QScrollBar_SliderReleasedCallback callback) {
+    sliderReleasedCallback = callback;
 }
 
-void ScrollBarHandler::setSliderReleasedCallback(void (*callback)())
-{
-    m_sliderReleasedCallback = callback;
+void QScrollBarHandler::setRangeChangedCallback(QScrollBar_RangeChangedCallback callback) {
+    rangeChangedCallback = callback;
 }
 
-void ScrollBarHandler::setRangeChangedCallback(void (*callback)(int, int))
-{
-    m_rangeChangedCallback = callback;
+void QScrollBarHandler::setActionTriggeredCallback(QScrollBar_ActionTriggeredCallback callback) {
+    actionTriggeredCallback = callback;
 }
 
-void ScrollBarHandler::setActionTriggeredCallback(void (*callback)(int))
-{
-    m_actionTriggeredCallback = callback;
-}
-
-void ScrollBarHandler::onValueChanged(int value)
-{
-    if (m_valueChangedCallback) {
-        m_valueChangedCallback(value);
+void QScrollBarHandler::onValueChanged(int value) const {
+    if (valueChangedCallback) {
+        valueChangedCallback(parent(), value);
     }
 }
 
-void ScrollBarHandler::onSliderMoved(int position)
-{
-    if (m_sliderMovedCallback) {
-        m_sliderMovedCallback(position);
+void QScrollBarHandler::onSliderMoved(int position) const {
+    if (sliderMovedCallback) {
+        sliderMovedCallback(parent(), position);
     }
 }
 
-void ScrollBarHandler::onSliderPressed()
-{
-    if (m_sliderPressedCallback) {
-        m_sliderPressedCallback();
+void QScrollBarHandler::onSliderPressed() const {
+    if (sliderPressedCallback) {
+        sliderPressedCallback(parent());
     }
 }
 
-void ScrollBarHandler::onSliderReleased()
-{
-    if (m_sliderReleasedCallback) {
-        m_sliderReleasedCallback();
+void QScrollBarHandler::onSliderReleased() const {
+    if (sliderReleasedCallback) {
+        sliderReleasedCallback(parent());
     }
 }
 
-void ScrollBarHandler::onRangeChanged(int min, int max)
-{
-    if (m_rangeChangedCallback) {
-        m_rangeChangedCallback(min, max);
+void QScrollBarHandler::onRangeChanged(int min, int max) const {
+    if (rangeChangedCallback) {
+        rangeChangedCallback(parent(), min, max);
     }
 }
 
-void ScrollBarHandler::onActionTriggered(int action)
-{
-    if (m_actionTriggeredCallback) {
-        m_actionTriggeredCallback(action);
+void QScrollBarHandler::onActionTriggered(int action) const {
+    if (actionTriggeredCallback) {
+        actionTriggeredCallback(parent(), action);
     }
 }

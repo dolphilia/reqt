@@ -1,59 +1,52 @@
 #include "QScrollBarBind.h"
+#include "QScrollBarHandler.h"
 
-BindQScrollBar::BindQScrollBar(QWidget *parent)
+QScrollBarBind::QScrollBarBind(QWidget* parent)
     : QScrollBar(parent)
-    , m_handler(nullptr)
-{
+    , handler(new QScrollBarHandler(this)) {
+    connect(this, &QScrollBar::valueChanged, handler, &QScrollBarHandler::onValueChanged);
+    connect(this, &QScrollBar::sliderMoved, handler, &QScrollBarHandler::onSliderMoved);
+    connect(this, &QScrollBar::sliderPressed, handler, &QScrollBarHandler::onSliderPressed);
+    connect(this, &QScrollBar::sliderReleased, handler, &QScrollBarHandler::onSliderReleased);
+    connect(this, &QScrollBar::rangeChanged, handler, &QScrollBarHandler::onRangeChanged);
+    connect(this, &QScrollBar::actionTriggered, handler, &QScrollBarHandler::onActionTriggered);
 }
 
-BindQScrollBar::BindQScrollBar(Qt::Orientation orientation, QWidget *parent)
+QScrollBarBind::QScrollBarBind(Qt::Orientation orientation, QWidget* parent)
     : QScrollBar(orientation, parent)
-    , m_handler(nullptr)
-{
+    , handler(new QScrollBarHandler(this)) {
+    connect(this, &QScrollBar::valueChanged, handler, &QScrollBarHandler::onValueChanged);
+    connect(this, &QScrollBar::sliderMoved, handler, &QScrollBarHandler::onSliderMoved);
+    connect(this, &QScrollBar::sliderPressed, handler, &QScrollBarHandler::onSliderPressed);
+    connect(this, &QScrollBar::sliderReleased, handler, &QScrollBarHandler::onSliderReleased);
+    connect(this, &QScrollBar::rangeChanged, handler, &QScrollBarHandler::onRangeChanged);
+    connect(this, &QScrollBar::actionTriggered, handler, &QScrollBarHandler::onActionTriggered);
 }
 
-BindQScrollBar::~BindQScrollBar()
-{
-    delete m_handler;
+QScrollBarBind::~QScrollBarBind() {
+    delete handler;
 }
 
-void BindQScrollBar::setScrollBarHandler(ScrollBarHandler *handler)
-{
-    if (m_handler) {
-        disconnect(this, &QScrollBar::valueChanged,
-                  m_handler, &ScrollBarHandler::onValueChanged);
-        disconnect(this, &QScrollBar::sliderMoved,
-                  m_handler, &ScrollBarHandler::onSliderMoved);
-        disconnect(this, &QScrollBar::sliderPressed,
-                  m_handler, &ScrollBarHandler::onSliderPressed);
-        disconnect(this, &QScrollBar::sliderReleased,
-                  m_handler, &ScrollBarHandler::onSliderReleased);
-        disconnect(this, &QScrollBar::rangeChanged,
-                  m_handler, &ScrollBarHandler::onRangeChanged);
-        disconnect(this, &QScrollBar::actionTriggered,
-                  m_handler, &ScrollBarHandler::onActionTriggered);
-        delete m_handler;
-    }
-
-    m_handler = handler;
-
-    if (m_handler) {
-        connect(this, &QScrollBar::valueChanged,
-                m_handler, &ScrollBarHandler::onValueChanged);
-        connect(this, &QScrollBar::sliderMoved,
-                m_handler, &ScrollBarHandler::onSliderMoved);
-        connect(this, &QScrollBar::sliderPressed,
-                m_handler, &ScrollBarHandler::onSliderPressed);
-        connect(this, &QScrollBar::sliderReleased,
-                m_handler, &ScrollBarHandler::onSliderReleased);
-        connect(this, &QScrollBar::rangeChanged,
-                m_handler, &ScrollBarHandler::onRangeChanged);
-        connect(this, &QScrollBar::actionTriggered,
-                m_handler, &ScrollBarHandler::onActionTriggered);
-    }
+void QScrollBarBind::setValueChangedCallback(QScrollBar_ValueChangedCallback callback) const {
+    handler->setValueChangedCallback(callback);
 }
 
-ScrollBarHandler *BindQScrollBar::handler() const
-{
-    return m_handler;
+void QScrollBarBind::setSliderMovedCallback(QScrollBar_SliderMovedCallback callback) const {
+    handler->setSliderMovedCallback(callback);
+}
+
+void QScrollBarBind::setSliderPressedCallback(QScrollBar_SliderPressedCallback callback) const {
+    handler->setSliderPressedCallback(callback);
+}
+
+void QScrollBarBind::setSliderReleasedCallback(QScrollBar_SliderReleasedCallback callback) const {
+    handler->setSliderReleasedCallback(callback);
+}
+
+void QScrollBarBind::setRangeChangedCallback(QScrollBar_RangeChangedCallback callback) const {
+    handler->setRangeChangedCallback(callback);
+}
+
+void QScrollBarBind::setActionTriggeredCallback(QScrollBar_ActionTriggeredCallback callback) const {
+    handler->setActionTriggeredCallback(callback);
 }

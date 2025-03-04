@@ -1,21 +1,32 @@
-#ifndef BIND_Q_SCROLL_BAR_H
-#define BIND_Q_SCROLL_BAR_H
+#ifndef QSCROLLBAR_BIND_H
+#define QSCROLLBAR_BIND_H
 
 #include <QScrollBar>
+
 #include "QScrollBarHandler.h"
 
-class BindQScrollBar : public QScrollBar {
+class QScrollBarHandler;
+
+class QScrollBarBind : public QScrollBar {
     Q_OBJECT
+    typedef void (*QScrollBar_ValueChangedCallback)(void*, int);
+    typedef void (*QScrollBar_SliderMovedCallback)(void*, int);
+    typedef void (*QScrollBar_SliderPressedCallback)(void*);
+    typedef void (*QScrollBar_SliderReleasedCallback)(void*);
+    typedef void (*QScrollBar_RangeChangedCallback)(void*, int, int);
+    typedef void (*QScrollBar_ActionTriggeredCallback)(void*, int);
 public:
-    explicit BindQScrollBar(QWidget *parent = nullptr);
-    explicit BindQScrollBar(Qt::Orientation orientation, QWidget *parent = nullptr);
-    ~BindQScrollBar();
-
-    void setScrollBarHandler(ScrollBarHandler *handler);
-    ScrollBarHandler *handler() const;
-
+    explicit QScrollBarBind(QWidget* parent = nullptr);
+    explicit QScrollBarBind(Qt::Orientation orientation, QWidget* parent = nullptr);
+    ~QScrollBarBind() override;
+    void setValueChangedCallback(QScrollBar_ValueChangedCallback callback) const;
+    void setSliderMovedCallback(QScrollBar_SliderMovedCallback callback) const;
+    void setSliderPressedCallback(QScrollBar_SliderPressedCallback callback) const;
+    void setSliderReleasedCallback(QScrollBar_SliderReleasedCallback callback) const;
+    void setRangeChangedCallback(QScrollBar_RangeChangedCallback callback) const;
+    void setActionTriggeredCallback(QScrollBar_ActionTriggeredCallback callback) const;
 private:
-    ScrollBarHandler *m_handler;
+    QScrollBarHandler* handler;
 };
 
-#endif // BIND_Q_SCROLL_BAR_H
+#endif // QSCROLLBAR_BIND_H

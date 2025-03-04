@@ -1,36 +1,40 @@
-#ifndef HANDLER_SCROLL_BAR_H
-#define HANDLER_SCROLL_BAR_H
+#ifndef QSCROLLBAR_HANDLER_H
+#define QSCROLLBAR_HANDLER_H
 
 #include <QObject>
 
-class ScrollBarHandler : public QObject {
+class QScrollBarHandler : public QObject {
     Q_OBJECT
+    typedef void (*QScrollBar_ValueChangedCallback)(void*, int);
+    typedef void (*QScrollBar_SliderMovedCallback)(void*, int);
+    typedef void (*QScrollBar_SliderPressedCallback)(void*);
+    typedef void (*QScrollBar_SliderReleasedCallback)(void*);
+    typedef void (*QScrollBar_RangeChangedCallback)(void*, int, int);
+    typedef void (*QScrollBar_ActionTriggeredCallback)(void*, int);
 public:
-    explicit ScrollBarHandler(QObject *parent = nullptr);
-    ~ScrollBarHandler();
-
-    void setValueChangedCallback(void (*callback)(int value));
-    void setSliderMovedCallback(void (*callback)(int position));
-    void setSliderPressedCallback(void (*callback)());
-    void setSliderReleasedCallback(void (*callback)());
-    void setRangeChangedCallback(void (*callback)(int min, int max));
-    void setActionTriggeredCallback(void (*callback)(int action));
+    explicit QScrollBarHandler(QObject* parent = nullptr);
+    void setValueChangedCallback(QScrollBar_ValueChangedCallback callback);
+    void setSliderMovedCallback(QScrollBar_SliderMovedCallback callback);
+    void setSliderPressedCallback(QScrollBar_SliderPressedCallback callback);
+    void setSliderReleasedCallback(QScrollBar_SliderReleasedCallback callback);
+    void setRangeChangedCallback(QScrollBar_RangeChangedCallback callback);
+    void setActionTriggeredCallback(QScrollBar_ActionTriggeredCallback callback);
 
 public slots:
-    void onValueChanged(int value);
-    void onSliderMoved(int position);
-    void onSliderPressed();
-    void onSliderReleased();
-    void onRangeChanged(int min, int max);
-    void onActionTriggered(int action);
+    void onValueChanged(int value) const;
+    void onSliderMoved(int position) const;
+    void onSliderPressed() const;
+    void onSliderReleased() const;
+    void onRangeChanged(int min, int max) const;
+    void onActionTriggered(int action) const;
 
 private:
-    void (*m_valueChangedCallback)(int value);
-    void (*m_sliderMovedCallback)(int position);
-    void (*m_sliderPressedCallback)();
-    void (*m_sliderReleasedCallback)();
-    void (*m_rangeChangedCallback)(int min, int max);
-    void (*m_actionTriggeredCallback)(int action);
+    QScrollBar_ValueChangedCallback valueChangedCallback;
+    QScrollBar_SliderMovedCallback sliderMovedCallback;
+    QScrollBar_SliderPressedCallback sliderPressedCallback;
+    QScrollBar_SliderReleasedCallback sliderReleasedCallback;
+    QScrollBar_RangeChangedCallback rangeChangedCallback;
+    QScrollBar_ActionTriggeredCallback actionTriggeredCallback;
 };
 
-#endif // HANDLER_SCROLL_BAR_H
+#endif // QSCROLLBAR_HANDLER_H
