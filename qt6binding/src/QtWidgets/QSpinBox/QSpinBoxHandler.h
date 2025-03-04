@@ -1,27 +1,30 @@
-#ifndef HANDLER_SPIN_BOX_H
-#define HANDLER_SPIN_BOX_H
+#ifndef QSPINBOX_HANDLER_H
+#define QSPINBOX_HANDLER_H
 
 #include <QObject>
 
-class SpinBoxHandler : public QObject {
+class QSpinBoxHandler : public QObject {
     Q_OBJECT
+    typedef void (*QSpinBox_ValueChangedCallback)(void*, int);
+    typedef void (*QSpinBox_TextChangedCallback)(void*, const char*);
+    typedef void (*QSpinBox_EditingFinishedCallback)(void*);
 public:
-    explicit SpinBoxHandler(QObject *parent = nullptr);
-    ~SpinBoxHandler();
+    explicit QSpinBoxHandler(QObject* parent = nullptr);
+    ~QSpinBoxHandler();
 
-    void setValueChangedCallback(void (*callback)(int value));
-    void setTextChangedCallback(void (*callback)(const char* text));
-    void setEditingFinishedCallback(void (*callback)());
+    void setValueChangedCallback(QSpinBox_ValueChangedCallback callback);
+    void setTextChangedCallback(QSpinBox_TextChangedCallback callback);
+    void setEditingFinishedCallback(QSpinBox_EditingFinishedCallback callback);
 
 public slots:
-    void onValueChanged(int value);
-    void onTextChanged(const QString &text);
-    void onEditingFinished();
+    void onValueChanged(int value) const;
+    void onTextChanged(const QString &text) const;
+    void onEditingFinished() const;
 
 private:
-    void (*m_valueChangedCallback)(int value);
-    void (*m_textChangedCallback)(const char* text);
-    void (*m_editingFinishedCallback)();
+    QSpinBox_ValueChangedCallback valueChangedCallback;
+    QSpinBox_TextChangedCallback textChangedCallback;
+    QSpinBox_EditingFinishedCallback editingFinishedCallback;
 };
 
-#endif // HANDLER_SPIN_BOX_H
+#endif // QSPINBOX_HANDLER_H

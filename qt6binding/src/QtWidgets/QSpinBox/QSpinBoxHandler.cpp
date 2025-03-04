@@ -1,49 +1,41 @@
 #include "QSpinBoxHandler.h"
 
-SpinBoxHandler::SpinBoxHandler(QObject *parent)
+QSpinBoxHandler::QSpinBoxHandler(QObject* parent)
     : QObject(parent)
-    , m_valueChangedCallback(nullptr)
-    , m_textChangedCallback(nullptr)
-    , m_editingFinishedCallback(nullptr)
-{
+    , valueChangedCallback(nullptr)
+    , textChangedCallback(nullptr)
+    , editingFinishedCallback(nullptr) {
 }
 
-SpinBoxHandler::~SpinBoxHandler()
-{
+QSpinBoxHandler::~QSpinBoxHandler() {
 }
 
-void SpinBoxHandler::setValueChangedCallback(void (*callback)(int))
-{
-    m_valueChangedCallback = callback;
+void QSpinBoxHandler::setValueChangedCallback(QSpinBox_ValueChangedCallback callback) {
+    valueChangedCallback = callback;
 }
 
-void SpinBoxHandler::setTextChangedCallback(void (*callback)(const char*))
-{
-    m_textChangedCallback = callback;
+void QSpinBoxHandler::setTextChangedCallback(QSpinBox_TextChangedCallback callback) {
+    textChangedCallback = callback;
 }
 
-void SpinBoxHandler::setEditingFinishedCallback(void (*callback)())
-{
-    m_editingFinishedCallback = callback;
+void QSpinBoxHandler::setEditingFinishedCallback(QSpinBox_EditingFinishedCallback callback) {
+    editingFinishedCallback = callback;
 }
 
-void SpinBoxHandler::onValueChanged(int value)
-{
-    if (m_valueChangedCallback) {
-        m_valueChangedCallback(value);
+void QSpinBoxHandler::onValueChanged(int value) const {
+    if (valueChangedCallback) {
+        valueChangedCallback(parent(), value);
     }
 }
 
-void SpinBoxHandler::onTextChanged(const QString &text)
-{
-    if (m_textChangedCallback) {
-        m_textChangedCallback(text.toUtf8().constData());
+void QSpinBoxHandler::onTextChanged(const QString &text) const {
+    if (textChangedCallback) {
+        textChangedCallback(parent(), text.toUtf8().constData());
     }
 }
 
-void SpinBoxHandler::onEditingFinished()
-{
-    if (m_editingFinishedCallback) {
-        m_editingFinishedCallback();
+void QSpinBoxHandler::onEditingFinished() const {
+    if (editingFinishedCallback) {
+        editingFinishedCallback(parent());
     }
 }

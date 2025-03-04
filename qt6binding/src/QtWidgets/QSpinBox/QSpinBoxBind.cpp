@@ -1,41 +1,26 @@
 #include "QSpinBoxBind.h"
+#include "QSpinBoxHandler.h"
 
-BindQSpinBox::BindQSpinBox(QWidget *parent)
+QSpinBoxBind::QSpinBoxBind(QWidget* parent)
     : QSpinBox(parent)
-    , m_handler(nullptr)
-{
+    , handler(new QSpinBoxHandler(this)) {
+    connect(this, QOverload<int>::of(&QSpinBox::valueChanged), handler, &QSpinBoxHandler::onValueChanged);
+    connect(this, &QSpinBox::textChanged, handler, &QSpinBoxHandler::onTextChanged);
+    connect(this, &QSpinBox::editingFinished, handler, &QSpinBoxHandler::onEditingFinished);
 }
 
-BindQSpinBox::~BindQSpinBox()
-{
-    delete m_handler;
+QSpinBoxBind::~QSpinBoxBind() {
+    delete handler;
 }
 
-void BindQSpinBox::setSpinBoxHandler(SpinBoxHandler *handler)
-{
-    if (m_handler) {
-        disconnect(this, QOverload<int>::of(&QSpinBox::valueChanged),
-                  m_handler, &SpinBoxHandler::onValueChanged);
-        disconnect(this, &QSpinBox::textChanged,
-                  m_handler, &SpinBoxHandler::onTextChanged);
-        disconnect(this, &QSpinBox::editingFinished,
-                  m_handler, &SpinBoxHandler::onEditingFinished);
-        delete m_handler;
-    }
-
-    m_handler = handler;
-
-    if (m_handler) {
-        connect(this, QOverload<int>::of(&QSpinBox::valueChanged),
-                m_handler, &SpinBoxHandler::onValueChanged);
-        connect(this, &QSpinBox::textChanged,
-                m_handler, &SpinBoxHandler::onTextChanged);
-        connect(this, &QSpinBox::editingFinished,
-                m_handler, &SpinBoxHandler::onEditingFinished);
-    }
+void QSpinBoxBind::setValueChangedCallback(QSpinBox_ValueChangedCallback callback) const {
+    handler->setValueChangedCallback(callback);
 }
 
-SpinBoxHandler *BindQSpinBox::handler() const
-{
-    return m_handler;
+void QSpinBoxBind::setTextChangedCallback(QSpinBox_TextChangedCallback callback) const {
+    handler->setTextChangedCallback(callback);
+}
+
+void QSpinBoxBind::setEditingFinishedCallback(QSpinBox_EditingFinishedCallback callback) const {
+    handler->setEditingFinishedCallback(callback);
 }
