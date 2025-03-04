@@ -56,19 +56,19 @@ int QToolBar_toolButtonStyle(void* tool_bar);
 #define QTOOLBAR_TOOLBUTTON_FOLLOW_STYLE 4
 
 // Callbacks
-typedef void (*QToolBarActionTriggeredCallback)(void* action);
-typedef void (*QToolBarMovableChangedCallback)(bool movable);
-typedef void (*QToolBarOrientationChangedCallback)(int orientation);
-typedef void (*QToolBarTopLevelChangedCallback)(bool topLevel);
-typedef void (*QToolBarVisibilityChangedCallback)(bool visible);
-typedef void (*QToolBarAllowedAreasChangedCallback)(int areas);
+typedef void (*QToolBar_ActionTriggeredCallback)(void*, void*);
+typedef void (*QToolBar_MovableChangedCallback)(void*, bool);
+typedef void (*QToolBar_OrientationChangedCallback)(void*, int);
+typedef void (*QToolBar_TopLevelChangedCallback)(void*, bool);
+typedef void (*QToolBar_VisibilityChangedCallback)(void*, bool);
+typedef void (*QToolBar_AllowedAreasChangedCallback)(void*, int);
 
-void QToolBar_setActionTriggeredCallback(void* tool_bar, QToolBarActionTriggeredCallback callback);
-void QToolBar_setMovableChangedCallback(void* tool_bar, QToolBarMovableChangedCallback callback);
-void QToolBar_setOrientationChangedCallback(void* tool_bar, QToolBarOrientationChangedCallback callback);
-void QToolBar_setTopLevelChangedCallback(void* tool_bar, QToolBarTopLevelChangedCallback callback);
-void QToolBar_setVisibilityChangedCallback(void* tool_bar, QToolBarVisibilityChangedCallback callback);
-void QToolBar_setAllowedAreasChangedCallback(void* tool_bar, QToolBarAllowedAreasChangedCallback callback);
+void QToolBar_setActionTriggeredCallback(void* tool_bar, QToolBar_ActionTriggeredCallback callback);
+void QToolBar_setMovableChangedCallback(void* tool_bar, QToolBar_MovableChangedCallback callback);
+void QToolBar_setOrientationChangedCallback(void* tool_bar, QToolBar_OrientationChangedCallback callback);
+void QToolBar_setTopLevelChangedCallback(void* tool_bar, QToolBar_TopLevelChangedCallback callback);
+void QToolBar_setVisibilityChangedCallback(void* tool_bar, QToolBar_VisibilityChangedCallback callback);
+void QToolBar_setAllowedAreasChangedCallback(void* tool_bar, QToolBar_AllowedAreasChangedCallback callback);
 
 #ifdef __cplusplus
 }

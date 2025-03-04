@@ -1,88 +1,71 @@
 #include "QToolBarHandler.h"
 
-ToolBarHandler::ToolBarHandler(QObject *parent)
+QToolBarHandler::QToolBarHandler(QObject* parent)
     : QObject(parent)
-    , m_actionTriggeredCallback(nullptr)
-    , m_movableChangedCallback(nullptr)
-    , m_orientationChangedCallback(nullptr)
-    , m_topLevelChangedCallback(nullptr)
-    , m_visibilityChangedCallback(nullptr)
-    , m_allowedAreasChangedCallback(nullptr)
-{
+    , actionTriggeredCallback(nullptr)
+    , movableChangedCallback(nullptr)
+    , orientationChangedCallback(nullptr)
+    , topLevelChangedCallback(nullptr)
+    , visibilityChangedCallback(nullptr)
+    , allowedAreasChangedCallback(nullptr) {
 }
 
-ToolBarHandler::~ToolBarHandler()
-{
+void QToolBarHandler::setActionTriggeredCallback(QToolBar_ActionTriggeredCallback callback) {
+    actionTriggeredCallback = callback;
 }
 
-void ToolBarHandler::setActionTriggeredCallback(void (*callback)(void* action))
-{
-    m_actionTriggeredCallback = callback;
+void QToolBarHandler::setMovableChangedCallback(QToolBar_MovableChangedCallback callback) {
+    movableChangedCallback = callback;
 }
 
-void ToolBarHandler::setMovableChangedCallback(void (*callback)(bool movable))
-{
-    m_movableChangedCallback = callback;
+void QToolBarHandler::setOrientationChangedCallback(QToolBar_OrientationChangedCallback callback) {
+    orientationChangedCallback = callback;
 }
 
-void ToolBarHandler::setOrientationChangedCallback(void (*callback)(int orientation))
-{
-    m_orientationChangedCallback = callback;
+void QToolBarHandler::setTopLevelChangedCallback(QToolBar_TopLevelChangedCallback callback) {
+    topLevelChangedCallback = callback;
 }
 
-void ToolBarHandler::setTopLevelChangedCallback(void (*callback)(bool topLevel))
-{
-    m_topLevelChangedCallback = callback;
+void QToolBarHandler::setVisibilityChangedCallback(QToolBar_VisibilityChangedCallback callback) {
+    visibilityChangedCallback = callback;
 }
 
-void ToolBarHandler::setVisibilityChangedCallback(void (*callback)(bool visible))
-{
-    m_visibilityChangedCallback = callback;
+void QToolBarHandler::setAllowedAreasChangedCallback(QToolBar_AllowedAreasChangedCallback callback) {
+    allowedAreasChangedCallback = callback;
 }
 
-void ToolBarHandler::setAllowedAreasChangedCallback(void (*callback)(int areas))
-{
-    m_allowedAreasChangedCallback = callback;
-}
-
-void ToolBarHandler::onActionTriggered(QAction* action)
-{
-    if (m_actionTriggeredCallback) {
-        m_actionTriggeredCallback(action);
+void QToolBarHandler::onActionTriggered(QAction* action) const {
+    if (actionTriggeredCallback) {
+        actionTriggeredCallback(parent(), action);
     }
 }
 
-void ToolBarHandler::onMovableChanged(bool movable)
-{
-    if (m_movableChangedCallback) {
-        m_movableChangedCallback(movable);
+void QToolBarHandler::onMovableChanged(bool movable) const {
+    if (movableChangedCallback) {
+        movableChangedCallback(parent(), movable);
     }
 }
 
-void ToolBarHandler::onOrientationChanged(int orientation)
-{
-    if (m_orientationChangedCallback) {
-        m_orientationChangedCallback(orientation);
+void QToolBarHandler::onOrientationChanged(int orientation) const {
+    if (orientationChangedCallback) {
+        orientationChangedCallback(parent(), orientation);
     }
 }
 
-void ToolBarHandler::onTopLevelChanged(bool topLevel)
-{
-    if (m_topLevelChangedCallback) {
-        m_topLevelChangedCallback(topLevel);
+void QToolBarHandler::onTopLevelChanged(bool topLevel) const {
+    if (topLevelChangedCallback) {
+        topLevelChangedCallback(parent(), topLevel);
     }
 }
 
-void ToolBarHandler::onVisibilityChanged(bool visible)
-{
-    if (m_visibilityChangedCallback) {
-        m_visibilityChangedCallback(visible);
+void QToolBarHandler::onVisibilityChanged(bool visible) const {
+    if (visibilityChangedCallback) {
+        visibilityChangedCallback(parent(), visible);
     }
 }
 
-void ToolBarHandler::onAllowedAreasChanged(int areas)
-{
-    if (m_allowedAreasChangedCallback) {
-        m_allowedAreasChangedCallback(areas);
+void QToolBarHandler::onAllowedAreasChanged(int areas) const {
+    if (allowedAreasChangedCallback) {
+        allowedAreasChangedCallback(parent(), areas);
     }
 }

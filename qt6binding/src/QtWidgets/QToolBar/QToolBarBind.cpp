@@ -1,59 +1,52 @@
 #include "QToolBarBind.h"
+#include "QToolBarHandler.h"
 
-BindQToolBar::BindQToolBar(QWidget *parent)
+QToolBarBind::QToolBarBind(QWidget* parent)
     : QToolBar(parent)
-    , m_handler(nullptr)
-{
+    , handler(new QToolBarHandler(this)) {
+    connect(this, &QToolBar::actionTriggered, handler, &QToolBarHandler::onActionTriggered);
+    connect(this, &QToolBar::movableChanged, handler, &QToolBarHandler::onMovableChanged);
+    connect(this, &QToolBar::orientationChanged, handler, &QToolBarHandler::onOrientationChanged);
+    connect(this, &QToolBar::topLevelChanged, handler, &QToolBarHandler::onTopLevelChanged);
+    connect(this, &QToolBar::visibilityChanged, handler, &QToolBarHandler::onVisibilityChanged);
+    connect(this, &QToolBar::allowedAreasChanged, handler, &QToolBarHandler::onAllowedAreasChanged);
 }
 
-BindQToolBar::BindQToolBar(const QString &title, QWidget *parent)
+QToolBarBind::QToolBarBind(const QString& title, QWidget* parent)
     : QToolBar(title, parent)
-    , m_handler(nullptr)
-{
+    , handler(new QToolBarHandler(this)) {
+    connect(this, &QToolBar::actionTriggered, handler, &QToolBarHandler::onActionTriggered);
+    connect(this, &QToolBar::movableChanged, handler, &QToolBarHandler::onMovableChanged);
+    connect(this, &QToolBar::orientationChanged, handler, &QToolBarHandler::onOrientationChanged);
+    connect(this, &QToolBar::topLevelChanged, handler, &QToolBarHandler::onTopLevelChanged);
+    connect(this, &QToolBar::visibilityChanged, handler, &QToolBarHandler::onVisibilityChanged);
+    connect(this, &QToolBar::allowedAreasChanged, handler, &QToolBarHandler::onAllowedAreasChanged);
 }
 
-BindQToolBar::~BindQToolBar()
-{
-    delete m_handler;
+QToolBarBind::~QToolBarBind() {
+    delete handler;
 }
 
-void BindQToolBar::setToolBarHandler(ToolBarHandler *handler)
-{
-    if (m_handler) {
-        disconnect(this, &QToolBar::actionTriggered,
-                  m_handler, &ToolBarHandler::onActionTriggered);
-        disconnect(this, &QToolBar::movableChanged,
-                  m_handler, &ToolBarHandler::onMovableChanged);
-        disconnect(this, &QToolBar::orientationChanged,
-                  m_handler, &ToolBarHandler::onOrientationChanged);
-        disconnect(this, &QToolBar::topLevelChanged,
-                  m_handler, &ToolBarHandler::onTopLevelChanged);
-        disconnect(this, &QToolBar::visibilityChanged,
-                  m_handler, &ToolBarHandler::onVisibilityChanged);
-        disconnect(this, &QToolBar::allowedAreasChanged,
-                  m_handler, &ToolBarHandler::onAllowedAreasChanged);
-        delete m_handler;
-    }
-
-    m_handler = handler;
-
-    if (m_handler) {
-        connect(this, &QToolBar::actionTriggered,
-                m_handler, &ToolBarHandler::onActionTriggered);
-        connect(this, &QToolBar::movableChanged,
-                m_handler, &ToolBarHandler::onMovableChanged);
-        connect(this, &QToolBar::orientationChanged,
-                m_handler, &ToolBarHandler::onOrientationChanged);
-        connect(this, &QToolBar::topLevelChanged,
-                m_handler, &ToolBarHandler::onTopLevelChanged);
-        connect(this, &QToolBar::visibilityChanged,
-                m_handler, &ToolBarHandler::onVisibilityChanged);
-        connect(this, &QToolBar::allowedAreasChanged,
-                m_handler, &ToolBarHandler::onAllowedAreasChanged);
-    }
+void QToolBarBind::setActionTriggeredCallback(QToolBar_ActionTriggeredCallback callback) const {
+    handler->setActionTriggeredCallback(callback);
 }
 
-ToolBarHandler *BindQToolBar::handler() const
-{
-    return m_handler;
+void QToolBarBind::setMovableChangedCallback(QToolBar_MovableChangedCallback callback) const {
+    handler->setMovableChangedCallback(callback);
+}
+
+void QToolBarBind::setOrientationChangedCallback(QToolBar_OrientationChangedCallback callback) const {
+    handler->setOrientationChangedCallback(callback);
+}
+
+void QToolBarBind::setTopLevelChangedCallback(QToolBar_TopLevelChangedCallback callback) const {
+    handler->setTopLevelChangedCallback(callback);
+}
+
+void QToolBarBind::setVisibilityChangedCallback(QToolBar_VisibilityChangedCallback callback) const {
+    handler->setVisibilityChangedCallback(callback);
+}
+
+void QToolBarBind::setAllowedAreasChangedCallback(QToolBar_AllowedAreasChangedCallback callback) const {
+    handler->setAllowedAreasChangedCallback(callback);
 }
