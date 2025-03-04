@@ -10,6 +10,8 @@ void QInputDialog_delete(void* dialog) {
     delete static_cast<QInputDialogBind*>(dialog);
 }
 
+// Methods
+
 void QInputDialog_setCancelButtonText(void* dialog, const char* text) {
     static_cast<QInputDialogBind*>(dialog)->setCancelButtonText(QString::fromUtf8(text));
 }
@@ -190,25 +192,101 @@ void QInputDialog_setVisible(void* dialog, bool visible) {
     static_cast<QInputDialogBind*>(dialog)->setVisible(visible);
 }
 
-double QInputDialog_getDouble(void* parent, const char* title, const char* label, double value, double min, double max, int decimals, bool* ok, int flags) {
-    return QInputDialogBind::getDouble(static_cast<QWidget*>(parent), title, label, value, min, max, decimals, ok, flags);
+// Static Methods
+
+double getDouble(QWidget* parent, const char* title, const char* label, double value, double min, double max, int decimals, bool* ok, int flags) {
+    bool okValue;
+    double result = QInputDialog::getDouble(
+        parent,
+        QString::fromUtf8(title),
+        QString::fromUtf8(label),
+        value,
+        min,
+        max,
+        decimals,
+        &okValue,
+        static_cast<Qt::WindowFlags>(flags)
+    );
+    if (ok) *ok = okValue;
+    return result;
 }
 
-int QInputDialog_getInt(void* parent, const char* title, const char* label, int value, int min, int max, int step, bool* ok, int flags) {
-    return QInputDialogBind::getInt(static_cast<QWidget*>(parent), title, label, value, min, max, step, ok, flags);
+int getInt(QWidget* parent, const char* title, const char* label, int value, int min, int max, int step, bool* ok, int flags) {
+    bool okValue;
+    int result = QInputDialog::getInt(
+        parent,
+        QString::fromUtf8(title),
+        QString::fromUtf8(label),
+        value,
+        min,
+        max,
+        step,
+        &okValue,
+        static_cast<Qt::WindowFlags>(flags)
+    );
+    if (ok) *ok = okValue;
+    return result;
 }
 
-const char* QInputDialog_getItem(void* parent, const char* title, const char* label, const char** items, int itemCount, int current, bool editable, bool* ok, int flags) {
-    return QInputDialogBind::getItem(static_cast<QWidget*>(parent), title, label, items, itemCount, current, editable, ok, flags);
+const char* getItem(QWidget* parent, const char* title, const char* label, const char** items, int itemCount, int current, bool editable, bool* ok, int flags) {
+    if (!items || itemCount < 0) return nullptr;
+    bool okValue;
+    QStringList itemList;
+    for (int i = 0; i < itemCount; ++i) {
+        if (items[i]) {
+            itemList << QString::fromUtf8(items[i]);
+        }
+    }
+    static QByteArray data;
+    QString result = QInputDialog::getItem(
+        parent,
+        title ? QString::fromUtf8(title) : QString(),
+        label ? QString::fromUtf8(label) : QString(),
+        itemList,
+        current >= 0 && current < itemCount ? current : 0,
+        editable,
+        &okValue,
+        static_cast<Qt::WindowFlags>(flags)
+    );
+    if (ok) *ok = okValue;
+    data = result.toUtf8();
+    return data.constData();
 }
 
-const char* QInputDialog_getMultiLineText(void* parent, const char* title, const char* label, const char* text, bool* ok, int flags) {
-    return QInputDialogBind::getMultiLineText(static_cast<QWidget*>(parent), title, label, text, ok, flags);
+const char* getMultiLineText(QWidget* parent, const char* title, const char* label, const char* text, bool* ok, int flags) {
+    bool okValue;
+    static QByteArray data;
+    QString result = QInputDialog::getMultiLineText(
+        parent,
+        title ? QString::fromUtf8(title) : QString(),
+        label ? QString::fromUtf8(label) : QString(),
+        text ? QString::fromUtf8(text) : QString(),
+        &okValue,
+        static_cast<Qt::WindowFlags>(flags)
+    );
+    if (ok) *ok = okValue;
+    data = result.toUtf8();
+    return data.constData();
 }
 
-const char* QInputDialog_getText(void* parent, const char* title, const char* label, int mode, const char* text, bool* ok, int flags) {
-    return QInputDialogBind::getText(static_cast<QWidget*>(parent), title, label, mode, text, ok, flags);
+const char* getText(QWidget* parent, const char* title, const char* label, int mode, const char* text, bool* ok, int flags) {
+    bool okValue;
+    static QByteArray data;
+    QString result = QInputDialog::getText(
+        parent,
+        title ? QString::fromUtf8(title) : QString(),
+        label ? QString::fromUtf8(label) : QString(),
+        static_cast<QLineEdit::EchoMode>(mode),
+        text ? QString::fromUtf8(text) : QString(),
+        &okValue,
+        static_cast<Qt::WindowFlags>(flags)
+    );
+    if (ok) *ok = okValue;
+    data = result.toUtf8();
+    return data.constData();
 }
+
+// Callback
 
 typedef void (*QInputDialog_DoubleValueChangedCallback)(void*, double);
 typedef void (*QInputDialog_DoubleValueSelectedCallback)(void*, double);
