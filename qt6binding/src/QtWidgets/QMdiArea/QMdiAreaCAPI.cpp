@@ -132,7 +132,9 @@ int QMdiArea_tabPosition(void* mdiArea) {
     return static_cast<int>(static_cast<QMdiAreaBind*>(mdiArea)->tabPosition());
 }
 
-void QMdiArea_setSubWindowActivatedCallback(void* mdiArea, SubWindowActivatedCallback callback) {
+typedef void (*QMdiArea_SubWindowActivatedCallback)(void*, void*);
+
+void QMdiArea_setSubWindowActivatedCallback(void* mdiArea, QMdiArea_SubWindowActivatedCallback callback) {
     static_cast<QMdiAreaBind*>(mdiArea)->setSubWindowActivatedCallback(callback);
 }
 
