@@ -1,18 +1,38 @@
 #include "QPushButtonHandler.h"
 
-ButtonClickHandler::ButtonClickHandler(void (*callback)(void*))
-    : QObject(nullptr)
-    , callback(callback)
-{
+ButtonClickHandler::ButtonClickHandler(QObject* parent)
+    : QObject(parent)
+    , clickedCallback(nullptr)
+    , pressedCallback(nullptr)
+    , releasedCallback(nullptr) {
 }
 
-ButtonClickHandler::~ButtonClickHandler()
-{
+void ButtonClickHandler::setClickedCallback(ClickedCallback callback) {
+    clickedCallback = callback;
 }
 
-void ButtonClickHandler::onClick()
-{
-    if (callback) {
-        callback(parent());
+void ButtonClickHandler::setPressedCallback(PressedCallback callback) {
+    pressedCallback = callback;
+}
+
+void ButtonClickHandler::setReleasedCallback(ReleasedCallback callback) {
+    releasedCallback = callback;
+}
+
+void ButtonClickHandler::onClicked() const {
+    if (clickedCallback) {
+        clickedCallback(parent());
+    }
+}
+
+void ButtonClickHandler::onPressed() const {
+    if (pressedCallback) {
+        pressedCallback(parent());
+    }
+}
+
+void ButtonClickHandler::onReleased() const {
+    if (releasedCallback) {
+        releasedCallback(parent());
     }
 }

@@ -1,89 +1,96 @@
 #include "QPushButtonBind.h"
+#include "qpushbutton.h"
 
 extern "C" {
 
 void* QPushButton_create(const char* text, void* parent) {
-    return QPushButtonBind::create(text, static_cast<QWidget*>(parent));
+    return new QPushButtonBind(text, static_cast<QWidget*>(parent));
 }
 
-void QPushButton_delete(void* button) {
-    QPushButtonBind::destroy(static_cast<QPushButton*>(button));
+void QPushButton_delete(void* pushButton) {
+    delete static_cast<QPushButtonBind*>(pushButton);
 }
 
-void QPushButton_setText(void* button, const char* text) {
-    QPushButtonBind::setText(static_cast<QPushButton*>(button), text);
+void QPushButton_setText(void* pushButton, const char* text) {
+    if (text) {
+        static_cast<QPushButtonBind*>(pushButton)->setText(QString::fromUtf8(text));
+    }
 }
 
-const char* QPushButton_text(void* button) {
-    return QPushButtonBind::text(static_cast<QPushButton*>(button));
+const char* QPushButton_text(void* pushButton) {
+    static QString str;
+    str = static_cast<QPushButtonBind*>(pushButton)->text();
+    return str.toUtf8().constData();
 }
 
-void QPushButton_setIcon(void* button, const char* iconPath) {
-    QPushButtonBind::setIcon(static_cast<QPushButton*>(button), iconPath);
+void QPushButton_setIcon(void* pushButton, const char* iconPath) {
+    if (iconPath) {
+        static_cast<QPushButtonBind*>(pushButton)->setIcon(QIcon(QString::fromUtf8(iconPath)));
+    }
 }
 
-void QPushButton_setEnabled(void* button, bool enabled) {
-    QPushButtonBind::setEnabled(static_cast<QPushButton*>(button), enabled);
+void QPushButton_setEnabled(void* pushButton, bool enabled) {
+    static_cast<QPushButtonBind*>(pushButton)->setEnabled(enabled);
 }
 
-bool QPushButton_isEnabled(void* button) {
-    return QPushButtonBind::isEnabled(static_cast<QPushButton*>(button));
+bool QPushButton_isEnabled(void* pushButton) {
+    return static_cast<QPushButtonBind*>(pushButton)->isEnabled();
 }
 
-void QPushButton_setCheckable(void* button, bool checkable) {
-    QPushButtonBind::setCheckable(static_cast<QPushButton*>(button), checkable);
+void QPushButton_setCheckable(void* pushButton, bool checkable) {
+    static_cast<QPushButtonBind*>(pushButton)->setCheckable(checkable);
 }
 
-bool QPushButton_isCheckable(void* button) {
-    return QPushButtonBind::isCheckable(static_cast<QPushButton*>(button));
+bool QPushButton_isCheckable(void* pushButton) {
+    return static_cast<QPushButtonBind*>(pushButton)->isCheckable();
 }
 
-void QPushButton_setChecked(void* button, bool checked) {
-    QPushButtonBind::setChecked(static_cast<QPushButton*>(button), checked);
+void QPushButton_setChecked(void* pushButton, bool checked) {
+    static_cast<QPushButtonBind*>(pushButton)->setChecked(checked);
 }
 
-bool QPushButton_isChecked(void* button) {
-    return QPushButtonBind::isChecked(static_cast<QPushButton*>(button));
+bool QPushButton_isChecked(void* pushButton) {
+    return static_cast<QPushButtonBind*>(pushButton)->isChecked();
 }
 
-void QPushButton_setAutoRepeat(void* button, bool autoRepeat) {
-    QPushButtonBind::setAutoRepeat(static_cast<QPushButton*>(button), autoRepeat);
+void QPushButton_setAutoRepeat(void* pushButton, bool autoRepeat) {
+    static_cast<QPushButtonBind*>(pushButton)->setAutoRepeat(autoRepeat);
 }
 
-bool QPushButton_autoRepeat(void* button) {
-    return QPushButtonBind::autoRepeat(static_cast<QPushButton*>(button));
+bool QPushButton_autoRepeat(void* pushButton) {
+    return static_cast<QPushButtonBind*>(pushButton)->autoRepeat();
 }
 
-void QPushButton_click(void* button) {
-    QPushButtonBind::click(static_cast<QPushButton*>(button));
+void QPushButton_click(void* pushButton) {
+    static_cast<QPushButtonBind*>(pushButton)->click();
 }
 
-void QPushButton_setFlat(void* button, bool flat) {
-    QPushButtonBind::setFlat(static_cast<QPushButton*>(button), flat);
+void QPushButton_setFlat(void* pushButton, bool flat) {
+    static_cast<QPushButtonBind*>(pushButton)->setFlat(flat);
 }
 
-bool QPushButton_isFlat(void* button) {
-    return QPushButtonBind::isFlat(static_cast<QPushButton*>(button));
+bool QPushButton_isFlat(void* pushButton) {
+    return static_cast<QPushButtonBind*>(pushButton)->isFlat();
 }
 
-void QPushButton_setDefault(void* button, bool default_) {
-    QPushButtonBind::setDefault(static_cast<QPushButton*>(button), default_);
+void QPushButton_setDefault(void* pushButton, bool default_) {
+    static_cast<QPushButtonBind*>(pushButton)->setDefault(default_);
 }
 
-bool QPushButton_isDefault(void* button) {
-    return QPushButtonBind::isDefault(static_cast<QPushButton*>(button));
+bool QPushButton_isDefault(void* pushButton) {
+    return static_cast<QPushButtonBind*>(pushButton)->isDefault();
 }
 
-void QPushButton_setClickCallback(void* button, QPushButtonClickCallback callback) {
-    QPushButtonBind::setClickCallback(static_cast<QPushButton*>(button), callback);
+void QPushButton_setClickedCallback(void* pushButton, ClickedCallback callback) {
+    static_cast<QPushButtonBind*>(pushButton)->setClickedCallback(callback);
 }
 
-void QPushButton_setPressedCallback(void* button, QPushButtonClickCallback callback) {
-    QPushButtonBind::setPressedCallback(static_cast<QPushButton*>(button), callback);
+void QPushButton_setPressedCallback(void* pushButton, PressedCallback callback) {
+    static_cast<QPushButtonBind*>(pushButton)->setPressedCallback(callback);
 }
 
-void QPushButton_setReleasedCallback(void* button, QPushButtonClickCallback callback) {
-    QPushButtonBind::setReleasedCallback(static_cast<QPushButton*>(button), callback);
+void QPushButton_setReleasedCallback(void* pushButton, ReleasedCallback callback) {
+    static_cast<QPushButtonBind*>(pushButton)->setReleasedCallback(callback);
 }
 
 }
