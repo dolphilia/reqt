@@ -2,26 +2,20 @@
 #define QSPLITTER_HANDLER_H
 
 #include <QObject>
-#include <QSplitter>
-
-typedef void (*SplitterMovedCallback)(void*, int, int);
 
 class QSplitterHandler : public QObject {
     Q_OBJECT
+    typedef void (*QSplitter_SplitterMovedCallback)(void*, int, int);
 public:
     explicit QSplitterHandler(QObject* parent = nullptr);
-    QSplitterHandler(const QSplitterHandler&) = delete;
-    QSplitterHandler& operator=(const QSplitterHandler&) = delete;
 
-    void setSplitter(QSplitter* splitter);
-    void setSplitterMovedCallback(SplitterMovedCallback callback);
+    void setSplitterMovedCallback(QSplitter_SplitterMovedCallback callback);
 
 public slots:
-    void onSplitterMoved(int pos, int index);
+    void onSplitterMoved(int pos, int index) const;
 
 private:
-    QSplitter* splitter;
-    SplitterMovedCallback splitterMovedCallback;
+    QSplitter_SplitterMovedCallback splitterMovedCallback;
 };
 
 #endif // QSPLITTER_HANDLER_H

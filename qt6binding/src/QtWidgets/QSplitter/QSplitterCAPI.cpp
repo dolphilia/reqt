@@ -71,7 +71,9 @@ bool QSplitter_isCollapsible(void* splitter, int index) {
     return static_cast<QSplitterBind*>(splitter)->isCollapsible(index);
 }
 
-void QSplitter_setSplitterMovedCallback(void* splitter, void (*callback)(void*, int, int)) {
+typedef void (*QSplitter_SplitterMovedCallback)(void*, int, int);
+
+void QSplitter_setSplitterMovedCallback(void* splitter, QSplitter_SplitterMovedCallback callback) {
     static_cast<QSplitterBind*>(splitter)->setSplitterMovedCallback(callback);
 }
 
