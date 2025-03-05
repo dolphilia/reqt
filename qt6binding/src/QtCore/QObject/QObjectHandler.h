@@ -24,6 +24,14 @@ public:
     void setCustomEventCallback(QObject_CustomEventCallback callback);
     void setDisconnectNotifyCallback(QObject_DisconnectNotifyCallback callback);
     void setTimerEventCallback(QObject_TimerEventCallback callback);
+    
+    // コールバックが設定されているかどうかを確認するメソッド
+    bool hasEventCallback() const { return eventCallback != nullptr; }
+    bool hasChildEventCallback() const { return childEventCallback != nullptr; }
+    bool hasConnectNotifyCallback() const { return connectNotifyCallback != nullptr; }
+    bool hasCustomEventCallback() const { return customEventCallback != nullptr; }
+    bool hasDisconnectNotifyCallback() const { return disconnectNotifyCallback != nullptr; }
+    bool hasTimerEventCallback() const { return timerEventCallback != nullptr; }
 
 public slots:
     void onDestroyed() const;

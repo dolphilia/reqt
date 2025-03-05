@@ -31,6 +31,7 @@ public:
     void setDisconnectNotifyCallback(QObject_DisconnectNotifyCallback callback) const;
     void setTimerEventCallback(QObject_TimerEventCallback callback) const;
 
+    // Protected Functions made public
     bool isSignalConnected(const QMetaMethod &signal) const;
     int receivers(const char *signal) const;
     QObject *sender() const;
@@ -39,6 +40,7 @@ public:
 protected:
     // Reimplemented Protected Functions
     void childEvent(QChildEvent *event) override;
+    bool event(QEvent *e) override;
     void connectNotify(const QMetaMethod &signal) override;
     void customEvent(QEvent *event) override;
     void disconnectNotify(const QMetaMethod &signal) override;

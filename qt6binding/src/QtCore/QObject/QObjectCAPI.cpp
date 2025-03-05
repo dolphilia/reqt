@@ -5,6 +5,9 @@
 
 extern "C" {
 
+//-- Properties
+//-- Public Functions
+
 // QObject(QObject *parent = nullptr)
 
 void* QObject_create(void* parent) {
@@ -16,8 +19,6 @@ void* QObject_create(void* parent) {
 void QObject_delete(void* object) {
     delete static_cast<QObjectBind*>(object);
 }
-
-//-- Public Functions
 
 // QBindable<QString> bindableObjectName()
 
@@ -87,9 +88,12 @@ char** QObject_dynamicPropertyNames(void* object, int* count) {
 }
 
 // virtual bool event(QEvent *e)
+// Note: event() is protected in QObject, so we can't call it directly from C API
+// Instead, use the event callback mechanism
 
 bool QObject_event(void* object, void* event) {
-    return static_cast<QObjectBind*>(object)->event(static_cast<QEvent*>(event));
+    // Forward the event to QObject's default implementation
+    return QObject::staticMetaObject.cast(static_cast<QObjectBind*>(object))->QObject::event(static_cast<QEvent*>(event));
 }
 
 // virtual bool eventFilter(QObject *watched, QEvent *event)
@@ -268,7 +272,7 @@ void* QObject_thread(void* object) {
     return static_cast<QObjectBind*>(object)->thread();
 }
 
-//-- Protected Functions
+//-- Protected Functions made public
 
 bool QObject_isSignalConnected(void* object, void* signal) {
     return static_cast<QObjectBind*>(object)->isSignalConnected(*static_cast<QMetaMethod*>(signal));
@@ -285,8 +289,6 @@ void* QObject_sender(void* object) {
 int QObject_senderSignalIndex(void* object) {
     return static_cast<QObjectBind*>(object)->senderSignalIndex();
 }
-
-//-- Properties
 
 //-- Static Public Members
 
@@ -349,57 +351,64 @@ const char * QObject_tr(const char * sourceText, const char * disambiguation, in
 //-- Callback
 
 typedef void (*QObject_DestroyedCallback)(void*);
-typedef void (*QObject_ObjectNameChangedCallback)(void*, const QString*);
-typedef void (*QObject_EventCallback)(void*, QEvent*);
+typedef void (*QObject_ObjectNameChangedCallback)(void*, const char *);
+typedef void (*QObject_EventCallback)(void*, void*);
 
 void QObject_setDestroyedCallback(void* object, QObject_DestroyedCallback callback) {
     static_cast<QObjectBind*>(object)->setDestroyedCallback(callback);
 }
 
 void QObject_setObjectNameChangedCallback(void* object, QObject_ObjectNameChangedCallback callback) {
-    static_cast<QObjectBind*>(object)->setObjectNameChangedCallback(callback);
+    typedef void (*QObject_ObjectNameChangedCallback_Cast)(void*, const QString*);
+    static_cast<QObjectBind*>(object)->setObjectNameChangedCallback(reinterpret_cast<QObject_ObjectNameChangedCallback_Cast>(callback));
 }
 
 void QObject_setEventCallback(void* object, QObject_EventCallback callback) {
-    static_cast<QObjectBind*>(object)->setEventCallback(callback);
+    typedef void (*QObject_EventCallback_Cast)(void*, QEvent*);
+    static_cast<QObjectBind*>(object)->setEventCallback(reinterpret_cast<QObject_EventCallback_Cast>(callback));
 }
 
 //-- Protected Callback
 
-typedef void (*QObject_ChildEventCallback)(void*, QChildEvent*);
-typedef void (*QObject_ConnectNotifyCallback)(void*, const QMetaMethod*);
-typedef void (*QObject_CustomEventCallback)(void*, QEvent*);
-typedef void (*QObject_DisconnectNotifyCallback)(void*, const QMetaMethod*);
-typedef void (*QObject_TimerEventCallback)(void*, QTimerEvent*);
+typedef void (*QObject_ChildEventCallback)(void*, void*);
+typedef void (*QObject_ConnectNotifyCallback)(void*, const void*);
+typedef void (*QObject_CustomEventCallback)(void*, void*);
+typedef void (*QObject_DisconnectNotifyCallback)(void*, const void*);
+typedef void (*QObject_TimerEventCallback)(void*, void*);
 
 // virtual void childEvent(QChildEvent *event)
 
 void QObject_setChildEventCallback(void* object, QObject_ChildEventCallback callback) {
-    static_cast<QObjectBind*>(object)->setChildEventCallback(callback);
+    typedef void (*QObject_ChildEventCallback_Cast)(void*, QChildEvent*);
+    static_cast<QObjectBind*>(object)->setChildEventCallback(reinterpret_cast<QObject_ChildEventCallback_Cast>(callback));
 }
 
 // virtual void connectNotify(const QMetaMethod &signal)
 
 void QObject_setConnectNotifyCallback(void* object, QObject_ConnectNotifyCallback callback) {
-    static_cast<QObjectBind*>(object)->setConnectNotifyCallback(callback);
+    typedef void (*QObject_ConnectNotifyCallback_Cast)(void*, const QMetaMethod*);
+    static_cast<QObjectBind*>(object)->setConnectNotifyCallback(reinterpret_cast<QObject_ConnectNotifyCallback_Cast>(callback));
 }
 
 // virtual void customEvent(QEvent *event)
 
 void QObject_setCustomEventCallback(void* object, QObject_CustomEventCallback callback) {
-    static_cast<QObjectBind*>(object)->setCustomEventCallback(callback);
+    typedef void (*QObject_CustomEventCallback_Cast)(void*, QEvent*);
+    static_cast<QObjectBind*>(object)->setCustomEventCallback(reinterpret_cast<QObject_CustomEventCallback_Cast>(callback));
 }
 
 // virtual void disconnectNotify(const QMetaMethod &signal)
 
 void QObject_setDisconnectNotifyCallback(void* object, QObject_DisconnectNotifyCallback callback) {
-    static_cast<QObjectBind*>(object)->setDisconnectNotifyCallback(callback);
+    typedef void (*QObject_DisconnectNotifyCallback_Cast)(void*, const QMetaMethod*);
+    static_cast<QObjectBind*>(object)->setDisconnectNotifyCallback(reinterpret_cast<QObject_DisconnectNotifyCallback_Cast>(callback));
 }
 
 // virtual void timerEvent(QTimerEvent *event)
 
 void QObject_setTimerEventCallback(void* object, QObject_TimerEventCallback callback) {
-    static_cast<QObjectBind*>(object)->setTimerEventCallback(callback);
+    typedef void (*QObject_TimerEventCallback_Cast)(void*, QTimerEvent*);
+    static_cast<QObjectBind*>(object)->setTimerEventCallback(reinterpret_cast<QObject_TimerEventCallback_Cast>(callback));
 }
 
 }

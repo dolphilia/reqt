@@ -11,6 +11,7 @@ QObjectHandler::QObjectHandler(QObject* parent)
     , disconnectNotifyCallback(nullptr)
     , timerEventCallback(nullptr) {
 }
+// set Callback
 
 void QObjectHandler::setDestroyedCallback(QObject_DestroyedCallback callback) {
     destroyedCallback = callback;
@@ -43,6 +44,8 @@ void QObjectHandler::setDisconnectNotifyCallback(QObject_DisconnectNotifyCallbac
 void QObjectHandler::setTimerEventCallback(QObject_TimerEventCallback callback) {
     timerEventCallback = callback;
 }
+
+// onXXXX
 
 void QObjectHandler::onDestroyed() const {
     if (destroyedCallback) {

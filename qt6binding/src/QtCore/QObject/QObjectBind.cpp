@@ -6,7 +6,6 @@ QObjectBind::QObjectBind(QObject* parent)
     , handler(new QObjectHandler(this)) {
     connect(this, &QObject::destroyed, handler, &QObjectHandler::onDestroyed);
     connect(this, &QObject::objectNameChanged, handler, &QObjectHandler::onObjectNameChanged);
-    connect(this, &QObject::event, handler, &QObjectHandler::onEvent);
 }
 
 QObjectBind::~QObjectBind() {
@@ -45,27 +44,7 @@ void QObjectBind::setTimerEventCallback(QObject_TimerEventCallback callback) con
     handler->setTimerEventCallback(callback);
 }
 
-// Reimplemented Protected Functions
-
-void QObjectBind::childEvent(QChildEvent *event) {
-    QObject::childEvent(event);
-    handler->onChildEvent(event);
-}
-
-void QObjectBind::connectNotify(const QMetaMethod &signal) {
-    QObject::connectNotify(signal);
-    handler->onConnectNotify(signal);
-}
-
-void QObjectBind::customEvent(QEvent *event) {
-    QObject::customEvent(event);
-    handler->onCustomEvent(event);
-}
-
-void QObjectBind::disconnectNotify(const QMetaMethod &signal) {
-    QObject::disconnectNotify(signal);
-    handler->onDisconnectNotify(signal);
-}
+// Protected Functions made public
 
 bool QObjectBind::isSignalConnected(const QMetaMethod &signal) const {
     return QObject::isSignalConnected(signal);
@@ -83,7 +62,46 @@ int QObjectBind::senderSignalIndex() const {
     return QObject::senderSignalIndex();
 }
 
+// Reimplemented Protected Functions
+
+bool QObjectBind::event(QEvent *e) {
+    if (handler && handler->hasEventCallback()) {
+        handler->onEvent(e);
+    }
+    return QObject::event(e);
+}
+
+void QObjectBind::childEvent(QChildEvent *event) {
+    QObject::childEvent(event);
+    if (handler && handler->hasChildEventCallback()) {
+        handler->onChildEvent(event);
+    }
+}
+
+void QObjectBind::connectNotify(const QMetaMethod &signal) {
+    QObject::connectNotify(signal);
+    if (handler && handler->hasConnectNotifyCallback()) {
+        handler->onConnectNotify(signal);
+    }
+}
+
+void QObjectBind::customEvent(QEvent *event) {
+    QObject::customEvent(event);
+    if (handler && handler->hasCustomEventCallback()) {
+        handler->onCustomEvent(event);
+    }
+}
+
+void QObjectBind::disconnectNotify(const QMetaMethod &signal) {
+    QObject::disconnectNotify(signal);
+    if (handler && handler->hasDisconnectNotifyCallback()) {
+        handler->onDisconnectNotify(signal);
+    }
+}
+
 void QObjectBind::timerEvent(QTimerEvent *event) {
     QObject::timerEvent(event);
-    handler->onTimerEvent(event);
+    if (handler && handler->hasTimerEventCallback()) {
+        handler->onTimerEvent(event);
+    }
 }
