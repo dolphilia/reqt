@@ -4,7 +4,10 @@ QSplitterHandleHandler::QSplitterHandleHandler(QObject* parent)
     : QObject(parent)
     , movedCallback(nullptr)
     , pressedCallback(nullptr)
-    , releasedCallback(nullptr) {
+    , releasedCallback(nullptr)
+    , eventCallback(nullptr)
+    , paintCallback(nullptr)
+    , resizeCallback(nullptr) {
 }
 
 void QSplitterHandleHandler::setMovedCallback(QSplitterHandle_MovedCallback callback) {
@@ -17,6 +20,18 @@ void QSplitterHandleHandler::setPressedCallback(QSplitterHandle_PressedCallback 
 
 void QSplitterHandleHandler::setReleasedCallback(QSplitterHandle_ReleasedCallback callback) {
     releasedCallback = callback;
+}
+
+void QSplitterHandleHandler::setEventCallback(QSplitterHandle_EventCallback callback) {
+    eventCallback = callback;
+}
+
+void QSplitterHandleHandler::setPaintCallback(QSplitterHandle_PaintCallback callback) {
+    paintCallback = callback;
+}
+
+void QSplitterHandleHandler::setResizeCallback(QSplitterHandle_ResizeCallback callback) {
+    resizeCallback = callback;
 }
 
 void QSplitterHandleHandler::onMoved() const {
@@ -34,5 +49,24 @@ void QSplitterHandleHandler::onPressed() const {
 void QSplitterHandleHandler::onReleased() const {
     if (releasedCallback) {
         releasedCallback(parent());
+    }
+}
+
+bool QSplitterHandleHandler::onEvent(QEvent* event) const {
+    if (eventCallback) {
+        return eventCallback(parent(), event);
+    }
+    return false;
+}
+
+void QSplitterHandleHandler::onPaint() const {
+    if (paintCallback) {
+        paintCallback(parent());
+    }
+}
+
+void QSplitterHandleHandler::onResize(QResizeEvent* event) const {
+    if (resizeCallback) {
+        resizeCallback(parent(), event);
     }
 }

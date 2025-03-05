@@ -1,6 +1,7 @@
 #include "QSplitterHandleBind.h"
 #include "QSplitterHandleHandler.h"
-#include <QMouseEvent>
+#include <QPainter>
+#include <QStyleOption>
 
 QSplitterHandleBind::QSplitterHandleBind(Qt::Orientation orientation, QSplitter* parent)
     : QSplitterHandle(orientation, parent)
@@ -12,6 +13,24 @@ QSplitterHandleBind::QSplitterHandleBind(Qt::Orientation orientation, QSplitter*
 QSplitterHandleBind::~QSplitterHandleBind() {
     delete handler;
 }
+
+// Reimplemented Public Functions
+
+QSize QSplitterHandleBind::sizeHint() const {
+    return QSplitterHandle::sizeHint();
+}
+
+// Protected Functions
+
+int QSplitterHandleBind::closestLegalPosition(int pos) {
+    return QSplitterHandle::closestLegalPosition(pos);
+}
+
+void QSplitterHandleBind::moveSplitter(int pos) {
+    QSplitterHandle::moveSplitter(pos);
+}
+
+// Callback
 
 void QSplitterHandleBind::setMovedCallback(QSplitterHandle_MovedCallback callback) const {
     handler->setMovedCallback(callback);
@@ -25,34 +44,46 @@ void QSplitterHandleBind::setReleasedCallback(QSplitterHandle_ReleasedCallback c
     handler->setReleasedCallback(callback);
 }
 
-bool QSplitterHandleBind::opaqueResize() const {
-    return splitter() ? splitter()->opaqueResize() : false;
+void QSplitterHandleBind::setEventCallback(QSplitterHandle_EventCallback callback) const {
+    handler->setEventCallback(callback);
 }
 
-void QSplitterHandleBind::setOpaqueResize(bool opaque) {
-    // QSplitterHandleの親であるQSplitterのopaqueResizeを設定する
-    if (splitter()) {
-        splitter()->setOpaqueResize(opaque);
-    }
+void QSplitterHandleBind::setPaintCallback(QSplitterHandle_PaintCallback callback) const {
+    handler->setPaintCallback(callback);
+}
+
+void QSplitterHandleBind::setResizeCallback(QSplitterHandle_ResizeCallback callback) const {
+    handler->setResizeCallback(callback);
+}
+
+//  Reimplemented Protected Functions
+
+bool QSplitterHandleBind::event(QEvent *event) {
+    bool result = QSplitterHandle::event(event);
+    return handler->onEvent(event) ? true : result;
+}
+
+void QSplitterHandleBind::paintEvent(QPaintEvent *event) {
+    QSplitterHandle::paintEvent(event);
+    handler->onPaint();
+}
+
+void QSplitterHandleBind::resizeEvent(QResizeEvent *event) {
+    QSplitterHandle::resizeEvent(event);
+    handler->onResize(event);
 }
 
 void QSplitterHandleBind::mouseMoveEvent(QMouseEvent *e) {
-    // 親クラスのイベントハンドラを呼び出す
     QSplitterHandle::mouseMoveEvent(e);
-    // ハンドラのコールバックを呼び出す
     handler->onMoved();
 }
 
 void QSplitterHandleBind::mousePressEvent(QMouseEvent *e) {
-    // 親クラスのイベントハンドラを呼び出す
     QSplitterHandle::mousePressEvent(e);
-    // ハンドラのコールバックを呼び出す
     handler->onPressed();
 }
 
 void QSplitterHandleBind::mouseReleaseEvent(QMouseEvent *e) {
-    // 親クラスのイベントハンドラを呼び出す
     QSplitterHandle::mouseReleaseEvent(e);
-    // ハンドラのコールバックを呼び出す
     handler->onReleased();
 }
