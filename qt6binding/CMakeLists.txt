@@ -32,5 +32,5 @@ add_library(qt6binding SHARED
 target_include_directories(qt6binding PUBLIC include include/qt6 src src/QtCore src/QtGui src/QtWidgets)
 target_link_libraries(qt6binding PRIVATE Qt6::Core Qt6::Gui Qt6::Widgets)
 
-add_subdirectory(example)
-add_subdirectory(demo)
+#add_subdirectory(example)
+#add_subdirectory(demo)
