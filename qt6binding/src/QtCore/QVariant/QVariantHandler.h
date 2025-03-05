@@ -3,42 +3,27 @@
 
 #include <QObject>
 #include <QVariant>
-#include <QString>
-#include <QDate>
-#include <QTime>
-#include <QDateTime>
-#include <QPoint>
-#include <QRect>
-#include <QSize>
 
 class QVariantHandler : public QObject {
     Q_OBJECT
+    typedef void (*QVariant_ValueChangedCallback)(void*, const void*);
 public:
     explicit QVariantHandler(QObject* parent = nullptr);
     ~QVariantHandler();
 
     // アクセサ
-    QVariant *variant() const;
+    QVariant *getVariant() const;
     
-    // 型チェック
-    bool isNull() const;
-    bool isValid() const;
-    bool canConvert(int targetTypeId) const;
-    
-    // 変換関数
-    QString toString() const;
-    int toInt(bool *ok = nullptr) const;
-    double toDouble(bool *ok = nullptr) const;
-    bool toBool() const;
-    QDate toDate() const;
-    QTime toTime() const;
-    QDateTime toDateTime() const;
-    QPoint toPoint() const;
-    QRect toRect() const;
-    QSize toSize() const;
+    // コールバック設定
+    void setValueChangedCallback(QVariant_ValueChangedCallback callback);
+    bool hasValueChangedCallback() const { return valueChangedCallback != nullptr; }
+
+public slots:
+    void onValueChanged(const QVariant& value) const;
 
 private:
-    QVariant *m_variant;
+    QVariant *variant;
+    QVariant_ValueChangedCallback valueChangedCallback;
 };
 
 #endif // QVARIANT_HANDLER_H

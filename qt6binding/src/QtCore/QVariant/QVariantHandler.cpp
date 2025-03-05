@@ -2,71 +2,27 @@
 
 QVariantHandler::QVariantHandler(QObject* parent)
     : QObject(parent)
-    , m_variant(new QVariant()) {
+    , variant(new QVariant())
+    , valueChangedCallback(nullptr) {
 }
 
 QVariantHandler::~QVariantHandler() {
-    delete m_variant;
+    delete variant;
 }
 
 // アクセサ
-QVariant *QVariantHandler::variant() const {
-    return m_variant;
+QVariant *QVariantHandler::getVariant() const {
+    return variant;
 }
 
-// 型チェック
-bool QVariantHandler::isNull() const {
-    return m_variant->isNull();
+// コールバック設定
+void QVariantHandler::setValueChangedCallback(QVariant_ValueChangedCallback callback) {
+    valueChangedCallback = callback;
 }
 
-bool QVariantHandler::isValid() const {
-    return m_variant->isValid();
-}
-
-bool QVariantHandler::canConvert(int targetTypeId) const {
-    return m_variant->canConvert(QMetaType(targetTypeId));
-}
-
-// 変換関数
-QString QVariantHandler::toString() const {
-    if (m_variant->canConvert<QString>()) {
-        return m_variant->toString();
+// スロット
+void QVariantHandler::onValueChanged(const QVariant& value) const {
+    if (valueChangedCallback) {
+        valueChangedCallback(parent(), &value);
     }
-    return QString();
-}
-
-int QVariantHandler::toInt(bool *ok) const {
-    return m_variant->toInt(ok);
-}
-
-double QVariantHandler::toDouble(bool *ok) const {
-    return m_variant->toDouble(ok);
-}
-
-bool QVariantHandler::toBool() const {
-    return m_variant->toBool();
-}
-
-QDate QVariantHandler::toDate() const {
-    return m_variant->toDate();
-}
-
-QTime QVariantHandler::toTime() const {
-    return m_variant->toTime();
-}
-
-QDateTime QVariantHandler::toDateTime() const {
-    return m_variant->toDateTime();
-}
-
-QPoint QVariantHandler::toPoint() const {
-    return m_variant->toPoint();
-}
-
-QRect QVariantHandler::toRect() const {
-    return m_variant->toRect();
-}
-
-QSize QVariantHandler::toSize() const {
-    return m_variant->toSize();
 }
