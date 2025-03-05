@@ -1,7 +1,7 @@
 #include "qt6.h"
 #include <stdio.h>
 
-void onValueChanged(double value) {
+void onValueChanged(void *context, double value) {
     printf("Value changed: %f\n", value);
 }
 

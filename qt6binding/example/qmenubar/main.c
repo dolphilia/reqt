@@ -1,12 +1,12 @@
 #include "qt6.h"
 #include <stdio.h>
 
-void on_triggered(void* action) {
+void on_triggered(void* action, void* menu) {
     const char* text = QMenuBar_actionText(NULL, action);
     printf("Action triggered: %s\n", text);
 }
 
-void on_hovered(void* action) {
+void on_hovered(void* action, void* menu) {
     const char* text = QMenuBar_actionText(NULL, action);
     printf("Action hovered: %s\n", text);
 }

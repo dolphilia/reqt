@@ -1,11 +1,11 @@
 #include "qt6.h"
 #include <stdio.h>
 
-void on_vertical_scroll_value_changed(int value) {
+void on_vertical_scroll_value_changed(void* obj, int value) {
     printf("Vertical scroll value changed: %d\n", value);
 }
 
-void on_horizontal_scroll_value_changed(int value) {
+void on_horizontal_scroll_value_changed(void* obj, int value) {
     printf("Horizontal scroll value changed: %d\n", value);
 }
 

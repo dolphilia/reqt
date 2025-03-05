@@ -79,7 +79,7 @@ int main(int argc, char *argv[]) {
     QWidget_show(button);
     
     // Show menu when button is clicked
-    QPushButton_setClickCallback(button, on_button_clicked);
+    QPushButton_setClickedCallback(button, on_button_clicked);
     
     // Run application
     int result = QApplication_exec();

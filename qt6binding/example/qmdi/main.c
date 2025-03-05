@@ -44,7 +44,7 @@ int main(int argc, char *argv[]) {
     void* layout1 = QVBoxLayout_create(content1);
     void* label1 = QLabel_create("Document 1 Content", content1);
     void* button1 = QPushButton_create("Action 1", content1);
-    QPushButton_setClickCallback(button1, onButtonClicked);
+    QPushButton_setClickedCallback(button1, onButtonClicked);
     
     QVBoxLayout_addWidget(layout1, label1);
     QVBoxLayout_addWidget(layout1, button1);
@@ -61,7 +61,7 @@ int main(int argc, char *argv[]) {
     void* content2 = QWidget_create(NULL);
     void* layout2 = QVBoxLayout_create(content2);
     void* label2 = QLabel_create("Document 2 Content", content2);
-    void* edit2 = QLineEdit_create("", content2);
+    void* edit2 = QLineEdit_create(content2);
     
     QVBoxLayout_addWidget(layout2, label2);
     QVBoxLayout_addWidget(layout2, edit2);

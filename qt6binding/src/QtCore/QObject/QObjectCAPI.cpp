@@ -1,5 +1,6 @@
 #include "QObjectBind.h"
 #include "QVariant/QVariantBind.h"
+#include <QtCore/qproperty.h>
 
 extern "C" {
 
@@ -12,6 +13,65 @@ void QObject_delete(void* object) {
 }
 
 // Public Functions
+
+void * QObject_bindableObjectName(void* object) {
+    QBindable<QString>* bindable = new QBindable<QString>(static_cast<QObjectBind*>(object)->bindableObjectName());
+    return static_cast<void*>(bindable);
+}
+
+bool QObject_blockSignals(void* object, bool block) {
+    return static_cast<QObjectBind*>(object)->blockSignals(block);
+}
+
+void** QObject_children(void* object, int* count) {
+    QList<QObject*> children = static_cast<QObjectBind*>(object)->children();
+    *count = children.size();
+    
+    void** result = new void*[children.size()];
+    for (int i = 0; i < children.size(); i++) {
+        result[i] = children[i];
+    }
+    
+    return result;
+}
+
+// QMetaObject::Connection	connect(const QObject *sender, const char *signal, const char *method, Qt::ConnectionType type = Qt::AutoConnection) const
+// bool	disconnect(const QObject *receiver, const char *method = nullptr) const
+// bool	disconnect(const char *signal = nullptr, const QObject *receiver = nullptr, const char *method = nullptr) const
+
+char** QObject_dynamicPropertyNames(void* object, int* count) {
+    QList<QByteArray> names = static_cast<QObjectBind*>(object)->dynamicPropertyNames();
+    *count = names.size();
+    
+    char** result = new char*[names.size()];
+    for (int i = 0; i < names.size(); i++) {
+        result[i] = qstrdup(names[i].constData());
+    }
+    
+    return result;
+}
+
+bool QObject_event(void* object, void* event) {
+    return static_cast<QObjectBind*>(object)->event(static_cast<QEvent*>(event));
+}
+
+bool QObject_eventFilter(void* object, void* watched, void* event) {
+    return static_cast<QObjectBind*>(object)->eventFilter(static_cast<QObject*>(watched), static_cast<QEvent*>(event));
+}
+
+// T	findChild(QAnyStringView name, Qt::FindChildOptions options = Qt::FindChildrenRecursively) const
+// void * QObject_findChild(void* object, const char* name) {
+//     return static_cast<QObjectBind*>(object)->findChild<QObject*>(name);
+// }
+
+
+void QObject_dumpObjectInfo(void* object) {
+    static_cast<QObjectBind*>(object)->dumpObjectInfo();
+}
+
+void QObject_dumpObjectTree(void* object) {
+    static_cast<QObjectBind*>(object)->dumpObjectTree();
+}
 
 void QObject_setObjectName(void* object, const char* name) {
     const QString qstr = QString::fromUtf8(name);
@@ -40,24 +100,8 @@ void* QObject_property(void* object, const char* name) {
     return variant;
 }
 
-char** QObject_dynamicPropertyNames(void* object, int* count) {
-    QList<QByteArray> names = static_cast<QObjectBind*>(object)->dynamicPropertyNames();
-    *count = names.size();
-    
-    char** result = new char*[names.size()];
-    for (int i = 0; i < names.size(); i++) {
-        result[i] = qstrdup(names[i].constData());
-    }
-    
-    return result;
-}
-
 void QObject_deleteLater(void* object) {
     static_cast<QObjectBind*>(object)->deleteLater();
-}
-
-bool QObject_blockSignals(void* object, bool block) {
-    return static_cast<QObjectBind*>(object)->blockSignals(block);
 }
 
 bool QObject_signalsBlocked(void* object) {
@@ -70,34 +114,6 @@ char* QObject_className(void* object) {
 
 bool QObject_inherits(void* object, const char* className) {
     return static_cast<QObjectBind*>(object)->inherits(className);
-}
-
-void QObject_dumpObjectInfo(void* object) {
-    static_cast<QObjectBind*>(object)->dumpObjectInfo();
-}
-
-void QObject_dumpObjectTree(void* object) {
-    static_cast<QObjectBind*>(object)->dumpObjectTree();
-}
-
-void** QObject_children(void* object, int* count) {
-    QList<QObject*> children = static_cast<QObjectBind*>(object)->children();
-    *count = children.size();
-    
-    void** result = new void*[children.size()];
-    for (int i = 0; i < children.size(); i++) {
-        result[i] = children[i];
-    }
-    
-    return result;
-}
-
-bool QObject_event(void* object, void* event) {
-    return static_cast<QObjectBind*>(object)->event(static_cast<QEvent*>(event));
-}
-
-bool QObject_eventFilter(void* object, void* watched, void* event) {
-    return static_cast<QObjectBind*>(object)->eventFilter(static_cast<QObject*>(watched), static_cast<QEvent*>(event));
 }
 
 void QObject_installEventFilter(void* object, void* filterObj) {

@@ -27,7 +27,7 @@ int main(int argc, char* argv[]) {
     void* button4 = QPushButton_create("Set IBeam Cursor", window);
     
     // ボタンのコールバック設定
-    QPushButton_setClickCallback(button1, onButtonClicked);
+    QPushButton_setClickedCallback(button1, onButtonClicked);
     
     // レイアウトにボタンを追加
     QVBoxLayout_addWidget(layout, button1);

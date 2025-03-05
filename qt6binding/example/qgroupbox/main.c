@@ -48,7 +48,7 @@ int main(int argc, char* argv[]) {
     QVBoxLayout_addWidget(layout, flatGroup);
     
     // トグルコールバックの設定
-    QGroupBox_setToggleCallback(checkableGroup, onGroupBoxToggled);
+    QGroupBox_setToggledCallback(checkableGroup, onGroupBoxToggled);
     
     // ウィンドウの表示
     QWidget_show(window);

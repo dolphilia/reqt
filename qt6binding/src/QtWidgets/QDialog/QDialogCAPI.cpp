@@ -2,7 +2,7 @@
 
 extern "C" {
 
-void* QDialog_new(void* parent, unsigned int flags) {
+void* QDialog_create(void* parent, unsigned int flags) {
     return new QDialogBind(static_cast<QWidget*>(parent), static_cast<Qt::WindowFlags>(flags));
 }
 

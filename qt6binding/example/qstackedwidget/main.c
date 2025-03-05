@@ -76,8 +76,8 @@ int main(int argc, char *argv[]) {
     QHBoxLayout_addWidget(buttonLayout, nextButton);
 
     // ボタンのコールバックを設定
-    QPushButton_setClickCallback(prevButton, prevButtonClicked);
-    QPushButton_setClickCallback(nextButton, nextButtonClicked);
+    QPushButton_setClickedCallback(prevButton, prevButtonClicked);
+    QPushButton_setClickedCallback(nextButton, nextButtonClicked);
 
     // 初期ページを設定
     QStackedWidget_setCurrentIndex(stackedWidget, 0);

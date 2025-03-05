@@ -194,10 +194,10 @@ void QInputDialog_setVisible(void* dialog, bool visible) {
 
 // Static Methods
 
-double getDouble(QWidget* parent, const char* title, const char* label, double value, double min, double max, int decimals, bool* ok, int flags) {
+double QInputDialog_getDouble(void* parent, const char* title, const char* label, double value, double min, double max, int decimals, bool* ok, int flags) {
     bool okValue;
     double result = QInputDialog::getDouble(
-        parent,
+        static_cast<QWidget*>(parent),
         QString::fromUtf8(title),
         QString::fromUtf8(label),
         value,
@@ -211,10 +211,10 @@ double getDouble(QWidget* parent, const char* title, const char* label, double v
     return result;
 }
 
-int getInt(QWidget* parent, const char* title, const char* label, int value, int min, int max, int step, bool* ok, int flags) {
+int QInputDialog_getInt(void* parent, const char* title, const char* label, int value, int min, int max, int step, bool* ok, int flags) {
     bool okValue;
     int result = QInputDialog::getInt(
-        parent,
+        static_cast<QWidget*>(parent),
         QString::fromUtf8(title),
         QString::fromUtf8(label),
         value,
@@ -228,7 +228,7 @@ int getInt(QWidget* parent, const char* title, const char* label, int value, int
     return result;
 }
 
-const char* getItem(QWidget* parent, const char* title, const char* label, const char** items, int itemCount, int current, bool editable, bool* ok, int flags) {
+const char* QInputDialog_getItem(void* parent, const char* title, const char* label, const char** items, int itemCount, int current, bool editable, bool* ok, int flags) {
     if (!items || itemCount < 0) return nullptr;
     bool okValue;
     QStringList itemList;
@@ -239,7 +239,7 @@ const char* getItem(QWidget* parent, const char* title, const char* label, const
     }
     static QByteArray data;
     QString result = QInputDialog::getItem(
-        parent,
+        static_cast<QWidget*>(parent),
         title ? QString::fromUtf8(title) : QString(),
         label ? QString::fromUtf8(label) : QString(),
         itemList,
@@ -253,11 +253,11 @@ const char* getItem(QWidget* parent, const char* title, const char* label, const
     return data.constData();
 }
 
-const char* getMultiLineText(QWidget* parent, const char* title, const char* label, const char* text, bool* ok, int flags) {
+const char* QInputDialog_getMultiLineText(void* parent, const char* title, const char* label, const char* text, bool* ok, int flags) {
     bool okValue;
     static QByteArray data;
     QString result = QInputDialog::getMultiLineText(
-        parent,
+        static_cast<QWidget*>(parent),
         title ? QString::fromUtf8(title) : QString(),
         label ? QString::fromUtf8(label) : QString(),
         text ? QString::fromUtf8(text) : QString(),
@@ -269,11 +269,11 @@ const char* getMultiLineText(QWidget* parent, const char* title, const char* lab
     return data.constData();
 }
 
-const char* getText(QWidget* parent, const char* title, const char* label, int mode, const char* text, bool* ok, int flags) {
+const char* QInputDialog_getText(void* parent, const char* title, const char* label, int mode, const char* text, bool* ok, int flags) {
     bool okValue;
     static QByteArray data;
     QString result = QInputDialog::getText(
-        parent,
+        static_cast<QWidget*>(parent),
         title ? QString::fromUtf8(title) : QString(),
         label ? QString::fromUtf8(label) : QString(),
         static_cast<QLineEdit::EchoMode>(mode),

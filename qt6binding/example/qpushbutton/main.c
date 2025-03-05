@@ -30,13 +30,13 @@ int main(int argc, char *argv[]) {
     
     // 通常のボタン
     void* button1 = QPushButton_create("Click Me", window);
-    QPushButton_setClickCallback(button1, onButtonClicked);
+    QPushButton_setClickedCallback(button1, onButtonClicked);
     QVBoxLayout_addWidget(layout, button1);
     
     // 押下状態を保持するボタン
     void* button2 = QPushButton_create("Toggle Button", window);
     QPushButton_setCheckable(button2, true);
-    QPushButton_setClickCallback(button2, onButtonClicked);
+    QPushButton_setClickedCallback(button2, onButtonClicked);
     QVBoxLayout_addWidget(layout, button2);
     
     // 無効化されたボタン

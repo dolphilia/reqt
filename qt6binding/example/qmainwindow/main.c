@@ -34,7 +34,7 @@ int main(int argc, char *argv[]) {
     QVBoxLayout_addWidget(layout, label);
     
     void* button = QPushButton_create("Click Me", centralWidget);
-    QPushButton_setClickCallback(button, onButtonClicked);
+    QPushButton_setClickedCallback(button, onButtonClicked);
     QVBoxLayout_addWidget(layout, button);
     
     QMainWindow_setCentralWidget(window, centralWidget);
@@ -71,7 +71,7 @@ int main(int argc, char *argv[]) {
     void* rightWidget = QWidget_create(NULL);
     void* rightLayout = QVBoxLayout_create(rightWidget);
     void* propertyLabel = QLabel_create("Properties:", rightWidget);
-    void* propertyEdit = QLineEdit_create("", rightWidget);
+    void* propertyEdit = QLineEdit_create(rightWidget);
     QVBoxLayout_addWidget(rightLayout, propertyLabel);
     QVBoxLayout_addWidget(rightLayout, propertyEdit);
     QVBoxLayout_addStretch(rightLayout, 1);

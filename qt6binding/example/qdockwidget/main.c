@@ -54,8 +54,8 @@ int main(int argc, char *argv[]) {
     void* leftLayout = QVBoxLayout_create(leftWidget);
     void* toolButton1 = QPushButton_create("Tool 1", leftWidget);
     void* toolButton2 = QPushButton_create("Tool 2", leftWidget);
-    QPushButton_setClickCallback(toolButton1, onButtonClicked);
-    QPushButton_setClickCallback(toolButton2, onButtonClicked);
+    QPushButton_setClickedCallback(toolButton1, onButtonClicked);
+    QPushButton_setClickedCallback(toolButton2, onButtonClicked);
     QVBoxLayout_addWidget(leftLayout, toolButton1);
     QVBoxLayout_addWidget(leftLayout, toolButton2);
     QVBoxLayout_addStretch(leftLayout, 1);
@@ -81,7 +81,7 @@ int main(int argc, char *argv[]) {
     void* rightWidget = QWidget_create(NULL);
     void* rightLayout = QVBoxLayout_create(rightWidget);
     void* propertyLabel = QLabel_create("Properties:", rightWidget);
-    void* propertyEdit = QLineEdit_create("", rightWidget);
+    void* propertyEdit = QLineEdit_create(rightWidget);
     QVBoxLayout_addWidget(rightLayout, propertyLabel);
     QVBoxLayout_addWidget(rightLayout, propertyEdit);
     QVBoxLayout_addStretch(rightLayout, 1);

@@ -11,19 +11,19 @@ void onCursorPositionChanged() {
     printf("Cursor position changed\n");
 }
 
-void onCopyAvailable(bool available) {
+void onCopyAvailable(void* obj, bool available) {
     printf("Copy available: %s\n", available ? "true" : "false");
 }
 
-void onUndoAvailable(bool available) {
+void onUndoAvailable(void* obj, bool available) {
     printf("Undo available: %s\n", available ? "true" : "false");
 }
 
-void onRedoAvailable(bool available) {
+void onRedoAvailable(void* obj, bool available) {
     printf("Redo available: %s\n", available ? "true" : "false");
 }
 
-void onSelectionChanged() {
+void onSelectionChanged(void* obj) {
     printf("Selection changed\n");
 }
 

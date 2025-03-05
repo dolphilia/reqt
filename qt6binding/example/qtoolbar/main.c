@@ -1,19 +1,19 @@
 #include "qt6.h"
 #include <stdio.h>
 
-void onActionTriggered(void* action) {
+void onActionTriggered(void* obj, void* action) {
     printf("Action triggered\n");
 }
 
-void onMovableChanged(bool movable) {
+void onMovableChanged(void* obj, bool movable) {
     printf("Movable changed: %s\n", movable ? "true" : "false");
 }
 
-void onOrientationChanged(int orientation) {
+void onOrientationChanged(void* obj, int orientation) {
     printf("Orientation changed: %d\n", orientation);
 }
 
-void onToolButtonClicked() {
+void onToolButtonClicked(void* obj) {
     printf("Tool button clicked\n");
 }
 

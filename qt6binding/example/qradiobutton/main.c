@@ -1,19 +1,19 @@
 #include "qt6.h"
 #include <stdio.h>
 
-void on_toggled(bool checked) {
+void on_toggled(void* obj, bool checked) {
     printf("Radio button toggled: %s\n", checked ? "checked" : "unchecked");
 }
 
-void on_clicked(bool checked) {
+void on_clicked(void* obj, bool checked) {
     printf("Radio button clicked: %s\n", checked ? "checked" : "unchecked");
 }
 
-void on_pressed() {
+void on_pressed(void* obj) {
     printf("Radio button pressed\n");
 }
 
-void on_released() {
+void on_released(void* obj) {
     printf("Radio button released\n");
 }
 

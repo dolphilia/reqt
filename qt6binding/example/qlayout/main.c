@@ -20,7 +20,7 @@ int main(int argc, char *argv[]) {
     QHBoxLayout_setSpacing(topLayout, 10);
     
     void* label1 = QLabel_create("Name:", window);
-    void* lineEdit = QLineEdit_create("", window);
+    void* lineEdit = QLineEdit_create(window);
     QHBoxLayout_addWidget(topLayout, label1);
     QHBoxLayout_addWidget(topLayout, lineEdit);
     

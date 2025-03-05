@@ -253,13 +253,13 @@ int main(int argc, char* argv[]) {
     void* mainLayout = QVBoxLayout_create(window);
     
     // ディスプレイの作成
-    display = QLineEdit_create("0", window);
+    display = QLineEdit_create(window);
     QWidget_setStyleSheet(display, "QLineEdit { font-size: 24px; padding: 5px; }");
     QLineEdit_setReadOnly(display, true);
     QVBoxLayout_addWidget(mainLayout, display);
     
     // ボタングリッドの作成
-    void* buttonGrid = QGridLayout_create();
+    void* buttonGrid = QGridLayout_create(window);
     
     // 数字ボタンの作成と配置
     void* button7 = createButton("7", window);
@@ -273,16 +273,16 @@ int main(int argc, char* argv[]) {
     void* button3 = createButton("3", window);
     void* button0 = createButton("0", window);
     
-    QPushButton_setClickCallback(button0, onDigit0);
-    QPushButton_setClickCallback(button1, onDigit1);
-    QPushButton_setClickCallback(button2, onDigit2);
-    QPushButton_setClickCallback(button3, onDigit3);
-    QPushButton_setClickCallback(button4, onDigit4);
-    QPushButton_setClickCallback(button5, onDigit5);
-    QPushButton_setClickCallback(button6, onDigit6);
-    QPushButton_setClickCallback(button7, onDigit7);
-    QPushButton_setClickCallback(button8, onDigit8);
-    QPushButton_setClickCallback(button9, onDigit9);
+    QPushButton_setClickedCallback(button0, onDigit0);
+    QPushButton_setClickedCallback(button1, onDigit1);
+    QPushButton_setClickedCallback(button2, onDigit2);
+    QPushButton_setClickedCallback(button3, onDigit3);
+    QPushButton_setClickedCallback(button4, onDigit4);
+    QPushButton_setClickedCallback(button5, onDigit5);
+    QPushButton_setClickedCallback(button6, onDigit6);
+    QPushButton_setClickedCallback(button7, onDigit7);
+    QPushButton_setClickedCallback(button8, onDigit8);
+    QPushButton_setClickedCallback(button9, onDigit9);
     
     QGridLayout_addWidget(buttonGrid, button7, 0, 0);
     QGridLayout_addWidget(buttonGrid, button8, 0, 1);
@@ -300,10 +300,10 @@ int main(int argc, char* argv[]) {
     void* buttonMinus = createButton("-", window);
     void* buttonMult = createButton("×", window);
     void* buttonDiv = createButton("÷", window);
-    QPushButton_setClickCallback(buttonPlus, onPlusOperator);
-    QPushButton_setClickCallback(buttonMinus, onMinusOperator);
-    QPushButton_setClickCallback(buttonMult, onMultiplyOperator);
-    QPushButton_setClickCallback(buttonDiv, onDivideOperator);
+    QPushButton_setClickedCallback(buttonPlus, onPlusOperator);
+    QPushButton_setClickedCallback(buttonMinus, onMinusOperator);
+    QPushButton_setClickedCallback(buttonMult, onMultiplyOperator);
+    QPushButton_setClickedCallback(buttonDiv, onDivideOperator);
     QGridLayout_addWidget(buttonGrid, buttonPlus, 0, 3);
     QGridLayout_addWidget(buttonGrid, buttonMinus, 1, 3);
     QGridLayout_addWidget(buttonGrid, buttonMult, 2, 3);
@@ -313,9 +313,9 @@ int main(int argc, char* argv[]) {
     void* buttonPoint = createButton(".", window);
     void* buttonEqual = createButton("=", window);
     void* buttonClear = createButton("C", window);
-    QPushButton_setClickCallback(buttonPoint, onPointPressed);
-    QPushButton_setClickCallback(buttonEqual, onEqualPressed);
-    QPushButton_setClickCallback(buttonClear, onClearPressed);
+    QPushButton_setClickedCallback(buttonPoint, onPointPressed);
+    QPushButton_setClickedCallback(buttonEqual, onEqualPressed);
+    QPushButton_setClickedCallback(buttonClear, onClearPressed);
     QGridLayout_addWidget(buttonGrid, buttonPoint, 3, 2);
     QGridLayout_addWidget(buttonGrid, buttonEqual, 3, 0);
     QGridLayout_addWidget(buttonGrid, buttonClear, 4, 0);

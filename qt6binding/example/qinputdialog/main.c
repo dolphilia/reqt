@@ -60,23 +60,23 @@ int main(int argc, char *argv[]) {
 
     // ボタンの作成
     void* textButton = QPushButton_create("テキスト入力ダイアログ", window);
-    QPushButton_setClickCallback(textButton, onTextButtonClicked);
+    QPushButton_setClickedCallback(textButton, onTextButtonClicked);
     QVBoxLayout_addWidget(layout, textButton);
 
     void* intButton = QPushButton_create("数値入力ダイアログ", window);
-    QPushButton_setClickCallback(intButton, onIntButtonClicked);
+    QPushButton_setClickedCallback(intButton, onIntButtonClicked);
     QVBoxLayout_addWidget(layout, intButton);
 
     void* doubleButton = QPushButton_create("小数入力ダイアログ", window);
-    QPushButton_setClickCallback(doubleButton, onDoubleButtonClicked);
+    QPushButton_setClickedCallback(doubleButton, onDoubleButtonClicked);
     QVBoxLayout_addWidget(layout, doubleButton);
 
     void* itemButton = QPushButton_create("項目選択ダイアログ", window);
-    QPushButton_setClickCallback(itemButton, onItemButtonClicked);
+    QPushButton_setClickedCallback(itemButton, onItemButtonClicked);
     QVBoxLayout_addWidget(layout, itemButton);
 
     void* multiLineButton = QPushButton_create("複数行テキスト入力ダイアログ", window);
-    QPushButton_setClickCallback(multiLineButton, onMultiLineButtonClicked);
+    QPushButton_setClickedCallback(multiLineButton, onMultiLineButtonClicked);
     QVBoxLayout_addWidget(layout, multiLineButton);
 
     // レイアウトの設定

@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <unistd.h>
 
-void on_value_changed(int value) {
+void on_value_changed(void* obj, int value) {
     printf("Progress value changed to: %d%%\n", value);
 }
 

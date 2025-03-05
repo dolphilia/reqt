@@ -22,7 +22,8 @@ void QGroupBox_setChecked(void* groupBox, bool checked);
 bool QGroupBox_isChecked(void* groupBox);
 
 // ハンドラー関連
-void QGroupBox_setToggleCallback(void* groupBox, void (*callback)(void*, bool));
+typedef void (*QGroupBox_ToggledCallback)(void*, bool);
+void QGroupBox_setToggledCallback(void* groupBox, QGroupBox_ToggledCallback callback);
 
 // アライメント定数
 #define QGROUPBOX_ALIGN_LEFT 0x0001

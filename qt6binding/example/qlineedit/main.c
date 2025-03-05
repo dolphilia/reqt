@@ -33,32 +33,32 @@ int main(int argc, char *argv[]) {
     QVBoxLayout_setContentsMargins(layout, 20, 20, 20, 20);
     
     // 通常のテキスト入力
-    void* lineEdit1 = QLineEdit_create("", window);
+    void* lineEdit1 = QLineEdit_create(window);
     QLineEdit_setPlaceholderText(lineEdit1, "Enter text here...");
     QLineEdit_setClearButtonEnabled(lineEdit1, true);
     QLineEdit_setTextChangedCallback(lineEdit1, onTextChanged);
     QVBoxLayout_addWidget(layout, lineEdit1);
     
     // パスワード入力
-    void* lineEdit2 = QLineEdit_create("", window);
+    void* lineEdit2 = QLineEdit_create(window);
     QLineEdit_setPlaceholderText(lineEdit2, "Enter password...");
     QLineEdit_setEchoMode(lineEdit2, QLINEEDIT_PASSWORD);
     QVBoxLayout_addWidget(layout, lineEdit2);
     
     // 最大文字数制限付き入力
-    void* lineEdit3 = QLineEdit_create("", window);
+    void* lineEdit3 = QLineEdit_create(window);
     QLineEdit_setPlaceholderText(lineEdit3, "Max 10 characters");
     QLineEdit_setMaxLength(lineEdit3, 10);
     QLineEdit_setTextEditedCallback(lineEdit3, onTextEdited);
     QVBoxLayout_addWidget(layout, lineEdit3);
     
     // 読み取り専用入力
-    void* lineEdit4 = QLineEdit_create("Read only text", window);
+    void* lineEdit4 = QLineEdit_create(window);
     QLineEdit_setReadOnly(lineEdit4, true);
     QVBoxLayout_addWidget(layout, lineEdit4);
     
     // リターンキー検知付き入力
-    void* lineEdit5 = QLineEdit_create("", window);
+    void* lineEdit5 = QLineEdit_create(window);
     QLineEdit_setPlaceholderText(lineEdit5, "Press Enter to submit");
     QLineEdit_setReturnPressedCallback(lineEdit5, onReturnPressed);
     QVBoxLayout_addWidget(layout, lineEdit5);

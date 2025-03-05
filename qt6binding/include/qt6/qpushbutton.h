@@ -26,10 +26,12 @@ void QPushButton_setFlat(void* button, bool flat);
 bool QPushButton_isFlat(void* button);
 void QPushButton_setDefault(void* button, bool default_);
 bool QPushButton_isDefault(void* button);
-typedef void (*QPushButtonClickCallback)(void* button);
-void QPushButton_setClickCallback(void* button, QPushButtonClickCallback callback);
-void QPushButton_setPressedCallback(void* button, QPushButtonClickCallback callback);
-void QPushButton_setReleasedCallback(void* button, QPushButtonClickCallback callback);
+typedef void (*QPushButton_ClickedCallback)(void*);
+typedef void (*QPushButton_PressedCallback)(void*);
+typedef void (*QPushButton_ReleasedCallback)(void*);
+void QPushButton_setClickedCallback(void* button, QPushButton_ClickedCallback callback);
+void QPushButton_setPressedCallback(void* button, QPushButton_PressedCallback callback);
+void QPushButton_setReleasedCallback(void* button, QPushButton_ReleasedCallback callback);
 
 #ifdef __cplusplus
 }
