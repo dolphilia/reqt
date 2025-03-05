@@ -1,202 +1,144 @@
 #include "QVariantBind.h"
-#include <cstring>
+#include "QVariantHandler.h"
 
-// 作成関数
-void *QVariantBind::create_empty()
-{
-    return new QVariantHandler();
+// コンストラクタ
+QVariantBind::QVariantBind(QObject* parent)
+    : QObject(parent)
+    , QVariant()
+    , handler(new QVariantHandler(this)) {
 }
 
-void *QVariantBind::create_string(const char *value)
-{
-    return new QVariantHandler(value);
+QVariantBind::QVariantBind(const QString &value, QObject* parent)
+    : QObject(parent)
+    , QVariant(value)
+    , handler(new QVariantHandler(this)) {
+    *handler->variant() = *this;
 }
 
-void *QVariantBind::create_int(int value)
-{
-    return new QVariantHandler(value);
+QVariantBind::QVariantBind(const char *value, QObject* parent)
+    : QObject(parent)
+    , QVariant(QString::fromUtf8(value))
+    , handler(new QVariantHandler(this)) {
+    *handler->variant() = *this;
 }
 
-void *QVariantBind::create_double(double value)
-{
-    return new QVariantHandler(value);
+QVariantBind::QVariantBind(int value, QObject* parent)
+    : QObject(parent)
+    , QVariant(value)
+    , handler(new QVariantHandler(this)) {
+    *handler->variant() = *this;
 }
 
-void *QVariantBind::create_bool(bool value)
-{
-    return new QVariantHandler(value);
+QVariantBind::QVariantBind(double value, QObject* parent)
+    : QObject(parent)
+    , QVariant(value)
+    , handler(new QVariantHandler(this)) {
+    *handler->variant() = *this;
 }
 
-void *QVariantBind::create_date(int year, int month, int day)
-{
-    QDate date(year, month, day);
-    return new QVariantHandler(date);
+QVariantBind::QVariantBind(bool value, QObject* parent)
+    : QObject(parent)
+    , QVariant(value)
+    , handler(new QVariantHandler(this)) {
+    *handler->variant() = *this;
 }
 
-void *QVariantBind::create_time(int hour, int minute, int second, int msec)
-{
-    QTime time(hour, minute, second, msec);
-    return new QVariantHandler(time);
+QVariantBind::QVariantBind(const QDate &value, QObject* parent)
+    : QObject(parent)
+    , QVariant(value)
+    , handler(new QVariantHandler(this)) {
+    *handler->variant() = *this;
 }
 
-void *QVariantBind::create_datetime(int year, int month, int day, int hour, int minute, int second, int msec)
-{
-    QDateTime dateTime(QDate(year, month, day), QTime(hour, minute, second, msec));
-    return new QVariantHandler(dateTime);
+QVariantBind::QVariantBind(const QTime &value, QObject* parent)
+    : QObject(parent)
+    , QVariant(value)
+    , handler(new QVariantHandler(this)) {
+    *handler->variant() = *this;
 }
 
-void *QVariantBind::create_point(int x, int y)
-{
-    QPoint point(x, y);
-    return new QVariantHandler(point);
+QVariantBind::QVariantBind(const QDateTime &value, QObject* parent)
+    : QObject(parent)
+    , QVariant(value)
+    , handler(new QVariantHandler(this)) {
+    *handler->variant() = *this;
 }
 
-void *QVariantBind::create_rect(int x, int y, int width, int height)
-{
-    QRect rect(x, y, width, height);
-    return new QVariantHandler(rect);
+QVariantBind::QVariantBind(const QPoint &value, QObject* parent)
+    : QObject(parent)
+    , QVariant(value)
+    , handler(new QVariantHandler(this)) {
+    *handler->variant() = *this;
 }
 
-void *QVariantBind::create_size(int width, int height)
-{
-    QSize size(width, height);
-    return new QVariantHandler(size);
+QVariantBind::QVariantBind(const QRect &value, QObject* parent)
+    : QObject(parent)
+    , QVariant(value)
+    , handler(new QVariantHandler(this)) {
+    *handler->variant() = *this;
 }
 
-// 削除関数
-void QVariantBind::delete_variant(void *variant)
-{
-    delete handler(variant);
+QVariantBind::QVariantBind(const QSize &value, QObject* parent)
+    : QObject(parent)
+    , QVariant(value)
+    , handler(new QVariantHandler(this)) {
+    *handler->variant() = *this;
 }
 
-// 型チェック関数
-bool QVariantBind::isNull(void *variant)
-{
-    return handler(variant)->isNull();
+QVariantBind::~QVariantBind() {
+    delete handler;
 }
 
-bool QVariantBind::isValid(void *variant)
-{
-    return handler(variant)->isValid();
+// 型チェック
+bool QVariantBind::isNull() const {
+    return QVariant::isNull();
 }
 
-bool QVariantBind::canConvert(void *variant, int targetTypeId)
-{
-    return handler(variant)->canConvert(targetTypeId);
+bool QVariantBind::isValid() const {
+    return QVariant::isValid();
+}
+
+bool QVariantBind::canConvert(int targetTypeId) const {
+    return QVariant::canConvert(QMetaType(targetTypeId));
 }
 
 // 変換関数
-char *QVariantBind::toString(void *variant)
-{
-    QString str = handler(variant)->toString();
-    QByteArray utf8 = str.toUtf8();
-    const char *data = utf8.constData();
-    size_t size = utf8.size();
-    
-    char *result = new char[size + 1];
-    if (size > 0) {
-        memcpy(result, data, size);
-    }
-    result[size] = '\0';
-    
-    return result;
+QString QVariantBind::toString() const {
+    return QVariant::toString();
 }
 
-int QVariantBind::toInt(void *variant, bool *ok)
-{
-    return handler(variant)->toInt(ok);
+int QVariantBind::toInt(bool *ok) const {
+    return QVariant::toInt(ok);
 }
 
-double QVariantBind::toDouble(void *variant, bool *ok)
-{
-    return handler(variant)->toDouble(ok);
+double QVariantBind::toDouble(bool *ok) const {
+    return QVariant::toDouble(ok);
 }
 
-bool QVariantBind::toBool(void *variant)
-{
-    return handler(variant)->toBool();
+bool QVariantBind::toBool() const {
+    return QVariant::toBool();
 }
 
-// 日付・時間関数
-void QVariantBind::toDate(void *variant, int *year, int *month, int *day)
-{
-    QDate date = handler(variant)->toDate();
-    if (date.isValid()) {
-        *year = date.year();
-        *month = date.month();
-        *day = date.day();
-    } else {
-        *year = 0;
-        *month = 0;
-        *day = 0;
-    }
+QDate QVariantBind::toDate() const {
+    return QVariant::toDate();
 }
 
-void QVariantBind::toTime(void *variant, int *hour, int *minute, int *second, int *msec)
-{
-    QTime time = handler(variant)->toTime();
-    if (time.isValid()) {
-        *hour = time.hour();
-        *minute = time.minute();
-        *second = time.second();
-        *msec = time.msec();
-    } else {
-        *hour = 0;
-        *minute = 0;
-        *second = 0;
-        *msec = 0;
-    }
+QTime QVariantBind::toTime() const {
+    return QVariant::toTime();
 }
 
-void QVariantBind::toDateTime(void *variant, int *year, int *month, int *day, int *hour, int *minute, int *second, int *msec)
-{
-    QDateTime dateTime = handler(variant)->toDateTime();
-    if (dateTime.isValid()) {
-        QDate date = dateTime.date();
-        QTime time = dateTime.time();
-        *year = date.year();
-        *month = date.month();
-        *day = date.day();
-        *hour = time.hour();
-        *minute = time.minute();
-        *second = time.second();
-        *msec = time.msec();
-    } else {
-        *year = 0;
-        *month = 0;
-        *day = 0;
-        *hour = 0;
-        *minute = 0;
-        *second = 0;
-        *msec = 0;
-    }
+QDateTime QVariantBind::toDateTime() const {
+    return QVariant::toDateTime();
 }
 
-// 幾何学関数
-void QVariantBind::toPoint(void *variant, int *x, int *y)
-{
-    QPoint point = handler(variant)->toPoint();
-    *x = point.x();
-    *y = point.y();
+QPoint QVariantBind::toPoint() const {
+    return QVariant::toPoint();
 }
 
-void QVariantBind::toRect(void *variant, int *x, int *y, int *width, int *height)
-{
-    QRect rect = handler(variant)->toRect();
-    *x = rect.x();
-    *y = rect.y();
-    *width = rect.width();
-    *height = rect.height();
+QRect QVariantBind::toRect() const {
+    return QVariant::toRect();
 }
 
-void QVariantBind::toSize(void *variant, int *width, int *height)
-{
-    QSize size = handler(variant)->toSize();
-    *width = size.width();
-    *height = size.height();
-}
-
-QVariantHandler *QVariantBind::handler(void *variant)
-{
-    return static_cast<QVariantHandler *>(variant);
+QSize QVariantBind::toSize() const {
+    return QVariant::toSize();
 }
