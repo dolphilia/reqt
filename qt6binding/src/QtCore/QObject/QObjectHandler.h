@@ -1,73 +1,28 @@
-#ifndef Q_OBJECT_HANDLER_H
-#define Q_OBJECT_HANDLER_H
+#ifndef QOBJECT_HANDLER_H
+#define QOBJECT_HANDLER_H
 
 #include <QObject>
-#include <QString>
-#include <QVariant>
-#include <QEvent>
-#include <QList>
-#include <QThread>
-#include <QMetaObject>
-#include <QByteArray>
 
-class QObjectHandler {
+class QObjectHandler : public QObject {
+    Q_OBJECT
+    typedef void (*QObject_DestroyedCallback)(void*);
+    typedef void (*QObject_ObjectNameChangedCallback)(void*, const QString*);
+    typedef void (*QObject_EventCallback)(void*, QEvent*);
 public:
-    explicit QObjectHandler(QObject *parent = nullptr);
-    virtual ~QObjectHandler();
+    explicit QObjectHandler(QObject* parent = nullptr);
+    void setDestroyedCallback(QObject_DestroyedCallback callback);
+    void setObjectNameChangedCallback(QObject_ObjectNameChangedCallback callback);
+    void setEventCallback(QObject_EventCallback callback);
 
-    // Object name
-    void setObjectName(const QString &name);
-    QString objectName() const;
-
-    // Parent
-    QObject *parent() const;
-    void setParent(QObject *parent);
-
-    // Property
-    bool setProperty(const char *name, const QVariant &value);
-    QVariant property(const char *name) const;
-    QList<QByteArray> dynamicPropertyNames() const;
-
-    // Object management
-    void deleteLater();
-    bool blockSignals(bool block);
-    bool signalsBlocked() const;
-
-    // Object info
-    QString className() const;
-    bool inherits(const char *className) const;
-    void dumpObjectInfo() const;
-    void dumpObjectTree() const;
-    
-    // Child management
-    QList<QObject*> children() const;
-    
-    // Event handling
-    bool event(QEvent *e);
-    bool eventFilter(QObject *watched, QEvent *event);
-    void installEventFilter(QObject *filterObj);
-    void removeEventFilter(QObject *obj);
-    
-    // Type checking
-    bool isWidgetType() const;
-    bool isWindowType() const;
-    
-    // Timer handling
-    int startTimer(int interval, Qt::TimerType timerType = Qt::CoarseTimer);
-    void killTimer(int id);
-    
-    // Thread handling
-    QThread *thread() const;
-    bool moveToThread(QThread *targetThread);
-    
-    // MetaObject
-    const QMetaObject *metaObject() const;
-
-    // Access to the underlying QObject
-    QObject *get() const;
+public slots:
+    void onDestroyed() const;
+    void onObjectNameChanged(const QString& objectName) const;
+    void onEvent(QEvent* event) const;
 
 private:
-    QObject *m_object;
+    QObject_DestroyedCallback destroyedCallback;
+    QObject_ObjectNameChangedCallback objectNameChangedCallback;
+    QObject_EventCallback eventCallback;
 };
 
-#endif // Q_OBJECT_HANDLER_H
+#endif // QOBJECT_HANDLER_H
