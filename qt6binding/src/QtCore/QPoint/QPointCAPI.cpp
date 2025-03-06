@@ -16,7 +16,7 @@ void* QPoint_create() {
 
 // QPoint(int xpos, int ypos)
 
-void* QPoint_createWithCoords(int x, int y) {
+void* QPoint_create_2(int x, int y) {
     return new QPointBind(x, y);
 }
 

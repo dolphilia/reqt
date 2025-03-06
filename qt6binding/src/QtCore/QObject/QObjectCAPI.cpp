@@ -109,7 +109,7 @@ void * QObject_findChild(void* object, const char* name) {
 
 // (since 6.7) T findChild(Qt::FindChildOptions options = Qt::FindChildrenRecursively) const
 
-void * QObject_findChildWithOptions(void* object, int options) {
+void * QObject_findChild_2(void* object, int options) {
     return static_cast<QObjectBind*>(object)->findChild<QObject*>(static_cast<Qt::FindChildOptions>(options));
 }
 
@@ -127,7 +127,7 @@ void** QObject_findChildren(void* object, const char* name, int* count) {
 
 // (since 6.3) QList<T>	findChildren(Qt::FindChildOptions options = Qt::FindChildrenRecursively) const
 
-void** QObject_findChildrenWithOptions(void* object, int options, int* count) {
+void** QObject_findChildren_2(void* object, int options, int* count) {
     QList<QObject*> children = static_cast<QObjectBind*>(object)->findChildren<QObject*>(static_cast<Qt::FindChildOptions>(options));
     *count = children.size();
     void** result = new void*[children.size()];
@@ -139,7 +139,7 @@ void** QObject_findChildrenWithOptions(void* object, int options, int* count) {
 
 // QList<T>	findChildren(const QRegularExpression &re, Qt::FindChildOptions options = Qt::FindChildrenRecursively) const
 
-void** QObject_findChildrenWithRegex(void* object, const char* re, int options, int* count) {
+void** QObject_findChildren_3(void* object, const char* re, int options, int* count) {
     QList<QObject*> children = static_cast<QObjectBind*>(object)->findChildren<QObject*>(QRegularExpression(re), static_cast<Qt::FindChildOptions>(options));
     *count = children.size();
     void** result = new void*[children.size()];

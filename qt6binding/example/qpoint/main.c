@@ -42,7 +42,7 @@ int main(int argc, char *argv[]) {
     printPointInfo(point1, "Default Point");
     
     // 2. 座標を指定してQPointを作成
-    void* point2 = QPoint_createWithCoords(10, 20);
+    void* point2 = QPoint_create_2(10, 20);
     printPointInfo(point2, "Point(10, 20)");
     
     // 3. 座標の設定

@@ -16,13 +16,13 @@ void* QPointF_create() {
 
 // QPointF(const QPoint &point)
 
-void* QPointF_createFromPoint(void* point) {
+void* QPointF_create_2(void* point) {
     return new QPointFBind(static_cast<QPoint*>(point));
 }
 
 // QPointF(qreal xpos, qreal ypos)
 
-void* QPointF_createWithCoords(double x, double y) {
+void* QPointF_create_3(double x, double y) {
     return new QPointFBind(x, y);
 }
 

@@ -15,12 +15,12 @@ void* QSizeF_create() {
 }
 // QSizeF(const QSize &size)
 
-void* QSizeF_createWithQSize(void* size) {
+void* QSizeF_create_2(void* size) {
     return new QSizeFBind(*static_cast<QSize*>(size));
 }
 
 // QSizeF(qreal width, qreal height)
-void* QSizeF_createWithSize(double width, double height) {
+void* QSizeF_create_3(double width, double height) {
     return new QSizeFBind(width, height);
 }
 
@@ -78,7 +78,7 @@ void QSizeF_scale(void* size, double width, double height, int mode) {
 }
 // void scale(const QSizeF &size, Qt::AspectRatioMode mode)
 
-void QSizeF_scaleWithSize(void* size, void* s, int mode) {
+void QSizeF_scale_2(void* size, void* s, int mode) {
     static_cast<QSizeFBind*>(size)->scale(*static_cast<QSizeF*>(s), static_cast<Qt::AspectRatioMode>(mode));
 }
 // QSizeF scaled(qreal width, qreal height, Qt::AspectRatioMode mode) const
@@ -88,7 +88,7 @@ void* QSizeF_scaled(void* size, double width, double height, int mode) {
     return new QSizeF(result);
 }
 // QSizeF scaled(const QSizeF &s, Qt::AspectRatioMode mode) const
-void* QSizeF_scaledWithSize(void* size, void* s, int mode) {
+void* QSizeF_scaled_2(void* size, void* s, int mode) {
     QSizeF result = static_cast<QSizeFBind*>(size)->scaled(*static_cast<QSizeF*>(s), static_cast<Qt::AspectRatioMode>(mode));
     return new QSizeF(result);
 }

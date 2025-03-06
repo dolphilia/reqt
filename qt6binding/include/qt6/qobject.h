@@ -23,10 +23,10 @@ char** QObject_dynamicPropertyNames(void* object, int* count); // QList<QByteArr
 bool QObject_event(void* object, void* event); // virtual bool event(QEvent *e)
 bool QObject_eventFilter(void* object, void* watched, void* event); // virtual bool eventFilter(QObject *watched, QEvent *event)
 void * QObject_findChild(void* object, const char* name); // T findChild(QAnyStringView name, Qt::FindChildOptions options = Qt::FindChildrenRecursively) const
-void * QObject_findChildWithOptions(void* object, int options); // (since 6.7) T findChild(Qt::FindChildOptions options = Qt::FindChildrenRecursively) const
+void * QObject_findChild_2(void* object, int options); // (since 6.7) T findChild(Qt::FindChildOptions options = Qt::FindChildrenRecursively) const
 void** QObject_findChildren(void* object, const char* name, int* count); // QList<T>	findChildren(QAnyStringView name, Qt::FindChildOptions options = Qt::FindChildrenRecursively) const
-void** QObject_findChildrenWithOptions(void* object, int options, int* count); // (since 6.3) QList<T>	findChildren(Qt::FindChildOptions options = Qt::FindChildrenRecursively) const
-void** QObject_findChildrenWithRegex(void* object, const char* re, int options, int* count); // QList<T>	findChildren(const QRegularExpression &re, Qt::FindChildOptions options = Qt::FindChildrenRecursively) const
+void** QObject_findChildren_2(void* object, int options, int* count); // (since 6.3) QList<T>	findChildren(Qt::FindChildOptions options = Qt::FindChildrenRecursively) const
+void** QObject_findChildren_3(void* object, const char* re, int options, int* count); // QList<T>	findChildren(const QRegularExpression &re, Qt::FindChildOptions options = Qt::FindChildrenRecursively) const
 bool QObject_inherits(void* object, const char* className); // bool inherits(const char *className) const
 void QObject_installEventFilter(void* object, void* filterObj); // void installEventFilter(QObject *filterObj)
 bool QObject_isQuickItemType(void* object); // (since 6.4) bool isQuickItemType() const

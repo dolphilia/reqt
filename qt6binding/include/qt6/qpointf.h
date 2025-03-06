@@ -10,8 +10,8 @@ extern "C" {
 //-- Public Functions
 void QPointF_delete(void* point);
 void* QPointF_create(); // QPointF()
-void* QPointF_createFromPoint(void* point); // QPointF(const QPoint &point)
-void* QPointF_createWithCoords(double x, double y); // QPointF(qreal xpos, qreal ypos)
+void* QPointF_create_2(void* point); // QPointF(const QPoint &point)
+void* QPointF_create_3(double x, double y); // QPointF(qreal xpos, qreal ypos)
 bool QPointF_isNull(void* point); // bool isNull() const
 double QPointF_manhattanLength(void* point); // qreal manhattanLength() const
 double* QPointF_rx(void* point); // qreal & rx()

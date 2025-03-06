@@ -43,12 +43,12 @@ int main(int argc, char *argv[]) {
     printPointFInfo(pointF1, "Default PointF");
     
     // 2. 座標を指定してQPointFを作成
-    void* pointF2 = QPointF_createWithCoords(10.5, 20.75);
+    void* pointF2 = QPointF_create_3(10.5, 20.75);
     printPointFInfo(pointF2, "PointF(10.5, 20.75)");
     
     // 3. QPointからQPointFを作成
-    void* point = QPoint_createWithCoords(15, 25);
-    void* pointF3 = QPointF_createFromPoint(point);
+    void* point = QPoint_create_2(15, 25);
+    void* pointF3 = QPointF_create_2(point);
     printPointFInfo(pointF3, "PointF from Point(15, 25)");
     
     // 4. 座標の設定
