@@ -8,9 +8,9 @@ extern "C" {
 #endif
 
 //-- Public Functions
+void QPoint_delete(void* point);
 void* QPoint_create(); // QPoint()
 void* QPoint_createWithCoords(int x, int y); // QPoint(int xpos, int ypos)
-void QPoint_delete(void* point);
 bool QPoint_isNull(void* point); // bool isNull() const
 int QPoint_manhattanLength(void* point); // int manhattanLength() const
 void* QPoint_rx(void* point); // int & rx()

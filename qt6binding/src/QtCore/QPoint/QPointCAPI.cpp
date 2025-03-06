@@ -4,6 +4,10 @@ extern "C" {
 
 //-- Public Functions
 
+void QPoint_delete(void* point) {
+    delete static_cast<QPointBind*>(point);
+}
+
 // QPoint()
 
 void* QPoint_create() {
@@ -14,10 +18,6 @@ void* QPoint_create() {
 
 void* QPoint_createWithCoords(int x, int y) {
     return new QPointBind(x, y);
-}
-
-void QPoint_delete(void* point) {
-    delete static_cast<QPointBind*>(point);
 }
 
 // bool isNull() const
