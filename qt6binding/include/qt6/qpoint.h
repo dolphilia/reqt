@@ -7,39 +7,29 @@
 extern "C" {
 #endif
 
-// コンストラクタ
-void* QPoint_create();
-void* QPoint_createWithCoords(int x, int y);
-
-// デストラクタ
+//-- Public Functions
+void* QPoint_create(); // QPoint()
+void* QPoint_createWithCoords(int x, int y); // QPoint(int xpos, int ypos)
 void QPoint_delete(void* point);
-
-// プロパティ取得
-bool QPoint_isNull(void* point);
-int QPoint_manhattanLength(void* point);
-int QPoint_x(void* point);
-int QPoint_y(void* point);
-
-// プロパティ設定
-void QPoint_setX(void* point, int x);
-void QPoint_setY(void* point, int y);
-
-// 変換
-void* QPoint_toPointF(void* point);
-void* QPoint_transposed(void* point);
-
-// 演算
-void* QPoint_add(void* point1, void* point2);
-void* QPoint_subtract(void* point1, void* point2);
-void* QPoint_multiplyInt(void* point, int factor);
-void* QPoint_multiplyFloat(void* point, float factor);
-void* QPoint_multiplyDouble(void* point, double factor);
-void* QPoint_divideReal(void* point, double divisor);
-
-// QPointF関連
-void QPointF_delete(void* pointF);
-double QPointF_x(void* pointF);
-double QPointF_y(void* pointF);
+bool QPoint_isNull(void* point); // bool isNull() const
+int QPoint_manhattanLength(void* point); // int manhattanLength() const
+void* QPoint_rx(void* point); // int & rx()
+void* QPoint_ry(void* point); // int & ry()
+void QPoint_setX(void* point, int x); // void setX(int x)
+void QPoint_setY(void* point, int y); // void setY(int y)
+// CGPoint toCGPoint() const
+void* QPoint_toPointF(void* point); // (since 6.4) QPointF toPointF() const
+void* QPoint_transposed(void* point); // QPoint transposed() const
+int QPoint_x(void* point); // int x() const
+int QPoint_y(void* point); // int y() const
+void* QPoint_multiplyDouble(void* point, double factor); // QPoint & operator*=(double factor)
+void* QPoint_multiplyFloat(void* point, float factor); // QPoint & operator*=(float factor)
+void* QPoint_multiplyInt(void* point, int factor); // QPoint & operator*=(int factor)
+void* QPoint_add(void* point1, void* point2); // QPoint & operator+=(const QPoint &point)
+void* QPoint_subtract(void* point1, void* point2); // QPoint & operator-=(const QPoint &point)
+void* QPoint_divideReal(void* point, double divisor); // QPoint & operator/=(qreal divisor)
+//-- Static Public Members
+int QPoint_dotProduct(void* point1, void* point2);
 
 #ifdef __cplusplus
 }

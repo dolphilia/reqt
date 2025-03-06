@@ -2,79 +2,125 @@
 
 extern "C" {
 
-// コンストラクタ
+//-- Public Functions
+
+// QPoint()
+
 void* QPoint_create() {
-    return QPointBind::create();
+    return new QPointBind();
 }
+
+// QPoint(int xpos, int ypos)
 
 void* QPoint_createWithCoords(int x, int y) {
-    return QPointBind::createWithCoords(x, y);
+    return new QPointBind(x, y);
 }
 
-// デストラクタ
 void QPoint_delete(void* point) {
-    QPointBind::destroy(static_cast<QPoint*>(point));
+    delete static_cast<QPointBind*>(point);
 }
 
-// プロパティ取得
+// bool isNull() const
+
 bool QPoint_isNull(void* point) {
-    return QPointBind::isNull(static_cast<QPoint*>(point));
+    return static_cast<QPointBind*>(point)->isNull();
 }
+
+// int manhattanLength() const
 
 int QPoint_manhattanLength(void* point) {
-    return QPointBind::manhattanLength(static_cast<QPoint*>(point));
+    return static_cast<QPointBind*>(point)->manhattanLength();
 }
 
-int QPoint_x(void* point) {
-    return QPointBind::x(static_cast<QPoint*>(point));
+// int & rx()
+
+void* QPoint_rx(void* point) {
+    return &static_cast<QPointBind*>(point)->rx();
 }
 
-int QPoint_y(void* point) {
-    return QPointBind::y(static_cast<QPoint*>(point));
+// int & ry()
+
+void* QPoint_ry(void* point) {
+    return &static_cast<QPointBind*>(point)->ry();
 }
 
-// プロパティ設定
+// void setX(int x)
+
 void QPoint_setX(void* point, int x) {
-    QPointBind::setX(static_cast<QPoint*>(point), x);
+    static_cast<QPointBind*>(point)->setX(x);
 }
+
+// void setY(int y)
 
 void QPoint_setY(void* point, int y) {
-    QPointBind::setY(static_cast<QPoint*>(point), y);
+    static_cast<QPointBind*>(point)->setY(y);
 }
 
-// 変換
+// CGPoint toCGPoint() const
+// (since 6.4) QPointF toPointF() const
+
 void* QPoint_toPointF(void* point) {
-    return QPointBind::toPointF(static_cast<QPoint*>(point));
+    return new QPointF(static_cast<QPointBind*>(point)->toPointF());
 }
+
+// QPoint transposed() const
 
 void* QPoint_transposed(void* point) {
-    return QPointBind::transposed(static_cast<QPoint*>(point));
+    return new QPoint(static_cast<QPointBind*>(point)->transposed());
 }
 
-// 演算
-void* QPoint_add(void* point1, void* point2) {
-    return QPointBind::add(static_cast<QPoint*>(point1), static_cast<QPoint*>(point2));
+// int x() const
+
+int QPoint_x(void* point) {
+    return static_cast<QPointBind*>(point)->x();
 }
 
-void* QPoint_subtract(void* point1, void* point2) {
-    return QPointBind::subtract(static_cast<QPoint*>(point1), static_cast<QPoint*>(point2));
+// int y() const
+
+int QPoint_y(void* point) {
+    return static_cast<QPointBind*>(point)->y();
 }
 
-void* QPoint_multiplyInt(void* point, int factor) {
-    return QPointBind::multiplyInt(static_cast<QPoint*>(point), factor);
-}
-
-void* QPoint_multiplyFloat(void* point, float factor) {
-    return QPointBind::multiplyFloat(static_cast<QPoint*>(point), factor);
-}
+// QPoint & operator*=(double factor)
 
 void* QPoint_multiplyDouble(void* point, double factor) {
-    return QPointBind::multiplyDouble(static_cast<QPoint*>(point), factor);
+    return new QPoint(*static_cast<QPointBind*>(point) * factor);
 }
+
+// QPoint & operator*=(float factor)
+
+void* QPoint_multiplyFloat(void* point, float factor) {
+    return new QPoint(*static_cast<QPointBind*>(point) * factor);
+}
+
+// QPoint & operator*=(int factor)
+
+void* QPoint_multiplyInt(void* point, int factor) {
+    return new QPoint(*static_cast<QPointBind*>(point) * factor);
+}
+
+// QPoint & operator+=(const QPoint &point)
+
+void* QPoint_add(void* point1, void* point2) {
+    return new QPoint(*static_cast<QPointBind*>(point1) + *static_cast<QPointBind*>(point2));
+}
+
+// QPoint & operator-=(const QPoint &point)
+
+void* QPoint_subtract(void* point1, void* point2) {
+    return new QPoint(*static_cast<QPointBind*>(point1) - *static_cast<QPointBind*>(point2));
+}
+
+// QPoint & operator/=(qreal divisor)
 
 void* QPoint_divideReal(void* point, double divisor) {
-    return QPointBind::divideReal(static_cast<QPoint*>(point), divisor);
+    return new QPoint(*static_cast<QPointBind*>(point) / divisor);
 }
 
+//-- Static Public Members
+
+int QPoint_dotProduct(void* point1, void* point2) {
+    return QPointBind::dotProduct(*static_cast<QPointBind*>(point1), *static_cast<QPointBind*>(point2));
+}
 
 }
