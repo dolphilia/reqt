@@ -1,5 +1,4 @@
 #include "QObjectBind.h"
-#include "QVariant/QVariantBind.h"
 #include <QtCore/qproperty.h>
 #include <QRegularExpression>
 

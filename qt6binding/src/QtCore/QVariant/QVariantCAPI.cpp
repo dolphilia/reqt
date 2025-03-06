@@ -1,5 +1,5 @@
 #include "QVariantBind.h"
-#include "../../include/qt6/qvariant.h"
+#include "qvariant.h"
 #include <QDate>
 #include <QTime>
 #include <QDateTime>
@@ -64,15 +64,15 @@ void *QVariant_create_int(int value) {
     return new QVariantBind(QVariant(value));
 }
 
-// QVariant(qlonglong val)
+// QVariant(long long val)
 
-void *QVariant_create_longlong(qlonglong value) {
+void *QVariant_create_longlong(long long value) {
     return new QVariantBind(QVariant(value));
 }
 
-// QVariant(qulonglong val)
+// QVariant(unsigned long long val)
 
-void *QVariant_create_ulonglong(qulonglong value) {
+void *QVariant_create_ulonglong(unsigned long long value) {
     return new QVariantBind(QVariant(value));
 }
 
@@ -107,7 +107,7 @@ void *QVariant_create_line(int x1, int y1, int x2, int y2) {
 
 // QVariant(QLineF val)
 
-void *QVariant_create_linef(qreal x1, qreal y1, qreal x2, qreal y2) {
+void *QVariant_create_linef(double x1, double y1, double x2, double y2) {
     QLineF line(x1, y1, x2, y2);
     return new QVariantBind(QVariant(line));
 }
@@ -121,7 +121,7 @@ void *QVariant_create_point(int x, int y) {
 
 // QVariant(QPointF val)
 
-void *QVariant_create_pointf(qreal x, qreal y) {
+void *QVariant_create_pointf(double x, double y) {
     QPointF point(x, y);
     return new QVariantBind(QVariant(point));
 }
@@ -135,7 +135,7 @@ void *QVariant_create_rect(int x, int y, int width, int height) {
 
 // QVariant(QRectF val)
 
-void *QVariant_create_rectf(qreal x, qreal y, qreal width, qreal height) {
+void *QVariant_create_rectf(double x, double y, double width, double height) {
     QRectF rect(x, y, width, height);
     return new QVariantBind(QVariant(rect));
 }
@@ -150,7 +150,7 @@ void *QVariant_create_size(int width, int height) {
 // QVariant(QSizeF val)
 
 
-void *QVariant_create_sizef(qreal width, qreal height) {
+void *QVariant_create_sizef(double width, double height) {
     QSizeF size(width, height);
     return new QVariantBind(QVariant(size));
 }
@@ -444,12 +444,12 @@ void QVariant_setValue_float(void *variant, float value) {
     var->setValue(value);
 }
 
-void QVariant_setValue_longlong(void *variant, qlonglong value) {
+void QVariant_setValue_longlong(void *variant, long long value) {
     QVariant* var = static_cast<QVariantBind*>(variant)->getHandler()->getVariant();
     var->setValue(value);
 }
 
-void QVariant_setValue_ulonglong(void *variant, qulonglong value) {
+void QVariant_setValue_ulonglong(void *variant, unsigned long long value) {
     QVariant* var = static_cast<QVariantBind*>(variant)->getHandler()->getVariant();
     var->setValue(value);
 }
@@ -469,22 +469,22 @@ void QVariant_setValue_line(void *variant, int x1, int y1, int x2, int y2) {
     var->setValue(QLine(x1, y1, x2, y2));
 }
 
-void QVariant_setValue_linef(void *variant, qreal x1, qreal y1, qreal x2, qreal y2) {
+void QVariant_setValue_linef(void *variant, double x1, double y1, double x2, double y2) {
     QVariant* var = static_cast<QVariantBind*>(variant)->getHandler()->getVariant();
     var->setValue(QLineF(x1, y1, x2, y2));
 }
 
-void QVariant_setValue_pointf(void *variant, qreal x, qreal y) {
+void QVariant_setValue_pointf(void *variant, double x, double y) {
     QVariant* var = static_cast<QVariantBind*>(variant)->getHandler()->getVariant();
     var->setValue(QPointF(x, y));
 }
 
-void QVariant_setValue_rectf(void *variant, qreal x, qreal y, qreal width, qreal height) {
+void QVariant_setValue_rectf(void *variant, double x, double y, double width, double height) {
     QVariant* var = static_cast<QVariantBind*>(variant)->getHandler()->getVariant();
     var->setValue(QRectF(x, y, width, height));
 }
 
-void QVariant_setValue_sizef(void *variant, qreal width, qreal height) {
+void QVariant_setValue_sizef(void *variant, double width, double height) {
     QVariant* var = static_cast<QVariantBind*>(variant)->getHandler()->getVariant();
     var->setValue(QSizeF(width, height));
 }
@@ -570,44 +570,18 @@ char QVariant_toChar(void *variant) {
 
 // QDate toDate() const
 
-void QVariant_toDate(void *variant, int *year, int *month, int *day) {
+void *QVariant_toDate(void *variant) {
     QVariant* var = static_cast<QVariantBind*>(variant)->getHandler()->getVariant();
     QDate date = var->toDate();
-    if (date.isValid()) {
-        *year = date.year();
-        *month = date.month();
-        *day = date.day();
-    } else {
-        *year = 0;
-        *month = 0;
-        *day = 0;
-    }
+    return new QVariantBind(QVariant(date));
 }
 
 // QDateTime toDateTime() const
 
-void QVariant_toDateTime(void *variant, int *year, int *month, int *day, int *hour, int *minute, int *second, int *msec) {
+void *QVariant_toDateTime(void *variant) {
     QVariant* var = static_cast<QVariantBind*>(variant)->getHandler()->getVariant();
     QDateTime dateTime = var->toDateTime();
-    if (dateTime.isValid()) {
-        QDate date = dateTime.date();
-        QTime time = dateTime.time();
-        *year = date.year();
-        *month = date.month();
-        *day = date.day();
-        *hour = time.hour();
-        *minute = time.minute();
-        *second = time.second();
-        *msec = time.msec();
-    } else {
-        *year = 0;
-        *month = 0;
-        *day = 0;
-        *hour = 0;
-        *minute = 0;
-        *second = 0;
-        *msec = 0;
-    }
+    return new QVariantBind(QVariant(dateTime));
 }
 
 // double toDouble(bool *ok = nullptr) const
@@ -681,24 +655,18 @@ void *QVariant_toJsonValue(void *variant) {
 
 // QLine toLine() const
 
-void QVariant_toLine(void *variant, int *x1, int *y1, int *x2, int *y2) {
+void *QVariant_toLine(void *variant) {
     QVariant* var = static_cast<QVariantBind*>(variant)->getHandler()->getVariant();
     QLine line = var->toLine();
-    *x1 = line.x1();
-    *y1 = line.y1();
-    *x2 = line.x2();
-    *y2 = line.y2();
+    return new QVariantBind(QVariant(line));
 }
 
 // QLineF toLineF() const
 
-void QVariant_toLineF(void *variant, qreal *x1, qreal *y1, qreal *x2, qreal *y2) {
+void *QVariant_toLineF(void *variant) {
     QVariant* var = static_cast<QVariantBind*>(variant)->getHandler()->getVariant();
     QLineF line = var->toLineF();
-    *x1 = line.x1();
-    *y1 = line.y1();
-    *x2 = line.x2();
-    *y2 = line.y2();
+    return new QVariantBind(QVariant(line));
 }
 
 // QList<QVariant> toList() const
@@ -717,9 +685,9 @@ void *QVariant_toLocale(void *variant) {
     return new QVariantBind(QVariant(locale));
 }
 
-// qlonglong toLongLong(bool *ok = nullptr) const
+// long long toLongLong(bool *ok = nullptr) const
 
-qlonglong QVariant_toLongLong(void *variant, bool *ok) {
+long long QVariant_toLongLong(void *variant, bool *ok) {
     QVariant* var = static_cast<QVariantBind*>(variant)->getHandler()->getVariant();
     return var->toLongLong(ok);
 }
@@ -750,49 +718,41 @@ void *QVariant_toPersistentModelIndex(void *variant) {
 
 // QPoint toPoint() const
 
-void QVariant_toPoint(void *variant, int *x, int *y) {
+void *QVariant_toPoint(void *variant) {
     QVariant* var = static_cast<QVariantBind*>(variant)->getHandler()->getVariant();
     QPoint point = var->toPoint();
-    *x = point.x();
-    *y = point.y();
+    return new QVariantBind(QVariant(point));
 }
 
 // QPointF toPointF() const
 
-void QVariant_toPointF(void *variant, qreal *x, qreal *y) {
+void *QVariant_toPointF(void *variant) {
     QVariant* var = static_cast<QVariantBind*>(variant)->getHandler()->getVariant();
     QPointF point = var->toPointF();
-    *x = point.x();
-    *y = point.y();
+    return new QVariantBind(QVariant(point));
 }
 
-// qreal toReal(bool *ok = nullptr) const
+// double toReal(bool *ok = nullptr) const
 
-qreal QVariant_toReal(void *variant, bool *ok) {
+double QVariant_toReal(void *variant, bool *ok) {
     QVariant* var = static_cast<QVariantBind*>(variant)->getHandler()->getVariant();
     return var->toReal(ok);
 }
 
 // QRect toRect() const
 
-void QVariant_toRect(void *variant, int *x, int *y, int *width, int *height) {
+void *QVariant_toRect(void *variant) {
     QVariant* var = static_cast<QVariantBind*>(variant)->getHandler()->getVariant();
     QRect rect = var->toRect();
-    *x = rect.x();
-    *y = rect.y();
-    *width = rect.width();
-    *height = rect.height();
+    return new QVariantBind(QVariant(rect));
 }
 
 // QRectF toRectF() const
 
-void QVariant_toRectF(void *variant, qreal *x, qreal *y, qreal *width, qreal *height) {
+void *QVariant_toRectF(void *variant) {
     QVariant* var = static_cast<QVariantBind*>(variant)->getHandler()->getVariant();
     QRectF rect = var->toRectF();
-    *x = rect.x();
-    *y = rect.y();
-    *width = rect.width();
-    *height = rect.height();
+    return new QVariantBind(QVariant(rect));
 }
 
 // QRegularExpression toRegularExpression() const
@@ -806,20 +766,18 @@ void *QVariant_toRegularExpression(void *variant) {
 // QSize toSize() const
 
 
-void QVariant_toSize(void *variant, int *width, int *height) {
+void *QVariant_toSize(void *variant) {
     QVariant* var = static_cast<QVariantBind*>(variant)->getHandler()->getVariant();
     QSize size = var->toSize();
-    *width = size.width();
-    *height = size.height();
+    return new QVariantBind(QVariant(size));
 }
 
 // QSizeF toSizeF() const
 
-void QVariant_toSizeF(void *variant, qreal *width, qreal *height) {
+void *QVariant_toSizeF(void *variant) {
     QVariant* var = static_cast<QVariantBind*>(variant)->getHandler()->getVariant();
     QSizeF size = var->toSizeF();
-    *width = size.width();
-    *height = size.height();
+    return new QVariantBind(QVariant(size));
 }
 
 // QString toString() const
@@ -850,20 +808,10 @@ void *QVariant_toStringList(void *variant) {
 
 // QTime toTime() const
 
-void QVariant_toTime(void *variant, int *hour, int *minute, int *second, int *msec) {
+void *QVariant_toTime(void *variant) {
     QVariant* var = static_cast<QVariantBind*>(variant)->getHandler()->getVariant();
     QTime time = var->toTime();
-    if (time.isValid()) {
-        *hour = time.hour();
-        *minute = time.minute();
-        *second = time.second();
-        *msec = time.msec();
-    } else {
-        *hour = 0;
-        *minute = 0;
-        *second = 0;
-        *msec = 0;
-    }
+    return new QVariantBind(QVariant(time));
 }
 
 // uint toUInt(bool *ok = nullptr) const
@@ -873,9 +821,9 @@ uint QVariant_toUInt(void *variant, bool *ok) {
     return var->toUInt(ok);
 }
 
-// qulonglong toULongLong(bool *ok = nullptr) const
+// unsigned long long toULongLong(bool *ok = nullptr) const
 
-qulonglong QVariant_toULongLong(void *variant, bool *ok) {
+unsigned long long QVariant_toULongLong(void *variant, bool *ok) {
     QVariant* var = static_cast<QVariantBind*>(variant)->getHandler()->getVariant();
     return var->toULongLong(ok);
 }
@@ -918,7 +866,252 @@ int QVariant_userType(void *variant) {
 }
 
 // T value() const &
+
+int QVariant_value_int(void *variant) {
+    QVariant* var = static_cast<QVariantBind*>(variant)->getHandler()->getVariant();
+    return var->value<int>();
+}
+
+bool QVariant_value_bool(void *variant) {
+    QVariant* var = static_cast<QVariantBind*>(variant)->getHandler()->getVariant();
+    return var->value<bool>();
+}
+
+double QVariant_value_double(void *variant) {
+    QVariant* var = static_cast<QVariantBind*>(variant)->getHandler()->getVariant();
+    return var->value<double>();
+}
+
+float QVariant_value_float(void *variant) {
+    QVariant* var = static_cast<QVariantBind*>(variant)->getHandler()->getVariant();
+    return var->value<float>();
+}
+
+long long QVariant_value_longlong(void *variant) {
+    QVariant* var = static_cast<QVariantBind*>(variant)->getHandler()->getVariant();
+    return var->value<long long>();
+}
+
+unsigned long long QVariant_value_ulonglong(void *variant) {
+    QVariant* var = static_cast<QVariantBind*>(variant)->getHandler()->getVariant();
+    return var->value<unsigned long long>();
+}
+
+uint QVariant_value_uint(void *variant) {
+    QVariant* var = static_cast<QVariantBind*>(variant)->getHandler()->getVariant();
+    return var->value<uint>();
+}
+
+char QVariant_value_char(void *variant) {
+    QVariant* var = static_cast<QVariantBind*>(variant)->getHandler()->getVariant();
+    return var->value<QChar>().toLatin1();
+}
+
+void QVariant_value_string(void *variant, char **result) {
+    QVariant* var = static_cast<QVariantBind*>(variant)->getHandler()->getVariant();
+    QString str = var->value<QString>();
+    QByteArray utf8 = str.toUtf8();
+    const char *data = utf8.constData();
+    size_t size = utf8.size();
+
+    *result = new char[size + 1];
+    if (size > 0) {
+        memcpy(*result, data, size);
+    }
+    (*result)[size] = '\0';
+}
+
+void QVariant_value_date(void *variant, int *year, int *month, int *day) {
+    QVariant* var = static_cast<QVariantBind*>(variant)->getHandler()->getVariant();
+    QDate date = var->value<QDate>();
+    if (date.isValid()) {
+        *year = date.year();
+        *month = date.month();
+        *day = date.day();
+    } else {
+        *year = 0;
+        *month = 0;
+        *day = 0;
+    }
+}
+
+void QVariant_value_time(void *variant, int *hour, int *minute, int *second, int *msec) {
+    QVariant* var = static_cast<QVariantBind*>(variant)->getHandler()->getVariant();
+    QTime time = var->value<QTime>();
+    if (time.isValid()) {
+        *hour = time.hour();
+        *minute = time.minute();
+        *second = time.second();
+        *msec = time.msec();
+    } else {
+        *hour = 0;
+        *minute = 0;
+        *second = 0;
+        *msec = 0;
+    }
+}
+
+void QVariant_value_datetime(void *variant, int *year, int *month, int *day, int *hour, int *minute, int *second, int *msec) {
+    QVariant* var = static_cast<QVariantBind*>(variant)->getHandler()->getVariant();
+    QDateTime dateTime = var->value<QDateTime>();
+    if (dateTime.isValid()) {
+        QDate date = dateTime.date();
+        QTime time = dateTime.time();
+        *year = date.year();
+        *month = date.month();
+        *day = date.day();
+        *hour = time.hour();
+        *minute = time.minute();
+        *second = time.second();
+        *msec = time.msec();
+    } else {
+        *year = 0;
+        *month = 0;
+        *day = 0;
+        *hour = 0;
+        *minute = 0;
+        *second = 0;
+        *msec = 0;
+    }
+}
+
+void QVariant_value_point(void *variant, int *x, int *y) {
+    QVariant* var = static_cast<QVariantBind*>(variant)->getHandler()->getVariant();
+    QPoint point = var->value<QPoint>();
+    *x = point.x();
+    *y = point.y();
+}
+
+void QVariant_value_pointf(void *variant, double *x, double *y) {
+    QVariant* var = static_cast<QVariantBind*>(variant)->getHandler()->getVariant();
+    QPointF point = var->value<QPointF>();
+    *x = point.x();
+    *y = point.y();
+}
+
+void QVariant_value_rect(void *variant, int *x, int *y, int *width, int *height) {
+    QVariant* var = static_cast<QVariantBind*>(variant)->getHandler()->getVariant();
+    QRect rect = var->value<QRect>();
+    *x = rect.x();
+    *y = rect.y();
+    *width = rect.width();
+    *height = rect.height();
+}
+
+void QVariant_value_rectf(void *variant, double *x, double *y, double *width, double *height) {
+    QVariant* var = static_cast<QVariantBind*>(variant)->getHandler()->getVariant();
+    QRectF rect = var->value<QRectF>();
+    *x = rect.x();
+    *y = rect.y();
+    *width = rect.width();
+    *height = rect.height();
+}
+
+void QVariant_value_size(void *variant, int *width, int *height) {
+    QVariant* var = static_cast<QVariantBind*>(variant)->getHandler()->getVariant();
+    QSize size = var->value<QSize>();
+    *width = size.width();
+    *height = size.height();
+}
+
+void QVariant_value_sizef(void *variant, double *width, double *height) {
+    QVariant* var = static_cast<QVariantBind*>(variant)->getHandler()->getVariant();
+    QSizeF size = var->value<QSizeF>();
+    *width = size.width();
+    *height = size.height();
+}
+
+void QVariant_value_line(void *variant, int *x1, int *y1, int *x2, int *y2) {
+    QVariant* var = static_cast<QVariantBind*>(variant)->getHandler()->getVariant();
+    QLine line = var->value<QLine>();
+    *x1 = line.x1();
+    *y1 = line.y1();
+    *x2 = line.x2();
+    *y2 = line.y2();
+}
+
+void QVariant_value_linef(void *variant, double *x1, double *y1, double *x2, double *y2) {
+    QVariant* var = static_cast<QVariantBind*>(variant)->getHandler()->getVariant();
+    QLineF line = var->value<QLineF>();
+    *x1 = line.x1();
+    *y1 = line.y1();
+    *x2 = line.x2();
+    *y2 = line.y2();
+}
+
 // T view()
+
+const int *QVariant_view_int(void *variant) {
+    QVariant* var = static_cast<QVariantBind*>(variant)->getHandler()->getVariant();
+    static int value;
+    value = var->view<int>();
+    return &value;
+}
+
+const bool *QVariant_view_bool(void *variant) {
+    QVariant* var = static_cast<QVariantBind*>(variant)->getHandler()->getVariant();
+    static bool value;
+    value = var->view<bool>();
+    return &value;
+}
+
+const double *QVariant_view_double(void *variant) {
+    QVariant* var = static_cast<QVariantBind*>(variant)->getHandler()->getVariant();
+    static double value;
+    value = var->view<double>();
+    return &value;
+}
+
+const float *QVariant_view_float(void *variant) {
+    QVariant* var = static_cast<QVariantBind*>(variant)->getHandler()->getVariant();
+    static float value;
+    value = var->view<float>();
+    return &value;
+}
+
+const long long *QVariant_view_longlong(void *variant) {
+    QVariant* var = static_cast<QVariantBind*>(variant)->getHandler()->getVariant();
+    static long long value;
+    value = var->view<long long>();
+    return &value;
+}
+
+const unsigned long long *QVariant_view_ulonglong(void *variant) {
+    QVariant* var = static_cast<QVariantBind*>(variant)->getHandler()->getVariant();
+    static unsigned long long value;
+    value = var->view<unsigned long long>();
+    return &value;
+}
+
+const unsigned int *QVariant_view_uint(void *variant) {
+    QVariant* var = static_cast<QVariantBind*>(variant)->getHandler()->getVariant();
+    static unsigned int value;
+    value = var->view<unsigned int>();
+    return &value;
+}
+
+const char *QVariant_view_char(void *variant) {
+    QVariant* var = static_cast<QVariantBind*>(variant)->getHandler()->getVariant();
+    static char result;
+    QChar qchar = var->view<QChar>();
+    if (!qchar.isNull()) {
+        result = qchar.toLatin1();
+        return &result;
+    }
+    return nullptr;
+}
+
+const char *QVariant_view_string(void *variant) {
+    QVariant* var = static_cast<QVariantBind*>(variant)->getHandler()->getVariant();
+    const QString &str = var->view<QString>();
+    if (!str.isEmpty()) {
+        static QByteArray utf8;
+        utf8 = str.toUtf8();
+        return utf8.constData();
+    }
+    return nullptr;
+}
+
 // QVariant & operator=(QVariant &&other)
 // QVariant & operator=(const QVariant &variant)
 

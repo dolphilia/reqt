@@ -56,20 +56,20 @@ int main(int argc, char *argv[])
     // 日付
     void *dateVariant = QVariant_create_date(2025, 2, 26);
     int year, month, day;
-    QVariant_toDate(dateVariant, &year, &month, &day);
+    QVariant_value_date(dateVariant, &year, &month, &day);
     printf("日付: %d年%d月%d日\n", year, month, day);
     QVariant_delete(dateVariant);
     
     // 時刻
     void *timeVariant = QVariant_create_time(13, 45, 30, 500);
     int hour, minute, second, msec;
-    QVariant_toTime(timeVariant, &hour, &minute, &second, &msec);
+    QVariant_value_time(timeVariant, &hour, &minute, &second, &msec);
     printf("時刻: %02d:%02d:%02d.%03d\n", hour, minute, second, msec);
     QVariant_delete(timeVariant);
     
     // 日時
     void *dateTimeVariant = QVariant_create_datetime(2025, 2, 26, 13, 45, 30, 500);
-    QVariant_toDateTime(dateTimeVariant, &year, &month, &day, &hour, &minute, &second, &msec);
+    QVariant_value_datetime(dateTimeVariant, &year, &month, &day, &hour, &minute, &second, &msec);
     printf("日時: %d年%d月%d日 %02d:%02d:%02d.%03d\n", year, month, day, hour, minute, second, msec);
     QVariant_delete(dateTimeVariant);
     
@@ -81,20 +81,20 @@ int main(int argc, char *argv[])
     // 点
     void *pointVariant = QVariant_create_point(10, 20);
     int x, y;
-    QVariant_toPoint(pointVariant, &x, &y);
+    QVariant_value_point(pointVariant, &x, &y);
     printf("点: (%d, %d)\n", x, y);
     QVariant_delete(pointVariant);
     
     // 矩形
     void *rectVariant = QVariant_create_rect(10, 20, 100, 50);
     int width, height;
-    QVariant_toRect(rectVariant, &x, &y, &width, &height);
+    QVariant_value_rect(rectVariant, &x, &y, &width, &height);
     printf("矩形: (%d, %d, %d, %d)\n", x, y, width, height);
     QVariant_delete(rectVariant);
     
     // サイズ
     void *sizeVariant = QVariant_create_size(800, 600);
-    QVariant_toSize(sizeVariant, &width, &height);
+    QVariant_value_size(sizeVariant, &width, &height);
     printf("サイズ: %d x %d\n", width, height);
     QVariant_delete(sizeVariant);
     
