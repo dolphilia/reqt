@@ -10,9 +10,9 @@ extern "C" {
 //-- Public Functions
 void QRect_delete(void* rect);
 void* QRect_create(); // QRect()
-void* QRect_create_2(void* topLeft, void* bottomRight); // QRect(const QPoint &topLeft, const QPoint &bottomRight)
-void* QRect_create_3(void* topLeft, void* size); // QRect(const QPoint &topLeft, const QSize &size)
-void* QRect_create_4(int x, int y, int width, int height); // QRect(int x, int y, int width, int height)
+void* QRect_createWithTLBR(void* topLeft, void* bottomRight); // QRect(const QPoint &topLeft, const QPoint &bottomRight)
+void* QRect_createWithTLSize(void* topLeft, void* size); // QRect(const QPoint &topLeft, const QSize &size)
+void* QRect_createWithXYWH(int x, int y, int width, int height); // QRect(int x, int y, int width, int height)
 void QRect_adjust(void* rect, int dx1, int dy1, int dx2, int dy2); // void adjust(int dx1, int dy1, int dx2, int dy2)
 void* QRect_adjusted(void* rect, int dx1, int dy1, int dx2, int dy2); // QRect adjusted(int dx1, int dy1, int dx2, int dy2) const
 int QRect_bottom(void* rect); // int bottom() const
@@ -68,21 +68,21 @@ void* QRect_toRectF(void* rect); // (since 6.4) QRectF toRectF() const
 int QRect_top(void* rect); // int top() const
 void* QRect_topLeft(void* rect); // QPoint topLeft() const
 void* QRect_topRight(void* rect); // QPoint topRight() const
-void QRect_translate(void* rect, int dx, int dy); // void translate(int dx, int dy)
-void QRect_translate_2(void* rect, void* offset); // void translate(const QPoint &offset)
-void* QRect_translated(void* rect, int dx, int dy); // QRect translated(int dx, int dy) const
-void* QRect_translated_2(void* rect, void* offset); // QRect translated(const QPoint &offset) const
+void QRect_translateByXY(void* rect, int dx, int dy); // void translate(int dx, int dy)
+void QRect_translateWithOffset(void* rect, void* offset); // void translate(const QPoint &offset)
+void* QRect_translatedByXY(void* rect, int dx, int dy); // QRect translated(int dx, int dy) const
+void* QRect_translatedWithOffset(void* rect, void* offset); // QRect translated(const QPoint &offset) const
 void* QRect_transposed(void* rect); // QRect transposed() const
 void* QRect_united(void* rect, void* rectangle); // QRect united(const QRect &rectangle) const
 int QRect_width(void* rect); // int width() const
 int QRect_x(void* rect); // int x() const
 int QRect_y(void* rect); // int y() const
-void* QRect_and(void* rect, void* rectangle); // QRect operator&(const QRect &rectangle) const
-void* QRect_andAssign(void* rect, void* rectangle); // QRect & operator&=(const QRect &rectangle)
-void* QRect_addAssign(void* rect, void* margins); // QRect & operator+=(const QMargins &margins)
-void* QRect_subtractAssign(void* rect, void* margins); // QRect & operator-=(const QMargins &margins)
-void* QRect_or(void* rect, void* rectangle); // QRect operator|(const QRect &rectangle) const
-void* QRect_orAssign(void* rect, void* rectangle); // QRect & operator|=(const QRect &rectangle)
+void* QRect_operatorAnd(void* rect, void* rectangle); // QRect operator&(const QRect &rectangle) const
+void* QRect_operatorAndAssign(void* rect, void* rectangle); // QRect & operator&=(const QRect &rectangle)
+void* QRect_operatorAddAssign(void* rect, void* margins); // QRect & operator+=(const QMargins &margins)
+void* QRect_operatorSubAssign(void* rect, void* margins); // QRect & operator-=(const QMargins &margins)
+void* QRect_operatorOr(void* rect, void* rectangle); // QRect operator|(const QRect &rectangle) const
+void* QRect_operatorOrAssign(void* rect, void* rectangle); // QRect & operator|=(const QRect &rectangle)
 //-- Static Public Members
 void* QRect_span(void* p1, void* p2); // (since 6.0) QRect span(const QPoint &p1, const QPoint &p2)
 

@@ -16,13 +16,13 @@ void* QPointF_create() {
 
 // QPointF(const QPoint &point)
 
-void* QPointF_create_2(void* point) {
+void* QPointF_createWithPoint(void* point) {
     return new QPointFBind(static_cast<QPoint*>(point));
 }
 
 // QPointF(qreal xpos, qreal ypos)
 
-void* QPointF_create_3(double x, double y) {
+void* QPointF_createWithXY(double x, double y) {
     return new QPointFBind(x, y);
 }
 
@@ -89,26 +89,34 @@ double QPointF_y(void* point) {
 
 // QPointF & operator*=(qreal factor)
 
-void* QPointF_multiply(void* point, double factor) {
-    return new QPointF(*static_cast<QPointFBind*>(point) * factor);
+void* QPointF_operatorMulAssign(void* point, double factor) {
+    QPointF result = static_cast<QPointFBind*>(point)->operator*=(factor);
+    QPointFBind* newPoint = new QPointFBind(result.x(), result.y());
+    return newPoint;
 }
 
 // QPointF & operator+=(const QPointF &point)
 
-void* QPointF_add(void* point1, void* point2) {
-    return new QPointF(*static_cast<QPointFBind*>(point1) + *static_cast<QPointFBind*>(point2));
+void* QPointF_operatorAddAssign(void* point1, void* point2) {
+    QPointF result = static_cast<QPointFBind*>(point1)->operator+=(*static_cast<QPointFBind*>(point2));
+    QPointFBind* newPoint = new QPointFBind(result.x(), result.y());
+    return newPoint;
 }
 
 // QPointF & operator-=(const QPointF &point)
 
-void* QPointF_subtract(void* point1, void* point2) {
-    return new QPointF(*static_cast<QPointFBind*>(point1) - *static_cast<QPointFBind*>(point2));
+void* QPointF_operatorSubAssign(void* point1, void* point2) {
+    QPointF result = static_cast<QPointFBind*>(point1)->operator-=(*static_cast<QPointFBind*>(point2));
+    QPointFBind* newPoint = new QPointFBind(result.x(), result.y());
+    return newPoint;
 }
 
 // QPointF & operator/=(qreal divisor)
 
-void* QPointF_divide(void* point, double divisor) {
-    return new QPointF(*static_cast<QPointFBind*>(point) / divisor);
+void* QPointF_operatorDivAssign(void* point, double divisor) {
+    QPointF result = static_cast<QPointFBind*>(point)->operator/=(divisor);
+    QPointFBind* newPoint = new QPointFBind(result.x(), result.y());
+    return newPoint;
 }
 
 //-- Static Public Members

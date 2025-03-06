@@ -1,3 +1,5 @@
+#include "qpoint.h"
+#include "qpointf.h"
 #include "qt6.h"
 #include <stdio.h>
 #include <math.h>
@@ -43,12 +45,12 @@ int main(int argc, char *argv[]) {
     printPointFInfo(pointF1, "Default PointF");
     
     // 2. 座標を指定してQPointFを作成
-    void* pointF2 = QPointF_create_3(10.5, 20.75);
+    void* pointF2 = QPointF_createWithXY(10.5, 20.75);
     printPointFInfo(pointF2, "PointF(10.5, 20.75)");
     
     // 3. QPointからQPointFを作成
-    void* point = QPoint_create_2(15, 25);
-    void* pointF3 = QPointF_create_2(point);
+    void* point = QPoint_createWithXY(15, 25);
+    void* pointF3 = QPointF_createWithPoint(point);
     printPointFInfo(pointF3, "PointF from Point(15, 25)");
     
     // 4. 座標の設定
@@ -57,19 +59,19 @@ int main(int argc, char *argv[]) {
     printPointFInfo(pointF1, "After setX/setY");
     
     // 5. 点の加算
-    void* pointF4 = QPointF_add(pointF1, pointF2);
+    void* pointF4 = QPointF_operatorAddAssign(pointF1, pointF2);
     printPointFInfo(pointF4, "pointF1 + pointF2");
     
     // 6. 点の減算
-    void* pointF5 = QPointF_subtract(pointF2, pointF1);
+    void* pointF5 = QPointF_operatorSubAssign(pointF2, pointF1);
     printPointFInfo(pointF5, "pointF2 - pointF1");
     
     // 7. スカラー倍
-    void* pointF6 = QPointF_multiply(pointF1, 2.5);
+    void* pointF6 = QPointF_operatorMulAssign(pointF1, 2.5);
     printPointFInfo(pointF6, "pointF1 * 2.5");
     
     // 8. スカラー除算
-    void* pointF7 = QPointF_divide(pointF2, 2.0);
+    void* pointF7 = QPointF_operatorDivAssign(pointF2, 2.0);
     printPointFInfo(pointF7, "pointF2 / 2.0");
     
     // 9. 座標の入れ替え

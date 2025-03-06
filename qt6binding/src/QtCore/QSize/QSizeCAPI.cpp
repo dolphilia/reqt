@@ -15,7 +15,7 @@ void* QSize_create() {
 
 // QSize(int width, int height)
 
-void* QSize_create_2(int width, int height) {
+void* QSize_createWithWH(int width, int height) {
     return new QSizeBind(width, height);
 }
 
@@ -67,23 +67,23 @@ void* QSize_rwidth(void* size) {
     return &static_cast<QSizeBind*>(size)->rwidth();
 }
 // void scale(int width, int height, Qt::AspectRatioMode mode)
-void QSize_scale(void* size, int width, int height, int mode) {
+void QSize_scaleByWH(void* size, int width, int height, int mode) {
     static_cast<QSizeBind*>(size)->scale(width, height, static_cast<Qt::AspectRatioMode>(mode));
 }
 // void scale(const QSize &size, Qt::AspectRatioMode mode)
 
-void QSize_scale_2(void* size, void* otherSize, int mode) {
+void QSize_scaleWithSize(void* size, void* otherSize, int mode) {
     static_cast<QSizeBind*>(size)->scale(*static_cast<QSize*>(otherSize), static_cast<Qt::AspectRatioMode>(mode));
 }
 // QSize scaled(int width, int height, Qt::AspectRatioMode mode) const
 
-void* QSize_scaled(void* size, int width, int height, int mode) {
+void* QSize_scaledByWH(void* size, int width, int height, int mode) {
     QSize result = static_cast<QSizeBind*>(size)->scaled(width, height, static_cast<Qt::AspectRatioMode>(mode));
     return new QSize(result);
 }
 // QSize scaled(const QSize &s, Qt::AspectRatioMode mode) const
 
-void* QSize_scaled_2(void* size, void* s, int mode) {
+void* QSize_scaledWithSize(void* size, void* s, int mode) {
     QSize result = static_cast<QSizeBind*>(size)->scaled(*static_cast<QSize*>(s), static_cast<Qt::AspectRatioMode>(mode));
     return new QSize(result);
 }
@@ -126,29 +126,29 @@ int QSize_width(void* size) {
 }
 // QSize & operator*=(qreal factor)
 
-void* QSize_operator_multiply(void* size, double factor) {
-    QSize result = *static_cast<QSizeBind*>(size) * factor;
+void* QSize_operatorMulAssign(void* size, double factor) {
+    QSize result = static_cast<QSizeBind*>(size)->operator*=(factor);
     QSizeBind* newSize = new QSizeBind(result.width(), result.height());
     return newSize;
 }
 
 // QSize & operator+=(const QSize &size)
 
-void* QSize_operator_add(void* size1, void* size2) {
-    QSize result = *static_cast<QSizeBind*>(size1) + *static_cast<QSize*>(size2);
+void* QSize_operatorAddAssign(void* size1, void* size2) {
+    QSize result = static_cast<QSizeBind*>(size1)->operator+=(*static_cast<QSize*>(size2));
     QSizeBind* newSize = new QSizeBind(result.width(), result.height());
     return newSize;
 }
 // QSize & operator-=(const QSize &size)
 
-void* QSize_operator_subtract(void* size1, void* size2) {
-    QSize result = *static_cast<QSizeBind*>(size1) - *static_cast<QSize*>(size2);
+void* QSize_operatorSubAssign(void* size1, void* size2) {
+    QSize result = static_cast<QSizeBind*>(size1)->operator-=(*static_cast<QSize*>(size2));
     QSizeBind* newSize = new QSizeBind(result.width(), result.height());
     return newSize;
 }
 // QSize & operator/=(qreal divisor)
-void* QSize_operator_divide(void* size, double divisor) {
-    QSize result = *static_cast<QSizeBind*>(size) / divisor;
+void* QSize_operatorDivAssign(void* size, double divisor) {
+    QSize result = static_cast<QSizeBind*>(size)->operator/=(divisor);
     QSizeBind* newSize = new QSizeBind(result.width(), result.height());
     return newSize;
 }

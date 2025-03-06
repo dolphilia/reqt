@@ -16,7 +16,7 @@ void* QPoint_create() {
 
 // QPoint(int xpos, int ypos)
 
-void* QPoint_create_2(int x, int y) {
+void* QPoint_createWithXY(int x, int y) {
     return new QPointBind(x, y);
 }
 
@@ -83,38 +83,50 @@ int QPoint_y(void* point) {
 
 // QPoint & operator*=(double factor)
 
-void* QPoint_multiplyDouble(void* point, double factor) {
-    return new QPoint(*static_cast<QPointBind*>(point) * factor);
+void* QPoint_operatorMulAssignDouble(void* point, double factor) {
+    QPoint result = static_cast<QPointBind*>(point)->operator*=(factor);
+    QPointBind* newPoint = new QPointBind(result.x(), result.y());
+    return newPoint;
 }
 
 // QPoint & operator*=(float factor)
 
-void* QPoint_multiplyFloat(void* point, float factor) {
-    return new QPoint(*static_cast<QPointBind*>(point) * factor);
+void* QPoint_operatorMulAssignFloat(void* point, float factor) {
+    QPoint result = static_cast<QPointBind*>(point)->operator*=(factor);
+    QPointBind* newPoint = new QPointBind(result.x(), result.y());
+    return newPoint;
 }
 
 // QPoint & operator*=(int factor)
 
-void* QPoint_multiplyInt(void* point, int factor) {
-    return new QPoint(*static_cast<QPointBind*>(point) * factor);
+void* QPoint_operatorMulAssignInt(void* point, int factor) {
+    QPoint result = static_cast<QPointBind*>(point)->operator*=(factor);
+    QPointBind* newPoint = new QPointBind(result.x(), result.y());
+    return newPoint;
 }
 
 // QPoint & operator+=(const QPoint &point)
 
-void* QPoint_add(void* point1, void* point2) {
-    return new QPoint(*static_cast<QPointBind*>(point1) + *static_cast<QPointBind*>(point2));
+void* QPoint_operatorAddAssign(void* point1, void* point2) {
+    QPoint result = static_cast<QPointBind*>(point1)->operator+=(*static_cast<QPointBind*>(point2));
+    QPointBind* newPoint = new QPointBind(result.x(), result.y());
+    return newPoint;
 }
 
 // QPoint & operator-=(const QPoint &point)
 
-void* QPoint_subtract(void* point1, void* point2) {
-    return new QPoint(*static_cast<QPointBind*>(point1) - *static_cast<QPointBind*>(point2));
+void* QPoint_operatorSubAssign(void* point1, void* point2) {
+    QPoint result = static_cast<QPointBind*>(point1)->operator-=(*static_cast<QPointBind*>(point2));
+    QPointBind* newPoint = new QPointBind(result.x(), result.y());
+    return newPoint;
 }
 
 // QPoint & operator/=(qreal divisor)
 
-void* QPoint_divideReal(void* point, double divisor) {
-    return new QPoint(*static_cast<QPointBind*>(point) / divisor);
+void* QPoint_operatorDivAssign(void* point, double divisor) {
+    QPoint result = static_cast<QPointBind*>(point)->operator/=(divisor);
+    QPointBind* newPoint = new QPointBind(result.x(), result.y());
+    return newPoint;
 }
 
 //-- Static Public Members

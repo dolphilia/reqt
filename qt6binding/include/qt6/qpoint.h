@@ -10,7 +10,7 @@ extern "C" {
 //-- Public Functions
 void QPoint_delete(void* point);
 void* QPoint_create(); // QPoint()
-void* QPoint_create_2(int x, int y); // QPoint(int xpos, int ypos)
+void* QPoint_createWithXY(int x, int y); // QPoint(int xpos, int ypos)
 bool QPoint_isNull(void* point); // bool isNull() const
 int QPoint_manhattanLength(void* point); // int manhattanLength() const
 void* QPoint_rx(void* point); // int & rx()
@@ -22,12 +22,12 @@ void* QPoint_toPointF(void* point); // (since 6.4) QPointF toPointF() const
 void* QPoint_transposed(void* point); // QPoint transposed() const
 int QPoint_x(void* point); // int x() const
 int QPoint_y(void* point); // int y() const
-void* QPoint_multiplyDouble(void* point, double factor); // QPoint & operator*=(double factor)
-void* QPoint_multiplyFloat(void* point, float factor); // QPoint & operator*=(float factor)
-void* QPoint_multiplyInt(void* point, int factor); // QPoint & operator*=(int factor)
-void* QPoint_add(void* point1, void* point2); // QPoint & operator+=(const QPoint &point)
-void* QPoint_subtract(void* point1, void* point2); // QPoint & operator-=(const QPoint &point)
-void* QPoint_divideReal(void* point, double divisor); // QPoint & operator/=(qreal divisor)
+void* QPoint_operatorMulAssignDouble(void* point, double factor); // QPoint & operator*=(double factor)
+void* QPoint_operatorMulAssignFloat(void* point, float factor); // QPoint & operator*=(float factor)
+void* QPoint_operatorMulAssignInt(void* point, int factor); // QPoint & operator*=(int factor)
+void* QPoint_operatorAddAssign(void* point1, void* point2); // QPoint & operator+=(const QPoint &point)
+void* QPoint_operatorSubAssign(void* point1, void* point2); // QPoint & operator-=(const QPoint &point)
+void* QPoint_operatorDivAssign(void* point, double divisor); // QPoint & operator/=(qreal divisor)
 //-- Static Public Members
 int QPoint_dotProduct(void* point1, void* point2);
 

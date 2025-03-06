@@ -10,15 +10,15 @@ void* QRect_create() {
     return new QRectBind();
 }
 // QRect(const QPoint &topLeft, const QPoint &bottomRight)
-void* QRect_create_2(void* topLeft, void* bottomRight) {
+void* QRect_createWithTLBR(void* topLeft, void* bottomRight) {
     return new QRectBind(*static_cast<QPoint*>(topLeft), *static_cast<QPoint*>(bottomRight));
 }
 // QRect(const QPoint &topLeft, const QSize &size)
-void* QRect_create_3(void* topLeft, void* size) {
+void* QRect_createWithTLSize(void* topLeft, void* size) {
     return new QRectBind(*static_cast<QPoint*>(topLeft), *static_cast<QSize*>(size));
 }
 // QRect(int x, int y, int width, int height)
-void* QRect_create_4(int x, int y, int width, int height) {
+void* QRect_createWithXYWH(int x, int y, int width, int height) {
     return new QRectBind(x, y, width, height);
 }
 // void adjust(int dx1, int dy1, int dx2, int dy2)
@@ -294,22 +294,22 @@ void* QRect_topRight(void* rect) {
 }
 // void translate(int dx, int dy)
 
-void QRect_translate(void* rect, int dx, int dy) {
+void QRect_translateByXY(void* rect, int dx, int dy) {
     static_cast<QRectBind*>(rect)->translate(dx, dy);
 }
 // void translate(const QPoint &offset)
 
-void QRect_translate_2(void* rect, void* offset) {
+void QRect_translateWithOffset(void* rect, void* offset) {
     static_cast<QRectBind*>(rect)->translate(*static_cast<QPoint*>(offset));
 }
 // QRect translated(int dx, int dy) const
 
-void* QRect_translated(void* rect, int dx, int dy) {
+void* QRect_translatedByXY(void* rect, int dx, int dy) {
     return new QRect(static_cast<QRectBind*>(rect)->translated(dx, dy));
 }
 // QRect translated(const QPoint &offset) const
 
-void* QRect_translated_2(void* rect, void* offset) {
+void* QRect_translatedWithOffset(void* rect, void* offset) {
     return new QRect(static_cast<QRectBind*>(rect)->translated(*static_cast<QPoint*>(offset)));
 }
 // QRect transposed() const
@@ -339,42 +339,42 @@ int QRect_y(void* rect) {
 }
 // QRect operator&(const QRect &rectangle) const
 
-void* QRect_and(void* rect, void* rectangle) {
+void* QRect_operatorAnd(void* rect, void* rectangle) {
     QRect result = static_cast<QRectBind*>(rect)->operator&(*static_cast<QRect*>(rectangle));
     QRectBind* newRect = new QRectBind(result.topLeft(), result.bottomRight());
     return newRect;
 }
 // QRect & operator&=(const QRect &rectangle)
 
-void* QRect_andAssign(void* rect, void* rectangle) {
+void* QRect_operatorAndAssign(void* rect, void* rectangle) {
     QRect result = static_cast<QRectBind*>(rect)->operator&=(*static_cast<QRect*>(rectangle));
     QRectBind* newRect = new QRectBind(result.topLeft(), result.bottomRight());
     return newRect;
 }
 // QRect & operator+=(const QMargins &margins)
 
-void* QRect_addAssign(void* rect, void* margins) {
+void* QRect_operatorAddAssign(void* rect, void* margins) {
     QRect result = static_cast<QRectBind*>(rect)->operator+=(*static_cast<QMargins*>(margins));
     QRectBind* newRect = new QRectBind(result.topLeft(), result.bottomRight());
     return newRect;
 }
 // QRect & operator-=(const QMargins &margins)
 
-void* QRect_subtractAssign(void* rect, void* margins) {
+void* QRect_operatorSubAssign(void* rect, void* margins) {
     QRect result = static_cast<QRectBind*>(rect)->operator-=(*static_cast<QMargins*>(margins));
     QRectBind* newRect = new QRectBind(result.topLeft(), result.bottomRight());
     return newRect;
 }
 // QRect operator|(const QRect &rectangle) const
 
-void* QRect_or(void* rect, void* rectangle) {
+void* QRect_operatorOr(void* rect, void* rectangle) {
     QRect result = static_cast<QRectBind*>(rect)->operator|(*static_cast<QRect*>(rectangle));
     QRectBind* newRect = new QRectBind(result.topLeft(), result.bottomRight());
     return newRect;
 }
 // QRect & operator|=(const QRect &rectangle)
 
-void* QRect_orAssign(void* rect, void* rectangle) {
+void* QRect_operatorOrAssign(void* rect, void* rectangle) {
     QRect result = static_cast<QRectBind*>(rect)->operator|=(*static_cast<QRect*>(rectangle));
     QRectBind* newRect = new QRectBind(result.topLeft(), result.bottomRight());
     return newRect;

@@ -1,3 +1,4 @@
+#include "qpoint.h"
 #include "qt6.h"
 #include <stdio.h>
 
@@ -42,7 +43,7 @@ int main(int argc, char *argv[]) {
     printPointInfo(point1, "Default Point");
     
     // 2. 座標を指定してQPointを作成
-    void* point2 = QPoint_create_2(10, 20);
+    void* point2 = QPoint_createWithXY(10, 20);
     printPointInfo(point2, "Point(10, 20)");
     
     // 3. 座標の設定
@@ -51,23 +52,23 @@ int main(int argc, char *argv[]) {
     printPointInfo(point1, "After setX/setY");
     
     // 4. 点の加算
-    void* point3 = QPoint_add(point1, point2);
+    void* point3 = QPoint_operatorAddAssign(point1, point2);
     printPointInfo(point3, "point1 + point2");
     
     // 5. 点の減算
-    void* point4 = QPoint_subtract(point2, point1);
+    void* point4 = QPoint_operatorSubAssign(point2, point1);
     printPointInfo(point4, "point2 - point1");
     
     // 6. スカラー倍
-    void* point5 = QPoint_multiplyInt(point1, 2);
+    void* point5 = QPoint_operatorMulAssignInt(point1, 2);
     printPointInfo(point5, "point1 * 2");
     
     // 7. 浮動小数点数倍
-    void* point6 = QPoint_multiplyDouble(point2, 1.5);
+    void* point6 = QPoint_operatorMulAssignDouble(point2, 1.5);
     printPointInfo(point6, "point2 * 1.5");
     
     // 8. スカラー除算
-    void* point7 = QPoint_divideReal(point2, 2.0);
+    void* point7 = QPoint_operatorDivAssign(point2, 2.0);
     printPointInfo(point7, "point2 / 2.0");
     
     // 9. 座標の入れ替え
