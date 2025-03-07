@@ -32,7 +32,8 @@ void QTimer_setTimerType(void *timer, int type);
 int QTimer_id(void *timer);
 
 // コールバック設定
-void QTimer_setCallback(void *timer, QTimer_Callback callback, void *userData);
+typedef void (*QTimer_TimeoutCallback)(void*);
+void QTimer_setTimeoutCallback(void* timer, QTimer_TimeoutCallback callback);
 
 // 静的メソッド
 void QTimer_singleShot(int msec, QTimer_Callback callback, void *userData);

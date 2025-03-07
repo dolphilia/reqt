@@ -1,657 +1,1132 @@
 #include "QStringBind.h"
-#include "qstring.h"
+#include <QString>
+
+extern "C" {
 
 // 静的メソッド
 char *QString_number_int(int n, int base)
 {
-    return QStringBind::number_int(n, base);
+    QString result = QStringBind::number(n, base);
+    QByteArray utf8 = result.toUtf8();
+    const char *data = utf8.constData();
+    size_t size = utf8.size();
+    
+    char *resultStr = new char[size + 1];
+    if (size > 0) {
+        memcpy(resultStr, data, size);
+    }
+    resultStr[size] = '\0';
+    
+    return resultStr;
 }
 
 char *QString_number_long(long n, int base)
 {
-    return QStringBind::number_long(n, base);
+    QString result = QStringBind::number(n, base);
+    QByteArray utf8 = result.toUtf8();
+    const char *data = utf8.constData();
+    size_t size = utf8.size();
+    
+    char *resultStr = new char[size + 1];
+    if (size > 0) {
+        memcpy(resultStr, data, size);
+    }
+    resultStr[size] = '\0';
+    
+    return resultStr;
 }
 
 char *QString_number_longlong(long long n, int base)
 {
-    return QStringBind::number_longlong(n, base);
+    QString result = QStringBind::number(n, base);
+    QByteArray utf8 = result.toUtf8();
+    const char *data = utf8.constData();
+    size_t size = utf8.size();
+    
+    char *resultStr = new char[size + 1];
+    if (size > 0) {
+        memcpy(resultStr, data, size);
+    }
+    resultStr[size] = '\0';
+    
+    return resultStr;
 }
 
 char *QString_number_ulonglong(unsigned long long n, int base)
 {
-    return QStringBind::number_ulonglong(n, base);
+    QString result = QStringBind::number(n, base);
+    QByteArray utf8 = result.toUtf8();
+    const char *data = utf8.constData();
+    size_t size = utf8.size();
+    
+    char *resultStr = new char[size + 1];
+    if (size > 0) {
+        memcpy(resultStr, data, size);
+    }
+    resultStr[size] = '\0';
+    
+    return resultStr;
 }
 
 char *QString_number_uint(unsigned int n, int base)
 {
-    return QStringBind::number_uint(n, base);
+    QString result = QStringBind::number(n, base);
+    QByteArray utf8 = result.toUtf8();
+    const char *data = utf8.constData();
+    size_t size = utf8.size();
+    
+    char *resultStr = new char[size + 1];
+    if (size > 0) {
+        memcpy(resultStr, data, size);
+    }
+    resultStr[size] = '\0';
+    
+    return resultStr;
 }
 
 char *QString_number_ulong(unsigned long n, int base)
 {
-    return QStringBind::number_ulong(n, base);
+    QString result = QStringBind::number(n, base);
+    QByteArray utf8 = result.toUtf8();
+    const char *data = utf8.constData();
+    size_t size = utf8.size();
+    
+    char *resultStr = new char[size + 1];
+    if (size > 0) {
+        memcpy(resultStr, data, size);
+    }
+    resultStr[size] = '\0';
+    
+    return resultStr;
 }
 
 char *QString_number_double(double n, char format, int precision)
 {
-    return QStringBind::number_double(n, format, precision);
+    QString result = QStringBind::number(n, format, precision);
+    QByteArray utf8 = result.toUtf8();
+    const char *data = utf8.constData();
+    size_t size = utf8.size();
+    
+    char *resultStr = new char[size + 1];
+    if (size > 0) {
+        memcpy(resultStr, data, size);
+    }
+    resultStr[size] = '\0';
+    
+    return resultStr;
 }
 
 int QString_compare_strings(const char *s1, const char *s2, int cs)
 {
-    return QStringBind::compare_strings(s1, s2, cs);
+    return QStringBind::compare(QString::fromUtf8(s1), QString::fromUtf8(s2), static_cast<Qt::CaseSensitivity>(cs));
 }
 
 int QString_locale_aware_compare(const char *s1, const char *s2)
 {
-    return QStringBind::locale_aware_compare(s1, s2);
+    return QStringBind::localeAwareCompare(QString::fromUtf8(s1), QString::fromUtf8(s2));
 }
 
 void *QString_from_latin1(const char *str, int size)
 {
-    return QStringBind::from_latin1(str, size);
+    return new QStringBind(QStringBind::fromLatin1(str, size));
 }
 
 void *QString_from_latin1_ba(const char *str)
 {
-    return QStringBind::from_latin1_ba(str);
+    QByteArray ba(str);
+    return new QStringBind(QStringBind::fromLatin1(ba));
 }
 
 void *QString_from_utf8_size(const char *str, int size)
 {
-    return QStringBind::from_utf8_size(str, size);
+    return new QStringBind(QStringBind::fromUtf8(str, size));
 }
 
 void *QString_from_utf8_ba(const char *str)
 {
-    return QStringBind::from_utf8_ba(str);
+    QByteArray ba(str);
+    return new QStringBind(QStringBind::fromUtf8(ba));
 }
 
 void *QString_from_local8bit(const char *str, int size)
 {
-    return QStringBind::from_local8bit(str, size);
+    return new QStringBind(QStringBind::fromLocal8Bit(str, size));
 }
 
 void *QString_from_local8bit_ba(const char *str)
 {
-    return QStringBind::from_local8bit_ba(str);
+    QByteArray ba(str);
+    return new QStringBind(QStringBind::fromLocal8Bit(ba));
 }
 
 void *QString_from_ucs4(const char *unicode, int size)
 {
-    return QStringBind::from_ucs4(unicode, size);
+    return new QStringBind(QStringBind::fromUcs4(reinterpret_cast<const char32_t*>(unicode), size));
 }
 
 void *QString_from_utf16(const char *unicode, int size)
 {
-    return QStringBind::from_utf16(unicode, size);
+    return new QStringBind(QStringBind::fromUtf16(reinterpret_cast<const char16_t*>(unicode), size));
 }
 
 void *QString_from_wchar_array(const wchar_t *string, int size)
 {
-    return QStringBind::from_wchar_array(string, size);
+    return new QStringBind(QStringBind::fromWCharArray(string, size));
 }
 
 int QString_static_max_size()
 {
-    return QStringBind::max_size();
+    return static_cast<int>(QString::maxSize());
 }
 
 // 作成・削除
 void *QString_create_empty()
 {
-    return QStringBind::create_empty();
+    return new QStringBind();
 }
 
 void *QString_create_from_utf8(const char *str)
 {
-    return QStringBind::create_from_utf8(str);
+    return new QStringBind(str);
 }
 
 void *QString_create_from_char(char ch)
 {
-    return QStringBind::create_from_char(ch);
+    return new QStringBind(QChar(ch));
 }
 
 void *QString_create_from_byte_array(const char *data, int size)
 {
-    return QStringBind::create_from_byte_array(data, size);
+    QByteArray ba(data, size);
+    return new QStringBind(ba);
 }
 
 void *QString_create_with_size(int size, char ch)
 {
-    return QStringBind::create_with_size(size, ch);
+    return new QStringBind(size, QChar(ch));
 }
 
 void QString_delete(void *str)
 {
-    QStringBind::delete_string(str);
+    delete static_cast<QStringBind*>(str);
 }
 
 // 基本操作
 int QString_length(void *str)
 {
-    return QStringBind::length(str);
+    return static_cast<QStringBind*>(str)->length();
 }
 
 bool QString_isEmpty(void *str)
 {
-    return QStringBind::isEmpty(str);
+    return static_cast<QStringBind*>(str)->isEmpty();
 }
 
 void QString_clear(void *str)
 {
-    QStringBind::clear(str);
+    static_cast<QStringBind*>(str)->clear();
 }
 
 char *QString_toString(void *str)
 {
-    return QStringBind::toString(str);
+    QByteArray utf8 = static_cast<QStringBind*>(str)->toUtf8();
+    const char *data = utf8.constData();
+    size_t size = utf8.size();
+    
+    char *result = new char[size + 1];
+    if (size > 0) {
+        memcpy(result, data, size);
+    }
+    result[size] = '\0';
+    
+    return result;
 }
 
 int QString_capacity(void *str)
 {
-    return QStringBind::capacity(str);
+    return static_cast<QStringBind*>(str)->capacity();
 }
 
 void QString_chop(void *str, int n)
 {
-    QStringBind::chop(str, n);
+    static_cast<QStringBind*>(str)->chop(n);
 }
 
 char *QString_chopped(void *str, int len)
 {
-    return QStringBind::chopped(str, len);
+    QString result = static_cast<QStringBind*>(str)->chopped(len);
+    QByteArray utf8 = result.toUtf8();
+    const char *data = utf8.constData();
+    size_t size = utf8.size();
+    
+    char *resultStr = new char[size + 1];
+    if (size > 0) {
+        memcpy(resultStr, data, size);
+    }
+    resultStr[size] = '\0';
+    
+    return resultStr;
 }
 
 void *QString_fill(void *str, char ch, int size)
 {
-    return QStringBind::fill(str, ch, size);
+    static_cast<QStringBind*>(str)->fill(QChar(ch), size);
+    return str;
 }
 
 char *QString_first(void *str, int n)
 {
-    return QStringBind::first(str, n);
+    QString result = static_cast<QStringBind*>(str)->first(n);
+    QByteArray utf8 = result.toUtf8();
+    const char *data = utf8.constData();
+    size_t size = utf8.size();
+    
+    char *resultStr = new char[size + 1];
+    if (size > 0) {
+        memcpy(resultStr, data, size);
+    }
+    resultStr[size] = '\0';
+    
+    return resultStr;
 }
 
 char *QString_last(void *str, int n)
 {
-    return QStringBind::last(str, n);
+    QString result = static_cast<QStringBind*>(str)->last(n);
+    QByteArray utf8 = result.toUtf8();
+    const char *data = utf8.constData();
+    size_t size = utf8.size();
+    
+    char *resultStr = new char[size + 1];
+    if (size > 0) {
+        memcpy(resultStr, data, size);
+    }
+    resultStr[size] = '\0';
+    
+    return resultStr;
 }
 
 char QString_front(void *str)
 {
-    return QStringBind::front(str);
+    QChar ch = static_cast<QStringBind*>(str)->front();
+    return ch.toLatin1();
 }
 
 char QString_back(void *str)
 {
-    return QStringBind::back(str);
+    QChar ch = static_cast<QStringBind*>(str)->back();
+    return ch.toLatin1();
 }
 
 bool QString_isNull(void *str)
 {
-    return QStringBind::isNull(str);
+    return static_cast<QStringBind*>(str)->isNull();
 }
 
 bool QString_isLower(void *str)
 {
-    return QStringBind::isLower(str);
+    return static_cast<QStringBind*>(str)->isLower();
 }
 
 bool QString_isUpper(void *str)
 {
-    return QStringBind::isUpper(str);
+    return static_cast<QStringBind*>(str)->isUpper();
 }
 
 bool QString_isRightToLeft(void *str)
 {
-    return QStringBind::isRightToLeft(str);
+    return static_cast<QStringBind*>(str)->isRightToLeft();
 }
 
 char *QString_left(void *str, int n)
 {
-    return QStringBind::left(str, n);
+    QString result = static_cast<QStringBind*>(str)->left(n);
+    QByteArray utf8 = result.toUtf8();
+    const char *data = utf8.constData();
+    size_t size = utf8.size();
+    
+    char *resultStr = new char[size + 1];
+    if (size > 0) {
+        memcpy(resultStr, data, size);
+    }
+    resultStr[size] = '\0';
+    
+    return resultStr;
 }
 
 char *QString_right(void *str, int n)
 {
-    return QStringBind::right(str, n);
+    QString result = static_cast<QStringBind*>(str)->right(n);
+    QByteArray utf8 = result.toUtf8();
+    const char *data = utf8.constData();
+    size_t size = utf8.size();
+    
+    char *resultStr = new char[size + 1];
+    if (size > 0) {
+        memcpy(resultStr, data, size);
+    }
+    resultStr[size] = '\0';
+    
+    return resultStr;
 }
 
 char *QString_mid(void *str, int position, int n)
 {
-    return QStringBind::mid(str, position, n);
+    QString result = static_cast<QStringBind*>(str)->mid(position, n);
+    QByteArray utf8 = result.toUtf8();
+    const char *data = utf8.constData();
+    size_t size = utf8.size();
+    
+    char *resultStr = new char[size + 1];
+    if (size > 0) {
+        memcpy(resultStr, data, size);
+    }
+    resultStr[size] = '\0';
+    
+    return resultStr;
 }
 
 int QString_max_size(void *str)
 {
-    return QStringBind::max_size(str);
+    return static_cast<QStringBind*>(str)->capacity();
 }
 
 void QString_reserve(void *str, int size)
 {
-    QStringBind::reserve(str, size);
+    static_cast<QStringBind*>(str)->reserve(size);
 }
 
 void QString_resize(void *str, int size)
 {
-    QStringBind::resize(str, size);
+    static_cast<QStringBind*>(str)->resize(size);
 }
 
 void QString_resize_with_char(void *str, int size, char fillChar)
 {
-    QStringBind::resize_with_char(str, size, fillChar);
+    static_cast<QStringBind*>(str)->resize(size, QChar(fillChar));
 }
 
 char *QString_repeated(void *str, int times)
 {
-    return QStringBind::repeated(str, times);
+    QString result = static_cast<QStringBind*>(str)->repeated(times);
+    QByteArray utf8 = result.toUtf8();
+    const char *data = utf8.constData();
+    size_t size = utf8.size();
+    
+    char *resultStr = new char[size + 1];
+    if (size > 0) {
+        memcpy(resultStr, data, size);
+    }
+    resultStr[size] = '\0';
+    
+    return resultStr;
 }
 
 char *QString_sliced(void *str, int position, int n)
 {
-    return QStringBind::sliced(str, position, n);
+    QString result = static_cast<QStringBind*>(str)->sliced(position, n);
+    QByteArray utf8 = result.toUtf8();
+    const char *data = utf8.constData();
+    size_t size = utf8.size();
+    
+    char *resultStr = new char[size + 1];
+    if (size > 0) {
+        memcpy(resultStr, data, size);
+    }
+    resultStr[size] = '\0';
+    
+    return resultStr;
 }
 
 char *QString_sliced_from(void *str, int position)
 {
-    return QStringBind::sliced_from(str, position);
+    QString result = static_cast<QStringBind*>(str)->sliced(position);
+    QByteArray utf8 = result.toUtf8();
+    const char *data = utf8.constData();
+    size_t size = utf8.size();
+    
+    char *resultStr = new char[size + 1];
+    if (size > 0) {
+        memcpy(resultStr, data, size);
+    }
+    resultStr[size] = '\0';
+    
+    return resultStr;
 }
 
 void QString_shrink_to_fit(void *str)
 {
-    QStringBind::shrink_to_fit(str);
+    static_cast<QStringBind*>(str)->squeeze();
 }
 
 void QString_squeeze(void *str)
 {
-    QStringBind::squeeze(str);
+    static_cast<QStringBind*>(str)->squeeze();
 }
 
 void QString_swap(void *str, void *other)
 {
-    QStringBind::swap(str, other);
+    static_cast<QStringBind*>(str)->swap(*static_cast<QStringBind*>(other));
 }
 
 // 数値変換
 void *QString_setNum_int(void *str, int n, int base)
 {
-    return QStringBind::setNum_int(str, n, base);
+    static_cast<QStringBind*>(str)->setNum(n, base);
+    return str;
 }
 
 void *QString_setNum_long(void *str, long n, int base)
 {
-    return QStringBind::setNum_long(str, n, base);
+    static_cast<QStringBind*>(str)->setNum(n, base);
+    return str;
 }
 
 void *QString_setNum_longlong(void *str, long long n, int base)
 {
-    return QStringBind::setNum_longlong(str, n, base);
+    static_cast<QStringBind*>(str)->setNum(n, base);
+    return str;
 }
 
 void *QString_setNum_ulonglong(void *str, unsigned long long n, int base)
 {
-    return QStringBind::setNum_ulonglong(str, n, base);
+    static_cast<QStringBind*>(str)->setNum(n, base);
+    return str;
 }
 
 void *QString_setNum_short(void *str, short n, int base)
 {
-    return QStringBind::setNum_short(str, n, base);
+    static_cast<QStringBind*>(str)->setNum(n, base);
+    return str;
 }
 
 void *QString_setNum_uint(void *str, unsigned int n, int base)
 {
-    return QStringBind::setNum_uint(str, n, base);
+    static_cast<QStringBind*>(str)->setNum(n, base);
+    return str;
 }
 
 void *QString_setNum_ulong(void *str, unsigned long n, int base)
 {
-    return QStringBind::setNum_ulong(str, n, base);
+    static_cast<QStringBind*>(str)->setNum(n, base);
+    return str;
 }
 
 void *QString_setNum_ushort(void *str, unsigned short n, int base)
 {
-    return QStringBind::setNum_ushort(str, n, base);
+    static_cast<QStringBind*>(str)->setNum(n, base);
+    return str;
 }
 
 void *QString_setNum_double(void *str, double n, char format, int precision)
 {
-    return QStringBind::setNum_double(str, n, format, precision);
+    static_cast<QStringBind*>(str)->setNum(n, format, precision);
+    return str;
 }
 
 void *QString_setNum_float(void *str, float n, char format, int precision)
 {
-    return QStringBind::setNum_float(str, n, format, precision);
+    static_cast<QStringBind*>(str)->setNum(n, format, precision);
+    return str;
 }
 
 // 文字列操作
 char QString_at(void *str, int position)
 {
-    return QStringBind::at(str, position);
+    QChar ch = static_cast<QStringBind*>(str)->at(position);
+    return ch.toLatin1();
 }
 
 void QString_append(void *str, const char *text)
 {
-    QStringBind::append(str, text);
+    static_cast<QStringBind*>(str)->append(QString::fromUtf8(text));
 }
 
 void QString_append_char(void *str, char ch)
 {
-    QStringBind::append_char(str, ch);
+    static_cast<QStringBind*>(str)->append(QChar(ch));
 }
 
 void QString_append_byte_array(void *str, const char *data, int size)
 {
-    QStringBind::append_byte_array(str, data, size);
+    QByteArray ba(data, size);
+    static_cast<QStringBind*>(str)->append(QString::fromUtf8(ba));
 }
 
 void QString_prepend(void *str, const char *text)
 {
-    QStringBind::prepend(str, text);
+    static_cast<QStringBind*>(str)->prepend(QString::fromUtf8(text));
 }
 
 void QString_prepend_char(void *str, char ch)
 {
-    QStringBind::prepend_char(str, ch);
+    static_cast<QStringBind*>(str)->prepend(QChar(ch));
 }
 
 void QString_prepend_byte_array(void *str, const char *data, int size)
 {
-    QStringBind::prepend_byte_array(str, data, size);
+    QByteArray ba(data, size);
+    static_cast<QStringBind*>(str)->prepend(QString::fromUtf8(ba));
 }
 
 void QString_insert(void *str, int position, const char *text)
 {
-    QStringBind::insert(str, position, text);
+    static_cast<QStringBind*>(str)->insert(position, QString::fromUtf8(text));
 }
 
 void QString_insert_char(void *str, int position, char ch)
 {
-    QStringBind::insert_char(str, position, ch);
+    static_cast<QStringBind*>(str)->insert(position, QChar(ch));
 }
 
 void QString_insert_byte_array(void *str, int position, const char *data, int size)
 {
-    QStringBind::insert_byte_array(str, position, data, size);
+    QByteArray ba(data, size);
+    static_cast<QStringBind*>(str)->insert(position, QString::fromUtf8(ba));
 }
 
 void QString_remove(void *str, int position, int n)
 {
-    QStringBind::remove(str, position, n);
+    static_cast<QStringBind*>(str)->remove(position, n);
 }
 
 void QString_replace(void *str, int position, int n, const char *after)
 {
-    QStringBind::replace(str, position, n, after);
+    static_cast<QStringBind*>(str)->replace(position, n, QString::fromUtf8(after));
 }
 
 void QString_replace_char(void *str, int position, int n, char after)
 {
-    QStringBind::replace_char(str, position, n, after);
+    static_cast<QStringBind*>(str)->replace(position, n, QChar(after));
 }
 
 void QString_replace_byte_array(void *str, int position, int n, const char *data, int size)
 {
-    QStringBind::replace_byte_array(str, position, n, data, size);
+    QByteArray ba(data, size);
+    static_cast<QStringBind*>(str)->replace(position, n, QString::fromUtf8(ba));
 }
 
 // 変換
 char *QString_toLower(void *str)
 {
-    return QStringBind::toLower(str);
+    QString result = static_cast<QStringBind*>(str)->toLower();
+    QByteArray utf8 = result.toUtf8();
+    const char *data = utf8.constData();
+    size_t size = utf8.size();
+    
+    char *resultStr = new char[size + 1];
+    if (size > 0) {
+        memcpy(resultStr, data, size);
+    }
+    resultStr[size] = '\0';
+    
+    return resultStr;
 }
 
 char *QString_toUpper(void *str)
 {
-    return QStringBind::toUpper(str);
+    QString result = static_cast<QStringBind*>(str)->toUpper();
+    QByteArray utf8 = result.toUtf8();
+    const char *data = utf8.constData();
+    size_t size = utf8.size();
+    
+    char *resultStr = new char[size + 1];
+    if (size > 0) {
+        memcpy(resultStr, data, size);
+    }
+    resultStr[size] = '\0';
+    
+    return resultStr;
 }
 
 char *QString_trimmed(void *str)
 {
-    return QStringBind::trimmed(str);
+    QString result = static_cast<QStringBind*>(str)->trimmed();
+    QByteArray utf8 = result.toUtf8();
+    const char *data = utf8.constData();
+    size_t size = utf8.size();
+    
+    char *resultStr = new char[size + 1];
+    if (size > 0) {
+        memcpy(resultStr, data, size);
+    }
+    resultStr[size] = '\0';
+    
+    return resultStr;
 }
 
 char *QString_simplified(void *str)
 {
-    return QStringBind::simplified(str);
+    QString result = static_cast<QStringBind*>(str)->simplified();
+    QByteArray utf8 = result.toUtf8();
+    const char *data = utf8.constData();
+    size_t size = utf8.size();
+    
+    char *resultStr = new char[size + 1];
+    if (size > 0) {
+        memcpy(resultStr, data, size);
+    }
+    resultStr[size] = '\0';
+    
+    return resultStr;
 }
 
 char *QString_toCaseFolded(void *str)
 {
-    return QStringBind::toCaseFolded(str);
+    QString result = static_cast<QStringBind*>(str)->toCaseFolded();
+    QByteArray utf8 = result.toUtf8();
+    const char *data = utf8.constData();
+    size_t size = utf8.size();
+    
+    char *resultStr = new char[size + 1];
+    if (size > 0) {
+        memcpy(resultStr, data, size);
+    }
+    resultStr[size] = '\0';
+    
+    return resultStr;
 }
 
 char *QString_toHtmlEscaped(void *str)
 {
-    return QStringBind::toHtmlEscaped(str);
+    QString result = static_cast<QStringBind*>(str)->toHtmlEscaped();
+    QByteArray utf8 = result.toUtf8();
+    const char *data = utf8.constData();
+    size_t size = utf8.size();
+    
+    char *resultStr = new char[size + 1];
+    if (size > 0) {
+        memcpy(resultStr, data, size);
+    }
+    resultStr[size] = '\0';
+    
+    return resultStr;
 }
 
 void QString_truncate(void *str, int position)
 {
-    QStringBind::truncate(str, position);
+    static_cast<QStringBind*>(str)->truncate(position);
 }
 
 // 数値変換
 double QString_toDouble(void *str, bool *ok)
 {
-    return QStringBind::toDouble(str, ok);
+    return static_cast<QStringBind*>(str)->toDouble(ok);
 }
 
 float QString_toFloat(void *str, bool *ok)
 {
-    return QStringBind::toFloat(str, ok);
+    return static_cast<QStringBind*>(str)->toFloat(ok);
 }
 
 int QString_toInt(void *str, bool *ok, int base)
 {
-    return QStringBind::toInt(str, ok, base);
+    return static_cast<QStringBind*>(str)->toInt(ok, base);
 }
 
 long QString_toLong(void *str, bool *ok, int base)
 {
-    return QStringBind::toLong(str, ok, base);
+    return static_cast<QStringBind*>(str)->toLong(ok, base);
 }
 
 long long QString_toLongLong(void *str, bool *ok, int base)
 {
-    return QStringBind::toLongLong(str, ok, base);
+    return static_cast<QStringBind*>(str)->toLongLong(ok, base);
 }
 
 short QString_toShort(void *str, bool *ok, int base)
 {
-    return QStringBind::toShort(str, ok, base);
+    return static_cast<QStringBind*>(str)->toShort(ok, base);
 }
 
 unsigned int QString_toUInt(void *str, bool *ok, int base)
 {
-    return QStringBind::toUInt(str, ok, base);
+    return static_cast<QStringBind*>(str)->toUInt(ok, base);
 }
 
 unsigned long QString_toULong(void *str, bool *ok, int base)
 {
-    return QStringBind::toULong(str, ok, base);
+    return static_cast<QStringBind*>(str)->toULong(ok, base);
 }
 
 unsigned long long QString_toULongLong(void *str, bool *ok, int base)
 {
-    return QStringBind::toULongLong(str, ok, base);
+    return static_cast<QStringBind*>(str)->toULongLong(ok, base);
 }
 
 unsigned short QString_toUShort(void *str, bool *ok, int base)
 {
-    return QStringBind::toUShort(str, ok, base);
+    return static_cast<QStringBind*>(str)->toUShort(ok, base);
 }
 
 // 検索
 int QString_indexOf(void *str, const char *substr, int from)
 {
-    return QStringBind::indexOf(str, substr, from);
+    return static_cast<QStringBind*>(str)->indexOf(QString::fromUtf8(substr), from);
 }
 
 int QString_indexOf_char(void *str, char ch, int from)
 {
-    return QStringBind::indexOf_char(str, ch, from);
+    return static_cast<QStringBind*>(str)->indexOf(QChar(ch), from);
 }
 
 int QString_lastIndexOf(void *str, const char *substr, int from)
 {
-    return QStringBind::lastIndexOf(str, substr, from);
+    return static_cast<QStringBind*>(str)->lastIndexOf(QString::fromUtf8(substr), from);
 }
 
 int QString_lastIndexOf_char(void *str, char ch, int from)
 {
-    return QStringBind::lastIndexOf_char(str, ch, from);
+    return static_cast<QStringBind*>(str)->lastIndexOf(QChar(ch), from);
 }
 
 bool QString_contains(void *str, const char *substr)
 {
-    return QStringBind::contains(str, substr);
+    return static_cast<QStringBind*>(str)->contains(QString::fromUtf8(substr));
 }
 
 bool QString_contains_char(void *str, char ch)
 {
-    return QStringBind::contains_char(str, ch);
+    return static_cast<QStringBind*>(str)->contains(QChar(ch));
 }
 
 bool QString_startsWith(void *str, const char *prefix)
 {
-    return QStringBind::startsWith(str, prefix);
+    return static_cast<QStringBind*>(str)->startsWith(QString::fromUtf8(prefix));
 }
 
 bool QString_startsWith_char(void *str, char ch)
 {
-    return QStringBind::startsWith_char(str, ch);
+    return static_cast<QStringBind*>(str)->startsWith(QChar(ch));
 }
 
 bool QString_endsWith(void *str, const char *suffix)
 {
-    return QStringBind::endsWith(str, suffix);
+    return static_cast<QStringBind*>(str)->endsWith(QString::fromUtf8(suffix));
 }
 
 bool QString_endsWith_char(void *str, char ch)
 {
-    return QStringBind::endsWith_char(str, ch);
+    return static_cast<QStringBind*>(str)->endsWith(QChar(ch));
 }
 
 // 分割
 char **QString_split(void *str, const char *sep, int *count)
 {
-    return QStringBind::split(str, sep, count);
+    QStringList list = static_cast<QStringBind*>(str)->split(QString::fromUtf8(sep));
+    *count = list.size();
+    
+    char **result = new char*[*count];
+    for (int i = 0; i < *count; i++) {
+        QByteArray utf8 = list.at(i).toUtf8();
+        const char *data = utf8.constData();
+        size_t size = utf8.size();
+        
+        result[i] = new char[size + 1];
+        if (size > 0) {
+            memcpy(result[i], data, size);
+        }
+        result[i][size] = '\0';
+    }
+    
+    return result;
 }
 
 char **QString_split_char(void *str, char sep, int *count)
 {
-    return QStringBind::split_char(str, sep, count);
+    QStringList list = static_cast<QStringBind*>(str)->split(QChar(sep));
+    *count = list.size();
+    
+    char **result = new char*[*count];
+    for (int i = 0; i < *count; i++) {
+        QByteArray utf8 = list.at(i).toUtf8();
+        const char *data = utf8.constData();
+        size_t size = utf8.size();
+        
+        result[i] = new char[size + 1];
+        if (size > 0) {
+            memcpy(result[i], data, size);
+        }
+        result[i][size] = '\0';
+    }
+    
+    return result;
 }
 
 // 比較
 bool QString_equals(void *str, const char *other)
 {
-    return QStringBind::equals(str, other);
+    return *static_cast<QStringBind*>(str) == QString::fromUtf8(other);
 }
 
 bool QString_equals_char(void *str, char ch)
 {
-    return QStringBind::equals_char(str, ch);
+    return *static_cast<QStringBind*>(str) == QString(QChar(ch));
 }
 
 int QString_compare(void *str, const char *other, int cs)
 {
-    return QStringBind::compare(str, other, cs);
+    return static_cast<QStringBind*>(str)->compare(QString::fromUtf8(other), static_cast<Qt::CaseSensitivity>(cs));
 }
 
 int QString_compare_char(void *str, char ch, int cs)
 {
-    return QStringBind::compare_char(str, ch, cs);
+    return static_cast<QStringBind*>(str)->compare(QString(QChar(ch)), static_cast<Qt::CaseSensitivity>(cs));
 }
 
 // カウント
 int QString_count(void *str, const char *substr, int cs)
 {
-    return QStringBind::count(str, substr, cs);
+    return static_cast<QStringBind*>(str)->count(QString::fromUtf8(substr), static_cast<Qt::CaseSensitivity>(cs));
 }
 
 int QString_count_char(void *str, char ch, int cs)
 {
-    return QStringBind::count_char(str, ch, cs);
+    return static_cast<QStringBind*>(str)->count(QChar(ch), static_cast<Qt::CaseSensitivity>(cs));
 }
 
 // セクション
 char *QString_section(void *str, const char *sep, int start, int end, int flags)
 {
-    return QStringBind::section(str, sep, start, end, flags);
+    QString result = static_cast<QStringBind*>(str)->section(QString::fromUtf8(sep), start, end, QFlags<QString::SectionFlag>(flags));
+    QByteArray utf8 = result.toUtf8();
+    const char *data = utf8.constData();
+    size_t size = utf8.size();
+    
+    char *resultStr = new char[size + 1];
+    if (size > 0) {
+        memcpy(resultStr, data, size);
+    }
+    resultStr[size] = '\0';
+    
+    return resultStr;
 }
 
 char *QString_section_char(void *str, char sep, int start, int end, int flags)
 {
-    return QStringBind::section_char(str, sep, start, end, flags);
+    QString result = static_cast<QStringBind*>(str)->section(QChar(sep), start, end, QFlags<QString::SectionFlag>(flags));
+    QByteArray utf8 = result.toUtf8();
+    const char *data = utf8.constData();
+    size_t size = utf8.size();
+    
+    char *resultStr = new char[size + 1];
+    if (size > 0) {
+        memcpy(resultStr, data, size);
+    }
+    resultStr[size] = '\0';
+    
+    return resultStr;
 }
 
 // 正規化
-char *QString_normalized(void *str, QString_NormalizationForm mode)
+char *QString_normalized(void *str, int mode)
 {
-    return QStringBind::normalized(str, static_cast<NormalizationForm>(mode));
+    QString result = static_cast<QStringBind*>(str)->normalized(static_cast<QString::NormalizationForm>(mode));
+    QByteArray utf8 = result.toUtf8();
+    const char *data = utf8.constData();
+    size_t size = utf8.size();
+    
+    char *resultStr = new char[size + 1];
+    if (size > 0) {
+        memcpy(resultStr, data, size);
+    }
+    resultStr[size] = '\0';
+    
+    return resultStr;
 }
 
 // 追加の文字列操作
 char *QString_arg_string(void *str, const char *a)
 {
-    return QStringBind::arg_string(str, a);
+    QString result = static_cast<QStringBind*>(str)->arg(QString::fromUtf8(a));
+    QByteArray utf8 = result.toUtf8();
+    const char *data = utf8.constData();
+    size_t size = utf8.size();
+    
+    char *resultStr = new char[size + 1];
+    if (size > 0) {
+        memcpy(resultStr, data, size);
+    }
+    resultStr[size] = '\0';
+    
+    return resultStr;
 }
 
 char *QString_arg_int(void *str, int a)
 {
-    return QStringBind::arg_int(str, a);
+    QString result = static_cast<QStringBind*>(str)->arg(a);
+    QByteArray utf8 = result.toUtf8();
+    const char *data = utf8.constData();
+    size_t size = utf8.size();
+    
+    char *resultStr = new char[size + 1];
+    if (size > 0) {
+        memcpy(resultStr, data, size);
+    }
+    resultStr[size] = '\0';
+    
+    return resultStr;
 }
 
 char *QString_arg_long(void *str, long a, int fieldWidth, int base, char fillChar)
 {
-    return QStringBind::arg_long(str, a, fieldWidth, base, fillChar);
+    QString result = static_cast<QStringBind*>(str)->arg(a, fieldWidth, base, QChar(fillChar));
+    QByteArray utf8 = result.toUtf8();
+    const char *data = utf8.constData();
+    size_t size = utf8.size();
+    
+    char *resultStr = new char[size + 1];
+    if (size > 0) {
+        memcpy(resultStr, data, size);
+    }
+    resultStr[size] = '\0';
+    
+    return resultStr;
 }
 
 char *QString_arg_longlong(void *str, long long a, int fieldWidth, int base, char fillChar)
 {
-    return QStringBind::arg_longlong(str, a, fieldWidth, base, fillChar);
+    QString result = static_cast<QStringBind*>(str)->arg(static_cast<qlonglong>(a), fieldWidth, base, QChar(fillChar));
+    QByteArray utf8 = result.toUtf8();
+    const char *data = utf8.constData();
+    size_t size = utf8.size();
+    
+    char *resultStr = new char[size + 1];
+    if (size > 0) {
+        memcpy(resultStr, data, size);
+    }
+    resultStr[size] = '\0';
+    
+    return resultStr;
 }
 
 char *QString_arg_short(void *str, short a, int fieldWidth, int base, char fillChar)
 {
-    return QStringBind::arg_short(str, a, fieldWidth, base, fillChar);
+    QString result = static_cast<QStringBind*>(str)->arg(a, fieldWidth, base, QChar(fillChar));
+    QByteArray utf8 = result.toUtf8();
+    const char *data = utf8.constData();
+    size_t size = utf8.size();
+    
+    char *resultStr = new char[size + 1];
+    if (size > 0) {
+        memcpy(resultStr, data, size);
+    }
+    resultStr[size] = '\0';
+    
+    return resultStr;
 }
 
 char *QString_arg_uint(void *str, unsigned int a, int fieldWidth, int base, char fillChar)
 {
-    return QStringBind::arg_uint(str, a, fieldWidth, base, fillChar);
+    QString result = static_cast<QStringBind*>(str)->arg(a, fieldWidth, base, QChar(fillChar));
+    QByteArray utf8 = result.toUtf8();
+    const char *data = utf8.constData();
+    size_t size = utf8.size();
+    
+    char *resultStr = new char[size + 1];
+    if (size > 0) {
+        memcpy(resultStr, data, size);
+    }
+    resultStr[size] = '\0';
+    
+    return resultStr;
 }
 
 char *QString_arg_ulong(void *str, unsigned long a, int fieldWidth, int base, char fillChar)
 {
-    return QStringBind::arg_ulong(str, a, fieldWidth, base, fillChar);
+    QString result = static_cast<QStringBind*>(str)->arg(a, fieldWidth, base, QChar(fillChar));
+    QByteArray utf8 = result.toUtf8();
+    const char *data = utf8.constData();
+    size_t size = utf8.size();
+    
+    char *resultStr = new char[size + 1];
+    if (size > 0) {
+        memcpy(resultStr, data, size);
+    }
+    resultStr[size] = '\0';
+    
+    return resultStr;
 }
 
 char *QString_arg_ushort(void *str, unsigned short a, int fieldWidth, int base, char fillChar)
 {
-    return QStringBind::arg_ushort(str, a, fieldWidth, base, fillChar);
+    QString result = static_cast<QStringBind*>(str)->arg(a, fieldWidth, base, QChar(fillChar));
+    QByteArray utf8 = result.toUtf8();
+    const char *data = utf8.constData();
+    size_t size = utf8.size();
+    
+    char *resultStr = new char[size + 1];
+    if (size > 0) {
+        memcpy(resultStr, data, size);
+    }
+    resultStr[size] = '\0';
+    
+    return resultStr;
 }
 
 char *QString_arg_double(void *str, double a, int fieldWidth, char format, int precision, char fillChar)
 {
-    return QStringBind::arg_double(str, a, fieldWidth, format, precision, fillChar);
+    QString result = static_cast<QStringBind*>(str)->arg(a, fieldWidth, format, precision, QChar(fillChar));
+    QByteArray utf8 = result.toUtf8();
+    const char *data = utf8.constData();
+    size_t size = utf8.size();
+    
+    char *resultStr = new char[size + 1];
+    if (size > 0) {
+        memcpy(resultStr, data, size);
+    }
+    resultStr[size] = '\0';
+    
+    return resultStr;
 }
 
 char *QString_arg_char(void *str, char a, int fieldWidth, char fillChar)
 {
-    return QStringBind::arg_char(str, a, fieldWidth, fillChar);
+    QString result = static_cast<QStringBind*>(str)->arg(QChar(a), fieldWidth, QChar(fillChar));
+    QByteArray utf8 = result.toUtf8();
+    const char *data = utf8.constData();
+    size_t size = utf8.size();
+    
+    char *resultStr = new char[size + 1];
+    if (size > 0) {
+        memcpy(resultStr, data, size);
+    }
+    resultStr[size] = '\0';
+    
+    return resultStr;
 }
 
 // パディング
 char *QString_leftJustified(void *str, int width, char fill, bool truncate)
 {
-    return QStringBind::leftJustified(str, width, fill, truncate);
+    QString result = static_cast<QStringBind*>(str)->leftJustified(width, QChar(fill), truncate);
+    QByteArray utf8 = result.toUtf8();
+    const char *data = utf8.constData();
+    size_t size = utf8.size();
+    
+    char *resultStr = new char[size + 1];
+    if (size > 0) {
+        memcpy(resultStr, data, size);
+    }
+    resultStr[size] = '\0';
+    
+    return resultStr;
 }
 
 char *QString_rightJustified(void *str, int width, char fill, bool truncate)
 {
-    return QStringBind::rightJustified(str, width, fill, truncate);
+    QString result = static_cast<QStringBind*>(str)->rightJustified(width, QChar(fill), truncate);
+    QByteArray utf8 = result.toUtf8();
+    const char *data = utf8.constData();
+    size_t size = utf8.size();
+    
+    char *resultStr = new char[size + 1];
+    if (size > 0) {
+        memcpy(resultStr, data, size);
+    }
+    resultStr[size] = '\0';
+    
+    return resultStr;
+}
+
 }

@@ -1,42 +1,21 @@
-#ifndef QT_QTIMERBIND_H
-#define QT_QTIMERBIND_H
+#ifndef QTIMER_BIND_H
+#define QTIMER_BIND_H
+
+#include <QTimer>
 
 #include "QTimerHandler.h"
 
-// タイマーのコールバック関数の型定義（C言語側で使用）
-typedef void (*QTimerCallback)(void *userData);
+class QTimerHandler;
 
-class QTimerBind {
+class QTimerBind : public QTimer {
+    Q_OBJECT
+    typedef void (*QTimer_TimeoutCallback)(void*);
 public:
-    // 作成・削除
-    static void *create();
-    static void delete_timer(void *timer);
-
-    // タイマー操作
-    static void start(void *timer, int msec);
-    static void startSingleShot(void *timer, int msec);
-    static void stop(void *timer);
-    static bool isActive(void *timer);
-    static int interval(void *timer);
-    static void setInterval(void *timer, int msec);
-    static int remainingTime(void *timer);
-    static int timerId(void *timer);
-    
-    // 追加機能
-    static bool isSingleShot(void *timer);
-    static void setSingleShot(void *timer, bool singleShot);
-    static int timerType(void *timer);
-    static void setTimerType(void *timer, int type);
-    static int id(void *timer);
-
-    // コールバック設定
-    static void setCallback(void *timer, QTimerCallback callback, void *userData);
-    
-    // 静的シングルショットタイマー
-    static void singleShot(int msec, QTimerCallback callback, void *userData);
-
+    explicit QTimerBind(QObject* parent = nullptr);
+    ~QTimerBind() override;
+    void setTimeoutCallback(QTimer_TimeoutCallback callback) const;
 private:
-    static QTimerHandler *handler(void *timer);
+    QTimerHandler* handler;
 };
 
-#endif // QT_QTIMERBIND_H
+#endif // QTIMER_BIND_H

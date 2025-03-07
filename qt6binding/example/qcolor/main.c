@@ -29,7 +29,7 @@ int main() {
     print_color_info(color1);
 
     // RGB constructor
-    void* color2 = QColor_createWithRgb(255, 0, 0, 255);
+    void* color2 = QColor_createWithRgba(255, 0, 0, 255);
     printf("Red color:\n");
     print_color_info(color2);
 
@@ -42,7 +42,7 @@ int main() {
     printf("Color manipulation:\n");
 
     // Set RGB
-    QColor_setRgb(color1, 0, 255, 0, 255);
+    QColor_setRgbByRgba(color1, 0, 255, 0, 255);
     printf("After setting RGB to green:\n");
     print_color_info(color1);
 
@@ -67,7 +67,7 @@ int main() {
 
     // Named colors
     void* namedColor = QColor_create();
-    QColor_setNamedColor(namedColor, "darkturquoise");
+    QColor_fromString(namedColor, "darkturquoise");
     printf("Dark turquoise color:\n");
     print_color_info(namedColor);
 

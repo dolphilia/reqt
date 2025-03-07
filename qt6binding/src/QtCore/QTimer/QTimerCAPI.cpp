@@ -1,121 +1,84 @@
 #include "QTimerBind.h"
-#include "qtimer.h"
-#include <QTimer>
 
-// 作成・削除
-void *QTimer_create()
-{
-    return QTimerBind::create();
+extern "C" {
+
+void* QTimer_create() {
+    return new QTimerBind();
 }
 
-void QTimer_delete(void *timer)
-{
-    QTimerBind::delete_timer(timer);
+void QTimer_delete(void* timer) {
+    delete static_cast<QTimerBind*>(timer);
 }
 
-// タイマー操作
-void QTimer_start(void *timer, int msec)
-{
-    QTimerBind::start(timer, msec);
+void QTimer_start(void* timer, int msec) {
+    QTimerBind* qtimer = static_cast<QTimerBind*>(timer);
+    qtimer->setInterval(msec);
+    qtimer->start();
 }
 
-void QTimer_startSingleShot(void *timer, int msec)
-{
-    QTimerBind::startSingleShot(timer, msec);
+void QTimer_startSingleShot(void* timer, int msec) {
+    QTimerBind* qtimer = static_cast<QTimerBind*>(timer);
+    qtimer->setSingleShot(true);
+    qtimer->setInterval(msec);
+    qtimer->start();
 }
 
-void QTimer_stop(void *timer)
-{
-    QTimerBind::stop(timer);
+void QTimer_stop(void* timer) {
+    static_cast<QTimerBind*>(timer)->stop();
 }
 
-bool QTimer_isActive(void *timer)
-{
-    return QTimerBind::isActive(timer);
+bool QTimer_isActive(void* timer) {
+    return static_cast<QTimerBind*>(timer)->isActive();
 }
 
-int QTimer_interval(void *timer)
-{
-    return QTimerBind::interval(timer);
+int QTimer_interval(void* timer) {
+    return static_cast<QTimerBind*>(timer)->interval();
 }
 
-void QTimer_setInterval(void *timer, int msec)
-{
-    QTimerBind::setInterval(timer, msec);
+void QTimer_setInterval(void* timer, int msec) {
+    static_cast<QTimerBind*>(timer)->setInterval(msec);
 }
 
-int QTimer_remainingTime(void *timer)
-{
-    return QTimerBind::remainingTime(timer);
+int QTimer_remainingTime(void* timer) {
+    return static_cast<QTimerBind*>(timer)->remainingTime();
 }
 
-int QTimer_timerId(void *timer)
-{
-    return QTimerBind::timerId(timer);
+int QTimer_timerId(void* timer) {
+    return static_cast<QTimerBind*>(timer)->timerId();
 }
 
-// 追加機能
-bool QTimer_isSingleShot(void *timer)
-{
-    return QTimerBind::isSingleShot(timer);
+bool QTimer_isSingleShot(void* timer) {
+    return static_cast<QTimerBind*>(timer)->isSingleShot();
 }
 
-void QTimer_setSingleShot(void *timer, bool singleShot)
-{
-    QTimerBind::setSingleShot(timer, singleShot);
+void QTimer_setSingleShot(void* timer, bool singleShot) {
+    static_cast<QTimerBind*>(timer)->setSingleShot(singleShot);
 }
 
-int QTimer_timerType(void *timer)
-{
-    return QTimerBind::timerType(timer);
+int QTimer_timerType(void* timer) {
+    return static_cast<int>(static_cast<QTimerBind*>(timer)->timerType());
 }
 
-void QTimer_setTimerType(void *timer, int type)
-{
-    QTimerBind::setTimerType(timer, type);
+void QTimer_setTimerType(void* timer, int type) {
+    static_cast<QTimerBind*>(timer)->setTimerType(static_cast<Qt::TimerType>(type));
 }
 
-int QTimer_id(void *timer)
-{
-    return QTimerBind::id(timer);
+typedef void (*QTimer_TimeoutCallback)(void*);
+
+void QTimer_setTimeoutCallback(void* timer, QTimer_TimeoutCallback callback) {
+    static_cast<QTimerBind*>(timer)->setTimeoutCallback(callback);
 }
 
-// コールバック設定
-void QTimer_setCallback(void *timer, QTimer_Callback callback, void *userData)
-{
-    QTimerBind::setCallback(timer, callback, userData);
+// 静的シングルショットタイマー
+void QTimer_singleShot(int msec, QTimer_TimeoutCallback callback, void* userData) {
+    QTimerBind* timer = new QTimerBind();
+    timer->setTimeoutCallback(callback);
+    QObject::connect(timer, &QTimer::timeout, timer, [timer, userData]() {
+        timer->setTimeoutCallback(nullptr);
+        timer->deleteLater();
+    });
+    timer->setSingleShot(true);
+    timer->start(msec);
 }
 
-// 静的メソッド
-// シングルショットタイマーのためのグローバル変数
-static QTimer *g_singleShotTimer = nullptr;
-static QTimer_Callback g_singleShotCallback = nullptr;
-static void *g_singleShotUserData = nullptr;
-
-// シングルショットタイマーのコールバック
-static void singleShotHandler()
-{
-    if (g_singleShotCallback) {
-        g_singleShotCallback(g_singleShotUserData);
-    }
-    
-    if (g_singleShotTimer) {
-        delete g_singleShotTimer;
-        g_singleShotTimer = nullptr;
-    }
-}
-
-void QTimer_singleShot(int msec, QTimer_Callback callback, void *userData)
-{
-    if (g_singleShotTimer) {
-        delete g_singleShotTimer;
-    }
-    
-    g_singleShotTimer = new QTimer();
-    g_singleShotTimer->setSingleShot(true);
-    g_singleShotCallback = callback;
-    g_singleShotUserData = userData;
-    
-    QObject::connect(g_singleShotTimer, &QTimer::timeout, singleShotHandler);
-    g_singleShotTimer->start(msec);
 }
