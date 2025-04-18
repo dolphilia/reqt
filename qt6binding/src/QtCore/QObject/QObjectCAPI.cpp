@@ -76,10 +76,10 @@ void QObject_dumpObjectTree(void* object) {
 
 // QList<QByteArray> dynamicPropertyNames() const
 
-char** QObject_dynamicPropertyNames(void* object, int* count) {
+void** QObject_dynamicPropertyNames(void* object, int* count) {
     QList<QByteArray> names = static_cast<QObjectBind*>(object)->dynamicPropertyNames();
     *count = names.size();
-    char** result = new char*[names.size()];
+    void** result = new void*[names.size()];
     for (int i = 0; i < names.size(); i++) {
         result[i] = qstrdup(names[i].constData());
     }

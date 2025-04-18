@@ -1,0 +1,744 @@
+# TODO
+
+## Qt Core Widgets
+
+- [ ] QAbstractAnimation: すべてのアニメーションの基底クラス
+- [ ] QAbstractEventDispatcher: Qt のイベントキューを管理するためのインターフェース
+- [ ] QAbstractEventDispatcher::TimerInfoV2: QAbstractEventDispatcherV2
+- [ ] QAbstractItemModel: アイテムモデルクラスの抽象インターフェース
+- [ ] QAbstractListModel: 1 次元リストモデルを作成するためにサブクラス化可能な抽象モデル
+- [ ] QAbstractNativeEventFilter: MSG や XCB イベント構造体などのネイティブイベントを受信するためのインターフェース
+- [ ] QAbstractProxyModel: ソート、フィルタリング、その他のデータ処理を行うプロキシアイテムモデルの基底クラス
+- [ ] QAbstractTableModel: テーブルモデルを作成するためにサブクラス化可能な抽象モデル
+- [ ] QAdoptSharedDataTag: ヘルパータグクラス
+- [ ] QAnimationGroup: アニメーショングループの抽象基底クラス
+- [ ] QAnyStringView: Latin-1、UTF-8、または UTF-16 文字列を統一的に読み取り専用で扱うビュー
+- [ ] QAssociativeIterable: QVariant 内の連想コンテナの反復インターフェース
+- [ ] QAtomicInt: プラットフォーム非依存の int 型のアトミック操作
+- [ ] QAtomicInteger: プラットフォーム非依存の整数型のアトミック操作
+- [ ] QAtomicPointer: ポインタに対するプラットフォーム非依存のアトミック操作を提供するテンプレートクラス
+- [ ] QAtomicScopedValueRollback: アトミック変数用の QScopedValueRollback を提供
+- [ ] QBEInteger: プラットフォーム非依存のビッグエンディアン整数
+- [ ] QBaseIterator: 空
+- [ ] QBasicTimer: オブジェクト用のタイマーイベント
+- [ ] QBindable: バインディング対応プロパティをラップするクラス。型安全な操作を可能にし、さまざまなプロパティクラス間の違いを抽象化
+- [ ] QBitArray: ビットの配列
+- [ ] QBluetoothPermission: Bluetooth 周辺機器へのアクセス
+- [ ] QBuffer: QByteArray 用の QIODevice インターフェース
+- [ ] QByteArray: バイトの配列
+- [ ] QByteArray::FromBase64Result: QByteArray::fromBase64Encoding の呼び出し結果を保持するクラス
+- [ ] QByteArrayList: バイト配列のリスト
+- [ ] QByteArrayMatcher: バイト配列内で迅速に一致させることができるバイト列を保持
+- [ ] QByteArrayView: QByteArray API の読み取り専用サブセットを持つバイト配列のビュー
+- [ ] QCache: キャッシュを提供するテンプレートクラス
+- [ ] QCalendar: カレンダーシステムを記述
+- [ ] QCalendar::SystemId: 空
+- [ ] QCalendarPermission: ユーザーのカレンダーへのアクセス
+- [ ] QCameraPermission: 写真やビデオを撮影するためのカメラへのアクセス
+- [ ] QCborArray: CBOR 要素の配列を保持
+- [ ] QCborError: CBOR ストリームの解析または検証中に見つかったエラー状態を保持
+- [ ] QCborMap: CBOR で表現可能な連想コンテナを保持
+- [ ] QCborMap::ConstIterator: QCborMap 用の STL スタイルの const イテレータクラス
+- [ ] QCborMap::Iterator: QCborMap 用の STL スタイルの非 const イテレータクラス
+- [ ] QCborParserError: QCborValue による解析エラーの報告に使用
+- [ ] QCborStreamReader: QByteArray または QIODevice 上で動作するシンプルな CBOR ストリームデコーダ
+- [ ] QCborStreamReader::StringResult: 空
+- [ ] QCborStreamWriter: 一方向ストリーム上で動作するシンプルな CBOR エンコーダ
+- [ ] QCborValue: CBOR 内の値をカプセル化
+- [ ] QChar: 16 ビットの Unicode 文字
+- [ ] QChildEvent: 子オブジェクトイベントのパラメータを含む
+- [ ] QChronoTimer: 繰り返しおよびワンショットタイマー
+- [ ] QCollator: ローカライズされた照合アルゴリズムに基づいて文字列を比較
+- [ ] QCollatorSortKey: 文字列の照合を高速化するために使用可能
+- [ ] QCommandLineOption: コマンドラインオプションを定義
+- [ ] QCommandLineParser: コマンドラインオプションを処理する手段
+- [ ] QConcatenateTablesProxyModel: 複数のソースモデルをプロキシし、それらの行を連結
+- [ ] QConstIterator: QVariant 内のコンテナを反復処理するためのインターフェース
+- [ ] QContactsPermission: ユーザーの連絡先へのアクセス
+- [ ] QContiguousCache: 連続キャッシュを提供するテンプレートクラス
+- [ ] QCoreApplication: UI を持たない Qt アプリケーションのイベントループ
+- [ ] QCryptographicHash: 暗号化ハッシュを生成する方法
+- [ ] QDataStream: バイナリデータを QIODevice にシリアル化
+- [ ] QDate: 日付関数
+- [ ] QDateTime: 日付と時刻の関数
+- [ ] QDeadlineTimer: 将来の期限をマーク
+- [ ] QDebug: デバッグ情報の出力ストリーム
+- [ ] QDebugStateSaver: カスタム QDebug 演算子用の便利なクラス
+- [ ] QDir: ディレクトリ構造とその内容へのアクセス
+- [ ] QDirIterator: ディレクトリエントリリスト用のイテレータ
+- [ ] QDirListing: ディレクトリエントリ用の STL スタイルのイテレータ
+- [ ] QDirListing::DirEntry: 空
+- [ ] QDirListing::sentinel: 空
+- [ ] QDynamicPropertyChangeEvent: 動的プロパティ変更イベントのパラメータを含む
+- [ ] QEasingCurve: アニメーションを制御するためのイージング曲線
+- [ ] QElapsedTimer: 経過時間を高速に計算
+- [ ] QEnableSharedFromThis: 共有ポインタによって既に管理されているオブジェクトの QSharedPointer を取得可能にする基底クラス
+- [ ] QEvent: すべてのイベントクラスの基底クラス。イベントオブジェクトはイベントパラメータを含む
+- [ ] QEventLoop: イベントループへの出入りの手段
+- [ ] QEventLoopLocker: イベントループが不要になったときに終了する手段
+- [ ] QException: スレッド間で転送可能な例外の基底クラス
+- [ ] QExplicitlySharedDataPointer: 明示的に共有されたオブジェクトへのポインタを表す
+- [ ] QFile: ファイルの読み取りおよび書き込み用のインターフェース
+- [ ] QFileDevice: 開いているファイルの読み取りおよび書き込み用のインターフェース
+- [ ] QFileInfo: ファイルシステムエントリに関する OS 非依存の API
+- [ ] QFileSelector: ファイルバリアントを選択するための便利な方法
+- [ ] QFileSystemWatcher: ファイルやディレクトリの変更を監視するためのインターフェース
+- [ ] QFlag: QFlags 用のヘルパーデータ型
+- [ ] QFlags: 列挙値の OR 組み合わせを型安全に格納
+- [ ] QFuture: 非同期計算の結果を表す
+- [ ] QFutureIterator: QFuture 用の Java スタイルの const イテレータ
+- [ ] QFutureSynchronizer: QFuture の同期を簡略化する便利なクラス
+- [ ] QFutureWatcher: シグナルとスロットを使用して QFuture を監視可能
+- [ ] QGenericArgument: 引数をマーシャリングするための内部ヘルパークラス
+- [ ] QGenericReturnArgument: 引数をマーシャリングするための内部ヘルパークラス
+- [ ] QGlobalStatic: グローバル静的オブジェクトを実装するために使用
+- [ ] QGregorianCalendar: グレゴリオ暦を実装
+- [ ] QHash: ハッシュテーブルベースの辞書を提供するテンプレートクラス
+- [ ] QHash::TryEmplaceResult: tryEmplace() 操作の結果を表すために使用
+- [ ] QHashIterator: QHash および QMultiHash 用の Java スタイルの const イテレータ
+- [ ] QHashSeed: 空
+- [ ] QIODevice: QtにおけるすべてのI/Oデバイスの基本インターフェースクラス
+- [ ] QIODeviceBase: デバイスが開かれるモードを示すフラグを提供するQIODeviceの基底クラス
+- [ ] QIdentityProxyModel: ソースモデルを変更せずにプロキシするモデル
+- [ ] QItemSelection: モデル内の選択されたアイテムに関する情報を管理
+- [ ] QItemSelectionModel: ビューの選択されたアイテムを追跡
+- [ ] QItemSelectionRange: モデル内の選択範囲に関する情報を管理
+- [ ] QIterable: QSequentialIterableおよびQAssociativeIterableの基底クラスとなるテンプレートクラス
+- [ ] QIterator: QVariant内のコンテナを反復処理するためのテンプレートクラス
+- [ ] QJalaliCalendar: ジャラリ（ヒジュラ太陽暦）カレンダーシステムの実装
+- [ ] QJniArray: Javaの配列を表すテンプレートクラス
+- [ ] QJniArrayBase: QJniArrayの共通で型に依存しないAPI
+- [ ] QJniEnvironment: JNI環境（JNIEnv）へのアクセスを提供
+- [ ] QJniObject: Javaネイティブインターフェース（JNI）の便利なラッパー
+- [ ] QJsonArray: JSON配列をカプセル化
+- [ ] QJsonDocument: JSONドキュメントの読み書き方法を提供
+- [ ] QJsonObject: JSONオブジェクトをカプセル化
+- [ ] QJsonParseError: JSON解析中のエラーを報告するために使用
+- [ ] QJsonValue: JSON内の値をカプセル化
+- [ ] QJulianCalendar: ユリウス暦システムの実装
+- [ ] QKeyCombination: キーとオプションの修飾キーの組み合わせを格納
+- [ ] QKeyValueIterator: 連想コンテナのキー/値ペアを反復処理するイテレータ
+- [ ] QLEInteger: プラットフォームに依存しないリトルエンディアン整数
+- [ ] QLatin1Char: 8ビットのASCII/Latin-1文字
+- [ ] QLatin1String: QLatin1StringViewと同じ
+- [ ] QLatin1StringMatcher: Latin-1テキスト内の部分文字列検索を最適化
+- [ ] QLatin1StringView: US-ASCII/Latin-1エンコードされた文字列リテラルの薄いラッパー
+- [ ] QLibrary: 実行時に共有ライブラリをロード
+- [ ] QLibraryInfo: Qtライブラリに関する情報
+- [ ] QLine: 整数精度を使用した2次元ベクトル
+- [ ] QLineF: 浮動小数点精度を使用した2次元ベクトル
+- [ ] QList: 動的配列を提供するテンプレートクラス
+- [ ] QListIterator: QListおよびQQueue用のJavaスタイルのconstイテレータ
+- [ ] QLocale: 数値とその文字列表現をさまざまな言語間で変換
+- [ ] QLocationPermission: ユーザーの位置情報へのアクセス
+- [ ] QLockFile: ファイルを使用したプロセス間のロック
+- [ ] QLoggingCategory: ログインフラストラクチャ内のカテゴリまたは「エリア」を表す
+- [ ] QMap: 連想配列を提供するテンプレートクラス
+- [ ] QMapIterator: QMap用のJavaスタイルのconstイテレータ
+- [ ] QMargins: 長方形の4つの余白を定義
+- [ ] QMarginsF: 長方形の4つの余白を定義
+- [ ] QMessageAuthenticationCode: ハッシュベースのメッセージ認証コードを生成する方法
+- [ ] QMessageLogContext: ログメッセージに関する追加情報
+- [ ] QMessageLogger: ログメッセージを生成
+- [ ] QMetaClassInfo: クラスに関する追加情報
+- [ ] QMetaContainer: 順序付きおよび連想コンテナの共通機能
+- [ ] QMetaEnum: 列挙子に関するメタデータ
+- [ ] QMetaMethod: メンバ関数に関するメタデータ
+- [ ] QMetaObject: Qtオブジェクトに関するメタ情報を含む
+- [ ] QMetaObject::Connection: 空
+- [ ] QMetaProperty: プロパティに関するメタデータ
+- [ ] QMetaSequence: 順序付きコンテナへの型消去アクセスを可能にする
+- [ ] QMetaType: メタオブジェクトシステム内の名前付き型を管理
+- [ ] QMicrophonePermission: 音声の監視または録音のためにマイクにアクセス
+- [ ] QMilankovicCalendar: ミランコビッチ暦システムの実装
+- [ ] QMimeData: MIMEタイプに関する情報を記録するデータのコンテナ
+- [ ] QMimeDatabase: MIMEタイプのデータベースを維持
+- [ ] QMimeType: MIMEタイプ文字列で表されるファイルまたはデータの種類を記述
+- [ ] QModelIndex: データモデル内のデータを特定するために使用
+- [ ] QModelRoleData: ロールとそのロールに関連付けられたデータを保持
+- [ ] QModelRoleDataSpan: QModelRoleDataオブジェクトのスパン
+- [ ] QMultiHash: 複数値のハッシュテーブル
+- [ ] QMultiMap: 複数の同等キーを持つ連想配列を提供するテンプレートクラス
+- [ ] QMultiMap::key_iterator: 空
+- [ ] QMultiMap::key_iterator class: QMultiMapキー用のSTLスタイルのconstイテレータを提供
+- [ ] QMultiMapIterator: QMultiMap用のJavaスタイルのconstイテレータ。QMultiMapはJavaスタイルとSTLスタイルの両方のイテレータを持つ。STLスタイルのイテレータの方が効率的で推奨される
+- [ ] QMutableHashIterator: QHashおよびQMultiHash用のJavaスタイルの非constイテレータ
+- [ ] QMutableListIterator: QList、QQueue、QStack用のJavaスタイルの非constイテレータ
+- [ ] QMutableMapIterator: QMap用のJavaスタイルの非constイテレータ
+- [ ] QMutableMultiMapIterator: QMultiMap用のJavaスタイルの非constイテレータ
+- [ ] QMutableSetIterator: QSet用のJavaスタイルの非constイテレータ
+- [ ] QMutex: スレッド間のアクセスの直列化
+- [ ] QMutexLocker: ミューテックスのロックとアンロックを簡略化する便利なクラス
+- [ ] QNativeInterface::QAndroidApplication: Android上のコアアプリケーションへのネイティブインターフェース
+- [ ] QNativeIpcKey: QSystemSemaphoreおよびQSharedMemoryで使用されるネイティブキーを保持
+- [ ] QNtfsPermissionCheckGuard: NTFS権限チェックを管理するRAIIクラス
+- [x] QObject: すべてのQtオブジェクトの基底クラス
+- [ ] QObjectBindableProperty: QObject派生クラスに格納されたプロパティデータの自動プロパティバインディングを可能にするテンプレートクラス
+- [ ] QObjectCleanupHandler: 複数のQObjectのライフタイムを監視
+- [ ] QObjectComputedProperty: 古いプロパティをバインダブルプロパティシステムに移行するためのテンプレートクラス
+- [ ] QOperatingSystemVersion: オペレーティングシステムのバージョンに関する情報
+- [ ] QParallelAnimationGroup: アニメーションの並列グループ
+- [ ] QPartialOrdering: 無順序の結果を許容する比較の結果を表す
+- [ ] QPauseAnimation: QSequentialAnimationGroupの一時停止
+- [ ] QPermission: 型付き権限の不透明なラッパー
+- [ ] QPersistentModelIndex: データモデル内のデータを特定するために使用
+- [ ] QPluginLoader: 実行時にプラグインをロード
+- [x] QPoint: 整数精度を使用して平面上の点を定義
+- [x] QPointF: 浮動小数点精度を使用して平面上の点を定義
+- [ ] QPointer: QObjectへのガード付きポインタを提供するテンプレートクラス
+- [ ] QProcess: 外部プログラムを開始し、それらと通信するために使用
+- [ ] QProcess::CreateProcessArguments: 空
+- [ ] QProcess::UnixProcessParameters: 空
+- [ ] QProcessEnvironment: プログラムに渡すことができる環境変数を保持
+- [ ] QPromise: QFutureでアクセスされる計算結果を格納する方法
+- [ ] QProperty: 自動プロパティバインディングを可能にするテンプレートクラス
+- [ ] QPropertyAnimation: Qtプロパティをアニメーション化
+- [ ] QPropertyBindingError: 空
+- [ ] QPropertyChangeHandler: QPropertyにインストールされた変更コールバックのライフサイクルを制御します
+- [ ] QPropertyData: 自動プロパティバインディングを持つプロパティのヘルパークラス
+- [ ] QPropertyNotifier: QPropertyにインストールされた変更コールバックのライフサイクルを制御します
+- [ ] QQueue: キューを提供する汎用コンテナ
+- [ ] QRandomGenerator: 高品質な乱数生成器からランダム値を取得するためのクラス
+- [ ] QRandomGenerator64: 高品質でシードレスな乱数生成器から64ビットのランダム値を取得するためのクラス
+- [ ] QReadLocker: 読み取り専用アクセスのためのロックとアンロックを簡略化する便利なクラス
+- [ ] QReadWriteLock: 読み書きロックを提供します
+- [x] QRect: 整数精度を使用して平面上の矩形を定義します
+- [ ] QRectF: 浮動小数点精度を使用して平面上の有限な矩形を定義します
+- [ ] QRecursiveMutex: スレッド間のアクセスを直列化します
+- [ ] QRegularExpression: 正規表現を使用したパターンマッチング
+- [ ] QRegularExpressionMatch: QRegularExpressionを文字列に対してマッチングした結果
+- [ ] QRegularExpressionMatchIterator: QRegularExpressionオブジェクトを文字列に対してグローバルマッチした結果のイテレータ
+- [ ] QResource: リソースから直接読み取るためのインターフェース
+- [ ] QRomanCalendar: 古代ローマ暦に基づくカレンダーの共有基盤
+- [ ] QRunnable: 実行可能なすべてのオブジェクトの基底クラス
+- [ ] QSaveFile: ファイルへの安全な書き込みを行うためのインターフェース
+- [ ] QScopeGuard: スコープの終了時に関数を呼び出すためのスコープガードを提供します
+- [ ] QScopedArrayPointer: 動的に割り当てられたオブジェクトの配列へのポインタを格納し、破棄時に削除します
+- [ ] QScopedPointer: 動的に割り当てられたオブジェクトへのポインタを格納し、破棄時に削除します
+- [ ] QScopedPropertyUpdateGroup: Qt::beginPropertyUpdateGroup()/Qt::endPropertyUpdateGroup()のRAIIクラス
+- [ ] QScopedValueRollback: 破棄時に変数を以前の値にリセットします
+- [ ] QSemaphore: 一般的なカウントセマフォ
+- [ ] QSemaphoreReleaser: QSemaphore::release()呼び出しの例外安全な延期
+- [ ] QSequentialAnimationGroup: アニメーションの逐次グループ
+- [ ] QSequentialIterable: QVariant内のコンテナのイテラブルインターフェース
+- [ ] QSet: ハッシュテーブルベースのセットを提供するテンプレートクラス
+- [ ] QSet::const_iterator: QSetのSTLスタイルのconstイテレータを提供するクラス
+- [ ] QSet::iterator: QSetのSTLスタイルの非constイテレータを提供するクラス
+- [ ] QSetIterator: QSetのJavaスタイルのconstイテレータ
+- [ ] QSettings: プラットフォームに依存しない永続的なアプリケーション設定
+- [ ] QSharedData: 共有データオブジェクトの基底クラス
+- [ ] QSharedDataPointer: 暗黙的に共有されたオブジェクトへのポインタを表します
+- [ ] QSharedMemory: 共有メモリセグメントへのアクセス
+- [ ] QSharedPointer: 共有ポインタへの強い参照を保持します
+- [ ] QSignalBlocker: QObject::blockSignals()の例外安全なラッパー
+- [ ] QSignalMapper: 識別可能な送信元からのシグナルを束ねます
+- [x] QSize: 整数ポイント精度を使用して2次元オブジェクトのサイズを定義します
+- [x] QSizeF: 浮動小数点精度を使用して2次元オブジェクトのサイズを定義します
+- [ ] QSocketNotifier: ファイルディスクリプタのアクティビティを監視するためのサポート
+- [ ] QSortFilterProxyModel: 別のモデルとビュー間で渡されるデータのソートとフィルタリングをサポート
+- [ ] QSpan: 連続データ上の非所有コンテナ
+- [ ] QStack: スタックを提供するテンプレートクラス
+- [ ] QStandardPaths: 標準パスにアクセスするためのメソッド
+- [ ] QStaticByteArrayMatcher: QByteArrayMatcherのコンパイル時バージョン
+- [ ] QStaticLatin1StringMatcher: QLatin1StringMatcherのコンパイル時バージョン
+- [ ] QStaticPlugin: 静的プラグインインスタンスとそのメタデータへの参照を含む構造体
+- [ ] QStorageInfo: 現在マウントされているストレージとドライブに関する情報を提供します
+- [x] QString: Unicode文字列
+- [ ] QStringConverter: テキストのエンコードとデコードのための基底クラス
+- [ ] QStringDecoder: 状態ベースのテキストデコーダ
+- [ ] QStringEncoder: 状態ベースのテキストエンコーダ
+- [ ] QStringList: 文字列のリスト
+- [ ] QStringListModel: ビューに文字列を供給するモデル
+- [ ] QStringMatcher: Unicode文字列内で迅速に一致させることができる文字列のシーケンスを保持します
+- [ ] QStringTokenizer: 指定された区切り文字に沿って文字列をトークンに分割します
+- [ ] QStringView: UTF-16文字列に対する統一されたビューで、QString APIの読み取り専用サブセットを提供します
+- [ ] QSysInfo: システムに関する情報
+- [ ] QSystemSemaphore: 一般的なカウントシステムセマフォ
+- [ ] QTaggedIterator: イテレータをラップし、標準的なイテレータ特性を公開するテンプレートクラス
+- [ ] QTemporaryDir: 一時的に使用するためのユニークなディレクトリを作成します
+- [ ] QTemporaryFile: 一時ファイルで動作するI/Oデバイス
+- [ ] QTextBoundaryFinder: 文字列内のUnicodeテキスト境界を見つける方法
+- [ ] QTextStream: テキストの読み書きのための便利なインターフェース
+- [ ] QThread: プラットフォームに依存しないスレッド管理方法
+- [ ] QThreadPool: QThreadのコレクションを管理します
+- [ ] QThreadStorage: スレッドごとのデータストレージ
+- [ ] QTime: 時計時間の関数
+- [ ] QTimeLine: アニメーションを制御するためのタイムライン
+- [ ] QTimeZone: 時間表現がUTCにどのように関連するかを識別します
+- [ ] QTimeZone::OffsetData: 空
+- [ ] QTimer: 繰り返しおよび単発のタイマー
+- [ ] QTimerEvent: タイマーイベントを記述するパラメータを含みます
+- [ ] QTranslator: テキスト出力の国際化サポート
+- [ ] QTransposeProxyModel: ソースモデルを転置するプロキシ
+- [ ] QTypeRevision: 2つの8ビットセグメント（メジャーとマイナー）を持つバージョン番号の軽量表現を含み、どちらも未知である可能性があります
+- [ ] QUnhandledException: Qt Concurrentワーカースレッドでの未処理の例外を表します
+- [ ] QUntypedBindable: `QProperty<T>` や任意の型TのQObjectBindablePropertyのようなバインダブルプロパティに対する統一インターフェース
+- [ ] QUrl: URLを操作するための便利なインターフェース
+- [ ] QUrlQuery: URLのクエリ内のキーと値のペアを操作する方法
+- [ ] QUtf8StringView: UTF-8文字列に対する統一されたビューで、QString APIの読み取り専用サブセットを提供します
+- [ ] QUuid: ユニバーサル一意識別子（UUID）を格納します
+- [ ] QUuid::Id128Bytes: 空
+- [ ] QVarLengthArray: 低レベルの可変長配列
+- [x] QVariant: 最も一般的なQtデータ型のための共用体のように動作します
+- [ ] QVariantAnimation: アニメーションの基底クラス
+- [ ] QVariantConstPointer: ポインタに基づくQVariantへのエミュレートされたconstポインタ
+- [ ] QVariantPointer: ポインタに基づくQVariantへのポインタをエミュレートするテンプレートクラス
+- [ ] QVariantRef: QVariantへの非const参照として動作します
+- [ ] QVector: QListのエイリアス
+- [ ] QVersionNumber: 任意のセグメント数を持つバージョン番号を含みます
+- [ ] QWaitCondition: スレッドを同期するための条件変数
+- [ ] QWeakPointer: 共有ポインタへの弱い参照を保持します
+- [ ] QWinEventNotifier: WindowsのWait関数をサポートします
+- [ ] QWriteLocker: 書き込みアクセスのためのロックとアンロックを簡略化する便利なクラス
+- [ ] QXmlStreamAttribute: 単一のXML属性を表します
+- [ ] QXmlStreamAttributes: QXmlStreamAttributeのベクトルを表します
+- [ ] QXmlStreamEntityDeclaration: DTDエンティティ宣言を表します
+- [ ] QXmlStreamEntityResolver: QXmlStreamReaderのエンティティリゾルバ
+- [ ] QXmlStreamNamespaceDeclaration: 名前空間宣言を表します
+- [ ] QXmlStreamNotationDeclaration: DTD表記宣言を表します
+- [ ] QXmlStreamReader: シンプルなストリーミングAPIを介して整形式XMLを読み取るための高速パーサ
+- [ ] QXmlStreamWriter: シンプルなストリーミングAPIを持つXMLライター
+- [ ] Qt::partial_ordering: 順序付けされていない結果を許容する比較の結果を表します
+- [ ] Qt::strong_ordering: 同等の値が区別できない比較を表します
+- [ ] Qt::totally_ordered_wrapper: ラップされた型に対して厳密な全順序を提供するラッパー型
+- [ ] Qt::weak_ordering: 同等の値が区別可能な比較を表します
+- [ ] QtFuture::WhenAnyResult: QtFuture::whenAny()の結果を表すために使用されます
+- [ ] qfloat16: 16ビット浮動小数点サポートを提供します
+
+## Qt GUI Classes
+
+- [ ] QAbstractFileIconProvider: QFileSystemModelクラスのファイルアイコン
+- [ ] QAbstractTextDocumentLayout: QTextDocumentsのカスタムレイアウトを実装するための抽象基底クラス
+- [ ] QAbstractTextDocumentLayout::PaintContext: ドキュメントのレイアウトを描画する際に使用されるパラメータを定義する便利なクラス
+- [ ] QAbstractTextDocumentLayout::Selection: 選択範囲のパラメータを定義する便利なクラス
+- [ ] QAccessible: アクセシビリティに関連する列挙型と静的関数
+- [ ] QAccessible::State: 空
+- [ ] QAccessibleActionInterface: インターフェース内で呼び出し可能なアクションのサポートを実装
+- [ ] QAccessibleAnnouncementEvent: 支援技術による特定のメッセージのアナウンスを要求するために使用
+- [ ] QAccessibleAttributesInterface: アクセシブルオブジェクトの属性を報告するサポートを実装
+- [ ] QAccessibleEditableTextInterface: 編集可能なテキストを持つオブジェクトのサポートを実装
+- [ ] QAccessibleEvent: アクセシビリティ通知の基底クラス
+- [ ] QAccessibleInterface: アクセシブルオブジェクトに関する情報を公開するインターフェースを定義
+- [ ] QAccessibleObject: QObjectのためのQAccessibleInterfaceの一部を実装
+- [ ] QAccessiblePlugin: ユーザーインターフェース要素のアクセシビリティ情報を提供するプラグインの抽象基底クラス
+- [ ] QAccessibleSelectionInterface: 選択処理のサポートを実装
+- [ ] QAccessibleStateChangeEvent: オブジェクトの状態が変更されたことをアクセシビリティフレームワークに通知
+- [ ] QAccessibleTableCellInterface: IAccessibleTable2セルインターフェースのサポートを実装
+- [ ] QAccessibleTableInterface: IAccessibleTable2インターフェースのサポートを実装
+- [ ] QAccessibleTableModelChangeEvent: テーブル、リスト、またはツリーでセルが追加または削除された変更を示す
+- [ ] QAccessibleTextCursorEvent: カーソルの移動を通知
+- [ ] QAccessibleTextInsertEvent: テキストが挿入されたことを通知
+- [ ] QAccessibleTextInterface: テキスト処理のサポートを実装
+- [ ] QAccessibleTextRemoveEvent: テキストが削除されたことを通知
+- [ ] QAccessibleTextSelectionEvent: オブジェクトのテキスト選択の変更を通知
+- [ ] QAccessibleTextUpdateEvent: テキストの変更を通知。編集可能なテキストをサポートするアクセシブル（例: ラインエディット）に使用
+- [ ] QAccessibleValueChangeEvent: アクセシブルオブジェクトの値の変更を記述
+- [ ] QAccessibleValueInterface: 値を操作するオブジェクトのサポートを実装
+- [ ] QAction: ユーザーコマンドを抽象化し、さまざまなUIコンポーネントに追加可能
+- [ ] QActionEvent: QActionが追加、削除、または変更されたときに生成されるイベント
+- [ ] QActionGroup: アクションをグループ化
+- [ ] QBackingStore: QWindowの描画領域
+- [ ] QBitmap: モノクロ（1ビット深度）のピクスマップ
+- [ ] QBrush: QPainterで描画される図形の塗りつぶしパターンを定義
+- [ ] QChildWindowEvent: 子ウィンドウの変更に関するイベントパラメータを含む
+- [ ] QClipboard: ウィンドウシステムのクリップボードへのアクセス
+- [ ] QCloseEvent: 閉じるイベントを記述するパラメータを含む
+- [ ] QColor: RGB、HSV、またはCMYK値に基づく色
+- [ ] QColorSpace: 色空間の抽象化
+- [ ] QColorSpace::PrimaryPoints: 4つの主要な色空間ポイントを含む構造体
+- [ ] QColorTransform: 色空間間の変換
+- [ ] QConicalGradient: 円錐グラデーションブラシを指定するためにQBrushと組み合わせて使用
+- [ ] QContextMenuEvent: コンテキストメニューイベントを記述するパラメータを含む
+- [ ] QCursor: 任意の形状を持つマウスカーソル
+- [ ] QDesktopServices: 一般的なデスクトップサービスへのアクセス方法
+- [ ] QDoubleValidator: 浮動小数点数の範囲チェック
+- [ ] QDrag: MIMEベースのドラッグ＆ドロップデータ転送をサポート
+- [ ] QDragEnterEvent: ドラッグ＆ドロップ操作がウィジェットに入ったときに送信されるイベント
+- [ ] QDragLeaveEvent: ドラッグ＆ドロップ操作がウィジェットを離れたときに送信されるイベント
+- [ ] QDragMoveEvent: ドラッグ＆ドロップ操作が進行中に送信されるイベント
+- [ ] QDropEvent: ドラッグ＆ドロップ操作が完了したときに送信されるイベント
+- [ ] QEnterEvent: 入力イベントを記述するパラメータを含む
+- [ ] QEventPoint: QPointerEvent内のポイントに関する情報
+- [ ] QExposeEvent: 露出イベントのパラメータを含む
+- [ ] QFileOpenEvent: ファイルまたはURLを開く要求があるときに送信されるイベント
+- [ ] QFileSystemModel: ローカルファイルシステムのデータモデル
+- [ ] QFocusEvent: ウィジェットのフォーカスイベントのパラメータを含む
+- [ ] QFont: テキスト描画に使用されるフォントのクエリを指定
+- [ ] QFont::Tag: 高度なフォント機能へのアクセスを提供するQFont::Tag型
+- [ ] QFontDatabase: 基盤となるウィンドウシステムで利用可能なフォントに関する情報
+- [ ] QFontInfo: フォントに関する一般的な情報
+- [ ] QFontMetrics: フォントメトリクス情報
+- [ ] QFontMetricsF: フォントメトリクス情報
+- [ ] QFontVariableAxis: フォント内の可変軸を表す
+- [ ] QGenericMatrix: N列M行の変換行列を表すテンプレートクラス
+- [ ] QGenericPlugin: プラグインの抽象基底クラス
+- [ ] QGenericPluginFactory: プラグインドライバを作成
+- [ ] QGlyphRun: フォント内の内部グリフへの直接アクセス
+- [ ] QGradient: グラデーション塗りつぶしを指定するためにQBrushと組み合わせて使用
+- [ ] QGuiApplication: GUIアプリケーションの制御フローと主要設定を管理
+- [ ] QHelpEvent: ウィジェット内の特定のポイントに関するヘルプ情報を要求するために使用されるイベント
+- [ ] QHideEvent: ウィジェットが非表示になった後に送信されるイベント
+- [ ] QHoverEvent: マウスイベントを記述するパラメータを含む
+- [ ] QIcon: 異なるモードと状態でスケーラブルなアイコン
+- [ ] QIconDragEvent: メインアイコンのドラッグが開始されたことを示す
+- [ ] QIconEngine: QIconレンダラーの抽象基底クラス
+- [ ] QIconEngine::ScaledPixmapArgument: 空
+- [ ] QIconEnginePlugin: カスタムQIconEngineプラグインの抽象基底クラス
+- [ ] QImage: ピクセルデータへの直接アクセスを可能にするハードウェア非依存の画像表現
+- [ ] QImageIOHandler: Qtのすべての画像フォーマットに共通の画像I/Oインターフェースを定義
+- [ ] QImageIOPlugin: 画像フォーマットプラグインを記述するインターフェースを定義
+- [ ] QImageReader: ファイルや他のデバイスから画像を読み取るためのフォーマット非依存インターフェース
+- [ ] QImageWriter: ファイルや他のデバイスに画像を書き込むためのフォーマット非依存インターフェース
+- [ ] QInputDevice: QInputEventが発生するデバイスを記述
+- [ ] QInputEvent: ユーザー入力を記述するイベントの基底クラス
+- [ ] QInputMethod: アクティブなテキスト入力メソッドへのアクセス
+- [ ] QInputMethodEvent: 入力メソッドイベントのパラメータ
+- [ ] QInputMethodEvent::Attribute: 入力メソッド属性を格納するクラス
+- [ ] QInputMethodQueryEvent: 入力コンテキストが入力オブジェクトに送信するイベント
+- [ ] QIntValidator: 文字列が指定された範囲内の有効な整数を含むことを保証するバリデーター
+- [ ] QKeyEvent: キーイベントを記述
+- [ ] QKeySequence: ショートカットで使用されるキーシーケンスをカプセル化します
+- [ ] QLinearGradient: QBrush と組み合わせて線形グラデーションブラシを指定するために使用されます
+- [ ] QMatrix4x4: 3D 空間での 4x4 変換行列を表します
+- [ ] QMouseEvent: マウスイベントを記述するパラメータを含みます
+- [ ] QMoveEvent: 移動イベントのパラメータを含みます
+- [ ] QMovie: QImageReader を使用してムービーを再生するための便利なクラス
+- [ ] QNativeGestureEvent: ジェスチャーイベントを記述するパラメータを含みます
+- [ ] QNativeInterface::QAndroidOffscreenSurface: Android 上のオフスクリーンサーフェスへのネイティブインターフェース
+- [ ] QNativeInterface::QAndroidScreen: Android 上のスクリーンへのネイティブインターフェース
+- [ ] QNativeInterface::QCocoaGLContext: macOS 上の NSOpenGLContext へのネイティブインターフェース
+- [ ] QNativeInterface::QEGLContext: EGL コンテキストへのネイティブインターフェース
+- [ ] QNativeInterface::QGLXContext: GLX コンテキストへのネイティブインターフェース
+- [ ] QNativeInterface::QWGLContext: Windows 上の WGL コンテキストへのネイティブインターフェース
+- [ ] QNativeInterface::QWaylandApplication: Wayland アプリケーションへのネイティブインターフェース
+- [ ] QNativeInterface::QWaylandScreen: Wayland 上のスクリーンへのネイティブインターフェース
+- [ ] QNativeInterface::QWindowsScreen: Windows 上のスクリーンへのネイティブインターフェース
+- [ ] QNativeInterface::QX11Application: X11 アプリケーションへのネイティブインターフェース
+- [ ] QOffscreenSurface: 基盤となるプラットフォームでのオフスクリーンサーフェスを表します
+- [ ] QOpenGLContext: ネイティブ OpenGL コンテキストを表し、QSurface 上での OpenGL レンダリングを可能にします
+- [ ] QOpenGLContextGroup: OpenGL リソースを共有するコンテキストのグループを表します
+- [ ] QOpenGLExtraFunctions: OpenGL ES 3.0、3.1、3.2 API へのクロスプラットフォームアクセスを提供します
+- [ ] QOpenGLFunctions: OpenGL ES 2.0 API へのクロスプラットフォームアクセスを提供します
+- [ ] QOpenGLTexture: OpenGL テクスチャオブジェクトをカプセル化します
+- [ ] QPageLayout: ページのサイズ、向き、余白を記述します
+- [ ] QPageRanges: ページ範囲のコレクションを表します
+- [ ] QPageRanges::Range: 範囲の開始点と終了点を保持する構造体
+- [ ] QPageSize: 定義されたページサイズのサイズと名前を記述します
+- [ ] QPagedPaintDevice: 複数ページをサポートするペイントデバイスを表します
+- [ ] QPaintDevice: QPainter で描画可能なオブジェクトの基底クラス
+- [ ] QPaintDeviceWindow: QWindow であり、同時に QPaintDevice でもある便利なサブクラス
+- [ ] QPaintEngine: QPainter が特定のプラットフォーム上のデバイスに描画する方法を抽象的に定義します
+- [ ] QPaintEngineState: アクティブなペイントエンジンの現在の状態に関する情報
+- [ ] QPaintEvent: ペイントイベントのパラメータを含みます
+- [ ] QPainter: ウィジェットやその他のペイントデバイス上で低レベルの描画を行います
+- [ ] QPainter::PixmapFragment: QPainter::drawPixmapFragments() 関数と共に使用され、ピクスマップまたはそのサブ領域の描画方法を指定します
+- [ ] QPainterPath: 描画操作のコンテナで、グラフィカルな形状を構築して再利用可能にします
+- [ ] QPainterPath::Element: サブパスの位置と種類を指定するクラス
+- [ ] QPainterPathStroker: 指定されたペインターパスの塗りつぶし可能なアウトラインを生成するために使用されます
+- [ ] QPainterStateGuard: QPainter::save() と QPainter::restore() のバランスを取るための RAII 便利クラス
+- [ ] QPalette: 各ウィジェット状態のカラ―グループを含みます
+- [ ] QPdfOutputIntent: 空
+- [ ] QPdfWriter: ペイントデバイスとして使用可能な PDF を生成するクラス
+- [ ] QPen: QPainter が線や形状のアウトラインを描画する方法を定義します
+- [ ] QPicture: QPainter コマンドを記録および再生するペイントデバイス
+- [ ] QPixelFormat: グラフィックスバッファ内の異なるピクセルレイアウトを記述するクラス
+- [ ] QPixmap: ペイントデバイスとして使用可能なオフスクリーン画像表現
+- [ ] QPixmapCache: アプリケーション全体で使用されるピクスマップのキャッシュ
+- [ ] QPixmapCache::Key: QPixmapCache への効率的なアクセスに使用されるクラス
+- [ ] QPlatformSurfaceEvent: ネイティブプラットフォームのサーフェスイベントを通知するために使用されます
+- [ ] QPointerEvent: ポインターイベントの基底クラス
+- [ ] QPointingDevice: マウス、タッチ、またはタブレットイベントが発生するデバイスを記述します
+- [ ] QPointingDeviceUniqueId: タグ付きトークンやスタイラスなど、ポインティングデバイスで使用される一意のオブジェクトを識別します
+- [ ] QPolygon: 整数精度を使用したポイントのリスト
+- [ ] QPolygonF: 浮動小数点精度を使用したポイントのリスト
+- [ ] QQuaternion: ベクトルとスカラーから成るクォータニオンを表します
+- [ ] QRadialGradient: QBrush と組み合わせて放射状グラデーションブラシを指定するために使用されます
+- [ ] QRasterWindow: QWindow 上で QPainter を使用するための便利なクラス
+- [ ] QRawFont: フォントの単一の物理インスタンスへのアクセス
+- [ ] QRegion: ペインターのクリップ領域を指定します
+- [ ] QRegularExpressionValidator: 文字列を正規表現に照らしてチェックするために使用されます
+- [ ] QResizeEvent: リサイズイベントのパラメータを含みます
+- [ ] QRgba64: 64 ビットの RGB カラーを含む構造体
+- [ ] QRgbaFloat: 4 部構成の RGBA 浮動小数点カラーを含む構造体
+- [ ] QRhiVulkanQueueSubmitParams: vkQueueSubmit() に渡される追加の Vulkan API オブジェクトを参照します
+- [ ] QScreen: スクリーンのプロパティを照会するために使用されます
+- [ ] QScrollEvent: スクロール時に送信されます
+- [ ] QScrollPrepareEvent: スクロールの準備中に送信されます
+- [ ] QSessionManager: セッションマネージャへのアクセス
+- [ ] QShader: 複数のシェーディング言語に翻訳されたシェーダーの複数のバージョンとリフレクションメタデータを含む
+- [ ] QShader::NativeShaderInfo: ネイティブシェーダーコードに関する追加メタデータ
+- [ ] QShader::SeparateToCombinedImageSamplerMapping: サンプラーのユニフォームに関するマッピングメタデータ
+- [ ] QShaderCode: シェーダーのソースコードまたはバイナリコードと追加メタデータを含む
+- [ ] QShaderDescription: シェーダーのインターフェースを記述
+- [ ] QShaderDescription::BlockVariable: ユニフォームまたはプッシュコンスタントブロックのメンバーを記述
+- [ ] QShaderDescription::BuiltinVariable: 組み込み変数を記述
+- [ ] QShaderDescription::InOutVariable: シェーダー内の入力または出力変数を記述
+- [ ] QShaderDescription::PushConstantBlock: プッシュコンスタントブロックを記述
+- [ ] QShaderDescription::StorageBlock: シェーダーストレージブロックを記述
+- [ ] QShaderDescription::UniformBlock: ユニフォームブロックを記述
+- [ ] QShaderKey: シェーディング言語、バージョン、フラグ、およびバリアントを指定
+- [ ] QShaderVersion: シェーディング言語のバージョンを指定
+- [ ] QShortcut: キーボードショートカットを作成するために使用
+- [ ] QShortcutEvent: ユーザーがキーの組み合わせを押したときに生成されるイベント
+- [ ] QShowEvent: ウィジェットが表示されたときに送信されるイベント
+- [ ] QSinglePointEvent: マウスイベントなど、単一のポイントを含むポインターイベントの基底クラス
+- [ ] QStandardItem: QStandardItemModelクラスで使用するアイテム
+- [ ] QStandardItemModel: カスタムデータを格納するための汎用モデル
+- [ ] QStaticText: テキストとそのレイアウトがほとんど更新されない場合に最適化された描画を可能にする
+- [ ] QStatusTipEvent: ステータスバーにメッセージを表示するために使用されるイベント
+- [ ] QStyleHints: プラットフォーム固有のヒントと設定を含む
+- [ ] QSupportedWritingSystems: 内部のQtフォントデータベースにフォントを登録する際に使用
+- [ ] QSurface: Qtにおけるレンダリング可能な表面の抽象化
+- [ ] QSurfaceFormat: QSurfaceのフォーマットを表す
+- [ ] QSyntaxHighlighter: 構文ハイライトルールを定義し、ドキュメントの現在のフォーマットやユーザーデータを照会するために使用可能
+- [ ] QTabletEvent: タブレットイベントを記述するパラメータを含む
+- [ ] QTextBlock: QTextDocument内のテキストフラグメントのコンテナ
+- [ ] QTextBlock::iterator: QTextBlockの内容を読み取るためのイテレータを提供
+- [ ] QTextBlockFormat: QTextDocument内のテキストブロックのフォーマット情報
+- [ ] QTextBlockGroup: QTextDocument内のテキストブロックのコンテナ
+- [ ] QTextBlockUserData: テキストブロックにカスタムデータを関連付けるために使用
+- [ ] QTextCharFormat: QTextDocument内の文字のフォーマット情報
+- [ ] QTextCursor: QTextDocumentへのアクセスと変更を行うためのAPIを提供
+- [ ] QTextDocument: フォーマットされたテキストを保持
+- [ ] QTextDocumentFragment: QTextDocumentからのフォーマットされたテキストの一部を表す
+- [ ] QTextDocumentWriter: QTextDocumentをファイルや他のデバイスに書き込むためのフォーマット非依存インターフェース
+- [ ] QTextFormat: QTextDocumentのフォーマット情報
+- [ ] QTextFragment: QTextDocument内の単一のQTextCharFormatを持つテキストの一部を保持
+- [ ] QTextFrame: QTextDocument内のフレームを表す
+- [ ] QTextFrameFormat: QTextDocument内のフレームのフォーマット情報
+- [ ] QTextImageFormat: QTextDocument内の画像のフォーマット情報
+- [ ] QTextInlineObject: QAbstractTextDocumentLayoutおよびその実装内のインラインオブジェクトを表す
+- [ ] QTextItem: カスタムペイントエンジンでテキストを描画するために必要なすべての情報
+- [ ] QTextLayout: テキストをレイアウトしレンダリングするために使用
+- [ ] QTextLayout::FormatRange: テキストレイアウトの内容内の特定の領域に追加のフォーマット情報を適用するために使用される構造体
+- [ ] QTextLength: QTextDocumentで使用されるさまざまな長さのタイプをカプセル化
+- [ ] QTextLine: QTextLayout内のテキストの1行を表す
+- [ ] QTextList: QTextDocument内の装飾されたリストアイテム
+- [ ] QTextListFormat: QTextDocument内のリストのフォーマット情報
+- [ ] QTextObject: QTextDocumentの一部をグループ化するさまざまな種類のオブジェクトの基底クラス
+- [ ] QTextObjectInterface: QTextDocument内のカスタムテキストオブジェクトを描画するためのインターフェース
+- [ ] QTextOption: 一般的なリッチテキストプロパティの説明
+- [ ] QTextOption::Tab: 空
+- [ ] QTextTable: QTextDocument内のテーブルを表す
+- [ ] QTextTableCell: QTextTable内のセルのプロパティを表す
+- [ ] QTextTableCellFormat: QTextDocument内のテーブルセルのフォーマット情報
+- [ ] QTextTableFormat: QTextDocument内のテーブルのフォーマット情報
+- [ ] QTouchEvent: タッチイベントを記述するパラメータを含む
+- [ ] QTransform: 座標系の2D変換を指定
+- [ ] QUndoCommand: QUndoStackに格納されるすべてのコマンドの基底クラス
+- [ ] QUndoGroup: QUndoStackオブジェクトのグループ
+- [ ] QUndoStack: QUndoCommandオブジェクトのスタック
+- [ ] QUtiMimeConverter: MIMEタイプとUniform Type Identifier (UTI)形式の間を変換
+- [ ] QValidator: 入力テキストの検証
+- [ ] QVector2D: 2D空間のベクトルまたは頂点を表す
+- [ ] QVector3D: 3D空間のベクトルまたは頂点を表す
+- [ ] QVector4D: 4D空間のベクトルまたは頂点を表す
+- [ ] QVulkanDeviceFunctions: デバイスレベルのコアVulkan 1.3 APIへのクロスプラットフォームアクセス
+- [ ] QVulkanExtension: Vulkan拡張に関する情報を表す
+- [ ] QVulkanFunctions: インスタンスレベルのコアVulkan 1.3 APIへのクロスプラットフォームアクセス
+- [ ] QVulkanInfoVector: QVulkanLayerおよびQVulkanExtension用の特殊なQList
+- [ ] QVulkanInstance: ネイティブVulkanインスタンスを表し、QSurfaceへのVulkanレンダリングを可能にする
+- [ ] QVulkanLayer: Vulkanレイヤーに関する情報を表す
+- [ ] QVulkanWindow: Vulkanレンダリングを実行するためのQWindowの便利なサブクラス
+- [ ] QVulkanWindowRenderer: QVulkanWindowのアプリケーション固有のレンダリングロジックを実装するために使用
+- [ ] QWhatsThisClickedEvent: 「What's This?」テキスト内のハイパーリンクを処理するために使用されるイベント
+- [ ] QWheelEvent: ホイールイベントを記述するパラメータを含む
+- [ ] QWindow: 基盤となるウィンドウシステム内のウィンドウを表す
+- [ ] QWindowStateChangeEvent: ウィンドウ状態変更前の状態
+- [ ] QWindowsMimeConverter: オープンスタンダードMIMEをWindowsクリップボード形式にマッピング
+
+## Qt Widgets Classes
+
+- [ ] QAbstractButton: ボタンウィジェットの抽象基底クラスで、ボタンに共通の機能を提供します
+- [ ] QAbstractGraphicsShapeItem: すべてのパスアイテムの共通ベース
+- [ ] QAbstractItemDelegate: モデルからのデータアイテムを表示および編集するために使用されます
+- [ ] QAbstractItemView: アイテムビュークラスの基本機能
+- [ ] QAbstractScrollArea: オンデマンドスクロールバーを備えたスクロール領域
+- [ ] QAbstractSlider: 範囲内の整数値
+- [ ] QAbstractSpinBox: スピンボックスと値を表示するためのラインエディット
+- [ ] QAccessibleWidget: QWidget の QAccessibleInterface を実装します
+- [ ] QApplication: GUI アプリケーションの制御フローとメイン設定を管理します
+- [ ] QBoxLayout: 子ウィジェットを水平または垂直に整列させます
+- [ ] QButtonGroup: ボタングループを整理するためのコンテナ
+- [ ] QCalendarWidget: ユーザーが日付を選択できる月ベースのカレンダーウィジェット
+- [ ] QCheckBox: テキストラベル付きのチェックボックス
+- [ ] QColorDialog: 色を指定するためのダイアログウィジェット
+- [ ] QColormap: デバイス非依存の QColor をデバイス依存のピクセル値にマッピングします
+- [ ] QColumnView: カラムビューのモデル/ビュー実装
+- [ ] QComboBox: ボタンとドロップダウンリストを組み合わせます
+- [ ] QCommandLinkButton: Vista スタイルのコマンドリンクボタン
+- [ ] QCommonStyle: GUI の共通ルックアンドフィールをカプセル化します
+- [ ] QCompleter: アイテムモデルに基づいた補完
+- [ ] QDataWidgetMapper: データモデルのセクションとウィジェット間のマッピング
+- [ ] QDateEdit: QDateTimeEdit ウィジェットに基づいた日付編集用ウィジェット
+- [ ] QDateTimeEdit: 日付と時刻を編集するためのウィジェット
+- [ ] QDial: 丸みを帯びた範囲コントロール（スピードメーターやポテンショメーターのような）
+- [ ] QDialog: ダイアログウィンドウの基底クラス
+- [ ] QDialogButtonBox: 現在のウィジェットスタイルに適したレイアウトでボタンを表示するウィジェット
+- [ ] QDockWidget: QMainWindow 内にドッキングしたり、デスクトップ上のトップレベルウィンドウとしてフローティングしたりできるウィジェット
+- [ ] QDoubleSpinBox: double 型を受け取るスピンボックスウィジェット
+- [ ] QErrorMessage: エラーメッセージ表示ダイアログ
+- [ ] QFileDialog: ユーザーがファイルまたはディレクトリを選択できるダイアログ
+- [ ] QFileIconProvider: QFileSystemModel クラスのファイルアイコン
+- [ ] QFocusFrame: ウィジェットの通常の描画可能領域の外側にあるフォーカスフレーム
+- [ ] QFontComboBox: ユーザーがフォントファミリーを選択できるコンボボックス
+- [ ] QFontDialog: フォントを選択するためのダイアログウィジェット
+- [ ] QFormLayout: 入力ウィジェットとその関連ラベルのフォームを管理します
+- [ ] QFormLayout::TakeRowResult: QFormLayout::takeRow() 呼び出しの結果を含みます
+- [ ] QFrame: フレームを持つことができるウィジェットの基底クラス
+- [ ] QGesture: 対応するユーザー入力を記述するプロパティを含むジェスチャーを表します
+- [ ] QGestureEvent: トリガーされたジェスチャーの説明
+- [ ] QGestureRecognizer: ジェスチャー認識のためのインフラストラクチャ
+- [ ] QGraphicsAnchor: QGraphicsAnchorLayout 内の 2 つのアイテム間のアンカーを表します
+- [ ] QGraphicsAnchorLayout: Graphics View でウィジェットを一緒にアンカーできるレイアウト
+- [ ] QGraphicsBlurEffect: ぼかし効果
+- [ ] QGraphicsColorizeEffect: 色付け効果
+- [ ] QGraphicsDropShadowEffect: ドロップシャドウ効果
+- [ ] QGraphicsEffect: すべてのグラフィックス効果の基底クラス
+- [ ] QGraphicsEllipseItem: QGraphicsScene に追加できる楕円アイテム
+- [ ] QGraphicsGridLayout: Graphics View でウィジェットを管理するためのグリッドレイアウト
+- [ ] QGraphicsItem: QGraphicsScene 内のすべてのグラフィカルアイテムの基底クラス
+- [ ] QGraphicsItemGroup: アイテムのグループを単一のアイテムとして扱うコンテナ
+- [ ] QGraphicsLayout: Graphics View 内のすべてのレイアウトの基底クラス
+- [ ] QGraphicsLayoutItem: カスタムアイテムをレイアウトで管理できるようにするために継承できます
+- [ ] QGraphicsLineItem: QGraphicsScene に追加できるラインアイテム
+- [ ] QGraphicsLinearLayout: Graphics View でウィジェットを管理するための水平または垂直レイアウト
+- [ ] QGraphicsObject: シグナル、スロット、プロパティを必要とするすべてのグラフィックスアイテムの基底クラス
+- [ ] QGraphicsOpacityEffect: 不透明度効果
+- [ ] QGraphicsPathItem: QGraphicsScene に追加できるパスアイテム
+- [ ] QGraphicsPixmapItem: QGraphicsScene に追加できるピックスマップアイテム
+- [ ] QGraphicsPolygonItem: QGraphicsScene に追加できるポリゴンアイテム
+- [ ] QGraphicsProxyWidget: QWidget を QGraphicsScene に埋め込むためのプロキシレイヤー
+- [ ] QGraphicsRectItem: QGraphicsScene に追加できる矩形アイテム
+- [ ] QGraphicsRotation: 指定された軸周りの回転変換
+- [ ] QGraphicsScale: スケール変換
+- [ ] QGraphicsScene: 多数の 2D グラフィカルアイテムを管理するためのサーフェス
+- [ ] QGraphicsSceneContextMenuEvent: グラフィックスビューフレームワークにおけるコンテキストメニューイベント
+- [ ] QGraphicsSceneDragDropEvent: グラフィックスビューフレームワークにおけるドラッグアンドドロップイベント
+- [ ] QGraphicsSceneEvent: すべてのグラフィックスビュー関連イベントの基底クラス
+- [ ] QGraphicsSceneHelpEvent: ツールチップが要求されたときのイベント
+- [ ] QGraphicsSceneHoverEvent: グラフィックスビューフレームワークにおけるホバーイベント
+- [ ] QGraphicsSceneMouseEvent: グラフィックスビューフレームワークにおけるマウスイベント
+- [ ] QGraphicsSceneMoveEvent: グラフィックスビューフレームワークにおけるウィジェット移動イベント
+- [ ] QGraphicsSceneResizeEvent: グラフィックスビューフレームワークにおけるウィジェットリサイズイベント
+- [ ] QGraphicsSceneWheelEvent: グラフィックスビューフレームワークにおけるホイールイベント
+- [ ] QGraphicsSimpleTextItem: QGraphicsScene に追加できるシンプルなテキストパスアイテム
+- [ ] QGraphicsTextItem: フォーマットされたテキストを表示するために QGraphicsScene に追加できるテキストアイテム
+- [ ] QGraphicsTransform: QGraphicsItems 上で高度な変換を構築するための抽象基底クラス
+- [ ] QGraphicsView: QGraphicsScene の内容を表示するためのウィジェット
+- [ ] QGraphicsWidget: QGraphicsScene 内のすべてのウィジェットアイテムの基底クラス
+- [ ] QGridLayout: ウィジェットをグリッドに配置します
+- [ ] QGroupBox: タイトル付きのグループボックスフレーム
+- [ ] QHBoxLayout: ウィジェットを水平に整列させます
+- [ ] QHeaderView: アイテムビューのヘッダー行またはヘッダー列
+- [ ] QInputDialog: ユーザーから単一の値を取得するためのシンプルな便利ダイアログ
+- [ ] QItemDelegate: モデルからのデータアイテムの表示および編集機能
+- [ ] QItemEditorCreator: QItemEditorCreatorBase をサブクラス化せずにアイテムエディタクリエーターベースを作成することを可能にします
+- [ ] QItemEditorCreatorBase: 新しいアイテムエディタクリエーターを実装する際にサブクラス化する必要がある抽象基底クラス
+- [ ] QItemEditorFactory: ビューとデリゲートでアイテムデータを編集するためのウィジェット
+- [ ] QKeySequenceEdit: QKeySequence の入力を許可します
+- [ ] QLCDNumber: LCD のような数字で数値を表示します
+- [ ] QLabel: テキストまたは画像の表示
+- [ ] QLayout: ジオメトリマネージャーの基底クラス
+- [ ] QLayoutItem: QLayout が操作する抽象アイテム
+- [ ] QLineEdit: 1 行テキストエディタ
+- [ ] QListView: モデルへのリストまたはアイコンビュー
+- [ ] QListWidget: アイテムベースのリストウィジェット
+- [ ] QListWidgetItem: QListWidget アイテムビュークラスで使用するアイテム
+- [ ] QMainWindow: メインアプリケーションウィンドウ
+- [ ] QMdiArea: MDI ウィンドウが表示される領域
+- [ ] QMdiSubWindow: QMdiArea のサブウィンドウクラス
+- [ ] QMenu: メニューバー、コンテキストメニュー、およびその他のポップアップメニューで使用するメニューウィジェット
+- [ ] QMenuBar: 水平メニューバー
+- [ ] QMessageBox: ユーザーに通知したり、ユーザーに質問して回答を受け取ったりするためのモーダルダイアログ
+- [ ] QPanGesture: ユーザーが行ったパンジェスチャーを記述します
+- [ ] QPinchGesture: ユーザーが行ったピンチジェスチャーを記述します
+- [ ] QPlainTextDocumentLayout: QTextDocument のプレーンテキストレイアウトを実装します
+- [ ] QPlainTextEdit: プレーンテキストを編集および表示するために使用されるウィジェット
+- [ ] QProgressBar: 水平または垂直プログレスバー
+- [ ] QProgressDialog: 遅い操作の進行状況に関するフィードバック
+- [ ] QProxyStyle: QStyle 要素を動的にオーバーライドすることを簡略化する便利なクラス
+- [ ] QPushButton: コマンドボタン
+- [ ] QRadioButton: テキストラベル付きのラジオボタン
+- [ ] QRhiWidget: Vulkan、Metal、Direct 3D などの高速化されたグラフィックス API を介して 3D グラフィックスをレンダリングするためのウィジェット
+- [ ] QRubberBand: 選択範囲または境界を示すことができる矩形または線
+- [ ] QScrollArea: 別のウィジェットへのスクロールビュー
+- [ ] QScrollBar: 垂直または水平スクロールバー
+- [ ] QScroller: スクロールウィジェットまたはグラフィックスアイテムのキネティックスクロールを有効にします
+- [ ] QScrollerProperties: QScroller の設定を格納します
+- [ ] QSizeGrip: トップレベルウィンドウをリサイズするためのリサイズハンドル
+- [ ] QSizePolicy: 水平および垂直リサイズポリシーを記述するレイアウト属性
+- [ ] QSlider: 垂直または水平スライダー
+- [ ] QSpacerItem: レイアウト内の空白スペース
+- [ ] QSpinBox: スピンボックスウィジェット
+- [ ] QSplashScreen: アプリケーション起動中に表示できるスプラッシュスクリーン
+- [ ] QSplitter: スプリッターウィジェットを実装します
+- [ ] QSplitterHandle: スプリッターのハンドル機能
+- [ ] QStackedLayout: 一度に 1 つのウィジェットのみが表示されるウィジェットのスタック
+- [ ] QStackedWidget: 一度に 1 つのウィジェットのみが表示されるウィジェットのスタック
+- [ ] QStandardItemEditorCreator: QItemEditorCreatorBase をサブクラス化せずにウィジェットを登録する可能性
+- [ ] QStatusBar: ステータス情報を表示するのに適した水平バー
+- [ ] QStyle: GUI のルックアンドフィールをカプセル化する抽象基底クラス
+- [ ] QStyleFactory: QStyle オブジェクトを作成します
+- [ ] QStyleHintReturn: 基本データ型以上のものを返すスタイルヒント
+- [ ] QStyleHintReturnMask: QRegion を返すスタイルヒント
+- [ ] QStyleHintReturnVariant: QVariant を返すスタイルヒント
+- [ ] QStyleOption: QStyle 関数で使用されるパラメータを格納します
+- [ ] QStyleOptionButton: ボタンを描画するためのパラメータを記述するために使用されます
+- [ ] QStyleOptionComboBox: コンボボックスを描画するためのパラメータを記述するために使用されます
+- [ ] QStyleOptionComplex: すべての複雑なコントロールに共通のパラメータを保持するために使用されます
+- [ ] QStyleOptionDockWidget: ドックウィジェットを描画するためのパラメータを記述するために使用されます
+- [ ] QStyleOptionFocusRect: QStyle でフォーカス矩形を描画するためのパラメータを記述するために使用されます
+- [ ] QStyleOptionFrame: フレームを描画するためのパラメータを記述するために使用されます
+- [ ] QStyleOptionGraphicsItem: QGraphicsItem を描画するために必要なパラメータを記述するために使用されます
+- [ ] QStyleOptionGroupBox: グループボックスを描画するためのパラメータを記述します
+- [ ] QStyleOptionHeader: ヘッダーを描画するためのパラメータを記述するために使用されます
+- [ ] QStyleOptionHeaderV2: ヘッダーを描画するためのパラメータを記述するために使用されます
+- [ ] QStyleOptionMenuItem: メニュー項目を描画するために必要なパラメータを記述するために使用されます
+- [ ] QStyleOptionProgressBar: プログレスバーを描画するために必要なパラメータを記述するために使用されます
+- [ ] QStyleOptionRubberBand: ラバーバンドを描画するために必要なパラメータを記述するために使用されます
+- [ ] QStyleOptionSizeGrip: サイズグリップを描画するためのパラメータを記述するために使用されます
+- [ ] QStyleOptionSlider: スライダーを描画するために必要なパラメータを記述するために使用されます
+- [ ] QStyleOptionSpinBox: スピンボックスを描画するために必要なパラメータを記述するために使用されます
+- [ ] QStyleOptionTab: タブバーを描画するためのパラメータを記述するために使用されます
+- [ ] QStyleOptionTabBarBase: タブバーのベース、つまりタブバーが通常重なる部分を記述するために使用されます
+- [ ] QStyleOptionTabWidgetFrame: タブウィジェットの周りのフレームを描画するためのパラメータを記述するために使用されます
+- [ ] QStyleOptionTitleBar: タイトルバーを描画するためのパラメータを記述するために使用されます
+- [ ] QStyleOptionToolBar: ツールバーを描画するためのパラメータを記述するために使用されます
+- [ ] QStyleOptionToolBox: ツールボックスを描画するために必要なパラメータを記述するために使用されます
+- [ ] QStyleOptionToolButton: ツールボタンを描画するためのパラメータを記述するために使用されます
+- [ ] QStyleOptionViewItem: ビューウィジェット内のアイテムを描画するために使用されるパラメータを記述するために使用されます
+- [ ] QStylePainter: ウィジェット内に QStyle 要素を描画するための便利なクラス
+- [ ] QStylePlugin: カスタム QStyle プラグインの抽象ベース
+- [ ] QStyledItemDelegate: モデルからのデータアイテムの表示および編集機能
+- [ ] QSwipeGesture: ユーザーが行ったスワイプジェスチャーを記述します
+- [ ] QSystemTrayIcon: システムトレイ内のアプリケーションのアイコン
+- [ ] QTabBar: タブ付きダイアログなどで使用されるタブバー
+- [ ] QTabWidget: タブ付きウィジェットのスタック
+- [ ] QTableView: テーブルビューのデフォルトのモデル/ビュー実装
+- [ ] QTableWidget: デフォルトモデルを持つアイテムベースのテーブルビュー
+- [ ] QTableWidgetItem: QTableWidget クラスで使用するアイテム
+- [ ] QTableWidgetSelectionRange: モデルインデックスと選択モデルを使用せずにモデル内の選択を操作する方法
+- [ ] QTapAndHoldGesture: ユーザーが行ったタップアンドホールド（別名 LongTap）ジェスチャーを記述します
+- [ ] QTapGesture: ユーザーが行ったタップジェスチャーを記述します
+- [ ] QTextBrowser: ハイパーテキストナビゲーションを備えたリッチテキストブラウザ
+- [ ] QTextEdit: プレーンテキストとリッチテキストの両方を編集および表示するために使用されるウィジェット
+- [ ] QTextEdit::ExtraSelection: QTextEdit::ExtraSelection 構造体は、ドキュメント内の特定の選択範囲に対して文字フォーマットを指定する方法を提供します
+- [ ] QTileRules: 9 つのセグメントに分割されたピックスマップまたは画像を描画するために使用されるルール
+- [ ] QTimeEdit: QDateTimeEdit ウィジェットに基づいた時刻編集用ウィジェット
+- [ ] QToolBar: コントロールのセットを含む移動可能なパネル
+- [ ] QToolBox: タブ付きウィジェットアイテムの列
+- [ ] QToolButton: 通常 QToolBar 内で使用される、コマンドまたはオプションへのクイックアクセスボタン
+- [ ] QToolTip: 任意のウィジェットのツールチップ（バルーンヘルプ）
+- [ ] QTreeView: ツリービューのデフォルトのモデル/ビュー実装
+- [ ] QTreeWidget: 事前定義されたツリーモデルを使用するツリービュー
+- [ ] QTreeWidgetItem: QTreeWidget 便利なクラスで使用するアイテム
+- [ ] QTreeWidgetItemIterator: QTreeWidget インスタンス内のアイテムを反復処理する方法
+- [ ] QUndoView: QUndoStack の内容を表示します
+- [ ] QVBoxLayout: ウィジェットを垂直に整列させます
+- [ ] QWhatsThis: 任意のウィジェットの簡単な説明、つまり「これは何？」という質問に答えます
+- [ ] QWidget: すべてのユーザーインターフェイスオブジェクトの基底クラス
+- [ ] QWidgetAction: ツールバーなどのアクションベースのコンテナにカスタムウィジェットを挿入するためのインターフェイスによって QAction を拡張します
+- [ ] QWidgetItem: ウィジェットを表すレイアウトアイテム
+- [ ] QWizard: ウィザードのフレームワーク
+- [ ] QWizardPage: ウィザードページの基底クラス

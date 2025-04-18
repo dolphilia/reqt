@@ -387,4 +387,5 @@ void* QRect_span(void* p1, void* p2) {
     QRectBind* newRect = new QRectBind(result.topLeft(), result.bottomRight());
     return newRect;
 }
+
 }
