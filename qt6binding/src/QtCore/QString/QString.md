@@ -1,0 +1,371 @@
+# QString Class
+
+## Public Types
+
+- ConstIterator
+- Iterator
+- enum NormalizationForm { NormalizationForm_D, NormalizationForm_C, NormalizationForm_KD, NormalizationForm_KC }
+- enum SectionFlag { SectionDefault, SectionSkipEmpty, SectionIncludeLeadingSep, SectionIncludeTrailingSep, SectionCaseInsensitiveSeps }
+- flags SectionFlags
+- const_iterator
+- const_pointer
+- const_reference
+- const_reverse_iterator
+- difference_type
+- iterator
+- pointer
+- reference
+- reverse_iterator
+- size_type
+- value_type
+
+## Public Functions
+
+- QString()
+- QString(QChar ch)
+- QString(QLatin1StringView str)
+- QString(const QByteArray &ba)
+- QString(const char *str)
+- (since 6.1) QString(const char8_t *str)
+- QString(const QChar *unicode, qsizetype size = -1)
+- QString(qsizetype size, QChar ch)
+- QString(const QString &other)
+- QString(QString &&other)
+- ~QString()
+- QString & append(const QString &str)
+- QString & append(QChar ch)
+- QString & append(QLatin1StringView str)
+- (since 6.0) QString & append(QStringView v)
+- (since 6.5) QString & append(QUtf8StringView str)
+- QString & append(const QByteArray &ba)
+- QString & append(const char *str)
+- QString & append(const QChar *str, qsizetype len)
+- QString arg(Args &&... args) const
+- QString arg(const T &a, int fieldWidth = 0, QChar fillChar = u' ') const
+- QString arg(T a, int fieldWidth = 0, int base = 10, QChar fillChar = u' ') const
+- QString arg(T a, int fieldWidth = 0, char format = 'g', int precision = -1, QChar fillChar = u' ') const
+- (since 6.6) QString & assign(QAnyStringView v)
+- (since 6.6) QString & assign(InputIterator first, InputIterator last)
+- (since 6.6) QString & assign(qsizetype n, QChar c)
+- const QChar at(qsizetype position) const
+- QChar & back()
+- QChar back() const
+- QString::iterator begin()
+- QString::const_iterator begin() const
+- qsizetype capacity() const
+- QString::const_iterator cbegin() const
+- QString::const_iterator cend() const
+- void chop(qsizetype n)
+- QString chopped(qsizetype len) &&
+- QString chopped(qsizetype len) const &
+- void clear()
+- int compare(QChar ch, Qt::CaseSensitivity cs = Qt::CaseSensitive) const
+- int compare(QLatin1StringView other, Qt::CaseSensitivity cs = Qt::CaseSensitive) const
+- int compare(QStringView s, Qt::CaseSensitivity cs = Qt::CaseSensitive) const
+- int compare(const QString &other, Qt::CaseSensitivity cs = Qt::CaseSensitive) const
+- QString::const_iterator constBegin() const
+- const QChar * constData() const
+- QString::const_iterator constEnd() const
+- bool contains(const QRegularExpression &re, QRegularExpressionMatch *rmatch = nullptr) const
+- bool contains(const QString &str, Qt::CaseSensitivity cs = Qt::CaseSensitive) const
+- bool contains(QChar ch, Qt::CaseSensitivity cs = Qt::CaseSensitive) const
+- bool contains(QLatin1StringView str, Qt::CaseSensitivity cs = Qt::CaseSensitive) const
+- bool contains(QStringView str, Qt::CaseSensitivity cs = Qt::CaseSensitive) const
+- qsizetype count(const QString &str, Qt::CaseSensitivity cs = Qt::CaseSensitive) const
+- qsizetype count(const QRegularExpression &re) const
+- qsizetype count(QChar ch, Qt::CaseSensitivity cs = Qt::CaseSensitive) const
+- (since 6.0) qsizetype count(QStringView str, Qt::CaseSensitivity cs = Qt::CaseSensitive) const
+- QString::const_reverse_iterator crbegin() const
+- QString::const_reverse_iterator crend() const
+- QChar * data()
+- const QChar * data() const
+- QString::iterator end()
+- QString::const_iterator end() const
+- bool endsWith(const QString &s, Qt::CaseSensitivity cs = Qt::CaseSensitive) const
+- bool endsWith(QChar c, Qt::CaseSensitivity cs = Qt::CaseSensitive) const
+- bool endsWith(QLatin1StringView s, Qt::CaseSensitivity cs = Qt::CaseSensitive) const
+- bool endsWith(QStringView str, Qt::CaseSensitivity cs = Qt::CaseSensitive) const
+- (since 6.1) QString::iterator erase(QString::const_iterator first, QString::const_iterator last)
+- (since 6.5) QString::iterator erase(QString::const_iterator it)
+- QString & fill(QChar ch, qsizetype size = -1)
+- (since 6.0) QString first(qsizetype n) &&
+- (since 6.0) QString first(qsizetype n) const &
+- QChar & front()
+- QChar front() const
+- qsizetype indexOf(QLatin1StringView str, qsizetype from = 0, Qt::CaseSensitivity cs = Qt::CaseSensitive) const
+- qsizetype indexOf(const QRegularExpression &re, qsizetype from = 0, QRegularExpressionMatch *rmatch = nullptr) const
+- qsizetype indexOf(const QString &str, qsizetype from = 0, Qt::CaseSensitivity cs = Qt::CaseSensitive) const
+- qsizetype indexOf(QChar ch, qsizetype from = 0, Qt::CaseSensitivity cs = Qt::CaseSensitive) const
+- qsizetype indexOf(QStringView str, qsizetype from = 0, Qt::CaseSensitivity cs = Qt::CaseSensitive) const
+- QString & insert(qsizetype position, const QString &str)
+- QString & insert(qsizetype position, QChar ch)
+- QString & insert(qsizetype position, QLatin1StringView str)
+- (since 6.0) QString & insert(qsizetype position, QStringView str)
+- (since 6.5) QString & insert(qsizetype position, QUtf8StringView str)
+- QString & insert(qsizetype position, const QByteArray &str)
+- QString & insert(qsizetype position, const char *str)
+- QString & insert(qsizetype position, const QChar *unicode, qsizetype size)
+- bool isEmpty() const
+- bool isLower() const
+- bool isNull() const
+- bool isRightToLeft() const
+- bool isUpper() const
+- bool isValidUtf16() const
+- (since 6.0) QString last(qsizetype n) &&
+- (since 6.0) QString last(qsizetype n) const &
+- qsizetype lastIndexOf(const QRegularExpression &re, qsizetype from, QRegularExpressionMatch *rmatch = nullptr) const
+- qsizetype lastIndexOf(const QString &str, qsizetype from, Qt::CaseSensitivity cs = Qt::CaseSensitive) const
+- (since 6.3) qsizetype lastIndexOf(QChar ch, Qt::CaseSensitivity cs = Qt::CaseSensitive) const
+- (since 6.2) qsizetype lastIndexOf(QLatin1StringView str, Qt::CaseSensitivity cs = Qt::CaseSensitive) const
+- (since 6.2) qsizetype lastIndexOf(QStringView str, Qt::CaseSensitivity cs = Qt::CaseSensitive) const
+- (since 6.2) qsizetype lastIndexOf(const QRegularExpression &re, QRegularExpressionMatch *rmatch = nullptr) const
+- (since 6.2) qsizetype lastIndexOf(const QString &str, Qt::CaseSensitivity cs = Qt::CaseSensitive) const
+- qsizetype lastIndexOf(QChar ch, qsizetype from, Qt::CaseSensitivity cs = Qt::CaseSensitive) const
+- qsizetype lastIndexOf(QLatin1StringView str, qsizetype from, Qt::CaseSensitivity cs = Qt::CaseSensitive) const
+- qsizetype lastIndexOf(QStringView str, qsizetype from, Qt::CaseSensitivity cs = Qt::CaseSensitive) const
+- QString left(qsizetype n) &&
+- QString left(qsizetype n) const &
+- QString leftJustified(qsizetype width, QChar fill = u' ', bool truncate = false) const
+- qsizetype length() const
+- (since 6.0) int localeAwareCompare(QStringView other) const
+- int localeAwareCompare(const QString &other) const
+- (since 6.8) qsizetype max_size() const
+- QString mid(qsizetype position, qsizetype n = -1) &&
+- QString mid(qsizetype position, qsizetype n = -1) const &
+- QString normalized(QString::NormalizationForm mode, QChar::UnicodeVersion version = QChar::Unicode_Unassigned) const
+- QString & prepend(const QString &str)
+- QString & prepend(QChar ch)
+- QString & prepend(QLatin1StringView str)
+- (since 6.0) QString & prepend(QStringView str)
+- (since 6.5) QString & prepend(QUtf8StringView str)
+- QString & prepend(const QByteArray &ba)
+- QString & prepend(const char *str)
+- QString & prepend(const QChar *str, qsizetype len)
+- void push_back(const QString &other)
+- void push_back(QChar ch)
+- void push_front(const QString &other)
+- void push_front(QChar ch)
+- QString::reverse_iterator rbegin()
+- QString::const_reverse_iterator rbegin() const
+- QString & remove(const QRegularExpression &re)
+- QString & remove(QChar ch, Qt::CaseSensitivity cs = Qt::CaseSensitive)
+- QString & remove(const QString &str, Qt::CaseSensitivity cs = Qt::CaseSensitive)
+- QString & remove(qsizetype position, qsizetype n)
+- QString & remove(QLatin1StringView str, Qt::CaseSensitivity cs = Qt::CaseSensitive)
+- (since 6.5) QString & removeAt(qsizetype pos)
+- (since 6.5) QString & removeFirst()
+- (since 6.1) QString & removeIf(Predicate pred)
+- (since 6.5) QString & removeLast()
+- QString::reverse_iterator rend()
+- QString::const_reverse_iterator rend() const
+- QString repeated(qsizetype times) const
+- QString & replace(qsizetype position, qsizetype n, const QString &after)
+- QString & replace(const QRegularExpression &re, const QString &after)
+- QString & replace(QChar before, QChar after, Qt::CaseSensitivity cs = Qt::CaseSensitive)
+- QString & replace(QChar c, QLatin1StringView after, Qt::CaseSensitivity cs = Qt::CaseSensitive)
+- QString & replace(QChar ch, const QString &after, Qt::CaseSensitivity cs = Qt::CaseSensitive)
+- QString & replace(QLatin1StringView before, QLatin1StringView after, Qt::CaseSensitivity cs = Qt::CaseSensitive)
+- QString & replace(QLatin1StringView before, const QString &after, Qt::CaseSensitivity cs = Qt::CaseSensitive)
+- QString & replace(const QString &before, QLatin1StringView after, Qt::CaseSensitivity cs = Qt::CaseSensitive)
+- QString & replace(const QString &before, const QString &after, Qt::CaseSensitivity cs = Qt::CaseSensitive)
+- QString & replace(qsizetype position, qsizetype n, QChar after)
+- QString & replace(qsizetype position, qsizetype n, const QChar *after, qsizetype alen)
+- QString & replace(const QChar *before, qsizetype blen, const QChar *after, qsizetype alen, Qt::CaseSensitivity cs = Qt::CaseSensitive)
+- void reserve(qsizetype size)
+- void resize(qsizetype size)
+- void resize(qsizetype newSize, QChar fillChar)
+- (since 6.8) void resizeForOverwrite(qsizetype size)
+- QString right(qsizetype n) &&
+- QString right(qsizetype n) const &
+- QString rightJustified(qsizetype width, QChar fill = u' ', bool truncate = false) const
+- QString section(QChar sep, qsizetype start, qsizetype end = -1, QString::SectionFlags flags = SectionDefault) const
+- QString section(const QRegularExpression &re, qsizetype start, qsizetype end = -1, QString::SectionFlags flags = SectionDefault) const
+- QString section(const QString &sep, qsizetype start, qsizetype end = -1, QString::SectionFlags flags = SectionDefault) const
+- QString & setNum(int n, int base = 10)
+- QString & setNum(long n, int base = 10)
+- QString & setNum(qlonglong n, int base = 10)
+- QString & setNum(qulonglong n, int base = 10)
+- QString & setNum(short n, int base = 10)
+- QString & setNum(uint n, int base = 10)
+- QString & setNum(ulong n, int base = 10)
+- QString & setNum(ushort n, int base = 10)
+- QString & setNum(double n, char format = 'g', int precision = 6)
+- QString & setNum(float n, char format = 'g', int precision = 6)
+- QString & setRawData(const QChar *unicode, qsizetype size)
+- QString & setUnicode(const QChar *unicode, qsizetype size)
+- (since 6.9) QString & setUnicode(const char16_t *unicode, qsizetype size)
+- (since 6.9) QString & setUtf16(const char16_t *unicode, qsizetype size)
+- void shrink_to_fit()
+- QString simplified() const
+- qsizetype size() const
+- (since 6.8) QString & slice(qsizetype pos, qsizetype n)
+- (since 6.8) QString & slice(qsizetype pos)
+- (since 6.0) QString sliced(qsizetype pos, qsizetype n) &&
+- (since 6.0) QString sliced(qsizetype pos, qsizetype n) const &
+- (since 6.0) QString sliced(qsizetype pos) &&
+- (since 6.0) QString sliced(qsizetype pos) const &
+- QStringList split(const QString &sep, Qt::SplitBehavior behavior = Qt::KeepEmptyParts, Qt::CaseSensitivity cs = Qt::CaseSensitive) const
+- QStringList split(const QRegularExpression &re, Qt::SplitBehavior behavior = Qt::KeepEmptyParts) const
+- QStringList split(QChar sep, Qt::SplitBehavior behavior = Qt::KeepEmptyParts, Qt::CaseSensitivity cs = Qt::CaseSensitive) const
+- void squeeze()
+- bool startsWith(const QString &s, Qt::CaseSensitivity cs = Qt::CaseSensitive) const
+- bool startsWith(QChar c, Qt::CaseSensitivity cs = Qt::CaseSensitive) const
+- bool startsWith(QLatin1StringView s, Qt::CaseSensitivity cs = Qt::CaseSensitive) const
+- bool startsWith(QStringView str, Qt::CaseSensitivity cs = Qt::CaseSensitive) const
+- void swap(QString &other)
+- CFStringRef toCFString() const
+- QString toCaseFolded() const
+- double toDouble(bool *ok = nullptr) const
+- (since 6.6) emscripten::val toEcmaString() const
+- float toFloat(bool *ok = nullptr) const
+- QString toHtmlEscaped() const
+- int toInt(bool *ok = nullptr, int base = 10) const
+- QByteArray toLatin1() const
+- QByteArray toLocal8Bit() const
+- long toLong(bool *ok = nullptr, int base = 10) const
+- qlonglong toLongLong(bool *ok = nullptr, int base = 10) const
+- QString toLower() const
+- NSString * toNSString() const
+- short toShort(bool *ok = nullptr, int base = 10) const
+- std::string toStdString() const
+- std::u16string toStdU16String() const
+- std::u32string toStdU32String() const
+- std::wstring toStdWString() const
+- uint toUInt(bool *ok = nullptr, int base = 10) const
+- ulong toULong(bool *ok = nullptr, int base = 10) const
+- qulonglong toULongLong(bool *ok = nullptr, int base = 10) const
+- ushort toUShort(bool *ok = nullptr, int base = 10) const
+- QList<uint> toUcs4() const
+- QString toUpper() const
+- QByteArray toUtf8() const
+- qsizetype toWCharArray(wchar_t *array) const
+- (since 6.0) auto tokenize(Needle &&sep, Flags... flags) &&
+- (since 6.0) auto tokenize(Needle &&sep, Flags... flags) const &&
+- (since 6.0) auto tokenize(Needle &&sep, Flags... flags) const &
+- QString trimmed() const
+- void truncate(qsizetype position)
+- const QChar * unicode() const
+- const ushort * utf16() const
+- (since 6.7) std::u16string_view operator std::u16string_view() const
+- QString & operator+=(const QString &other)
+- QString & operator+=(QChar ch)
+- QString & operator+=(QLatin1StringView str)
+- (since 6.0) QString & operator+=(QStringView str)
+- (since 6.5) QString & operator+=(QUtf8StringView str)
+- QString & operator+=(const QByteArray &ba)
+- QString & operator+=(const char *str)
+- QString & operator=(QString &&other)
+- QString & operator=(const QString &other)
+- QString & operator=(QChar ch)
+- QString & operator=(QLatin1StringView str)
+- QString & operator=(const QByteArray &ba)
+- QString & operator=(const char *str)
+- QChar & operator[](qsizetype position)
+- const QChar operator[](qsizetype position) const
+
+## Static Public Members
+
+- QString asprintf(const char *cformat, ...)
+- int compare(const QString &s1, const QString &s2, Qt::CaseSensitivity cs = Qt::CaseSensitive)
+- int compare(QLatin1StringView s1, const QString &s2, Qt::CaseSensitivity cs = Qt::CaseSensitive)
+- int compare(QStringView s1, const QString &s2, Qt::CaseSensitivity cs = Qt::CaseSensitive)
+- int compare(const QString &s1, QLatin1StringView s2, Qt::CaseSensitivity cs = Qt::CaseSensitive)
+- int compare(const QString &s1, QStringView s2, Qt::CaseSensitivity cs = Qt::CaseSensitive)
+- QString fromCFString(CFStringRef string)
+- (since 6.6) QString fromEcmaString(emscripten::val jsString)
+- QString fromLatin1(const char *str, qsizetype size)
+- (since 6.0) QString fromLatin1(QByteArrayView str)
+- QString fromLatin1(const QByteArray &str)
+- QString fromLocal8Bit(const char *str, qsizetype size)
+- (since 6.0) QString fromLocal8Bit(QByteArrayView str)
+- QString fromLocal8Bit(const QByteArray &str)
+- QString fromNSString(const NSString *string)
+- QString fromRawData(const QChar *unicode, qsizetype size)
+- QString fromStdString(const std::string &str)
+- QString fromStdU16String(const std::u16string &str)
+- QString fromStdU32String(const std::u32string &str)
+- QString fromStdWString(const std::wstring &str)
+- QString fromUcs4(const char32_t *unicode, qsizetype size = -1)
+- QString fromUtf8(const char *str, qsizetype size)
+- (since 6.0) QString fromUtf8(QByteArrayView str)
+- QString fromUtf8(const QByteArray &str)
+- (since 6.1) QString fromUtf8(const char8_t *str)
+- (since 6.0) QString fromUtf8(const char8_t *str, qsizetype size)
+- QString fromUtf16(const char16_t *unicode, qsizetype size = -1)
+- QString fromWCharArray(const wchar_t *string, qsizetype size = -1)
+- int localeAwareCompare(const QString &s1, const QString &s2)
+- (since 6.0) int localeAwareCompare(QStringView s1, QStringView s2)
+- (since 6.8) qsizetype maxSize()
+- QString number(long n, int base = 10)
+- QString number(double n, char format = 'g', int precision = 6)
+- QString number(int n, int base = 10)
+- QString number(qlonglong n, int base = 10)
+- QString number(qulonglong n, int base = 10)
+- QString number(uint n, int base = 10)
+- QString number(ulong n, int base = 10)
+- QString vasprintf(const char *cformat, va_list ap)
+
+## Related Non-Members
+
+- (since 6.1) qsizetype erase(QString &s, const T &t)
+- (since 6.1) qsizetype erase_if(QString &s, Predicate pred)
+- bool operator!=(const QByteArray &lhs, const QString &rhs)
+- bool operator!=(const QString &lhs, const QString &rhs)
+- bool operator!=(const char *const &lhs, const QString &rhs)
+- bool operator!=(const QString &lhs, const QByteArray &rhs)
+- bool operator!=(const QString &lhs, const QLatin1StringView &rhs)
+- bool operator!=(const QString &lhs, const char *const &rhs)
+- (since 6.4) QString operator""_s(const char16_t *str, size_t size)
+- QString operator+(QString &&s1, const QString &s2)
+- (since 6.9) QString operator+(QStringView lhs, const QString &rhs)
+- (since 6.9) QString operator+(const QString &lhs, QStringView rhs)
+- QString operator+(const QString &s1, const QString &s2)
+- QString operator+(const QString &s1, const char *s2)
+- QString operator+(const char *s1, const QString &s2)
+- bool operator<(const QByteArray &lhs, const QString &rhs)
+- bool operator<(const char *const &lhs, const QString &rhs)
+- bool operator<(const QLatin1StringView &lhs, const QString &rhs)
+- bool operator<(const QString &lhs, const QByteArray &rhs)
+- bool operator<(const QString &lhs, const QLatin1StringView &rhs)
+- bool operator<(const QString &lhs, const QString &rhs)
+- bool operator<(const QString &lhs, const char *const &rhs)
+- QDataStream & operator<<(QDataStream &stream, const QString &string)
+- bool operator<=(const QByteArray &lhs, const QString &rhs)
+- bool operator<=(const QString &lhs, const QString &rhs)
+- bool operator<=(const char *const &lhs, const QString &rhs)
+- bool operator<=(const QLatin1StringView &lhs, const QString &rhs)
+- bool operator<=(const QString &lhs, const QByteArray &rhs)
+- bool operator<=(const QString &lhs, const QLatin1StringView &rhs)
+- bool operator<=(const QString &lhs, const char *const &rhs)
+- bool operator==(const QByteArray &lhs, const QString &rhs)
+- bool operator==(const QLatin1StringView &lhs, const QString &rhs)
+- bool operator==(const QString &lhs, const QByteArray &rhs)
+- bool operator==(const QString &lhs, const QLatin1StringView &rhs)
+- bool operator==(const QString &lhs, const QString &rhs)
+- bool operator==(const QString &lhs, const char *const &rhs)
+- bool operator==(const char *const &lhs, const QString &rhs)
+- bool operator>(const QByteArray &lhs, const QString &rhs)
+- bool operator>(const QString &lhs, const QString &rhs)
+- bool operator>(const char *const &lhs, const QString &rhs)
+- bool operator>(const QLatin1StringView &lhs, const QString &rhs)
+- bool operator>(const QString &lhs, const QByteArray &rhs)
+- bool operator>(const QString &lhs, const QLatin1StringView &rhs)
+- bool operator>(const QString &lhs, const char *const &rhs)
+- bool operator>=(const QByteArray &lhs, const QString &rhs)
+- bool operator>=(const QString &lhs, const QString &rhs)
+- bool operator>=(const char *const &lhs, const QString &rhs)
+- bool operator>=(const QLatin1StringView &lhs, const QString &rhs)
+- bool operator>=(const QString &lhs, const QByteArray &rhs)
+- bool operator>=(const QString &lhs, const QLatin1StringView &rhs)
+- bool operator>=(const QString &lhs, const char *const &rhs)
+- QDataStream & operator>>(QDataStream &stream, QString &string)
+
+## Macros
+
+- QStringLiteral(str)
+- QT_NO_CAST_FROM_ASCII
+- QT_NO_CAST_TO_ASCII
+- QT_RESTRICTED_CAST_FROM_ASCII
+- const char * qPrintable(const QString &str)
+- const wchar_t * qUtf16Printable(const QString &str)
+- const char * qUtf8Printable(const QString &str)
